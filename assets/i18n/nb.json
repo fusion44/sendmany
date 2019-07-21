@@ -1,0 +1,21 @@
+{
+  "auth": {
+    "pin": "Skriv inn din PIN-kode"
+  },
+  "home": {
+    "title": "Oversikt"
+  },
+  "invoices": {
+    "title": "Sedler"
+  },
+  "pay": {
+    "title": "Sende"
+  },
+  "prefs": {
+    "btn": "Innstillinger",
+    "language_label": "Språk",
+    "theme_label": "Theme",
+    "title": "Innstillinger"
+  },
+  "title": "Torden App"
+}

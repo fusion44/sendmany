@@ -1,0 +1,21 @@
+{
+  "auth": {
+    "pin": "Gib deinen PIN ein"
+  },
+  "home": {
+    "title": "Übersicht"
+  },
+  "invoices": {
+    "title": "Rechnungen"
+  },
+  "pay": {
+    "title": "Senden"
+  },
+  "prefs": {
+    "btn": "Einstellungen",
+    "language_label": "Sprache",
+    "theme_label": "Theme",
+    "title": "Einstellungen"
+  },
+  "title": "Torden"
+}
