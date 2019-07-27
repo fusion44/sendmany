@@ -8,6 +8,7 @@ import 'package:torden/common/utils.dart';
 import 'package:torden/common/widgets/tabbar/tab_bar.dart';
 import 'package:torden/lightning/connection_manager/bloc.dart';
 import 'package:torden/overview/balance_overview_widget.dart';
+import 'package:torden/overview/bloc/bloc.dart';
 import 'package:torden/preferences/bloc.dart';
 import 'package:torden/preferences/preferences_page.dart';
 
@@ -19,40 +20,52 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   TabController _controller;
+  LnInfoBloc _lnInfoBloc;
+
   @override
   void initState() {
     _controller = new TabController(length: 4, vsync: this);
+    _lnInfoBloc = LnInfoBloc();
+    _lnInfoBloc.dispatch(LoadLnInfo());
     super.initState();
   }
 
   @override
   void dispose() {
     _controller.dispose();
+    _lnInfoBloc.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener(
-      bloc: BlocProvider.of<PreferencesBloc>(context),
-      listener: (BuildContext context, PreferencesState state) {
-        if (state != null) {
-          FlutterI18n.refresh(context, Locale(state.language));
-          setState(() {});
-        }
-      },
-      child: BlocBuilder(
-        bloc: BlocProvider.of<ConnectionManagerBloc>(context),
-        builder: (BuildContext context, ConnectionManagerState state) {
-          if (state is ConnectionEstablishedState) {
-            return _buildScaffold();
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<LnInfoBloc>(
+          builder: (context) => _lnInfoBloc,
+        ),
+      ],
+      child: BlocListener(
+        bloc: BlocProvider.of<PreferencesBloc>(context),
+        listener: (BuildContext context, PreferencesState state) {
+          if (state != null) {
+            FlutterI18n.refresh(context, Locale(state.language));
+            setState(() {});
           }
-          return Scaffold(
-            body: Center(
-              child: Text(tr(context, "network.not_yet_established")),
-            ),
-          );
         },
+        child: BlocBuilder(
+          bloc: BlocProvider.of<ConnectionManagerBloc>(context),
+          builder: (BuildContext context, ConnectionManagerState state) {
+            if (state is ConnectionEstablishedState) {
+              return _buildScaffold();
+            }
+            return Scaffold(
+              body: Center(
+                child: Text(tr(context, "network.not_yet_established")),
+              ),
+            );
+          },
+        ),
       ),
     );
   }

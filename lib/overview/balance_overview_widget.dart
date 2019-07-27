@@ -17,26 +17,11 @@ class BalanceOverviewWidget extends StatefulWidget {
 }
 
 class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
-  LnInfoBloc _lnInfoBloc;
-
-  @override
-  void initState() {
-    _lnInfoBloc = LnInfoBloc();
-    _lnInfoBloc.dispatch(LoadLnInfo());
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _lnInfoBloc.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
     return BlocBuilder(
-      bloc: _lnInfoBloc,
+      bloc: BlocProvider.of<LnInfoBloc>(context),
       builder: (BuildContext context, LnInfoState state) {
         if (state is LnInfoStateLoading) {
           return Text(tr(context, "network.loading"));
