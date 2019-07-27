@@ -8,6 +8,10 @@
   "invoices": {
     "title": "Bills"
   },
+  "network": {
+    "loading": "loading",
+    "not_yet_established": "Connection not yet established"
+  },
   "pay": {
     "title": "Send"
   },
@@ -17,5 +21,13 @@
     "theme_label": "Theme",
     "title": "Settings"
   },
-  "title": "Torden App"
+  "title": "Torden App",
+  "wallet": {
+    "balance": "Balance",
+    "channel": "Channel",
+    "confirmed": "confirmed",
+    "onchain": "On Chain",
+    "total": "Total",
+    "unconfirmed": "unconfirmed"
+  }
 }

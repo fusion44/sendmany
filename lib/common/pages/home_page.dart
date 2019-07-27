@@ -6,7 +6,8 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:torden/common/constants.dart';
 import 'package:torden/common/utils.dart';
 import 'package:torden/common/widgets/tabbar/tab_bar.dart';
-import 'package:torden/common/widgets/widgets.dart';
+import 'package:torden/lightning/connection_manager/bloc.dart';
+import 'package:torden/overview/balance_overview_widget.dart';
 import 'package:torden/preferences/bloc.dart';
 import 'package:torden/preferences/preferences_page.dart';
 
@@ -40,55 +41,46 @@ class _HomePageState extends State<HomePage>
           setState(() {});
         }
       },
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: tordenBackground,
-          elevation: 0,
-          titleSpacing: 0,
-          title: _getTabBar(),
-        ),
-        body: TabBarView(
-          controller: _controller,
-          children: <Widget>[
-            Column(
-              children: <Widget>[
-                Card(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        "Title",
-                        textAlign: TextAlign.left,
-                      ),
-                      Container(height: 25.0, color: Colors.red)
-                    ],
-                  ),
-                ),
-                Card(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Text("Title"),
-                    ],
-                  ),
-                ),
-              ],
+      child: BlocBuilder(
+        bloc: BlocProvider.of<ConnectionManagerBloc>(context),
+        builder: (BuildContext context, ConnectionManagerState state) {
+          if (state is ConnectionEstablishedState) {
+            return _buildScaffold();
+          }
+          return Scaffold(
+            body: Center(
+              child: Text(tr(context, "network.not_yet_established")),
             ),
-            Column(
-              children: <Widget>[
-                MoneyValueView(amount: 12443.56, hero: true),
-                MoneyValueView(amount: 12.05)
-              ],
-            ),
-            Column(
-              children: <Widget>[
-                MoneyValueView(amount: 12443.56, hero: true),
-                MoneyValueView(amount: 12.05)
-              ],
-            ),
-            PreferencesPage(),
-          ],
-        ),
+          );
+        },
+      ),
+    );
+  }
+
+  Scaffold _buildScaffold() {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: tordenBackground,
+        elevation: 0,
+        titleSpacing: 0,
+        title: _getTabBar(),
+      ),
+      body: TabBarView(
+        controller: _controller,
+        children: <Widget>[
+          Column(
+            children: <Widget>[
+              BalanceOverviewWidget(),
+            ],
+          ),
+          Column(
+            children: <Widget>[],
+          ),
+          Column(
+            children: <Widget>[],
+          ),
+          PreferencesPage(),
+        ],
       ),
     );
   }

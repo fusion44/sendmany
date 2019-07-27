@@ -29,6 +29,10 @@ const tordenBlue700 = const Color(0xff0082fb);
 const tordenBlue200 = const Color(0xff72deff);
 const tordenBlue100 = const Color(0xffb2f2ff);
 
+const tordenConfirmedBalance = tordenPrimaryGreen700;
+const tordenUnconfirmedBalance = tordenPrimaryGreen500;
+const tordenChannelBalance = tordenPrimaryGreen300;
+
 const themeTorden = "torden";
 const themeDark = "dark";
 const themeLight = "light";

@@ -8,13 +8,12 @@ import 'package:flutter_i18n/flutter_i18n_delegate.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:torden/auth/login/login_page.dart';
 import 'package:torden/common/constants.dart';
-import 'package:torden/common/pages/splash_page.dart';
 import 'package:torden/common/pages/home_page.dart';
 import 'package:torden/preferences/bloc.dart';
-import 'package:torden/preferences/preferences_bloc.dart';
-import 'package:torden/preferences/preferences_page.dart';
-import 'package:torden/preferences/preferences_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'lightning/connection_manager/bloc.dart';
+import 'preferences/preferences_page.dart';
 
 class SimpleBlocDelegate extends BlocDelegate {
   @override
@@ -42,11 +41,14 @@ class TordenApp extends StatefulWidget {
 
 class _TordenAppState extends State<TordenApp> {
   PreferencesBloc _preferencesBloc;
+  ConnectionManagerBloc _connectionManagerBloc;
 
   @override
   void initState() {
     _preferencesBloc = PreferencesBloc();
     _preferencesBloc.dispatch(LoadPreferencesEvent());
+    _connectionManagerBloc = ConnectionManagerBloc();
+    _connectionManagerBloc.dispatch(AppStart());
     super.initState();
   }
 
@@ -63,6 +65,9 @@ class _TordenAppState extends State<TordenApp> {
         BlocProvider<PreferencesBloc>(
           builder: (BuildContext context) => _preferencesBloc,
         ),
+        BlocProvider<ConnectionManagerBloc>(
+          builder: (BuildContext context) => _connectionManagerBloc,
+        )
       ],
       child: _buildMaterialApp(),
     );
@@ -76,12 +81,26 @@ class _TordenAppState extends State<TordenApp> {
       condition: (PreferencesState oldState, PreferencesState newState) {
         return oldState.theme != newState.theme;
       },
-      builder: (BuildContext context, PreferencesState state) {
+      builder: (BuildContext context, PreferencesState prefsState) {
+        String initialRoute = "login";
+        // 1: No connection info to a node => setup screen
+        /*if (prefsState.lnNodeIP == "" &&
+              prefsState.lnNodeMacaroon == "" &&
+              prefsState.lnNodeCertificate == "") {
+            // TODO: If we can't find node info then
+            // navigate to a setup screen
+        
+            initialRoute = "/setup";
+          } else {
+            // 2: We have connection info to a node => login screen
+            initialRoute = "/login";
+          }*/
         return MaterialApp(
-          theme: _getTheme(state.theme),
-          initialRoute: "/",
+          theme: _getTheme(prefsState.theme),
+          initialRoute: initialRoute,
           routes: <String, WidgetBuilder>{
             "/": (BuildContext context) => LoginPage(),
+            "/setup": (BuildContext context) => Text("Setup"),
             "/home": (BuildContext context) => HomePage(),
             "/preferences": (BuildContext context) => PreferencesPage(),
           },

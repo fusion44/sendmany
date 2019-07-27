@@ -8,6 +8,10 @@
   "invoices": {
     "title": "Sedler"
   },
+  "network": {
+    "loading": "lasting",
+    "not_yet_established": "Forbindelse ennå ikke etablert"
+  },
   "pay": {
     "title": "Sende"
   },
@@ -17,5 +21,13 @@
     "theme_label": "Theme",
     "title": "Innstillinger"
   },
-  "title": "Torden App"
+  "title": "Torden App",
+  "wallet": {
+    "balance": "bankens balanse",
+    "channel": "Channel",
+    "confirmed": "bekreftet",
+    "onchain": "On Chain",
+    "total": "generelle",
+    "unconfirmed": "ubekreftet"
+  }
 }

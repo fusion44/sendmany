@@ -8,6 +8,10 @@
   "invoices": {
     "title": "Rechnungen"
   },
+  "network": {
+    "loading": "Lade",
+    "not_yet_established": "Verbindung noch nicht hergestellt"
+  },
   "pay": {
     "title": "Senden"
   },
@@ -17,5 +21,13 @@
     "theme_label": "Theme",
     "title": "Einstellungen"
   },
-  "title": "Torden"
+  "title": "Torden",
+  "wallet": {
+    "balance": "Kontostand",
+    "channel": "Channel",
+    "confirmed": "bestätigt",
+    "onchain": "On Chain",
+    "total": "Gesamt",
+    "unconfirmed": "unbestätigt"
+  }
 }
