@@ -2,6 +2,12 @@
   "auth": {
     "pin": "Gib deinen PIN ein"
   },
+  "channels": {
+    "info": "Kanäle",
+    "id": "ID",
+    "local": "Lokal",
+    "remote": "Fern"
+  },
   "home": {
     "title": "Übersicht"
   },

@@ -3,6 +3,8 @@ import 'package:flutter/rendering.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:torden/channels/blocs/listchannelsbloc/bloc.dart';
+import 'package:torden/channels/channels_overview_widget.dart';
 import 'package:torden/common/constants.dart';
 import 'package:torden/common/utils.dart';
 import 'package:torden/common/widgets/tabbar/tab_bar.dart';
@@ -22,12 +24,14 @@ class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   TabController _controller;
   LnInfoBloc _lnInfoBloc;
-
+  ListChannelsBloc _listChannelsBloc;
   @override
   void initState() {
     _controller = new TabController(length: 4, vsync: this);
     _lnInfoBloc = LnInfoBloc();
     _lnInfoBloc.dispatch(LoadLnInfo());
+    _listChannelsBloc = ListChannelsBloc();
+    _listChannelsBloc.dispatch(LoadChannels());
     super.initState();
   }
 
@@ -44,6 +48,9 @@ class _HomePageState extends State<HomePage>
       providers: [
         BlocProvider<LnInfoBloc>(
           builder: (context) => _lnInfoBloc,
+        ),
+        BlocProvider<ListChannelsBloc>(
+          builder: (context) => _listChannelsBloc,
         ),
       ],
       child: BlocListener(
@@ -86,6 +93,7 @@ class _HomePageState extends State<HomePage>
             child: Column(
               children: <Widget>[
                 BalanceOverviewWidget(),
+                ChannelsOverviewWidget(),
                 NodeOverviewWidget(),
               ],
             ),

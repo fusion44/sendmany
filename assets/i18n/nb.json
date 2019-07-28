@@ -2,6 +2,12 @@
   "auth": {
     "pin": "Skriv inn din PIN-kode"
   },
+  "channels": {
+    "info": "Channels",
+    "id": "ID",
+    "local": "Lokal",
+    "remote": "Fjern"
+  },
   "home": {
     "title": "Oversikt"
   },
