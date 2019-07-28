@@ -11,7 +11,7 @@ const String prefTheme = "theme_preference";
 // Themeing
 const tordenBackground = const Color(0xff32333d);
 const tordenBackgroundAccent = const Color(0xff26282f);
-const tordenBackgroundCard = const Color(0xff373740);
+const tordenBackgroundCard = const Color(0xff393942);
 const tordenPrimaryGreen700 = const Color(0xff007d51);
 const tordenPrimaryGreen500 = const Color(0xff1eb980);
 const tordenPrimaryGreen300 = const Color(0xff37efba);
