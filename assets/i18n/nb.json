@@ -12,6 +12,18 @@
     "loading": "lasting",
     "not_yet_established": "Forbindelse ennå ikke etablert"
   },
+  "node": {
+    "alias": "Alias",
+    "block_height": "Blockheight",
+    "chain": "Chain",
+    "channels": "Channels",
+    "identity_pubkey": "Identity Pubkey",
+    "info": "Noden din",
+    "peers": "Peers",
+    "synced_to_chain": "Synced to chain",
+    "synced_to_chain_no": "Nei",
+    "synced_to_chain_yes": "Ja"
+  },
   "pay": {
     "title": "Sende"
   },

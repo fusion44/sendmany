@@ -1,5 +1,6 @@
 library torden.widgets;
 
+export "data_item.dart";
 export "balance_display_list_item.dart";
 export "filled_text_field.dart";
 export "loading_indicator.dart";

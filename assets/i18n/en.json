@@ -12,6 +12,18 @@
     "loading": "loading",
     "not_yet_established": "Connection not yet established"
   },
+  "node": {
+    "alias": "Alias",
+    "block_height": "Blockheight",
+    "chain": "Chain",
+    "channels": "Channel",
+    "identity_pubkey": "Identity Pubkey",
+    "info": "Your Node",
+    "peers": "Peers",
+    "synced_to_chain": "Synced to chain",
+    "synced_to_chain_no": "No",
+    "synced_to_chain_yes": "Yes"
+  },
   "pay": {
     "title": "Send"
   },

@@ -7,8 +7,9 @@ import 'package:torden/common/constants.dart';
 import 'package:torden/common/utils.dart';
 import 'package:torden/common/widgets/tabbar/tab_bar.dart';
 import 'package:torden/lightning/connection_manager/bloc.dart';
-import 'package:torden/overview/balance_overview_widget.dart';
 import 'package:torden/overview/bloc/bloc.dart';
+import 'package:torden/overview/balance_overview_widget.dart';
+import 'package:torden/overview/node_overview_widget.dart';
 import 'package:torden/preferences/bloc.dart';
 import 'package:torden/preferences/preferences_page.dart';
 
@@ -81,10 +82,13 @@ class _HomePageState extends State<HomePage>
       body: TabBarView(
         controller: _controller,
         children: <Widget>[
-          Column(
-            children: <Widget>[
-              BalanceOverviewWidget(),
-            ],
+          SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                BalanceOverviewWidget(),
+                NodeOverviewWidget(),
+              ],
+            ),
           ),
           Column(
             children: <Widget>[],
