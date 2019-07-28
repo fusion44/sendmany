@@ -24,20 +24,17 @@ class _NodeOverviewWidgetState extends State<NodeOverviewWidget> {
         } else if (state is LnInfoStateLoadingFinished) {
           return TordenCard(
             tr(context, "node.info"),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                _buildRowAliasAndChain(state),
-                Divider(),
-                _buildRowChainSyncBlockHeight(state),
-                Divider(),
-                _buildRowPeersChannel(state),
-                Divider(),
-                _buildRowPubkey(state),
-                Divider(),
-                _buildRowVersion(state),
-              ],
-            ),
+            [
+              _buildRowAliasAndChain(state),
+              Divider(),
+              _buildRowChainSyncBlockHeight(state),
+              Divider(),
+              _buildRowPeersChannel(state),
+              Divider(),
+              _buildRowPubkey(state),
+              Divider(),
+              _buildRowVersion(state),
+            ],
           );
         }
         return Text("Unknown State? $state");

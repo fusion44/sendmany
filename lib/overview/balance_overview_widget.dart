@@ -30,46 +30,37 @@ class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
               state.walletBalance.confirmedBalance +
               state.walletBalance.unconfirmedBalance;
 
-          return TordenCard(
-            tr(context, "wallet.balance"),
+          return TordenCard(tr(context, "wallet.balance"), [
+            Text(tr(context, "wallet.total")),
+            MoneyValueView(amount: total, hero: true),
             Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: Text(tr(context, "wallet.total")),
+                BalanceDisplayListItem(
+                  theme: theme,
+                  title: tr(context, "wallet.onchain"),
+                  subtitle: tr(context, "wallet.confirmed"),
+                  amount: state.walletBalance.confirmedBalance,
+                  color: tordenConfirmedBalance,
                 ),
-                MoneyValueView(amount: total, hero: true),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    BalanceDisplayListItem(
-                      theme: theme,
-                      title: tr(context, "wallet.onchain"),
-                      subtitle: tr(context, "wallet.confirmed"),
-                      amount: state.walletBalance.confirmedBalance,
-                      color: tordenConfirmedBalance,
-                    ),
-                    Divider(),
-                    BalanceDisplayListItem(
-                      theme: theme,
-                      title: tr(context, "wallet.onchain"),
-                      subtitle: tr(context, "wallet.unconfirmed"),
-                      amount: state.walletBalance.unconfirmedBalance,
-                      color: tordenUnconfirmedBalance,
-                    ),
-                    Divider(),
-                    BalanceDisplayListItem(
-                      theme: theme,
-                      title: tr(context, "wallet.channel"),
-                      amount: state.channelBalance.balance,
-                      color: tordenChannelBalance,
-                    ),
-                  ],
+                Divider(),
+                BalanceDisplayListItem(
+                  theme: theme,
+                  title: tr(context, "wallet.onchain"),
+                  subtitle: tr(context, "wallet.unconfirmed"),
+                  amount: state.walletBalance.unconfirmedBalance,
+                  color: tordenUnconfirmedBalance,
+                ),
+                Divider(),
+                BalanceDisplayListItem(
+                  theme: theme,
+                  title: tr(context, "wallet.channel"),
+                  amount: state.channelBalance.balance,
+                  color: tordenChannelBalance,
                 ),
               ],
             ),
-          );
+          ]);
         }
         return Text("Unknown State? $state");
       },

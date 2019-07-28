@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class TordenCard extends Card {
   final String header;
-  final Widget child;
+  final List<Widget> cardChildren;
 
-  TordenCard(this.header, this.child);
+  TordenCard(this.header, this.cardChildren);
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +15,11 @@ class TordenCard extends Card {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(this.header, style: theme.textTheme.title),
-            child,
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Text(this.header, style: theme.textTheme.title),
+            ),
+            ...cardChildren,
           ],
         ),
       ),
