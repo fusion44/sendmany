@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:torden/common/constants.dart';
 import 'package:torden/common/utils.dart';
+import 'package:torden/common/widgets/charts/charts.dart';
 import 'package:torden/common/widgets/money_value_view.dart';
 import 'package:torden/lightning/lnd/lnd_rpc.dart';
 
@@ -10,6 +12,13 @@ class CompactChannelListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
+    double total =
+        channel.localBalance.toDouble() + channel.remoteBalance.toDouble();
+    List<ChartSectionInput> sections = [
+      ChartSectionInput(channel.localBalance.toDouble(), tordenLocalBalance),
+      ChartSectionInput(channel.remoteBalance.toDouble(), tordenRemoteBalance),
+    ];
+
     return Stack(
       children: <Widget>[
         Container(
@@ -18,8 +27,16 @@ class CompactChannelListItem extends StatelessWidget {
           color: channel.active ? Colors.green : Colors.red,
         ),
         Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(left: 11.0),
+              child: FlatLineChart(
+                values: sections,
+                total: total,
+                strokeWidth: 2,
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.only(top: 3.0, left: 11.0),
               child: Stack(
@@ -50,7 +67,7 @@ class CompactChannelListItem extends StatelessWidget {
                 MoneyValueView(
                   amount: channel.localBalance,
                 ),
-                Container(width: 8.0),
+                Expanded(child: Container()),
                 Padding(
                   padding: const EdgeInsets.only(right: 6.0),
                   child: Text(

@@ -29,7 +29,7 @@ class _ChannelsOverviewWidgetState extends State<ChannelsOverviewWidget> {
           for (int i = 0; i < length; i++) {
             widgets.add(CompactChannelListItem(channel: channels[i]));
             if (i != length - 1) {
-              widgets.add(Divider());
+              widgets.add(SizedBox(height: 8.0));
             }
           }
 

@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:torden/common/constants.dart';
 import 'package:torden/common/utils.dart';
+import 'package:torden/common/widgets/charts/charts.dart';
 import 'package:torden/common/widgets/money_value_view.dart';
 import 'package:torden/common/widgets/torden_card.dart';
 import 'package:torden/common/widgets/widgets.dart';
@@ -30,37 +31,57 @@ class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
               state.walletBalance.confirmedBalance +
               state.walletBalance.unconfirmedBalance;
 
-          return TordenCard(tr(context, "wallet.balance"), [
-            Text(tr(context, "wallet.total")),
-            MoneyValueView(amount: total, hero: true),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                BalanceDisplayListItem(
-                  theme: theme,
-                  title: tr(context, "wallet.onchain"),
-                  subtitle: tr(context, "wallet.confirmed"),
-                  amount: state.walletBalance.confirmedBalance,
-                  color: tordenConfirmedBalance,
+          List<ChartSectionInput> i = [
+            ChartSectionInput(state.walletBalance.confirmedBalance.toDouble(),
+                tordenConfirmedBalance),
+            ChartSectionInput(state.walletBalance.unconfirmedBalance.toDouble(),
+                tordenUnconfirmedBalance),
+            ChartSectionInput(
+                state.channelBalance.balance.toDouble(), tordenChannelBalance),
+          ];
+
+          return TordenCard(
+              tr(context, "wallet.balance"),
+              [
+                Text(tr(context, "wallet.total")),
+                MoneyValueView(amount: total, hero: true),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: FlatLineChart(
+                    values: i,
+                    total: total.toDouble(),
+                    strokeWidth: 3,
+                  ),
                 ),
-                Divider(),
-                BalanceDisplayListItem(
-                  theme: theme,
-                  title: tr(context, "wallet.onchain"),
-                  subtitle: tr(context, "wallet.unconfirmed"),
-                  amount: state.walletBalance.unconfirmedBalance,
-                  color: tordenUnconfirmedBalance,
-                ),
-                Divider(),
-                BalanceDisplayListItem(
-                  theme: theme,
-                  title: tr(context, "wallet.channel"),
-                  amount: state.channelBalance.balance,
-                  color: tordenChannelBalance,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    BalanceDisplayListItem(
+                      theme: theme,
+                      title: tr(context, "wallet.onchain"),
+                      subtitle: tr(context, "wallet.confirmed"),
+                      amount: state.walletBalance.confirmedBalance,
+                      color: tordenConfirmedBalance,
+                    ),
+                    Divider(),
+                    BalanceDisplayListItem(
+                      theme: theme,
+                      title: tr(context, "wallet.onchain"),
+                      subtitle: tr(context, "wallet.unconfirmed"),
+                      amount: state.walletBalance.unconfirmedBalance,
+                      color: tordenUnconfirmedBalance,
+                    ),
+                    Divider(),
+                    BalanceDisplayListItem(
+                      theme: theme,
+                      title: tr(context, "wallet.channel"),
+                      amount: state.channelBalance.balance,
+                      color: tordenChannelBalance,
+                    ),
+                  ],
                 ),
               ],
-            ),
-          ]);
+              CrossAxisAlignment.stretch);
         }
         return Text("Unknown State? $state");
       },
