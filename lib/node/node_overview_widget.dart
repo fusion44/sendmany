@@ -4,9 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:torden/common/utils.dart';
 import 'package:torden/common/widgets/torden_card.dart';
 import 'package:torden/common/widgets/widgets.dart';
+import 'package:torden/overview/bloc/bloc.dart';
 import 'package:torden/overview/bloc/ln_info_bloc.dart';
-
-import 'bloc/bloc.dart';
 
 class NodeOverviewWidget extends StatefulWidget {
   @override
