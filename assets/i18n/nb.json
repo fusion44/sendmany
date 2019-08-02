@@ -3,8 +3,8 @@
     "pin": "Skriv inn din PIN-kode"
   },
   "channels": {
-    "info": "Channels",
     "id": "ID",
+    "info": "Channels",
     "local": "Lokal",
     "remote": "Fjern"
   },
@@ -45,6 +45,8 @@
     "channel": "Channel",
     "confirmed": "bekreftet",
     "onchain": "On Chain",
+    "receive": "Empfange",
+    "send": "Sende",
     "total": "generelle",
     "unconfirmed": "ubekreftet"
   }

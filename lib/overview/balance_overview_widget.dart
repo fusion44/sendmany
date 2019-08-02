@@ -78,6 +78,9 @@ class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
                       amount: state.channelBalance.balance,
                       color: tordenChannelBalance,
                     ),
+                    Divider(),
+                    Container(height: 16.0),
+                    _buildSendReceiveButtons(),
                   ],
                 ),
               ],
@@ -85,6 +88,32 @@ class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
         }
         return Text("Unknown State? $state");
       },
+    );
+  }
+
+  _buildSendReceiveButtons() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+        Container(
+          width: 150,
+          child: RaisedButton.icon(
+            onPressed: () => Navigator.pushNamed(context, "/receive"),
+            icon: Icon(Icons.call_received),
+            label: Text(tr(context, "wallet.receive")),
+            color: tordenDarkGreen,
+          ),
+        ),
+        Container(
+          width: 150,
+          child: RaisedButton.icon(
+            onPressed: () => Navigator.pushNamed(context, "/send"),
+            icon: Icon(Icons.send),
+            label: Text(tr(context, "wallet.send")),
+            color: tordenBlue700,
+          ),
+        )
+      ],
     );
   }
 }

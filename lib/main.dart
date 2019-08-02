@@ -103,6 +103,14 @@ class _TordenAppState extends State<TordenApp> {
             "/setup": (BuildContext context) => Text("Setup"),
             "/home": (BuildContext context) => HomePage(),
             "/preferences": (BuildContext context) => PreferencesPage(),
+            "/send": (BuildContext context) => Scaffold(
+                  appBar: AppBar(),
+                  body: Center(child: Text("Send")),
+                ),
+            "/receive": (BuildContext context) => Scaffold(
+                  appBar: AppBar(),
+                  body: Center(child: Text("Receive")),
+                ),
           },
           supportedLocales: const [Locale("en"), Locale("de"), Locale("nb")],
           localizationsDelegates: delegates,

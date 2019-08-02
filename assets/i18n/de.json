@@ -3,8 +3,8 @@
     "pin": "Gib deinen PIN ein"
   },
   "channels": {
-    "info": "Kanäle",
     "id": "ID",
+    "info": "Kanäle",
     "local": "Lokal",
     "remote": "Fern"
   },
@@ -45,6 +45,8 @@
     "channel": "Channel",
     "confirmed": "bestätigt",
     "onchain": "On Chain",
+    "receive": "Empfangen",
+    "send": "Senden",
     "total": "Gesamt",
     "unconfirmed": "unbestätigt"
   }
