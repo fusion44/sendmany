@@ -1,4 +1,4 @@
-import 'package:torden/lightning/lnd/lnd_rpc.dart';
+import 'package:torden/common/connection/lnd_rpc/lnd_rpc.dart';
 
 class LnConnectionDataProvider {
   static final LnConnectionDataProvider _singleton =

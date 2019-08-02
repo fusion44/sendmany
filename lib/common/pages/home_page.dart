@@ -3,17 +3,17 @@ import 'package:flutter/rendering.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
-import 'package:torden/channels/blocs/listchannelsbloc/bloc.dart';
-import 'package:torden/channels/channels_overview_widget.dart';
+import 'package:torden/channels/listchannels/bloc/bloc.dart';
+import 'package:torden/channels/listchannels/list_channels_widget.dart';
+import 'package:torden/common/connection/connection_manager/bloc.dart';
 import 'package:torden/common/constants.dart';
 import 'package:torden/common/utils.dart';
 import 'package:torden/common/widgets/tabbar/tab_bar.dart';
-import 'package:torden/lightning/connection_manager/bloc.dart';
 import 'package:torden/node/node_overview_widget.dart';
-import 'package:torden/overview/bloc/bloc.dart';
-import 'package:torden/overview/balance_overview_widget.dart';
 import 'package:torden/preferences/bloc.dart';
 import 'package:torden/preferences/preferences_page.dart';
+import 'package:torden/wallet/balance/balance_overview_widget.dart';
+import 'package:torden/wallet/balance/bloc/bloc.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -98,7 +98,7 @@ class _HomePageState extends State<HomePage>
           ),
           Column(
             children: <Widget>[
-              ChannelsOverviewWidget(),
+              ListChannelsWidget(),
             ],
           ),
           Column(
@@ -114,7 +114,8 @@ class _HomePageState extends State<HomePage>
 
   _getTabBar() {
     List<TabData> tabs = [];
-    tabs.add(TabData(tr(context, "home.title"), Icons.account_balance_wallet));
+    tabs.add(
+        TabData(tr(context, "wallet.wallet"), Icons.account_balance_wallet));
     tabs.add(TabData(tr(context, "channels.info"), Icons.scatter_plot));
     tabs.add(TabData(tr(context, "node.info"), Icons.star));
     tabs.add(TabData(tr(context, "prefs.title"), Icons.settings));

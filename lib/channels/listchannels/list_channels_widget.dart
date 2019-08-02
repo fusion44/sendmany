@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:torden/channels/blocs/listchannelsbloc/listchannels_state.dart';
+import 'package:torden/common/connection/lnd_rpc/lnd_rpc.dart';
 import 'package:torden/common/utils.dart';
 import 'package:torden/common/widgets/compact_channel_list_item.dart';
 import 'package:torden/common/widgets/widgets.dart';
-import 'package:torden/lightning/lnd/lnd_rpc.dart';
 
-import 'blocs/listchannelsbloc/bloc.dart';
+import 'bloc/bloc.dart';
 
-class ChannelsOverviewWidget extends StatefulWidget {
+class ListChannelsWidget extends StatefulWidget {
   @override
-  _ChannelsOverviewWidgetState createState() => _ChannelsOverviewWidgetState();
+  _ListChannelsWidgetState createState() => _ListChannelsWidgetState();
 }
 
-class _ChannelsOverviewWidgetState extends State<ChannelsOverviewWidget> {
+class _ListChannelsWidgetState extends State<ListChannelsWidget> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder(

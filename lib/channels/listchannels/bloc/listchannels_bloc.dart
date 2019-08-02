@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:grpc/grpc.dart';
-import 'package:torden/lightning/connection_manager/bloc.dart';
-import 'package:torden/lightning/lnd/rpc.pbgrpc.dart';
+import 'package:torden/common/connection/connection_manager/bloc.dart';
+import 'package:torden/common/connection/lnd_rpc/lnd_rpc.dart';
 import './bloc.dart';
 
 class ListChannelsBloc extends Bloc<ListChannelsEvent, ListChannelsState> {

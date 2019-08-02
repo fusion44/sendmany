@@ -1,5 +1,6 @@
 {
   "auth": {
+    "check": "Check",
     "pin": "Enter your PIN"
   },
   "channels": {
@@ -7,12 +8,6 @@
     "info": "Channels",
     "local": "Local",
     "remote": "Remote"
-  },
-  "home": {
-    "title": "Overview"
-  },
-  "invoices": {
-    "title": "Bills"
   },
   "network": {
     "loading": "loading",
@@ -30,9 +25,6 @@
     "synced_to_chain_no": "No",
     "synced_to_chain_yes": "Yes"
   },
-  "pay": {
-    "title": "Send"
-  },
   "prefs": {
     "btn": "Settings",
     "language_label": "Language",
@@ -44,10 +36,12 @@
     "balance": "Balance",
     "channel": "Channel",
     "confirmed": "confirmed",
+    "invoices": "Invoices",
     "onchain": "On Chain",
     "receive": "Receive",
     "send": "Send",
     "total": "Total",
-    "unconfirmed": "unconfirmed"
+    "unconfirmed": "unconfirmed",
+    "wallet": "wallet"
   }
 }

@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:torden/lightning/lnd/lnd_rpc.dart';
+import 'package:torden/common/connection/lnd_rpc/lnd_rpc.dart';
 
 @immutable
 abstract class LnInfoState extends Equatable {

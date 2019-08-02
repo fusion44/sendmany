@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:torden/common/connection/lnd_rpc/lnd_rpc.dart';
 import 'package:torden/common/constants.dart';
 import 'package:torden/common/utils.dart';
 import 'package:torden/common/widgets/charts/charts.dart';
 import 'package:torden/common/widgets/money_value_view.dart';
-import 'package:torden/lightning/lnd/lnd_rpc.dart';
 
 class CompactChannelListItem extends StatelessWidget {
   final Channel channel;

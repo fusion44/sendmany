@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:grpc/grpc.dart';
-import 'package:torden/lightning/connection_manager/connection_data_provider.dart';
-import 'package:torden/lightning/lnd/lnd_rpc.dart';
+import 'package:torden/common/connection/connection_manager/bloc.dart';
+import 'package:torden/common/connection/lnd_rpc/lnd_rpc.dart';
 
 import 'connection_manager_event.dart';
 import 'connection_manager_state.dart';
@@ -14,7 +14,6 @@ class ConnectionManagerBloc
   ClientChannel _clientChannel;
   LightningClient _lightningClient;
   bool _connected = false;
-  // TODO: refactor this once the setup screen is implemented
   final String _macaroon = "";
 
   @override
@@ -41,9 +40,7 @@ class ConnectionManagerBloc
   }
 
   _establishConnection() async {
-    // TODO: refactor this once the setup screen is implemented
     final String cert = """-----BEGIN CERTIFICATE-----
-...
 -----END CERTIFICATE-----""";
 
     ChannelCredentials creds = ChannelCredentials.secure(
@@ -52,7 +49,7 @@ class ConnectionManagerBloc
     );
 
     ChannelOptions opts = ChannelOptions(credentials: creds);
-    _clientChannel = ClientChannel('ip.of.node', port: 10009, options: opts);
+    _clientChannel = ClientChannel('172.81.181.43', port: 10009, options: opts);
 
     _lightningClient = LightningClient(
       _clientChannel,

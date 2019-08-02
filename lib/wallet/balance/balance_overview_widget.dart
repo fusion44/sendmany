@@ -8,7 +8,6 @@ import 'package:torden/common/widgets/charts/charts.dart';
 import 'package:torden/common/widgets/money_value_view.dart';
 import 'package:torden/common/widgets/torden_card.dart';
 import 'package:torden/common/widgets/widgets.dart';
-import 'package:torden/overview/bloc/ln_info_bloc.dart';
 
 import 'bloc/bloc.dart';
 

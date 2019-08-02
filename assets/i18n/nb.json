@@ -1,5 +1,6 @@
 {
   "auth": {
+    "check": "Sjekke",
     "pin": "Skriv inn din PIN-kode"
   },
   "channels": {
@@ -7,12 +8,6 @@
     "info": "Channels",
     "local": "Lokal",
     "remote": "Fjern"
-  },
-  "home": {
-    "title": "Oversikt"
-  },
-  "invoices": {
-    "title": "Sedler"
   },
   "network": {
     "loading": "lasting",
@@ -30,9 +25,6 @@
     "synced_to_chain_no": "Nei",
     "synced_to_chain_yes": "Ja"
   },
-  "pay": {
-    "title": "Sende"
-  },
   "prefs": {
     "btn": "Innstillinger",
     "language_label": "Språk",
@@ -44,10 +36,12 @@
     "balance": "bankens balanse",
     "channel": "Channel",
     "confirmed": "bekreftet",
+    "invoices": "Sedler",
     "onchain": "On Chain",
     "receive": "Empfange",
     "send": "Sende",
     "total": "generelle",
-    "unconfirmed": "ubekreftet"
+    "unconfirmed": "ubekreftet",
+    "wallet": "Lommebok"
   }
 }

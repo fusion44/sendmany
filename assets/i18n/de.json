@@ -1,5 +1,6 @@
 {
   "auth": {
+    "check": "Prüfen",
     "pin": "Gib deinen PIN ein"
   },
   "channels": {
@@ -7,12 +8,6 @@
     "info": "Kanäle",
     "local": "Lokal",
     "remote": "Fern"
-  },
-  "home": {
-    "title": "Übersicht"
-  },
-  "invoices": {
-    "title": "Rechnungen"
   },
   "network": {
     "loading": "Lade",
@@ -30,9 +25,6 @@
     "synced_to_chain_no": "Nein",
     "synced_to_chain_yes": "Ja"
   },
-  "pay": {
-    "title": "Senden"
-  },
   "prefs": {
     "btn": "Einstellungen",
     "language_label": "Sprache",
@@ -44,10 +36,12 @@
     "balance": "Kontostand",
     "channel": "Channel",
     "confirmed": "bestätigt",
+    "invoices": "Rechnungen",
     "onchain": "On Chain",
     "receive": "Empfangen",
     "send": "Senden",
     "total": "Gesamt",
-    "unconfirmed": "unbestätigt"
+    "unconfirmed": "unbestätigt",
+    "wallet": "Brieftasche"
   }
 }

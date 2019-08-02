@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter/scheduler.dart' show timeDilation;
-
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_i18n/flutter_i18n_delegate.dart';
@@ -12,7 +10,7 @@ import 'package:torden/common/pages/home_page.dart';
 import 'package:torden/preferences/bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'lightning/connection_manager/bloc.dart';
+import 'common/connection/connection_manager/bloc.dart';
 import 'preferences/preferences_page.dart';
 
 class SimpleBlocDelegate extends BlocDelegate {
@@ -24,8 +22,6 @@ class SimpleBlocDelegate extends BlocDelegate {
 }
 
 void main() async {
-  // timeDilation = 10.0;
-
   SharedPreferences prefs = await SharedPreferences.getInstance();
   BlocSupervisor.delegate = SimpleBlocDelegate();
   runApp(TordenApp(sharedPreferences: prefs));
