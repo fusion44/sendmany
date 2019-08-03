@@ -31,12 +31,27 @@
     "theme_label": "Theme",
     "title": "Innstillinger"
   },
+  "qr": {
+    "open_qr_scanner": "Open QR-Code reader"
+  },
   "title": "Torden App",
   "wallet": {
     "balance": "bankens balanse",
     "channel": "Channel",
     "confirmed": "bekreftet",
-    "invoices": "Sedler",
+    "invoices": {
+      "check_invoice": "Sjekk faktura",
+      "decoding": "Decoding ...",
+      "description": "Beskrivelse",
+      "destination": "Mottaker",
+      "header": "Faktura",
+      "invoice_invalid": "Ugyldig faktura",
+      "invoices": "Sedler",
+      "is_expired": "Faktura er utløpt!",
+      "paste_invoice_here": "Lim inn fakturaen din her",
+      "pay": "Betale"
+    },
+    "lightning": "Lightning",
     "onchain": "On Chain",
     "receive": "Empfange",
     "send": "Sende",

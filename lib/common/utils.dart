@@ -2,6 +2,7 @@ library torden.utils;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 /// Translates a string with the given [key] and the [translationParams].
 String tr(BuildContext context, String key,
@@ -37,4 +38,15 @@ class LanguageDisplayData {
   final Image flag;
 
   LanguageDisplayData(this.name, this.flag);
+}
+
+/// Updates the time ago library with the current language
+void updateTimeAgoLib(String lang) {
+  if (lang == "de") {
+    timeago.setLocaleMessages(lang, timeago.DeMessages());
+  } else if (lang == "nb") {
+    timeago.setLocaleMessages("nb", timeago.NbNoMessages());
+  } else {
+    timeago.setLocaleMessages(lang, timeago.EnMessages());
+  }
 }

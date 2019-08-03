@@ -31,12 +31,27 @@
     "theme_label": "Theme",
     "title": "Einstellungen"
   },
+  "qr": {
+    "open_qr_scanner": "QR-Code Scanner öffnen"
+  },
   "title": "Torden",
   "wallet": {
     "balance": "Kontostand",
     "channel": "Channel",
     "confirmed": "bestätigt",
-    "invoices": "Rechnungen",
+    "invoices": {
+      "check_invoice": "Prüfen",
+      "decoding": "Dekodiere ...",
+      "description": "Beschreibung",
+      "destination": "Empfänger",
+      "header": "Rechnung",
+      "invoice_invalid": "Rechnung ungültig",
+      "invoices": "Rechnungen",
+      "is_expired": "Rechnung ist abgelaufen",
+      "paste_invoice_here": "Füge deine Rechnung hier ein",
+      "pay": "Bezahlen"
+    },
+    "lightning": "Lightning",
     "onchain": "On Chain",
     "receive": "Empfangen",
     "send": "Senden",

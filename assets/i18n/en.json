@@ -31,12 +31,27 @@
     "theme_label": "Theme",
     "title": "Settings"
   },
+  "qr": {
+    "open_qr_scanner": "Open QR-Code scanne"
+  },
   "title": "Torden App",
   "wallet": {
     "balance": "Balance",
     "channel": "Channel",
     "confirmed": "confirmed",
-    "invoices": "Invoices",
+    "invoices": {
+      "check_invoice": "Check",
+      "decoding": "Decoding ...",
+      "description": "Description",
+      "destination": "Destination",
+      "header": "Invoice",
+      "invoice_invalid": "Invalid invoice",
+      "invoices": "Invoices",
+      "is_expired": "Invoice is expired!",
+      "paste_invoice_here": "Paste your invoice here",
+      "pay": "Pay"
+    },
+    "lightning": "Lightning",
     "onchain": "On Chain",
     "receive": "Receive",
     "send": "Send",

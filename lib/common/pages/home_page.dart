@@ -58,6 +58,7 @@ class _HomePageState extends State<HomePage>
         listener: (BuildContext context, PreferencesState state) {
           if (state != null) {
             FlutterI18n.refresh(context, Locale(state.language));
+            updateTimeAgoLib(state.language);
             setState(() {});
           }
         },
