@@ -18,7 +18,7 @@ class _NodeOverviewWidgetState extends State<NodeOverviewWidget> {
       bloc: BlocProvider.of<LnInfoBloc>(context),
       builder: (BuildContext context, LnInfoState state) {
         if (state is LnInfoStateLoading) {
-          return Text(tr(context, "network.loading"));
+          return TranslatedText("network.loading");
         } else if (state is LnInfoStateLoadingFinished) {
           return TordenCard(
             tr(context, "node.info"),

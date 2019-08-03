@@ -9,6 +9,7 @@ import 'package:torden/common/connection/connection_manager/bloc.dart';
 import 'package:torden/common/constants.dart';
 import 'package:torden/common/utils.dart';
 import 'package:torden/common/widgets/tabbar/tab_bar.dart';
+import 'package:torden/common/widgets/widgets.dart';
 import 'package:torden/node/node_overview_widget.dart';
 import 'package:torden/preferences/bloc.dart';
 import 'package:torden/preferences/preferences_page.dart';
@@ -70,7 +71,7 @@ class _HomePageState extends State<HomePage>
             }
             return Scaffold(
               body: Center(
-                child: Text(tr(context, "network.not_yet_established")),
+                child: TranslatedText("network.not_yet_established"),
               ),
             );
           },

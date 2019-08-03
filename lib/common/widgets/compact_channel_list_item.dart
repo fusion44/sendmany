@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:torden/common/connection/lnd_rpc/lnd_rpc.dart';
 import 'package:torden/common/constants.dart';
-import 'package:torden/common/utils.dart';
 import 'package:torden/common/widgets/charts/charts.dart';
 import 'package:torden/common/widgets/money_value_view.dart';
+import 'package:torden/common/widgets/widgets.dart';
 
 class CompactChannelListItem extends StatelessWidget {
   final Channel channel;
@@ -43,8 +43,8 @@ class CompactChannelListItem extends StatelessWidget {
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.only(top: 2.0),
-                    child: Text(
-                      tr(context, "channels.id"),
+                    child: TranslatedText(
+                      "channels.id",
                       style: theme.textTheme.caption,
                     ),
                   ),
@@ -59,8 +59,8 @@ class CompactChannelListItem extends StatelessWidget {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(left: 11.0, right: 6.0),
-                  child: Text(
-                    tr(context, "channels.local"),
+                  child: TranslatedText(
+                    "channels.local",
                     style: theme.textTheme.caption,
                   ),
                 ),
@@ -70,8 +70,8 @@ class CompactChannelListItem extends StatelessWidget {
                 Expanded(child: Container()),
                 Padding(
                   padding: const EdgeInsets.only(right: 6.0),
-                  child: Text(
-                    tr(context, "channels.remote"),
+                  child: TranslatedText(
+                    "channels.remote",
                     style: theme.textTheme.caption,
                   ),
                 ),

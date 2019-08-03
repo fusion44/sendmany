@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:torden/common/utils.dart';
+import 'package:torden/common/widgets/widgets.dart';
 import 'package:torden/preferences/bloc.dart';
 
 class PreferencesPage extends StatefulWidget {
@@ -25,7 +26,7 @@ class _PreferencesPageState extends State<PreferencesPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text(tr(context, "prefs.language_label")),
+                      TranslatedText("prefs.language_label"),
                       Padding(
                         padding: const EdgeInsets.only(left: 16.0),
                         child: DropdownButton(
@@ -42,7 +43,7 @@ class _PreferencesPageState extends State<PreferencesPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text(tr(context, "prefs.theme_label")),
+                      TranslatedText("prefs.theme_label"),
                       Padding(
                         padding: const EdgeInsets.only(left: 16.0),
                         child: DropdownButton(

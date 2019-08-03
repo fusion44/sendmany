@@ -19,7 +19,7 @@ class _ListChannelsWidgetState extends State<ListChannelsWidget> {
       bloc: BlocProvider.of<ListChannelsBloc>(context),
       builder: (BuildContext context, ListChannelsState state) {
         if (state is ChannelsLoadingState) {
-          return Text(tr(context, "network.loading"));
+          return TranslatedText("network.loading");
         } else if (state is ChannelsLoadedState) {
           List<Widget> widgets = [Container(height: 8)];
           int length = state.channels.channels.length;

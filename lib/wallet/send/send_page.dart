@@ -37,7 +37,7 @@ class _SendPageState extends State<SendPage> {
         builder: (BuildContext context, DecodePayReqState state) {
           return Scaffold(
             appBar: AppBar(
-              title: Text(tr(context, 'wallet.send')),
+              title: TranslatedText("wallet.send"),
               bottom: TabBar(
                 isScrollable: true,
                 tabs: <Widget>[
@@ -49,7 +49,7 @@ class _SendPageState extends State<SendPage> {
             body: TabBarView(
               children: <Widget>[
                 _buildUI(state),
-                Text(tr(context, "wallet.onchain")),
+                TranslatedText("wallet.onchain"),
               ],
             ),
             floatingActionButton: _buildFAB(),
@@ -106,7 +106,7 @@ class _SendPageState extends State<SendPage> {
               ),
             ),
             RaisedButton(
-              child: Text(tr(context, "wallet.invoices.check_invoice")),
+              child: TranslatedText("wallet.invoices.check_invoice"),
               onPressed: () {
                 String code = _invoiceController.value.text;
                 _decodePayReqBloc.dispatch(DecodePayReqEvent(code));
@@ -127,8 +127,8 @@ class _SendPageState extends State<SendPage> {
         child: Column(
           children: <Widget>[
             Container(height: 64.0),
-            Text(
-              tr(context, "wallet.invoices.decoding"),
+            TranslatedText(
+              "wallet.invoices.decoding",
               style: theme.textTheme.title,
             ),
             Padding(
@@ -204,7 +204,7 @@ class _SendPageState extends State<SendPage> {
               padding: const EdgeInsets.only(top: 8.0),
               child: RaisedButton.icon(
                 icon: Icon(Icons.flash_on),
-                label: Text(tr(context, "wallet.invoices.pay")),
+                label: TranslatedText("wallet.invoices.pay"),
                 onPressed: () {
                   // TODO: implement me
                   PreferencesBloc blc =

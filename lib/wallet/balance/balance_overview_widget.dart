@@ -24,7 +24,7 @@ class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
       bloc: BlocProvider.of<LnInfoBloc>(context),
       builder: (BuildContext context, LnInfoState state) {
         if (state is LnInfoStateLoading) {
-          return Text(tr(context, "network.loading"));
+          return TranslatedText("network.loading");
         } else if (state is LnInfoStateLoadingFinished) {
           Int64 total = state.channelBalance.balance +
               state.walletBalance.confirmedBalance +
@@ -42,7 +42,7 @@ class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
           return TordenCard(
               tr(context, "wallet.balance"),
               [
-                Text(tr(context, "wallet.total")),
+                TranslatedText("wallet.total"),
                 MoneyValueView(amount: total, hero: true),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -99,7 +99,7 @@ class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
           child: RaisedButton.icon(
             onPressed: () => Navigator.pushNamed(context, "/receive"),
             icon: Icon(Icons.call_received),
-            label: Text(tr(context, "wallet.receive")),
+            label: TranslatedText("wallet.receive"),
             color: tordenDarkGreen,
           ),
         ),
@@ -108,7 +108,7 @@ class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
           child: RaisedButton.icon(
             onPressed: () => Navigator.pushNamed(context, "/send"),
             icon: Icon(Icons.send),
-            label: Text(tr(context, "wallet.send")),
+            label: TranslatedText("wallet.send"),
             color: tordenBlue700,
           ),
         )

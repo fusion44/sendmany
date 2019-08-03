@@ -7,3 +7,4 @@ export "loading_indicator.dart";
 export "logo_hero_widget.dart";
 export "money_value_view.dart";
 export "torden_card.dart";
+export "translated_text.dart";
