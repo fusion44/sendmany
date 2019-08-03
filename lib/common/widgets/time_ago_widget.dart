@@ -6,11 +6,17 @@ import 'package:torden/preferences/bloc.dart';
 class TimeAgoTextWidget extends StatelessWidget {
   final bool allowFromNow;
   final DateTime date;
+  final TextStyle style;
+  final TextOverflow overflow;
+  final bool softWrap;
 
-  const TimeAgoTextWidget({
+  const TimeAgoTextWidget(
+    this.date, {
     Key key,
-    this.date,
     this.allowFromNow = true,
+    this.style,
+    this.overflow,
+    this.softWrap,
   }) : super(key: key);
 
   @override
@@ -23,7 +29,12 @@ class TimeAgoTextWidget extends StatelessWidget {
           allowFromNow: allowFromNow,
           locale: state.language,
         );
-        return Text(formatted);
+        return Text(
+          formatted,
+          style: style,
+          overflow: overflow,
+          softWrap: softWrap,
+        );
       },
     );
   }

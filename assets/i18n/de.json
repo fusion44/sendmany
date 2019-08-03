@@ -41,15 +41,18 @@
     "confirmed": "bestätigt",
     "invoices": {
       "check_invoice": "Prüfen",
+      "creation_date": "Erstellt am",
       "decoding": "Dekodiere ...",
       "description": "Beschreibung",
       "destination": "Empfänger",
+      "expiration_date": "Gültig bis",
       "header": "Rechnung",
       "invoice_invalid": "Rechnung ungültig",
       "invoices": "Rechnungen",
       "is_expired": "Rechnung ist abgelaufen",
       "paste_invoice_here": "Füge deine Rechnung hier ein",
-      "pay": "Bezahlen"
+      "pay": "Bezahlen",
+      "try_another_invoice": "Nochmal"
     },
     "lightning": "Lightning",
     "onchain": "On Chain",

@@ -41,15 +41,18 @@
     "confirmed": "bekreftet",
     "invoices": {
       "check_invoice": "Sjekk faktura",
+      "creation_date": "Opprettet på",
       "decoding": "Decoding ...",
       "description": "Beskrivelse",
       "destination": "Mottaker",
+      "expiration_date": "Slås av",
       "header": "Faktura",
       "invoice_invalid": "Ugyldig faktura",
       "invoices": "Sedler",
       "is_expired": "Faktura er utløpt!",
       "paste_invoice_here": "Lim inn fakturaen din her",
-      "pay": "Betale"
+      "pay": "Betale",
+      "try_another_invoice": "Prøv på nytt"
     },
     "lightning": "Lightning",
     "onchain": "On Chain",

@@ -41,15 +41,18 @@
     "confirmed": "confirmed",
     "invoices": {
       "check_invoice": "Check",
+      "creation_date": "Created at",
       "decoding": "Decoding ...",
       "description": "Description",
       "destination": "Destination",
+      "expiration_date": "Expires in",
       "header": "Invoice",
       "invoice_invalid": "Invalid invoice",
       "invoices": "Invoices",
       "is_expired": "Invoice is expired!",
       "paste_invoice_here": "Paste your invoice here",
-      "pay": "Pay"
+      "pay": "Pay",
+      "try_another_invoice": "Retry"
     },
     "lightning": "Lightning",
     "onchain": "On Chain",

@@ -4,7 +4,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:torden/common/constants.dart';
 import 'package:torden/common/utils.dart';
 import 'package:torden/common/widgets/qr_scanner_widget.dart';
-import 'package:torden/common/widgets/time_ago_widget.dart';
+import 'package:torden/common/widgets/timeago_list_item.dart';
 import 'package:torden/common/widgets/widgets.dart';
 import 'package:torden/preferences/bloc.dart';
 import 'package:torden/wallet/send/lightning/decode_payreq/bloc/decode_pay_req_bloc.dart';
@@ -146,13 +146,7 @@ class _SendPageState extends State<SendPage> {
       return Column(
         children: <Widget>[
           Text("Error: ${state.message}"),
-          RaisedButton.icon(
-            icon: Icon(Icons.sync),
-            label: Text("Retry"),
-            onPressed: () {
-              _decodePayReqBloc.dispatch(ResetDecodePayReqEvent());
-            },
-          )
+          _buildRetryButton()
         ],
       );
     } else {
@@ -188,9 +182,16 @@ class _SendPageState extends State<SendPage> {
             label: tr(context, "wallet.invoices.destination"),
           ),
           Divider(),
-          TimeAgoTextWidget(date: reqDate),
+          TimeAgoListItem(
+            reqDate,
+            tr(context, "wallet.invoices.creation_date"),
+          ),
           Divider(),
-          TimeAgoTextWidget(date: expDate),
+          TimeAgoListItem(
+            expDate,
+            tr(context, "wallet.invoices.expiration_date"),
+            color: expired ? Colors.redAccent : tordenBackground,
+          ),
           expired
               ? Text(
                   tr(context, "wallet.invoices.is_expired"),
@@ -202,24 +203,37 @@ class _SendPageState extends State<SendPage> {
           Center(
             child: Padding(
               padding: const EdgeInsets.only(top: 8.0),
-              child: RaisedButton.icon(
-                icon: Icon(Icons.flash_on),
-                label: TranslatedText("wallet.invoices.pay"),
-                onPressed: () {
-                  // TODO: implement me
-                  PreferencesBloc blc =
-                      BlocProvider.of<PreferencesBloc>(context);
-                  if (blc.currentState.language == "de") {
-                    blc.dispatch(ChangeLanguageEvent(languageCode: "nb"));
-                  } else {
-                    blc.dispatch(ChangeLanguageEvent(languageCode: "de"));
-                  }
-                },
-              ),
+              child: expired ? _buildRetryButton() : _buildSendButton(),
             ),
           )
         ],
       ),
+    );
+  }
+
+  RaisedButton _buildRetryButton() {
+    return RaisedButton.icon(
+      icon: Icon(Icons.sync),
+      label: TranslatedText("wallet.invoices.try_another_invoice"),
+      onPressed: () {
+        _decodePayReqBloc.dispatch(ResetDecodePayReqEvent());
+      },
+    );
+  }
+
+  RaisedButton _buildSendButton() {
+    return RaisedButton.icon(
+      icon: Icon(Icons.flash_on),
+      label: TranslatedText("wallet.invoices.pay"),
+      onPressed: () {
+        // TODO: implement me
+        PreferencesBloc blc = BlocProvider.of<PreferencesBloc>(context);
+        if (blc.currentState.language == "de") {
+          blc.dispatch(ChangeLanguageEvent(languageCode: "nb"));
+        } else {
+          blc.dispatch(ChangeLanguageEvent(languageCode: "de"));
+        }
+      },
     );
   }
 }
