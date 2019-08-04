@@ -38,7 +38,7 @@ class DecodePayReqBloc extends Bloc<DecodePayReqBlocEvent, DecodePayReqState> {
       PayReq decoded;
       try {
         decoded = await client.decodePayReq(req, options: opts);
-        yield DecodedPayReqState(decoded);
+        yield DecodedPayReqState(decoded, reqString);
       } catch (e) {
         print(e);
 

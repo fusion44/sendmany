@@ -56,6 +56,12 @@
     },
     "lightning": "Lightning",
     "onchain": "On Chain",
+    "payments": {
+      "amnt_total_fees": "Gebühren",
+      "num_hops": "Sprünge",
+      "paid": "Bezahlt",
+      "paying": "Bezahle"
+    },
     "receive": "Empfangen",
     "send": "Senden",
     "total": "Gesamt",

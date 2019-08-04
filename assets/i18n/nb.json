@@ -56,6 +56,12 @@
     },
     "lightning": "Lightning",
     "onchain": "On Chain",
+    "payments": {
+      "amnt_total_fees": "Avgifter",
+      "num_hops": "Hops",
+      "paid": "Betalt",
+      "paying": "Betale"
+    },
     "receive": "Empfange",
     "send": "Sende",
     "total": "generelle",

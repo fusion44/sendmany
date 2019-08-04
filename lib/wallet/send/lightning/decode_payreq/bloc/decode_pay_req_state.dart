@@ -17,8 +17,9 @@ class DecodingPayReqState extends DecodePayReqState {
 
 class DecodedPayReqState extends DecodePayReqState {
   final PayReq req;
+  final String reqString;
 
-  DecodedPayReqState(this.req);
+  DecodedPayReqState(this.req, this.reqString);
 }
 
 class DecodingPayReqErrorState extends DecodePayReqState {
