@@ -65,6 +65,11 @@
     "receive": "Empfangen",
     "send": "Senden",
     "total": "Gesamt",
+    "transactions": {
+      "address_invalid": "Ungültige Adresse",
+      "send": "Senden",
+      "insert_address_here": "Füge die Zieladresse hier ein"
+    },
     "unconfirmed": "unbestätigt",
     "wallet": "Brieftasche"
   }

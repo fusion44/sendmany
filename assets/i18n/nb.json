@@ -65,6 +65,11 @@
     "receive": "Empfange",
     "send": "Sende",
     "total": "generelle",
+    "transactions": {
+      "address_invalid": "Ugyldig adresse",
+      "send": "Sende",
+      "insert_address_here": "Lim inn destinasjonsadressen her"
+    },
     "unconfirmed": "ubekreftet",
     "wallet": "Lommebok"
   }

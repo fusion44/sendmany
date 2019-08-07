@@ -65,6 +65,11 @@
     "receive": "Receive",
     "send": "Send",
     "total": "Total",
+    "transactions": {
+      "address_invalid": "Invalid Address",
+      "send": "Send",
+      "insert_address_here": "Insert the destination address here"
+    },
     "unconfirmed": "unconfirmed",
     "wallet": "wallet"
   }
