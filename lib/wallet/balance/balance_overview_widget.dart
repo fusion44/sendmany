@@ -8,6 +8,7 @@ import 'package:torden/common/widgets/charts/charts.dart';
 import 'package:torden/common/widgets/money_value_view.dart';
 import 'package:torden/common/widgets/torden_card.dart';
 import 'package:torden/common/widgets/widgets.dart';
+import 'package:torden/wallet/send/send_page.dart';
 
 import 'bloc/bloc.dart';
 
@@ -17,11 +18,19 @@ class BalanceOverviewWidget extends StatefulWidget {
 }
 
 class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
+  LnInfoBloc _infoBloc;
+
+  @override
+  initState() {
+    _infoBloc = BlocProvider.of<LnInfoBloc>(context);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
     return BlocBuilder(
-      bloc: BlocProvider.of<LnInfoBloc>(context),
+      bloc: _infoBloc,
       builder: (BuildContext context, LnInfoState state) {
         if (state is LnInfoStateLoading) {
           return TranslatedText("network.loading");
@@ -106,7 +115,19 @@ class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
         Container(
           width: 150,
           child: RaisedButton.icon(
-            onPressed: () => Navigator.pushNamed(context, "/send"),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return BlocProvider<LnInfoBloc>(
+                      builder: (context) => _infoBloc,
+                      child: SendPage(),
+                    );
+                  },
+                ),
+              );
+            },
             icon: Icon(Icons.send),
             label: TranslatedText("wallet.send"),
             color: tordenBlue700,

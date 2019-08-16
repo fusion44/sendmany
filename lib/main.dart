@@ -9,7 +9,6 @@ import 'package:torden/common/constants.dart';
 import 'package:torden/common/pages/home_page.dart';
 import 'package:torden/preferences/bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:torden/wallet/send/send_page.dart';
 
 import 'common/connection/connection_manager/bloc.dart';
 import 'preferences/preferences_page.dart';
@@ -100,7 +99,6 @@ class _TordenAppState extends State<TordenApp> {
             "/setup": (BuildContext context) => Text("Setup"),
             "/home": (BuildContext context) => HomePage(),
             "/preferences": (BuildContext context) => PreferencesPage(),
-            "/send": (BuildContext context) => SendPage(),
             "/receive": (BuildContext context) => Scaffold(
                   appBar: AppBar(),
                   body: Center(child: Text("Receive")),
