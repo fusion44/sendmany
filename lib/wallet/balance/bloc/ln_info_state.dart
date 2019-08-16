@@ -11,6 +11,18 @@ class InitialLnInfoState extends LnInfoState {}
 
 class LnInfoStateLoading extends LnInfoState {}
 
+class LnInfoStateReloading extends LnInfoState {
+  final GetInfoResponse infoResponse;
+  final WalletBalanceResponse walletBalance;
+  final ChannelBalanceResponse channelBalance;
+
+  LnInfoStateReloading(
+    this.infoResponse,
+    this.walletBalance,
+    this.channelBalance,
+  ) : super([infoResponse, walletBalance, channelBalance]);
+}
+
 class LnInfoStateLoadingFinished extends LnInfoState {
   final GetInfoResponse infoResponse;
   final WalletBalanceResponse walletBalance;
@@ -20,5 +32,5 @@ class LnInfoStateLoadingFinished extends LnInfoState {
     this.infoResponse,
     this.walletBalance,
     this.channelBalance,
-  );
+  ) : super([infoResponse, walletBalance, channelBalance]);
 }
