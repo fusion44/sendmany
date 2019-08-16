@@ -67,8 +67,15 @@
     "total": "generelle",
     "transactions": {
       "address_invalid": "Ugyldig adresse",
+      "close_txid_qr_dlg": "Ferdig",
+      "confirmations": "Bekreftelser",
+      "insert_address_here": "Lim inn destinasjonsadressen her",
+      "loading": "Laster transaksjoner",
       "send": "Sende",
-      "insert_address_here": "Lim inn destinasjonsadressen her"
+      "submitted_to_mempool": "Transaction submitted",
+      "transaction_id": "Transaction ID",
+      "transactions": "Transaksjoner",
+      "view_on_blockstream_info": "View on blockstream.info"
     },
     "unconfirmed": "ubekreftet",
     "wallet": "Lommebok"

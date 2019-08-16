@@ -67,8 +67,15 @@
     "total": "Total",
     "transactions": {
       "address_invalid": "Invalid Address",
+      "close_txid_qr_dlg": "OK",
+      "confirmations": "Confirmations",
+      "insert_address_here": "Insert the destination address here",
+      "loading": "Loading Transactions",
       "send": "Send",
-      "insert_address_here": "Insert the destination address here"
+      "submitted_to_mempool": "Transaction submitted",
+      "transaction_id": "Transaction ID",
+      "transactions": "Transactions",
+      "view_on_blockstream_info": "View on blockstream.info"
     },
     "unconfirmed": "unconfirmed",
     "wallet": "wallet"

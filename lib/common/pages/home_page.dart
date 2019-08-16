@@ -15,6 +15,8 @@ import 'package:torden/preferences/bloc.dart';
 import 'package:torden/preferences/preferences_page.dart';
 import 'package:torden/wallet/balance/balance_overview_widget.dart';
 import 'package:torden/wallet/balance/bloc/bloc.dart';
+import 'package:torden/wallet/balance/load_transactions/bloc/bloc.dart';
+import 'package:torden/wallet/balance/transactions_widget.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -26,6 +28,8 @@ class _HomePageState extends State<HomePage>
   TabController _controller;
   LnInfoBloc _lnInfoBloc;
   ListChannelsBloc _listChannelsBloc;
+  LoadTransactionsBloc _loadTransactionsBloc;
+
   @override
   void initState() {
     _controller = new TabController(length: 4, vsync: this);
@@ -33,6 +37,9 @@ class _HomePageState extends State<HomePage>
     _lnInfoBloc.dispatch(LoadLnInfo());
     _listChannelsBloc = ListChannelsBloc();
     _listChannelsBloc.dispatch(LoadChannels());
+    _loadTransactionsBloc = LoadTransactionsBloc();
+    _loadTransactionsBloc.dispatch(LoadTransactionsEvent());
+    _loadTransactionsBloc.dispatch(ChangePollTransactionsIntervalEvent(10));
     super.initState();
   }
 
@@ -40,6 +47,8 @@ class _HomePageState extends State<HomePage>
   void dispose() {
     _controller.dispose();
     _lnInfoBloc.dispose();
+    _listChannelsBloc.dispose();
+    _loadTransactionsBloc.dispose();
     super.dispose();
   }
 
@@ -53,28 +62,42 @@ class _HomePageState extends State<HomePage>
         BlocProvider<ListChannelsBloc>(
           builder: (context) => _listChannelsBloc,
         ),
+        BlocProvider<LoadTransactionsBloc>(
+          builder: (context) => _loadTransactionsBloc,
+        )
       ],
       child: BlocListener(
-        bloc: BlocProvider.of<PreferencesBloc>(context),
-        listener: (BuildContext context, PreferencesState state) {
-          if (state != null) {
-            FlutterI18n.refresh(context, Locale(state.language));
-            updateTimeAgoLib(state.language);
-            setState(() {});
+        bloc: _loadTransactionsBloc,
+        listener: (BuildContext context, state) {
+          if (state is ReloadingTransactionsState) {
+            // Reload the lightning info when transactions
+            // are reloaded to receive eventualy updated
+            // wallet balances
+            _lnInfoBloc.dispatch(LoadLnInfo());
           }
         },
-        child: BlocBuilder(
-          bloc: BlocProvider.of<ConnectionManagerBloc>(context),
-          builder: (BuildContext context, ConnectionManagerState state) {
-            if (state is ConnectionEstablishedState) {
-              return _buildScaffold();
+        child: BlocListener(
+          bloc: BlocProvider.of<PreferencesBloc>(context),
+          listener: (BuildContext context, PreferencesState state) {
+            if (state != null) {
+              FlutterI18n.refresh(context, Locale(state.language));
+              updateTimeAgoLib(state.language);
+              setState(() {});
             }
-            return Scaffold(
-              body: Center(
-                child: TranslatedText("network.not_yet_established"),
-              ),
-            );
           },
+          child: BlocBuilder(
+            bloc: BlocProvider.of<ConnectionManagerBloc>(context),
+            builder: (BuildContext context, ConnectionManagerState state) {
+              if (state is ConnectionEstablishedState) {
+                return _buildScaffold();
+              }
+              return Scaffold(
+                body: Center(
+                  child: TranslatedText("network.not_yet_established"),
+                ),
+              );
+            },
+          ),
         ),
       ),
     );
@@ -95,6 +118,7 @@ class _HomePageState extends State<HomePage>
             child: Column(
               children: <Widget>[
                 BalanceOverviewWidget(),
+                TransactionsWidget(),
               ],
             ),
           ),

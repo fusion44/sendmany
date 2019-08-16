@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:torden/common/utils.dart';
 import 'package:torden/common/widgets/widgets.dart';
+import 'package:torden/wallet/balance/bloc/bloc.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'on_chain/send_coins/bloc/bloc.dart';
 
@@ -41,18 +43,96 @@ class _SendTransactionWidgetState extends State<SendTransactionWidget> {
 
   @override
   Widget build(BuildContext context) {
+    LnInfoBloc infoBloc = BlocProvider.of<LnInfoBloc>(context);
     return BlocBuilder(
-      bloc: _sendCoinsBloc,
-      builder: (context, state) {
-        if (state is InitialSendCoinsState) {
-          return _buildScanAndSendUI();
-        } else if (state is TransactionSubmittedState) {
-          return Center(child: Text(state.transactionId));
-        } else {
-          return Center(child: Text("Unknown state $state"));
-        }
+      bloc: infoBloc,
+      builder: (BuildContext context, LnInfoState infoState) {
+        return BlocBuilder(
+          bloc: _sendCoinsBloc,
+          builder: (context, sendCoinsState) {
+            if (sendCoinsState is InitialSendCoinsState) {
+              return _buildScanAndSendUI();
+            } else if (sendCoinsState is TransactionSubmittedState) {
+              return TordenCard(
+                tr(context, "wallet.transactions.submitted_to_mempool"),
+                [
+                  Row(
+                    children: <Widget>[
+                      Flexible(
+                        child: DataItem(
+                          label: tr(
+                            context,
+                            "wallet.transactions.transaction_id",
+                          ),
+                          text: sendCoinsState.transactionId,
+                        ),
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.confirmation_number),
+                        onPressed: () {
+                          _showQRDialog(sendCoinsState.transactionId);
+                        },
+                      )
+                    ],
+                  ),
+                  RaisedButton(
+                      child: TranslatedText(
+                        "wallet.transactions.view_on_blockstream_info",
+                      ),
+                      onPressed: () {
+                        if (infoState is LnInfoStateLoadingFinished) {
+                          _launchURL(
+                            infoState.infoResponse.chains[0].network,
+                            sendCoinsState.transactionId,
+                          );
+                        }
+                      }),
+                ],
+                CrossAxisAlignment.center,
+              );
+            } else {
+              return Center(child: Text("Unknown state $sendCoinsState"));
+            }
+          },
+        );
       },
     );
+  }
+
+  Future<void> _showQRDialog(String txid) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: TranslatedText("wallet.transactions.transaction_id"),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(txid),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: TranslatedText("wallet.transactions.close_txid_qr_dlg"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  _launchURL(String network, String txid) async {
+    String url = "https://blockstream.info/$network/tx/$txid";
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   _buildScanAndSendUI() {

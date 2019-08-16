@@ -67,8 +67,15 @@
     "total": "Gesamt",
     "transactions": {
       "address_invalid": "Ungültige Adresse",
+      "close_txid_qr_dlg": "Fertig",
+      "confirmations": "Bestätigungen",
+      "insert_address_here": "Füge die Zieladresse hier ein",
+      "loading": "Lade Transaktionen",
       "send": "Senden",
-      "insert_address_here": "Füge die Zieladresse hier ein"
+      "submitted_to_mempool": "Transaktion uebermittelt",
+      "transaction_id": "Transaction ID",
+      "transactions": "Transactions",
+      "view_on_blockstream_info": "Auf blockstream.info ansehen"
     },
     "unconfirmed": "unbestätigt",
     "wallet": "Brieftasche"
