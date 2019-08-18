@@ -71,6 +71,7 @@
       "confirmations": "Confirmations",
       "insert_address_here": "Insert the destination address here",
       "loading": "Loading Transactions",
+      "next_transaction_button": "Next Transaction",
       "send": "Send",
       "submitted_to_mempool": "Transaction submitted",
       "transaction_id": "Transaction ID",

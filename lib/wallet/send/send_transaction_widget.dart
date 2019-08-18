@@ -1,6 +1,10 @@
 import 'package:fixnum/fixnum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:qr_flutter/qr_flutter.dart';
+import 'package:share/share.dart';
+import 'package:torden/common/constants.dart';
 import 'package:torden/common/utils.dart';
 import 'package:torden/common/widgets/widgets.dart';
 import 'package:torden/wallet/balance/bloc/bloc.dart';
@@ -53,42 +57,16 @@ class _SendTransactionWidgetState extends State<SendTransactionWidget> {
             if (sendCoinsState is InitialSendCoinsState) {
               return _buildScanAndSendUI();
             } else if (sendCoinsState is TransactionSubmittedState) {
-              return TordenCard(
-                tr(context, "wallet.transactions.submitted_to_mempool"),
-                [
-                  Row(
-                    children: <Widget>[
-                      Flexible(
-                        child: DataItem(
-                          label: tr(
-                            context,
-                            "wallet.transactions.transaction_id",
-                          ),
-                          text: sendCoinsState.transactionId,
-                        ),
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.confirmation_number),
-                        onPressed: () {
-                          _showQRDialog(sendCoinsState.transactionId);
-                        },
-                      )
-                    ],
-                  ),
-                  RaisedButton(
-                      child: TranslatedText(
-                        "wallet.transactions.view_on_blockstream_info",
-                      ),
-                      onPressed: () {
-                        if (infoState is LnInfoStateLoadingFinished) {
-                          _launchURL(
-                            infoState.infoResponse.chains[0].network,
-                            sendCoinsState.transactionId,
-                          );
-                        }
-                      }),
-                ],
-                CrossAxisAlignment.center,
+              return _buildTransactionSubmittedUI(
+                sendCoinsState.transactionId,
+                infoState is LnInfoStateLoadingFinished
+                    ? () {
+                        _launchURL(
+                          infoState.infoResponse.chains[0].network,
+                          sendCoinsState.transactionId,
+                        );
+                      }
+                    : null,
               );
             } else {
               return Center(child: Text("Unknown state $sendCoinsState"));
@@ -107,10 +85,13 @@ class _SendTransactionWidgetState extends State<SendTransactionWidget> {
         return AlertDialog(
           title: TranslatedText("wallet.transactions.transaction_id"),
           content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text(txid),
-              ],
+            child: Container(
+              width: 256,
+              height: 256,
+              child: QrImage(
+                data: txid,
+                backgroundColor: Colors.white,
+              ),
             ),
           ),
           actions: <Widget>[
@@ -179,7 +160,7 @@ class _SendTransactionWidgetState extends State<SendTransactionWidget> {
                   String address = _addressController.value.text;
                   String amount = _amountController.value.text;
                   _sendCoinsBloc.dispatch(
-                    SendCoinsEvent(
+                    DoSendCoinsEvent(
                       address: address,
                       amount: Int64.parseInt(amount),
                     ),
@@ -197,5 +178,64 @@ class _SendTransactionWidgetState extends State<SendTransactionWidget> {
               });
             },
           );
+  }
+
+  Widget _buildTransactionSubmittedUI(String txid, Function onPressed) {
+    return TordenCard(
+      tr(context, "wallet.transactions.submitted_to_mempool"),
+      [
+        Row(
+          children: <Widget>[
+            Flexible(
+              child: DataItem(
+                label: tr(
+                  context,
+                  "wallet.transactions.transaction_id",
+                ),
+                text: txid,
+              ),
+            ),
+            IconButton(
+              icon: Icon(Icons.share),
+              onPressed: () {
+                _shareTxid(txid);
+              },
+            ),
+            IconButton(
+              icon: Icon(MdiIcons.qrcode),
+              onPressed: () {
+                _showQRDialog(txid);
+              },
+            )
+          ],
+        ),
+        _buildRetryButton(),
+        RaisedButton(
+          child: TranslatedText(
+            "wallet.transactions.view_on_blockstream_info",
+          ),
+          onPressed: onPressed,
+        ),
+      ],
+      CrossAxisAlignment.stretch,
+    );
+  }
+
+  void _shareTxid(String txid) {
+    Share.share(txid);
+  }
+
+  Widget _buildRetryButton() {
+    return RaisedButton.icon(
+      icon: Icon(Icons.camera_alt),
+      label: TranslatedText("wallet.transactions.next_transaction_button"),
+      color: tordenConfirmedBalance,
+      onPressed: () {
+        _showPasteView = false;
+        widget.showFAB(true);
+        _amountController.text = "";
+        _sendCoinsBloc.dispatch(ResetSendCoinsEvent());
+      },
+    );
   }
 }

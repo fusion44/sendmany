@@ -4,18 +4,25 @@ import 'package:meta/meta.dart';
 
 @immutable
 class SendCoinsEvent extends Equatable {
+  SendCoinsEvent({props = const []}) : super(props);
+}
+
+@immutable
+class DoSendCoinsEvent extends SendCoinsEvent {
   final String address;
   final Int64 amount;
   final int targetConf;
   final Int64 satPerByte;
   final bool sendAll;
 
-  SendCoinsEvent({
+  DoSendCoinsEvent({
     @required this.address,
     @required this.amount,
     this.targetConf = 6,
     this.satPerByte = Int64.ZERO,
     this.sendAll = false,
     List props = const [],
-  }) : super(props);
+  }) : super(props: props);
 }
+
+class ResetSendCoinsEvent extends SendCoinsEvent {}

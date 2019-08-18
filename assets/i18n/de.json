@@ -71,8 +71,9 @@
       "confirmations": "Bestätigungen",
       "insert_address_here": "Füge die Zieladresse hier ein",
       "loading": "Lade Transaktionen",
+      "next_transaction_button": "Nächste Transaktion",
       "send": "Senden",
-      "submitted_to_mempool": "Transaktion uebermittelt",
+      "submitted_to_mempool": "Transaktion übermittelt",
       "transaction_id": "Transaction ID",
       "transactions": "Transactions",
       "view_on_blockstream_info": "Auf blockstream.info ansehen"

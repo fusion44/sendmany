@@ -13,7 +13,7 @@ class SendCoinsBloc extends Bloc<SendCoinsEvent, SendCoinsState> {
   Stream<SendCoinsState> mapEventToState(
     SendCoinsEvent event,
   ) async* {
-    if (event is SendCoinsEvent) {
+    if (event is DoSendCoinsEvent) {
       var client = LnConnectionDataProvider().lightningClient;
       var macaroon = LnConnectionDataProvider().macaroon;
 
@@ -26,6 +26,8 @@ class SendCoinsBloc extends Bloc<SendCoinsEvent, SendCoinsState> {
 
       SendCoinsResponse resp = await client.sendCoins(req, options: opts);
       yield TransactionSubmittedState(resp.txid);
+    } else if (event is ResetSendCoinsEvent) {
+      yield InitialSendCoinsState();
     }
   }
 }
