@@ -14,6 +14,7 @@ class SendCoinsBloc extends Bloc<SendCoinsEvent, SendCoinsState> {
     SendCoinsEvent event,
   ) async* {
     if (event is DoSendCoinsEvent) {
+      yield SubmittingTransactionState();
       var client = LnConnectionDataProvider().lightningClient;
       var macaroon = LnConnectionDataProvider().macaroon;
 
@@ -24,8 +25,18 @@ class SendCoinsBloc extends Bloc<SendCoinsEvent, SendCoinsState> {
       req.addr = event.address;
       req.amount = event.amount;
 
-      SendCoinsResponse resp = await client.sendCoins(req, options: opts);
-      yield TransactionSubmittedState(resp.txid);
+      try {
+        SendCoinsResponse resp = await client.sendCoins(req, options: opts);
+        yield TransactionSubmittedState(resp.txid);
+      } catch (e) {
+        var state = SendCoinsErrorState(
+          "$e",
+          address: event.address,
+          amount: event.amount,
+        );
+
+        yield state;
+      }
     } else if (event is ResetSendCoinsEvent) {
       yield InitialSendCoinsState();
     }
