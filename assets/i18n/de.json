@@ -48,10 +48,13 @@
       "expiration_date": "Gültig bis",
       "header": "Rechnung",
       "invoice_invalid": "Rechnung ungültig",
+      "invoice_paid": "Rechnung bezahlt",
       "invoices": "Rechnungen",
       "is_expired": "Rechnung ist abgelaufen",
+      "paid_go_back_to_home": "Zurück zur Übersicht",
       "paste_invoice_here": "Füge deine Rechnung hier ein",
       "pay": "Bezahlen",
+      "pay_another": "Nächste bezahlen",
       "try_another_invoice": "Nochmal"
     },
     "lightning": "Lightning",
@@ -64,19 +67,30 @@
     },
     "receive": "Empfangen",
     "send": "Senden",
+    "send_page": {
+      "next_step": "Fortfahren",
+      "paste_from_clipboard": "Aus der Zwischenablage kopieren"
+    },
     "total": "Gesamt",
     "transactions": {
       "address_invalid": "Ungültige Adresse",
+      "amount_in_sats": "Betrag in Satoshis",
+      "amount_invalid": "Betrag ungültig",
       "close_txid_qr_dlg": "Fertig",
       "confirmations": "Bestätigungen",
+      "destination_address": "Zieladresse",
       "insert_address_here": "Füge die Zieladresse hier ein",
       "loading": "Lade Transaktionen",
       "next_transaction_button": "Nächste Transaktion",
       "send": "Senden",
+      "send_coins_page_title": "Onchain versenden",
+      "send_maximum_short": "max",
       "submitted_to_mempool": "Transaktion übermittelt",
       "transaction_id": "Transaction ID",
       "transactions": "Transactions",
-      "view_on_blockstream_info": "Auf blockstream.info ansehen"
+      "tx_sent_go_back_to_home": "Zurück zur Übersicht",
+      "view_on_blockstream_info": "Auf blockstream.info ansehen",
+      "working": "Sende ..."
     },
     "unconfirmed": "unbestätigt",
     "wallet": "Brieftasche"

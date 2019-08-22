@@ -119,13 +119,13 @@ class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) {
-                    return BlocProvider<LnInfoBloc>(
-                      builder: (context) => _infoBloc,
-                      child: SendPage(),
-                    );
-                  },
-                ),
+                    builder: (context) {
+                      return BlocProvider<LnInfoBloc>(
+                        builder: (context) => _infoBloc,
+                        child: SendPage(),
+                      );
+                    },
+                    settings: RouteSettings(name: SendPage.route_name)),
               );
             },
             icon: Icon(Icons.send),

@@ -1,32 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:torden/common/connection/lnd_rpc/lnd_rpc.dart';
+import 'package:torden/common/connection/lnd_rpc/lnd_rpc.dart' as lnrpc;
 import 'package:torden/common/constants.dart';
 import 'package:torden/common/utils.dart';
 import 'package:torden/common/widgets/widgets.dart';
 
-import 'lightning/decode_payreq/bloc/bloc.dart';
-import 'lightning/send_payment/bloc/bloc.dart';
+import 'decode_payreq/bloc/bloc.dart';
+import 'send_payment/bloc/bloc.dart';
 
-class SendPaymentWidget extends StatefulWidget {
-  final Function showFAB;
-  final bool showPasteView;
+class SendPaymentPage extends StatefulWidget {
+  final QrInfo qrinfo;
 
-  const SendPaymentWidget({
-    Key key,
-    @required this.showFAB,
-    @required this.showPasteView,
-  }) : super(key: key);
+  const SendPaymentPage({Key key, @required this.qrinfo}) : super(key: key);
   @override
-  _SendPaymentWidgetState createState() => _SendPaymentWidgetState();
+  _SendPaymentPageState createState() => _SendPaymentPageState();
 }
 
-class _SendPaymentWidgetState extends State<SendPaymentWidget> {
+class _SendPaymentPageState extends State<SendPaymentPage> {
   final DecodePayReqBloc _decodePayReqBloc = DecodePayReqBloc();
   final SendPaymentBloc _sendPaymentBloc = SendPaymentBloc();
   final _invoiceController = TextEditingController();
-  bool paymentSent = false;
-  PayReq inflightPayment;
+  bool _paymentSent = false;
+  lnrpc.PayReq _inflightPayment;
+
+  @override
+  initState() {
+    _decodePayReqBloc.dispatch(DecodePayReqEvent(widget.qrinfo.address));
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -38,7 +39,18 @@ class _SendPaymentWidgetState extends State<SendPaymentWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return paymentSent ? _buildAwaitResponseUI() : _buildScanAndSendUI();
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        appBar: AppBar(
+          leading: new IconButton(
+            icon: new Icon(Icons.arrow_back),
+            onPressed: () => Navigator.of(context).pop(_paymentSent),
+          ),
+        ),
+        body: _paymentSent ? _buildAwaitResponseUI() : _buildScanAndSendUI(),
+      ),
+    );
   }
 
   _buildScanAndSendUI() {
@@ -47,50 +59,7 @@ class _SendPaymentWidgetState extends State<SendPaymentWidget> {
       bloc: _decodePayReqBloc,
       builder: (BuildContext context, DecodePayReqState state) {
         if (state is InitialDecodePayReqBlocState) {
-          if (widget.showPasteView) {
-            return Column(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Form(
-                    autovalidate: true,
-                    child: TextFormField(
-                      maxLines: 6,
-                      autofocus: false,
-                      controller: _invoiceController,
-                      decoration: InputDecoration(
-                        labelText:
-                            tr(context, "wallet.invoices.paste_invoice_here"),
-                      ),
-                      validator: (text) {
-                        String reqString = text;
-                        if (text.contains(":")) reqString = text.split(":")[1];
-                        if (reqString.startsWith("ln") &&
-                            reqString.length > 25) {
-                          return null;
-                        }
-                        return tr(context, "wallet.invoices.invoice_invalid");
-                      },
-                    ),
-                  ),
-                ),
-                RaisedButton(
-                  child: TranslatedText("wallet.invoices.check_invoice"),
-                  onPressed: () {
-                    String code = _invoiceController.value.text;
-                    _decodePayReqBloc.dispatch(DecodePayReqEvent(code));
-                  },
-                )
-              ],
-            );
-          } else {
-            return QRScannerWidget(
-              onStringFound: (String code) {
-                widget.showFAB(false);
-                _decodePayReqBloc.dispatch(DecodePayReqEvent(code));
-              },
-            );
-          }
+          return Text("Initial");
         } else if (state is DecodingPayReqState) {
           return LoadingWidget("wallet.invoices.decoding");
         } else if (state is DecodedPayReqState) {
@@ -171,7 +140,7 @@ class _SendPaymentWidgetState extends State<SendPaymentWidget> {
       icon: Icon(Icons.sync),
       label: TranslatedText("wallet.invoices.try_another_invoice"),
       onPressed: () {
-        _decodePayReqBloc.dispatch(ResetDecodePayReqEvent());
+        Navigator.pop(context);
       },
     );
   }
@@ -183,8 +152,8 @@ class _SendPaymentWidgetState extends State<SendPaymentWidget> {
       onPressed: () {
         _sendPaymentBloc.dispatch(SendPaymentViaInvoiceEvent(state.reqString));
         setState(() {
-          paymentSent = true;
-          inflightPayment = state.req;
+          _paymentSent = true;
+          _inflightPayment = state.req;
         });
       },
     );
@@ -203,9 +172,9 @@ class _SendPaymentWidgetState extends State<SendPaymentWidget> {
     );
   }
 
-  TordenCard _buildPaymentSentWidget(SendPaymentResponseState state) {
+  Widget _buildPaymentSentWidget(SendPaymentResponseState state) {
     return TordenCard(
-      tr(context, "wallet.payments.paid"),
+      tr(context, "wallet.invoices.invoice_paid"),
       <Widget>[
         MoneyValueView(
           amount: state.response.paymentRoute.totalAmtMsat ~/ 1000,
@@ -230,14 +199,48 @@ class _SendPaymentWidgetState extends State<SendPaymentWidget> {
         ),
         Divider(),
         DataItem(
-          text: inflightPayment.description,
+          text: _inflightPayment.description,
           label: tr(context, "wallet.invoices.description"),
         ),
         DataItem(
-          text: inflightPayment.destination,
+          text: _inflightPayment.destination,
           label: tr(context, "wallet.invoices.destination"),
         ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            RaisedButton(
+              child: TranslatedText("wallet.invoices.paid_go_back_to_home"),
+              onPressed: () {
+                _navigateHome();
+              },
+            ),
+            Container(width: 8.0),
+            RaisedButton(
+              child: TranslatedText("wallet.invoices.pay_another"),
+              onPressed: () {
+                // we've been launched from an URL
+                // the navigator won't be able to pop
+                // ==> go directly to the home screen
+                if (Navigator.canPop(context)) {
+                  Navigator.pop(context, true);
+                } else {
+                  _navigateHome();
+                }
+              },
+              color: tordenPrimaryGreen700,
+            ),
+          ],
+        ),
       ],
+      CrossAxisAlignment.stretch,
+    );
+  }
+
+  void _navigateHome() {
+    Navigator.popUntil(
+      context,
+      ModalRoute.withName("/home"),
     );
   }
 }

@@ -50,3 +50,99 @@ void updateTimeAgoLib(String lang) {
     timeago.setLocaleMessages(lang, timeago.EnMessages());
   }
 }
+
+enum PaymentLayer {
+  /// lightning
+  // Mainnet: lnbc
+  // Testnet: lntb
+  // Regtest: lncrt
+  lightning,
+  onchain,
+  unknown,
+}
+
+enum Network { mainnet, testnet, regtest }
+
+enum BitcoindAddressType {
+  /// onchain mainnet
+  // P2PKH which begin with the number 1, eg: 1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2
+  // P2SH type starting with the number 3, eg: 3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy
+  // Bech32 type starting with bc1, eg: bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq
+  /// onchain testnet
+  // P2PKH which begin with m, eg: mipcBbFg9gMiCh81Kj8tqqdgoZub1ZJRfn
+  // P2SH type starting with the number 2, eg: 2MzQwSSnBHWHqSAqtTVQ6v47XtaisrJa1Vc
+  // Bech32 type starting with tb1, eg: tb1qw508d6qejxtdg4y5r3zarvary0c5xw7kxpjzsx
+  p2pkh,
+  p2sh,
+  bech32,
+}
+
+class QrInfo {
+  // Can be the amount or the ln invoice
+  String address;
+  // the amount of the invoice or onchain payment request
+  String amount;
+  // onchina or lightning
+  PaymentLayer layer;
+  // mainnet, testnet, regtest
+  Network network;
+  // bitcoin address type for the selected network type
+  BitcoindAddressType btcAddressType;
+}
+
+/// Checks a String if it is a valid lightning invoice or
+/// an onchain address.
+QrInfo checkQrCode(String code) {
+  if (code.contains(":")) {
+    code = code.split(":")[1];
+  }
+
+  QrInfo info = QrInfo();
+  info.layer = PaymentLayer.unknown;
+  info.address = code;
+
+  if (code.startsWith("lnbc")) {
+    info.network = Network.mainnet;
+    info.layer = PaymentLayer.lightning;
+    return info;
+  } else if (code.startsWith("lntb")) {
+    info.network = Network.testnet;
+    info.layer = PaymentLayer.lightning;
+  } else if (code.startsWith("lncrt")) {
+    info.network = Network.regtest;
+    info.layer = PaymentLayer.lightning;
+  } else if (code.startsWith("1")) {
+    info.network = Network.mainnet;
+    info.layer = PaymentLayer.onchain;
+    info.btcAddressType = BitcoindAddressType.p2pkh;
+  } else if (code.startsWith("3")) {
+    info.network = Network.mainnet;
+    info.layer = PaymentLayer.onchain;
+    info.btcAddressType = BitcoindAddressType.p2sh;
+  } else if (code.startsWith("bc1")) {
+    info.network = Network.mainnet;
+    info.layer = PaymentLayer.onchain;
+    info.btcAddressType = BitcoindAddressType.bech32;
+  } else if (code.startsWith("m")) {
+    info.network = Network.testnet;
+    info.layer = PaymentLayer.onchain;
+    info.btcAddressType = BitcoindAddressType.p2pkh;
+  } else if (code.startsWith("2")) {
+    info.network = Network.testnet;
+    info.layer = PaymentLayer.onchain;
+    info.btcAddressType = BitcoindAddressType.p2sh;
+  } else if (code.startsWith("tb1")) {
+    info.network = Network.testnet;
+    info.layer = PaymentLayer.onchain;
+    info.btcAddressType = BitcoindAddressType.bech32;
+  }
+  return info;
+}
+
+showSnackbar(BuildContext context, String message) {
+  WidgetsBinding.instance.addPostFrameCallback(
+    (_) async {
+      Scaffold.of(context).showSnackBar(SnackBar(content: Text(message)));
+    },
+  );
+}

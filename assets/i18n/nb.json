@@ -48,10 +48,13 @@
       "expiration_date": "Slås av",
       "header": "Faktura",
       "invoice_invalid": "Ugyldig faktura",
+      "invoice_paid": "Regningen betalt",
       "invoices": "Sedler",
       "is_expired": "Faktura er utløpt!",
+      "paid_go_back_to_home": "Tilbake til oversikten",
       "paste_invoice_here": "Lim inn fakturaen din her",
       "pay": "Betale",
+      "pay_another": "Betal neste",
       "try_another_invoice": "Prøv på nytt"
     },
     "lightning": "Lightning",
@@ -64,19 +67,30 @@
     },
     "receive": "Empfange",
     "send": "Sende",
+    "send_page": {
+      "next_step": "Fortsette",
+      "paste_from_clipboard": "Paste from clipboard"
+    },
     "total": "generelle",
     "transactions": {
       "address_invalid": "Ugyldig adresse",
+      "amount_in_sats": "Beløp i satoshis",
+      "amount_invalid": "Beløp ugyldig",
       "close_txid_qr_dlg": "Ferdig",
       "confirmations": "Bekreftelser",
+      "destination_address": "destinasjon adresse",
       "insert_address_here": "Lim inn destinasjonsadressen her",
       "loading": "Laster transaksjoner",
       "next_transaction_button": "Neste transaksjon",
       "send": "Sende",
+      "send_coins_page_title": "Sende onchain",
+      "send_maximum_short": "max",
       "submitted_to_mempool": "Transaksjon sendt",
       "transaction_id": "Transaction ID",
       "transactions": "Transaksjoner",
-      "view_on_blockstream_info": "Vis på blockstream.info"
+      "tx_sent_go_back_to_home": "Tilbake til oversikten",
+      "view_on_blockstream_info": "Vis på blockstream.info",
+      "working": "Sende ..."
     },
     "unconfirmed": "ubekreftet",
     "wallet": "Lommebok"

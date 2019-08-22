@@ -48,10 +48,13 @@
       "expiration_date": "Expires in",
       "header": "Invoice",
       "invoice_invalid": "Invalid invoice",
+      "invoice_paid": "Invoice paid",
       "invoices": "Invoices",
       "is_expired": "Invoice is expired!",
+      "paid_go_back_to_home": "Back to overview",
       "paste_invoice_here": "Paste your invoice here",
       "pay": "Pay",
+      "pay_another": "Pay another",
       "try_another_invoice": "Retry"
     },
     "lightning": "Lightning",
@@ -64,19 +67,30 @@
     },
     "receive": "Receive",
     "send": "Send",
+    "send_page": {
+      "next_step": "Next",
+      "paste_from_clipboard": "Paste from clipboard"
+    },
     "total": "Total",
     "transactions": {
       "address_invalid": "Invalid Address",
+      "amount_in_sats": "Amount in satoshis",
+      "amount_invalid": "Amount invalid",
       "close_txid_qr_dlg": "OK",
       "confirmations": "Confirmations",
+      "destination_address": "Destination Address",
       "insert_address_here": "Insert the destination address here",
       "loading": "Loading Transactions",
       "next_transaction_button": "Next Transaction",
       "send": "Send",
+      "send_coins_page_title": "Send onchain",
+      "send_maximum_short": "max",
       "submitted_to_mempool": "Transaction submitted",
       "transaction_id": "Transaction ID",
       "transactions": "Transactions",
-      "view_on_blockstream_info": "View on blockstream.info"
+      "tx_sent_go_back_to_home": "Back to overview",
+      "view_on_blockstream_info": "View on blockstream.info",
+      "working": "Sending ..."
     },
     "unconfirmed": "unconfirmed",
     "wallet": "wallet"
