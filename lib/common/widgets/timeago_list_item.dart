@@ -6,14 +6,12 @@ class TimeAgoListItem extends StatelessWidget {
   final DateTime dateTime;
   final String label;
   final Color color;
-  final bool halfWidth;
 
   const TimeAgoListItem(
     this.dateTime,
     this.label, {
     Key key,
     this.color = tordenBackground,
-    this.halfWidth,
   }) : super(key: key);
 
   @override

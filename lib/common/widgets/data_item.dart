@@ -5,14 +5,12 @@ class DataItem extends StatelessWidget {
   final String text;
   final String label;
   final Color color;
-  final bool halfWidth;
 
   const DataItem({
     Key key,
     @required this.text,
     @required this.label,
     this.color = tordenBackground,
-    this.halfWidth,
   }) : super(key: key);
 
   @override
