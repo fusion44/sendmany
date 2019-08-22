@@ -6,6 +6,8 @@ class FilledTextField extends StatefulWidget {
   final String Function(String) validator;
   final Function(String text) textChanged;
   final obscureText;
+  final TextAlign textAlign;
+  final TextInputType keyboardType;
 
   final String actionButtonText;
   final Function actionButtonClicked;
@@ -15,6 +17,8 @@ class FilledTextField extends StatefulWidget {
     this.validator,
     this.textChanged,
     this.obscureText = false,
+    this.textAlign = TextAlign.start,
+    this.keyboardType = TextInputType.text,
     this.actionButtonText,
     this.actionButtonClicked,
   }) : super(key: key);
@@ -61,12 +65,13 @@ class _FilledTextFieldState extends State<FilledTextField> {
   }
 
   Widget _buildTextFormField() {
-    ThemeData theme = Theme.of(context);
     bool showButton = false;
     double height = 48.0;
-    if (widget.actionButtonClicked != null && this.controller.text == "") {
+
+    if (widget.actionButtonClicked != null) {
       showButton = true;
     }
+
     return Stack(
       children: <Widget>[
         TextFormField(
@@ -74,15 +79,12 @@ class _FilledTextFieldState extends State<FilledTextField> {
             border: InputBorder.none,
             focusedBorder: InputBorder.none,
             hintText: widget.textHint,
-            suffixIcon: showButton
-                ? null
-                : Icon(
-                    Icons.check,
-                    color: validated ? tordenPrimaryGreen300 : tordenOrange200,
-                  ),
+            suffixIcon: _buildIcon(showButton),
           ),
           controller: controller,
           obscureText: widget.obscureText,
+          textAlign: widget.textAlign,
+          keyboardType: widget.keyboardType,
         ),
         showButton ? Container(height: height) : Container(),
         showButton
@@ -97,12 +99,7 @@ class _FilledTextFieldState extends State<FilledTextField> {
                     child: Container(
                       height: height,
                       child: Center(
-                        child: Text(
-                          widget.actionButtonText.toUpperCase(),
-                          style: theme.textTheme.button.apply(
-                            color: Colors.redAccent,
-                          ),
-                        ),
+                        child: Text(widget.actionButtonText.toUpperCase()),
                       ),
                     ),
                   ),
@@ -111,5 +108,22 @@ class _FilledTextFieldState extends State<FilledTextField> {
             : Container(),
       ],
     );
+  }
+
+  Widget _buildIcon(bool showButton) {
+    if (showButton) {
+      return Padding(
+        padding: const EdgeInsets.only(right: 80.0),
+        child: Icon(
+          Icons.check,
+          color: validated ? tordenPrimaryGreen300 : tordenOrange200,
+        ),
+      );
+    } else {
+      return Icon(
+        Icons.check,
+        color: validated ? tordenPrimaryGreen300 : tordenOrange200,
+      );
+    }
   }
 }
