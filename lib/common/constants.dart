@@ -7,6 +7,10 @@ const String heroTagTordenLogo = "hero_torden_logo";
 // Preferences keys
 const String prefLanguageCode = "language_preference";
 const String prefTheme = "theme_preference";
+const String prefOnboardingFinished = "onboarding_finished";
+const String prefNumNodes = "num_nodes";
+const String prefPinActive = "pin_active";
+const String prefConnectionData = "sec_connection_data_json";
 
 // Themeing
 const tordenBackground = const Color(0xff32333d);

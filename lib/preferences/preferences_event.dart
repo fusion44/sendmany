@@ -24,3 +24,15 @@ class ChangeThemeEvent extends PreferencesEvent {
   @override
   String toString() => 'Change theme { lang: $theme }';
 }
+
+class SetOnboardingFinishedEvent extends PreferencesEvent {
+  final bool onboardingFinished;
+
+  SetOnboardingFinishedEvent([this.onboardingFinished = true]);
+}
+
+class SetPinActiveEvent extends PreferencesEvent {
+  final bool pinActive;
+
+  SetPinActiveEvent([this.pinActive = true]);
+}
