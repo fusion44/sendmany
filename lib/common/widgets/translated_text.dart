@@ -6,6 +6,7 @@ class TranslatedText extends StatelessWidget {
   final TextStyle style;
   final TextOverflow overflow;
   final bool softWrap;
+  final TextAlign textAlign;
 
   const TranslatedText(
     this.text, {
@@ -13,6 +14,7 @@ class TranslatedText extends StatelessWidget {
     this.style,
     this.overflow,
     this.softWrap,
+    this.textAlign,
   }) : super(key: key);
 
   @override
@@ -22,6 +24,7 @@ class TranslatedText extends StatelessWidget {
       style: style,
       overflow: overflow,
       softWrap: softWrap,
+      textAlign: textAlign,
     );
   }
 }

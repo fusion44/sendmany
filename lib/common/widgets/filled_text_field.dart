@@ -2,17 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:torden/common/constants.dart';
 
 class FilledTextField extends StatefulWidget {
+  final String text;
   final String textHint;
   final String Function(String) validator;
   final Function(String text) textChanged;
   final obscureText;
   final TextAlign textAlign;
   final TextInputType keyboardType;
+  final int maxLines;
+  final int minLines;
+  final int maxLength;
+  final bool maxLengthEnforced;
+  final TextInputAction textInputAction;
 
   final String actionButtonText;
   final Function actionButtonClicked;
+
   FilledTextField({
     Key key,
+    this.text = "",
     this.textHint,
     this.validator,
     this.textChanged,
@@ -21,6 +29,11 @@ class FilledTextField extends StatefulWidget {
     this.keyboardType = TextInputType.text,
     this.actionButtonText,
     this.actionButtonClicked,
+    this.maxLines = 1,
+    this.minLines,
+    this.maxLength,
+    this.maxLengthEnforced = true,
+    this.textInputAction,
   }) : super(key: key);
 
   @override
@@ -30,20 +43,29 @@ class FilledTextField extends StatefulWidget {
 class _FilledTextFieldState extends State<FilledTextField> {
   final TextEditingController controller = TextEditingController();
   bool validated = false;
+
   @override
   initState() {
-    controller.addListener(() {
-      String res = widget.validator(controller.text);
-      if (res == null) {
-        setState(() {
-          this.validated = true;
-        });
-      } else {
-        setState(() {
-          this.validated = false;
-        });
-      }
-    });
+    if (widget.validator != null) {
+      controller.addListener(() {
+        this.widget.textChanged?.call(controller.text);
+        String res = widget.validator(controller.text);
+        if (res == null) {
+          setState(() {
+            this.validated = true;
+          });
+        } else {
+          setState(() {
+            this.validated = false;
+          });
+        }
+      });
+    } else {
+      controller.addListener(() {
+        this.widget.textChanged?.call(controller.text);
+      });
+    }
+    controller.text = widget.text;
     super.initState();
   }
 
@@ -85,6 +107,11 @@ class _FilledTextFieldState extends State<FilledTextField> {
           obscureText: widget.obscureText,
           textAlign: widget.textAlign,
           keyboardType: widget.keyboardType,
+          maxLines: widget.maxLines,
+          minLines: widget.minLines,
+          maxLength: widget.maxLength,
+          maxLengthEnforced: widget.maxLengthEnforced,
+          textInputAction: widget.textInputAction,
         ),
         showButton ? Container(height: height) : Container(),
         showButton
@@ -111,19 +138,22 @@ class _FilledTextFieldState extends State<FilledTextField> {
   }
 
   Widget _buildIcon(bool showButton) {
-    if (showButton) {
-      return Padding(
-        padding: const EdgeInsets.only(right: 80.0),
-        child: Icon(
+    if (widget.validator != null) {
+      if (showButton) {
+        return Padding(
+          padding: const EdgeInsets.only(right: 80.0),
+          child: Icon(
+            Icons.check,
+            color: validated ? tordenPrimaryGreen300 : tordenOrange200,
+          ),
+        );
+      } else {
+        return Icon(
           Icons.check,
           color: validated ? tordenPrimaryGreen300 : tordenOrange200,
-        ),
-      );
-    } else {
-      return Icon(
-        Icons.check,
-        color: validated ? tordenPrimaryGreen300 : tordenOrange200,
-      );
+        );
+      }
     }
+    return null;
   }
 }
