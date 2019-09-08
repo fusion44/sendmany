@@ -105,8 +105,8 @@ class _TordenAppState extends State<TordenApp> {
   }
 
   Widget _buildOnboardingPage() {
-    return BlocProvider(
-      builder: (BuildContext context) => _preferencesBloc,
+    return BlocProvider.value(
+      value: _preferencesBloc,
       child: OnboardingPage(),
     );
   }
@@ -122,12 +122,8 @@ class _TordenAppState extends State<TordenApp> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<PreferencesBloc>(
-          builder: (BuildContext context) => _preferencesBloc,
-        ),
-        BlocProvider<ConnectionManagerBloc>(
-          builder: (BuildContext context) => _connectionManagerBloc,
-        )
+        BlocProvider<PreferencesBloc>.value(value: _preferencesBloc),
+        BlocProvider<ConnectionManagerBloc>.value(value: _connectionManagerBloc)
       ],
       child: _buildMaterialApp(),
     );
