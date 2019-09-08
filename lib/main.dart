@@ -4,13 +4,13 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_i18n/flutter_i18n_delegate.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:torden/auth/login/login_page.dart';
 import 'package:torden/common/constants.dart';
 import 'package:torden/common/pages/home_page.dart';
 import 'package:torden/preferences/bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'common/connection/connection_manager/bloc.dart';
+import 'common/pages/onboarding_page.dart';
 import 'preferences/preferences_page.dart';
 
 class SimpleBlocDelegate extends BlocDelegate {
@@ -38,6 +38,7 @@ class TordenApp extends StatefulWidget {
 class _TordenAppState extends State<TordenApp> {
   PreferencesBloc _preferencesBloc;
   ConnectionManagerBloc _connectionManagerBloc;
+  Map<String, WidgetBuilder> _routes;
 
   @override
   void initState() {
@@ -45,12 +46,75 @@ class _TordenAppState extends State<TordenApp> {
     _preferencesBloc.dispatch(LoadPreferencesEvent());
     _connectionManagerBloc = ConnectionManagerBloc();
     _connectionManagerBloc.dispatch(AppStart());
+
+    _routes = <String, WidgetBuilder>{
+      "/": (BuildContext context) => _buildSplashPage(),
+      "/onboarding": (BuildContext conctext) => _buildOnboardingPage(),
+      "/splash": (BuildContext context) => _buildSplashPage(),
+      "/setup": (BuildContext context) => Text("Setup"),
+      "/home": (BuildContext context) => HomePage(),
+      "/preferences": (BuildContext context) => PreferencesPage(),
+      "/receive": (BuildContext context) => Scaffold(
+            appBar: AppBar(),
+            body: Center(child: Text("Receive")),
+          ),
+    };
+
     super.initState();
+  }
+
+  Widget _buildSplashPage() {
+    return BlocBuilder(
+      bloc: _preferencesBloc,
+      builder: (BuildContext context, PreferencesState prefsState) {
+        // possible states:
+        // PreferencesLoadingState -> Show splash screen
+        // PreferencesLoadedState:
+        //  onboardingFinished false -> show Onboarding screen
+        //  onboardingFinished true:
+        //    pinActive false -> go to HomePage
+        //    pinActive true -> go to LoginPage
+        if (prefsState is PreferencesLoadedState) {
+          if (prefsState.onboardingFinished) {
+            if (prefsState.pinActive) {
+              _navigateToNamedRoute(context, "/login");
+            } else {
+              _navigateToNamedRoute(context, "/home");
+            }
+          } else {
+            _navigateToNamedRoute(context, "/onboarding");
+          }
+        }
+        return Scaffold(
+          body: Center(child: Text("Splash")),
+        );
+      },
+    );
+  }
+
+  _navigateToNamedRoute(BuildContext context, String r) {
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) async {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          r,
+          (Route<dynamic> route) => false,
+        );
+      },
+    );
+  }
+
+  Widget _buildOnboardingPage() {
+    return BlocProvider(
+      builder: (BuildContext context) => _preferencesBloc,
+      child: OnboardingPage(),
+    );
   }
 
   @override
   void dispose() {
     _preferencesBloc.dispose();
+    _connectionManagerBloc.dispose();
     super.dispose();
   }
 
@@ -75,35 +139,14 @@ class _TordenAppState extends State<TordenApp> {
     return BlocBuilder(
       bloc: _preferencesBloc,
       condition: (PreferencesState oldState, PreferencesState newState) {
+        if (oldState is PreferencesLoadingState) return true;
         return oldState.theme != newState.theme;
       },
       builder: (BuildContext context, PreferencesState prefsState) {
-        String initialRoute = "login";
-        // 1: No connection info to a node => setup screen
-        /*if (prefsState.lnNodeIP == "" &&
-              prefsState.lnNodeMacaroon == "" &&
-              prefsState.lnNodeCertificate == "") {
-            // TODO: If we can't find node info then
-            // navigate to a setup screen
-        
-            initialRoute = "/setup";
-          } else {
-            // 2: We have connection info to a node => login screen
-            initialRoute = "/login";
-          }*/
         return MaterialApp(
           theme: _getTheme(prefsState.theme),
-          initialRoute: initialRoute,
-          routes: <String, WidgetBuilder>{
-            "/": (BuildContext context) => LoginPage(),
-            "/setup": (BuildContext context) => Text("Setup"),
-            "/home": (BuildContext context) => HomePage(),
-            "/preferences": (BuildContext context) => PreferencesPage(),
-            "/receive": (BuildContext context) => Scaffold(
-                  appBar: AppBar(),
-                  body: Center(child: Text("Receive")),
-                ),
-          },
+          initialRoute: "/splash",
+          routes: _routes,
           supportedLocales: const [Locale("en"), Locale("de"), Locale("nb")],
           localizationsDelegates: delegates,
           localeResolutionCallback: (deviceLocale, supportedLocales) {
