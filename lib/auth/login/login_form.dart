@@ -39,7 +39,7 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   _buildUi() {
-    return BlocBuilder<LoginEvent, LoginState>(
+    return BlocBuilder<LoginBloc, LoginState>(
       bloc: _loginBloc,
       builder: (
         BuildContext context,

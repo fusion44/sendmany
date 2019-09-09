@@ -15,6 +15,15 @@ const AddressType$json = const {
   ],
 };
 
+const InvoiceHTLCState$json = const {
+  '1': 'InvoiceHTLCState',
+  '2': const [
+    const {'1': 'ACCEPTED', '2': 0},
+    const {'1': 'SETTLED', '2': 1},
+    const {'1': 'CANCELLED', '2': 2},
+  ],
+};
+
 const GenSeedRequest$json = const {
   '1': 'GenSeedRequest',
   '2': const [
@@ -133,7 +142,18 @@ const SendRequest$json = const {
     const {'1': 'fee_limit', '3': 8, '4': 1, '5': 11, '6': '.lnrpc.FeeLimit', '10': 'feeLimit'},
     const {'1': 'outgoing_chan_id', '3': 9, '4': 1, '5': 4, '10': 'outgoingChanId'},
     const {'1': 'cltv_limit', '3': 10, '4': 1, '5': 13, '10': 'cltvLimit'},
+    const {'1': 'dest_tlv', '3': 11, '4': 3, '5': 11, '6': '.lnrpc.SendRequest.DestTlvEntry', '10': 'destTlv'},
   ],
+  '3': const [SendRequest_DestTlvEntry$json],
+};
+
+const SendRequest_DestTlvEntry$json = const {
+  '1': 'DestTlvEntry',
+  '2': const [
+    const {'1': 'key', '3': 1, '4': 1, '5': 4, '10': 'key'},
+    const {'1': 'value', '3': 2, '4': 1, '5': 12, '10': 'value'},
+  ],
+  '7': const {'7': true},
 };
 
 const SendResponse$json = const {
@@ -506,6 +526,7 @@ const GetInfoResponse$json = const {
     const {'1': 'num_inactive_channels', '3': 15, '4': 1, '5': 13, '10': 'num_inactive_channels'},
     const {'1': 'chains', '3': 16, '4': 3, '5': 11, '6': '.lnrpc.Chain', '10': 'chains'},
     const {'1': 'color', '3': 17, '4': 1, '5': 9, '10': 'color'},
+    const {'1': 'synced_to_graph', '3': 18, '4': 1, '5': 8, '10': 'synced_to_graph'},
   ],
   '9': const [
     const {'1': 11, '2': 12},
@@ -744,12 +765,40 @@ const QueryRoutesRequest$json = const {
     const {'1': 'final_cltv_delta', '3': 4, '4': 1, '5': 5, '10': 'finalCltvDelta'},
     const {'1': 'fee_limit', '3': 5, '4': 1, '5': 11, '6': '.lnrpc.FeeLimit', '10': 'feeLimit'},
     const {'1': 'ignored_nodes', '3': 6, '4': 3, '5': 12, '10': 'ignoredNodes'},
-    const {'1': 'ignored_edges', '3': 7, '4': 3, '5': 11, '6': '.lnrpc.EdgeLocator', '10': 'ignoredEdges'},
+    const {
+      '1': 'ignored_edges',
+      '3': 7,
+      '4': 3,
+      '5': 11,
+      '6': '.lnrpc.EdgeLocator',
+      '8': const {'3': true},
+      '10': 'ignoredEdges',
+    },
     const {'1': 'source_pub_key', '3': 8, '4': 1, '5': 9, '10': 'sourcePubKey'},
     const {'1': 'use_mission_control', '3': 9, '4': 1, '5': 8, '10': 'useMissionControl'},
+    const {'1': 'ignored_pairs', '3': 10, '4': 3, '5': 11, '6': '.lnrpc.NodePair', '10': 'ignoredPairs'},
+    const {'1': 'dest_tlv', '3': 11, '4': 3, '5': 11, '6': '.lnrpc.QueryRoutesRequest.DestTlvEntry', '10': 'destTlv'},
   ],
+  '3': const [QueryRoutesRequest_DestTlvEntry$json],
   '9': const [
     const {'1': 3, '2': 4},
+  ],
+};
+
+const QueryRoutesRequest_DestTlvEntry$json = const {
+  '1': 'DestTlvEntry',
+  '2': const [
+    const {'1': 'key', '3': 1, '4': 1, '5': 4, '10': 'key'},
+    const {'1': 'value', '3': 2, '4': 1, '5': 12, '10': 'value'},
+  ],
+  '7': const {'7': true},
+};
+
+const NodePair$json = const {
+  '1': 'NodePair',
+  '2': const [
+    const {'1': 'from', '3': 1, '4': 1, '5': 12, '10': 'from'},
+    const {'1': 'to', '3': 2, '4': 1, '5': 12, '10': 'to'},
   ],
 };
 
@@ -765,6 +814,7 @@ const QueryRoutesResponse$json = const {
   '1': 'QueryRoutesResponse',
   '2': const [
     const {'1': 'routes', '3': 1, '4': 3, '5': 11, '6': '.lnrpc.Route', '10': 'routes'},
+    const {'1': 'success_prob', '3': 2, '4': 1, '5': 1, '10': 'success_prob'},
   ],
 };
 
@@ -793,7 +843,19 @@ const Hop$json = const {
     const {'1': 'amt_to_forward_msat', '3': 6, '4': 1, '5': 3, '10': 'amt_to_forward_msat'},
     const {'1': 'fee_msat', '3': 7, '4': 1, '5': 3, '10': 'fee_msat'},
     const {'1': 'pub_key', '3': 8, '4': 1, '5': 9, '10': 'pub_key'},
+    const {'1': 'tlv_payload', '3': 9, '4': 1, '5': 8, '10': 'tlv_payload'},
+    const {'1': 'tlv_records', '3': 10, '4': 3, '5': 11, '6': '.lnrpc.Hop.TlvRecordsEntry', '10': 'tlv_records'},
   ],
+  '3': const [Hop_TlvRecordsEntry$json],
+};
+
+const Hop_TlvRecordsEntry$json = const {
+  '1': 'TlvRecordsEntry',
+  '2': const [
+    const {'1': 'key', '3': 1, '4': 1, '5': 4, '10': 'key'},
+    const {'1': 'value', '3': 2, '4': 1, '5': 12, '10': 'value'},
+  ],
+  '7': const {'7': true},
 };
 
 const Route$json = const {
@@ -1053,6 +1115,7 @@ const Invoice$json = const {
     const {'1': 'amt_paid_sat', '3': 19, '4': 1, '5': 3, '10': 'amt_paid_sat'},
     const {'1': 'amt_paid_msat', '3': 20, '4': 1, '5': 3, '10': 'amt_paid_msat'},
     const {'1': 'state', '3': 21, '4': 1, '5': 14, '6': '.lnrpc.Invoice.InvoiceState', '10': 'state'},
+    const {'1': 'htlcs', '3': 22, '4': 3, '5': 11, '6': '.lnrpc.InvoiceHTLC', '10': 'htlcs'},
   ],
   '4': const [Invoice_InvoiceState$json],
 };
@@ -1064,6 +1127,20 @@ const Invoice_InvoiceState$json = const {
     const {'1': 'SETTLED', '2': 1},
     const {'1': 'CANCELED', '2': 2},
     const {'1': 'ACCEPTED', '2': 3},
+  ],
+};
+
+const InvoiceHTLC$json = const {
+  '1': 'InvoiceHTLC',
+  '2': const [
+    const {'1': 'chan_id', '3': 1, '4': 1, '5': 4, '10': 'chan_id'},
+    const {'1': 'htlc_index', '3': 2, '4': 1, '5': 4, '10': 'htlc_index'},
+    const {'1': 'amt_msat', '3': 3, '4': 1, '5': 4, '10': 'amt_msat'},
+    const {'1': 'accept_height', '3': 4, '4': 1, '5': 5, '10': 'accept_height'},
+    const {'1': 'accept_time', '3': 5, '4': 1, '5': 3, '10': 'accept_time'},
+    const {'1': 'resolve_time', '3': 6, '4': 1, '5': 3, '10': 'resolve_time'},
+    const {'1': 'expiry_height', '3': 7, '4': 1, '5': 5, '10': 'expiry_height'},
+    const {'1': 'state', '3': 8, '4': 1, '5': 14, '6': '.lnrpc.InvoiceHTLCState', '10': 'state'},
   ],
 };
 

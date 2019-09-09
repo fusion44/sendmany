@@ -54,7 +54,7 @@ class _SendCoinsPageState extends State<SendCoinsPage> {
     );
   }
 
-  BlocBuilder<LnInfoEvent, LnInfoState> _buildInnerUI(LnInfoBloc infoBloc) {
+  Widget _buildInnerUI(LnInfoBloc infoBloc) {
     return BlocBuilder(
       bloc: infoBloc,
       builder: (BuildContext context, LnInfoState infoState) {

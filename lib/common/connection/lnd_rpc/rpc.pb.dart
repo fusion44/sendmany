@@ -664,6 +664,16 @@ class SendRequest extends $pb.GeneratedMessage {
         8, 'feeLimit', $pb.PbFieldType.OM, FeeLimit.getDefault, FeeLimit.create)
     ..a<Int64>(9, 'outgoingChanId', $pb.PbFieldType.OU6, Int64.ZERO)
     ..a<$core.int>(10, 'cltvLimit', $pb.PbFieldType.OU3)
+    ..m<Int64, $core.List<$core.int>>(
+        11,
+        'destTlv',
+        'SendRequest.DestTlvEntry',
+        $pb.PbFieldType.OU6,
+        $pb.PbFieldType.OY,
+        null,
+        null,
+        null,
+        const $pb.PackageName('lnrpc'))
     ..hasRequiredFields = false;
 
   SendRequest._() : super();
@@ -764,6 +774,8 @@ class SendRequest extends $pb.GeneratedMessage {
 
   $core.bool hasCltvLimit() => $_has(9);
   void clearCltvLimit() => clearField(10);
+
+  $core.Map<Int64, $core.List<$core.int>> get destTlv => $_getMap(10);
 }
 
 class SendResponse extends $pb.GeneratedMessage {
@@ -2613,6 +2625,7 @@ class GetInfoResponse extends $pb.GeneratedMessage {
     ..a<$core.int>(15, 'numInactiveChannels', $pb.PbFieldType.OU3)
     ..pc<Chain>(16, 'chains', $pb.PbFieldType.PM, Chain.create)
     ..aOS(17, 'color')
+    ..aOB(18, 'syncedToGraph')
     ..hasRequiredFields = false;
 
   GetInfoResponse._() : super();
@@ -2747,6 +2760,14 @@ class GetInfoResponse extends $pb.GeneratedMessage {
 
   $core.bool hasColor() => $_has(14);
   void clearColor() => clearField(17);
+
+  $core.bool get syncedToGraph => $_get(15, false);
+  set syncedToGraph($core.bool v) {
+    $_setBool(15, v);
+  }
+
+  $core.bool hasSyncedToGraph() => $_has(15);
+  void clearSyncedToGraph() => clearField(18);
 }
 
 class Chain extends $pb.GeneratedMessage {
@@ -4144,6 +4165,17 @@ class QueryRoutesRequest extends $pb.GeneratedMessage {
     ..pc<EdgeLocator>(7, 'ignoredEdges', $pb.PbFieldType.PM, EdgeLocator.create)
     ..aOS(8, 'sourcePubKey')
     ..aOB(9, 'useMissionControl')
+    ..pc<NodePair>(10, 'ignoredPairs', $pb.PbFieldType.PM, NodePair.create)
+    ..m<Int64, $core.List<$core.int>>(
+        11,
+        'destTlv',
+        'QueryRoutesRequest.DestTlvEntry',
+        $pb.PbFieldType.OU6,
+        $pb.PbFieldType.OY,
+        null,
+        null,
+        null,
+        const $pb.PackageName('lnrpc'))
     ..hasRequiredFields = false;
 
   QueryRoutesRequest._() : super();
@@ -4201,6 +4233,7 @@ class QueryRoutesRequest extends $pb.GeneratedMessage {
 
   $core.List<$core.List<$core.int>> get ignoredNodes => $_getList(4);
 
+  @$core.Deprecated('This field is deprecated.')
   $core.List<EdgeLocator> get ignoredEdges => $_getList(5);
 
   $core.String get sourcePubKey => $_getS(6, '');
@@ -4218,6 +4251,53 @@ class QueryRoutesRequest extends $pb.GeneratedMessage {
 
   $core.bool hasUseMissionControl() => $_has(7);
   void clearUseMissionControl() => clearField(9);
+
+  $core.List<NodePair> get ignoredPairs => $_getList(8);
+
+  $core.Map<Int64, $core.List<$core.int>> get destTlv => $_getMap(9);
+}
+
+class NodePair extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i =
+      $pb.BuilderInfo('NodePair', package: const $pb.PackageName('lnrpc'))
+        ..a<$core.List<$core.int>>(1, 'from', $pb.PbFieldType.OY)
+        ..a<$core.List<$core.int>>(2, 'to', $pb.PbFieldType.OY)
+        ..hasRequiredFields = false;
+
+  NodePair._() : super();
+  factory NodePair() => create();
+  factory NodePair.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory NodePair.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  NodePair clone() => NodePair()..mergeFromMessage(this);
+  NodePair copyWith(void Function(NodePair) updates) =>
+      super.copyWith((message) => updates(message as NodePair));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static NodePair create() => NodePair._();
+  NodePair createEmptyInstance() => create();
+  static $pb.PbList<NodePair> createRepeated() => $pb.PbList<NodePair>();
+  static NodePair getDefault() => _defaultInstance ??= create()..freeze();
+  static NodePair _defaultInstance;
+
+  $core.List<$core.int> get from => $_getN(0);
+  set from($core.List<$core.int> v) {
+    $_setBytes(0, v);
+  }
+
+  $core.bool hasFrom() => $_has(0);
+  void clearFrom() => clearField(1);
+
+  $core.List<$core.int> get to => $_getN(1);
+  set to($core.List<$core.int> v) {
+    $_setBytes(1, v);
+  }
+
+  $core.bool hasTo() => $_has(1);
+  void clearTo() => clearField(2);
 }
 
 class EdgeLocator extends $pb.GeneratedMessage {
@@ -4267,6 +4347,7 @@ class QueryRoutesResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('QueryRoutesResponse',
       package: const $pb.PackageName('lnrpc'))
     ..pc<Route>(1, 'routes', $pb.PbFieldType.PM, Route.create)
+    ..a<$core.double>(2, 'successProb', $pb.PbFieldType.OD)
     ..hasRequiredFields = false;
 
   QueryRoutesResponse._() : super();
@@ -4291,6 +4372,14 @@ class QueryRoutesResponse extends $pb.GeneratedMessage {
   static QueryRoutesResponse _defaultInstance;
 
   $core.List<Route> get routes => $_getList(0);
+
+  $core.double get successProb => $_getN(1);
+  set successProb($core.double v) {
+    $_setDouble(1, v);
+  }
+
+  $core.bool hasSuccessProb() => $_has(1);
+  void clearSuccessProb() => clearField(2);
 }
 
 class Hop extends $pb.GeneratedMessage {
@@ -4304,6 +4393,17 @@ class Hop extends $pb.GeneratedMessage {
         ..aInt64(6, 'amtToForwardMsat')
         ..aInt64(7, 'feeMsat')
         ..aOS(8, 'pubKey')
+        ..aOB(9, 'tlvPayload')
+        ..m<Int64, $core.List<$core.int>>(
+            10,
+            'tlvRecords',
+            'Hop.TlvRecordsEntry',
+            $pb.PbFieldType.OU6,
+            $pb.PbFieldType.OY,
+            null,
+            null,
+            null,
+            const $pb.PackageName('lnrpc'))
         ..hasRequiredFields = false;
 
   Hop._() : super();
@@ -4396,6 +4496,16 @@ class Hop extends $pb.GeneratedMessage {
 
   $core.bool hasPubKey() => $_has(7);
   void clearPubKey() => clearField(8);
+
+  $core.bool get tlvPayload => $_get(8, false);
+  set tlvPayload($core.bool v) {
+    $_setBool(8, v);
+  }
+
+  $core.bool hasTlvPayload() => $_has(8);
+  void clearTlvPayload() => clearField(9);
+
+  $core.Map<Int64, $core.List<$core.int>> get tlvRecords => $_getMap(9);
 }
 
 class Route extends $pb.GeneratedMessage {
@@ -5593,6 +5703,7 @@ class Invoice extends $pb.GeneratedMessage {
             Invoice_InvoiceState.OPEN,
             Invoice_InvoiceState.valueOf,
             Invoice_InvoiceState.values)
+        ..pc<InvoiceHTLC>(22, 'htlcs', $pb.PbFieldType.PM, InvoiceHTLC.create)
         ..hasRequiredFields = false;
 
   Invoice._() : super();
@@ -5787,6 +5898,111 @@ class Invoice extends $pb.GeneratedMessage {
 
   $core.bool hasState() => $_has(20);
   void clearState() => clearField(21);
+
+  $core.List<InvoiceHTLC> get htlcs => $_getList(21);
+}
+
+class InvoiceHTLC extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i =
+      $pb.BuilderInfo('InvoiceHTLC', package: const $pb.PackageName('lnrpc'))
+        ..a<Int64>(1, 'chanId', $pb.PbFieldType.OU6, Int64.ZERO)
+        ..a<Int64>(2, 'htlcIndex', $pb.PbFieldType.OU6, Int64.ZERO)
+        ..a<Int64>(3, 'amtMsat', $pb.PbFieldType.OU6, Int64.ZERO)
+        ..a<$core.int>(4, 'acceptHeight', $pb.PbFieldType.O3)
+        ..aInt64(5, 'acceptTime')
+        ..aInt64(6, 'resolveTime')
+        ..a<$core.int>(7, 'expiryHeight', $pb.PbFieldType.O3)
+        ..e<InvoiceHTLCState>(
+            8,
+            'state',
+            $pb.PbFieldType.OE,
+            InvoiceHTLCState.ACCEPTED,
+            InvoiceHTLCState.valueOf,
+            InvoiceHTLCState.values)
+        ..hasRequiredFields = false;
+
+  InvoiceHTLC._() : super();
+  factory InvoiceHTLC() => create();
+  factory InvoiceHTLC.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory InvoiceHTLC.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  InvoiceHTLC clone() => InvoiceHTLC()..mergeFromMessage(this);
+  InvoiceHTLC copyWith(void Function(InvoiceHTLC) updates) =>
+      super.copyWith((message) => updates(message as InvoiceHTLC));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static InvoiceHTLC create() => InvoiceHTLC._();
+  InvoiceHTLC createEmptyInstance() => create();
+  static $pb.PbList<InvoiceHTLC> createRepeated() => $pb.PbList<InvoiceHTLC>();
+  static InvoiceHTLC getDefault() => _defaultInstance ??= create()..freeze();
+  static InvoiceHTLC _defaultInstance;
+
+  Int64 get chanId => $_getI64(0);
+  set chanId(Int64 v) {
+    $_setInt64(0, v);
+  }
+
+  $core.bool hasChanId() => $_has(0);
+  void clearChanId() => clearField(1);
+
+  Int64 get htlcIndex => $_getI64(1);
+  set htlcIndex(Int64 v) {
+    $_setInt64(1, v);
+  }
+
+  $core.bool hasHtlcIndex() => $_has(1);
+  void clearHtlcIndex() => clearField(2);
+
+  Int64 get amtMsat => $_getI64(2);
+  set amtMsat(Int64 v) {
+    $_setInt64(2, v);
+  }
+
+  $core.bool hasAmtMsat() => $_has(2);
+  void clearAmtMsat() => clearField(3);
+
+  $core.int get acceptHeight => $_get(3, 0);
+  set acceptHeight($core.int v) {
+    $_setSignedInt32(3, v);
+  }
+
+  $core.bool hasAcceptHeight() => $_has(3);
+  void clearAcceptHeight() => clearField(4);
+
+  Int64 get acceptTime => $_getI64(4);
+  set acceptTime(Int64 v) {
+    $_setInt64(4, v);
+  }
+
+  $core.bool hasAcceptTime() => $_has(4);
+  void clearAcceptTime() => clearField(5);
+
+  Int64 get resolveTime => $_getI64(5);
+  set resolveTime(Int64 v) {
+    $_setInt64(5, v);
+  }
+
+  $core.bool hasResolveTime() => $_has(5);
+  void clearResolveTime() => clearField(6);
+
+  $core.int get expiryHeight => $_get(6, 0);
+  set expiryHeight($core.int v) {
+    $_setSignedInt32(6, v);
+  }
+
+  $core.bool hasExpiryHeight() => $_has(6);
+  void clearExpiryHeight() => clearField(7);
+
+  InvoiceHTLCState get state => $_getN(7);
+  set state(InvoiceHTLCState v) {
+    setField(8, v);
+  }
+
+  $core.bool hasState() => $_has(7);
+  void clearState() => clearField(8);
 }
 
 class AddInvoiceResponse extends $pb.GeneratedMessage {

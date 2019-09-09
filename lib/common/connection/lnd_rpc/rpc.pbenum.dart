@@ -33,6 +33,24 @@ class AddressType extends $pb.ProtobufEnum {
   const AddressType._($core.int v, $core.String n) : super(v, n);
 }
 
+class InvoiceHTLCState extends $pb.ProtobufEnum {
+  static const InvoiceHTLCState ACCEPTED = InvoiceHTLCState._(0, 'ACCEPTED');
+  static const InvoiceHTLCState SETTLED = InvoiceHTLCState._(1, 'SETTLED');
+  static const InvoiceHTLCState CANCELLED = InvoiceHTLCState._(2, 'CANCELLED');
+
+  static const $core.List<InvoiceHTLCState> values = <InvoiceHTLCState>[
+    ACCEPTED,
+    SETTLED,
+    CANCELLED,
+  ];
+
+  static final $core.Map<$core.int, InvoiceHTLCState> _byValue =
+      $pb.ProtobufEnum.initByValue(values);
+  static InvoiceHTLCState valueOf($core.int value) => _byValue[value];
+
+  const InvoiceHTLCState._($core.int v, $core.String n) : super(v, n);
+}
+
 class ChannelCloseSummary_ClosureType extends $pb.ProtobufEnum {
   static const ChannelCloseSummary_ClosureType COOPERATIVE_CLOSE =
       ChannelCloseSummary_ClosureType._(0, 'COOPERATIVE_CLOSE');
