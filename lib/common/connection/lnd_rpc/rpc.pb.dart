@@ -5,8 +5,7 @@
 // @dart = 2.3
 // ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type
 
-import 'dart:core' as $core
-    show bool, Deprecated, double, int, List, Map, override, pragma, String;
+import 'dart:core' as $core;
 
 import 'package:fixnum/fixnum.dart';
 import 'package:protobuf/protobuf.dart' as $pb;
@@ -16,11 +15,11 @@ import 'rpc.pbenum.dart';
 export 'rpc.pbenum.dart';
 
 class GenSeedRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo('GenSeedRequest', package: const $pb.PackageName('lnrpc'))
-        ..a<$core.List<$core.int>>(1, 'aezeedPassphrase', $pb.PbFieldType.OY)
-        ..a<$core.List<$core.int>>(2, 'seedEntropy', $pb.PbFieldType.OY)
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('GenSeedRequest',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..a<$core.List<$core.int>>(1, 'aezeedPassphrase', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(2, 'seedEntropy', $pb.PbFieldType.OY)
+    ..hasRequiredFields = false;
 
   GenSeedRequest._() : super();
   factory GenSeedRequest() => create();
@@ -61,7 +60,7 @@ class GenSeedRequest extends $pb.GeneratedMessage {
 
 class GenSeedResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('GenSeedResponse',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..pPS(1, 'cipherSeedMnemonic')
     ..a<$core.List<$core.int>>(2, 'encipheredSeed', $pb.PbFieldType.OY)
     ..hasRequiredFields = false;
@@ -100,13 +99,14 @@ class GenSeedResponse extends $pb.GeneratedMessage {
 
 class InitWalletRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('InitWalletRequest',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..a<$core.List<$core.int>>(1, 'walletPassword', $pb.PbFieldType.OY)
     ..pPS(2, 'cipherSeedMnemonic')
     ..a<$core.List<$core.int>>(3, 'aezeedPassphrase', $pb.PbFieldType.OY)
     ..a<$core.int>(4, 'recoveryWindow', $pb.PbFieldType.O3)
     ..a<ChanBackupSnapshot>(5, 'channelBackups', $pb.PbFieldType.OM,
-        ChanBackupSnapshot.getDefault, ChanBackupSnapshot.create)
+        defaultOrMaker: ChanBackupSnapshot.getDefault,
+        subBuilder: ChanBackupSnapshot.create)
     ..hasRequiredFields = false;
 
   InitWalletRequest._() : super();
@@ -167,7 +167,7 @@ class InitWalletRequest extends $pb.GeneratedMessage {
 
 class InitWalletResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('InitWalletResponse',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..hasRequiredFields = false;
 
   InitWalletResponse._() : super();
@@ -194,11 +194,12 @@ class InitWalletResponse extends $pb.GeneratedMessage {
 
 class UnlockWalletRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('UnlockWalletRequest',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..a<$core.List<$core.int>>(1, 'walletPassword', $pb.PbFieldType.OY)
     ..a<$core.int>(2, 'recoveryWindow', $pb.PbFieldType.O3)
     ..a<ChanBackupSnapshot>(3, 'channelBackups', $pb.PbFieldType.OM,
-        ChanBackupSnapshot.getDefault, ChanBackupSnapshot.create)
+        defaultOrMaker: ChanBackupSnapshot.getDefault,
+        subBuilder: ChanBackupSnapshot.create)
     ..hasRequiredFields = false;
 
   UnlockWalletRequest._() : super();
@@ -249,7 +250,7 @@ class UnlockWalletRequest extends $pb.GeneratedMessage {
 
 class UnlockWalletResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('UnlockWalletResponse',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..hasRequiredFields = false;
 
   UnlockWalletResponse._() : super();
@@ -277,7 +278,7 @@ class UnlockWalletResponse extends $pb.GeneratedMessage {
 
 class ChangePasswordRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('ChangePasswordRequest',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..a<$core.List<$core.int>>(1, 'currentPassword', $pb.PbFieldType.OY)
     ..a<$core.List<$core.int>>(2, 'newPassword', $pb.PbFieldType.OY)
     ..hasRequiredFields = false;
@@ -324,7 +325,7 @@ class ChangePasswordRequest extends $pb.GeneratedMessage {
 
 class ChangePasswordResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('ChangePasswordResponse',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..hasRequiredFields = false;
 
   ChangePasswordResponse._() : super();
@@ -353,19 +354,17 @@ class ChangePasswordResponse extends $pb.GeneratedMessage {
 
 class Utxo extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('Utxo',
-      package: const $pb.PackageName('lnrpc'))
-    ..e<AddressType>(
-        1,
-        'type',
-        $pb.PbFieldType.OE,
-        AddressType.WITNESS_PUBKEY_HASH,
-        AddressType.valueOf,
-        AddressType.values)
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..e<AddressType>(1, 'address_type', $pb.PbFieldType.OE,
+        protoName: 'type',
+        defaultOrMaker: AddressType.WITNESS_PUBKEY_HASH,
+        valueOf: AddressType.valueOf,
+        enumValues: AddressType.values)
     ..aOS(2, 'address')
-    ..aInt64(3, 'amountSat')
-    ..aOS(4, 'pkScript')
-    ..a<OutPoint>(
-        5, 'outpoint', $pb.PbFieldType.OM, OutPoint.getDefault, OutPoint.create)
+    ..aInt64(3, 'amount_sat')
+    ..aOS(4, 'pk_script')
+    ..a<OutPoint>(5, 'outpoint', $pb.PbFieldType.OM,
+        defaultOrMaker: OutPoint.getDefault, subBuilder: OutPoint.create)
     ..aInt64(6, 'confirmations')
     ..hasRequiredFields = false;
 
@@ -438,18 +437,18 @@ class Utxo extends $pb.GeneratedMessage {
 }
 
 class Transaction extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo('Transaction', package: const $pb.PackageName('lnrpc'))
-        ..aOS(1, 'txHash')
-        ..aInt64(2, 'amount')
-        ..a<$core.int>(3, 'numConfirmations', $pb.PbFieldType.O3)
-        ..aOS(4, 'blockHash')
-        ..a<$core.int>(5, 'blockHeight', $pb.PbFieldType.O3)
-        ..aInt64(6, 'timeStamp')
-        ..aInt64(7, 'totalFees')
-        ..pPS(8, 'destAddresses')
-        ..aOS(9, 'rawTxHex')
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('Transaction',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..aOS(1, 'tx_hash')
+    ..aInt64(2, 'amount')
+    ..a<$core.int>(3, 'num_confirmations', $pb.PbFieldType.O3)
+    ..aOS(4, 'block_hash')
+    ..a<$core.int>(5, 'block_height', $pb.PbFieldType.O3)
+    ..aInt64(6, 'time_stamp')
+    ..aInt64(7, 'total_fees')
+    ..pPS(8, 'dest_addresses')
+    ..aOS(9, 'raw_tx_hex')
+    ..hasRequiredFields = false;
 
   Transaction._() : super();
   factory Transaction() => create();
@@ -539,7 +538,7 @@ class Transaction extends $pb.GeneratedMessage {
 
 class GetTransactionsRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('GetTransactionsRequest',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..hasRequiredFields = false;
 
   GetTransactionsRequest._() : super();
@@ -568,8 +567,9 @@ class GetTransactionsRequest extends $pb.GeneratedMessage {
 
 class TransactionDetails extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('TransactionDetails',
-      package: const $pb.PackageName('lnrpc'))
-    ..pc<Transaction>(1, 'transactions', $pb.PbFieldType.PM, Transaction.create)
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..pc<Transaction>(1, 'transactions', $pb.PbFieldType.PM,
+        subBuilder: Transaction.create)
     ..hasRequiredFields = false;
 
   TransactionDetails._() : super();
@@ -604,12 +604,12 @@ class FeeLimit extends $pb.GeneratedMessage {
     2: FeeLimit_Limit.percent,
     0: FeeLimit_Limit.notSet
   };
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo('FeeLimit', package: const $pb.PackageName('lnrpc'))
-        ..oo(0, [1, 2])
-        ..aInt64(1, 'fixed')
-        ..aInt64(2, 'percent')
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('FeeLimit',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..oo(0, [1, 2])
+    ..aInt64(1, 'fixed')
+    ..aInt64(2, 'percent')
+    ..hasRequiredFields = false;
 
   FeeLimit._() : super();
   factory FeeLimit() => create();
@@ -652,7 +652,7 @@ class FeeLimit extends $pb.GeneratedMessage {
 
 class SendRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('SendRequest',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..a<$core.List<$core.int>>(1, 'dest', $pb.PbFieldType.OY)
     ..aOS(2, 'destString')
     ..aInt64(3, 'amt')
@@ -660,20 +660,16 @@ class SendRequest extends $pb.GeneratedMessage {
     ..aOS(5, 'paymentHashString')
     ..aOS(6, 'paymentRequest')
     ..a<$core.int>(7, 'finalCltvDelta', $pb.PbFieldType.O3)
-    ..a<FeeLimit>(
-        8, 'feeLimit', $pb.PbFieldType.OM, FeeLimit.getDefault, FeeLimit.create)
-    ..a<Int64>(9, 'outgoingChanId', $pb.PbFieldType.OU6, Int64.ZERO)
+    ..a<FeeLimit>(8, 'feeLimit', $pb.PbFieldType.OM,
+        defaultOrMaker: FeeLimit.getDefault, subBuilder: FeeLimit.create)
+    ..a<Int64>(9, 'outgoingChanId', $pb.PbFieldType.OU6,
+        defaultOrMaker: Int64.ZERO)
     ..a<$core.int>(10, 'cltvLimit', $pb.PbFieldType.OU3)
-    ..m<Int64, $core.List<$core.int>>(
-        11,
-        'destTlv',
-        'SendRequest.DestTlvEntry',
-        $pb.PbFieldType.OU6,
-        $pb.PbFieldType.OY,
-        null,
-        null,
-        null,
-        const $pb.PackageName('lnrpc'))
+    ..m<Int64, $core.List<$core.int>>(11, 'destTlv',
+        entryClassName: 'SendRequest.DestTlvEntry',
+        keyFieldType: $pb.PbFieldType.OU6,
+        valueFieldType: $pb.PbFieldType.OY,
+        packageName: const $pb.PackageName('lnrpc'))
     ..hasRequiredFields = false;
 
   SendRequest._() : super();
@@ -780,12 +776,12 @@ class SendRequest extends $pb.GeneratedMessage {
 
 class SendResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('SendResponse',
-      package: const $pb.PackageName('lnrpc'))
-    ..aOS(1, 'paymentError')
-    ..a<$core.List<$core.int>>(2, 'paymentPreimage', $pb.PbFieldType.OY)
-    ..a<Route>(
-        3, 'paymentRoute', $pb.PbFieldType.OM, Route.getDefault, Route.create)
-    ..a<$core.List<$core.int>>(4, 'paymentHash', $pb.PbFieldType.OY)
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..aOS(1, 'payment_error')
+    ..a<$core.List<$core.int>>(2, 'payment_preimage', $pb.PbFieldType.OY)
+    ..a<Route>(3, 'payment_route', $pb.PbFieldType.OM,
+        defaultOrMaker: Route.getDefault, subBuilder: Route.create)
+    ..a<$core.List<$core.int>>(4, 'payment_hash', $pb.PbFieldType.OY)
     ..hasRequiredFields = false;
 
   SendResponse._() : super();
@@ -843,10 +839,11 @@ class SendResponse extends $pb.GeneratedMessage {
 
 class SendToRouteRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('SendToRouteRequest',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..a<$core.List<$core.int>>(1, 'paymentHash', $pb.PbFieldType.OY)
     ..aOS(2, 'paymentHashString')
-    ..a<Route>(4, 'route', $pb.PbFieldType.OM, Route.getDefault, Route.create)
+    ..a<Route>(4, 'route', $pb.PbFieldType.OM,
+        defaultOrMaker: Route.getDefault, subBuilder: Route.create)
     ..hasRequiredFields = false;
 
   SendToRouteRequest._() : super();
@@ -904,13 +901,13 @@ class ChannelPoint extends $pb.GeneratedMessage {
     2: ChannelPoint_FundingTxid.fundingTxidStr,
     0: ChannelPoint_FundingTxid.notSet
   };
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo('ChannelPoint', package: const $pb.PackageName('lnrpc'))
-        ..oo(0, [1, 2])
-        ..a<$core.List<$core.int>>(1, 'fundingTxidBytes', $pb.PbFieldType.OY)
-        ..aOS(2, 'fundingTxidStr')
-        ..a<$core.int>(3, 'outputIndex', $pb.PbFieldType.OU3)
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('ChannelPoint',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..oo(0, [1, 2])
+    ..a<$core.List<$core.int>>(1, 'funding_txid_bytes', $pb.PbFieldType.OY)
+    ..aOS(2, 'funding_txid_str')
+    ..a<$core.int>(3, 'output_index', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false;
 
   ChannelPoint._() : super();
   factory ChannelPoint() => create();
@@ -962,12 +959,12 @@ class ChannelPoint extends $pb.GeneratedMessage {
 }
 
 class OutPoint extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo('OutPoint', package: const $pb.PackageName('lnrpc'))
-        ..a<$core.List<$core.int>>(1, 'txidBytes', $pb.PbFieldType.OY)
-        ..aOS(2, 'txidStr')
-        ..a<$core.int>(3, 'outputIndex', $pb.PbFieldType.OU3)
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('OutPoint',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..a<$core.List<$core.int>>(1, 'txid_bytes', $pb.PbFieldType.OY)
+    ..aOS(2, 'txid_str')
+    ..a<$core.int>(3, 'output_index', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false;
 
   OutPoint._() : super();
   factory OutPoint() => create();
@@ -1015,7 +1012,7 @@ class OutPoint extends $pb.GeneratedMessage {
 
 class LightningAddress extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('LightningAddress',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..aOS(1, 'pubkey')
     ..aOS(2, 'host')
     ..hasRequiredFields = false;
@@ -1060,17 +1057,13 @@ class LightningAddress extends $pb.GeneratedMessage {
 
 class EstimateFeeRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('EstimateFeeRequest',
-      package: const $pb.PackageName('lnrpc'))
-    ..m<$core.String, Int64>(
-        1,
-        'addrToAmount',
-        'EstimateFeeRequest.AddrToAmountEntry',
-        $pb.PbFieldType.OS,
-        $pb.PbFieldType.O6,
-        null,
-        null,
-        null,
-        const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..m<$core.String, Int64>(1, 'AddrToAmount',
+        protoName: 'AddrToAmount',
+        entryClassName: 'EstimateFeeRequest.AddrToAmountEntry',
+        keyFieldType: $pb.PbFieldType.OS,
+        valueFieldType: $pb.PbFieldType.O6,
+        packageName: const $pb.PackageName('lnrpc'))
     ..a<$core.int>(2, 'targetConf', $pb.PbFieldType.O3)
     ..hasRequiredFields = false;
 
@@ -1108,9 +1101,9 @@ class EstimateFeeRequest extends $pb.GeneratedMessage {
 
 class EstimateFeeResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('EstimateFeeResponse',
-      package: const $pb.PackageName('lnrpc'))
-    ..aInt64(1, 'feeSat')
-    ..aInt64(2, 'feerateSatPerByte')
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..aInt64(1, 'fee_sat')
+    ..aInt64(2, 'feerate_sat_per_byte')
     ..hasRequiredFields = false;
 
   EstimateFeeResponse._() : super();
@@ -1153,17 +1146,13 @@ class EstimateFeeResponse extends $pb.GeneratedMessage {
 
 class SendManyRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('SendManyRequest',
-      package: const $pb.PackageName('lnrpc'))
-    ..m<$core.String, Int64>(
-        1,
-        'addrToAmount',
-        'SendManyRequest.AddrToAmountEntry',
-        $pb.PbFieldType.OS,
-        $pb.PbFieldType.O6,
-        null,
-        null,
-        null,
-        const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..m<$core.String, Int64>(1, 'AddrToAmount',
+        protoName: 'AddrToAmount',
+        entryClassName: 'SendManyRequest.AddrToAmountEntry',
+        keyFieldType: $pb.PbFieldType.OS,
+        valueFieldType: $pb.PbFieldType.O6,
+        packageName: const $pb.PackageName('lnrpc'))
     ..a<$core.int>(3, 'targetConf', $pb.PbFieldType.O3)
     ..aInt64(5, 'satPerByte')
     ..hasRequiredFields = false;
@@ -1210,7 +1199,7 @@ class SendManyRequest extends $pb.GeneratedMessage {
 
 class SendManyResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('SendManyResponse',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..aOS(1, 'txid')
     ..hasRequiredFields = false;
 
@@ -1246,7 +1235,7 @@ class SendManyResponse extends $pb.GeneratedMessage {
 
 class SendCoinsRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('SendCoinsRequest',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..aOS(1, 'addr')
     ..aInt64(2, 'amount')
     ..a<$core.int>(3, 'targetConf', $pb.PbFieldType.O3)
@@ -1318,7 +1307,7 @@ class SendCoinsRequest extends $pb.GeneratedMessage {
 
 class SendCoinsResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('SendCoinsResponse',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..aOS(1, 'txid')
     ..hasRequiredFields = false;
 
@@ -1354,7 +1343,7 @@ class SendCoinsResponse extends $pb.GeneratedMessage {
 
 class ListUnspentRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('ListUnspentRequest',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..a<$core.int>(1, 'minConfs', $pb.PbFieldType.O3)
     ..a<$core.int>(2, 'maxConfs', $pb.PbFieldType.O3)
     ..hasRequiredFields = false;
@@ -1399,8 +1388,8 @@ class ListUnspentRequest extends $pb.GeneratedMessage {
 
 class ListUnspentResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('ListUnspentResponse',
-      package: const $pb.PackageName('lnrpc'))
-    ..pc<Utxo>(1, 'utxos', $pb.PbFieldType.PM, Utxo.create)
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..pc<Utxo>(1, 'utxos', $pb.PbFieldType.PM, subBuilder: Utxo.create)
     ..hasRequiredFields = false;
 
   ListUnspentResponse._() : super();
@@ -1429,14 +1418,11 @@ class ListUnspentResponse extends $pb.GeneratedMessage {
 
 class NewAddressRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('NewAddressRequest',
-      package: const $pb.PackageName('lnrpc'))
-    ..e<AddressType>(
-        1,
-        'type',
-        $pb.PbFieldType.OE,
-        AddressType.WITNESS_PUBKEY_HASH,
-        AddressType.valueOf,
-        AddressType.values)
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..e<AddressType>(1, 'type', $pb.PbFieldType.OE,
+        defaultOrMaker: AddressType.WITNESS_PUBKEY_HASH,
+        valueOf: AddressType.valueOf,
+        enumValues: AddressType.values)
     ..hasRequiredFields = false;
 
   NewAddressRequest._() : super();
@@ -1471,7 +1457,7 @@ class NewAddressRequest extends $pb.GeneratedMessage {
 
 class NewAddressResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('NewAddressResponse',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..aOS(1, 'address')
     ..hasRequiredFields = false;
 
@@ -1507,7 +1493,7 @@ class NewAddressResponse extends $pb.GeneratedMessage {
 
 class SignMessageRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('SignMessageRequest',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..a<$core.List<$core.int>>(1, 'msg', $pb.PbFieldType.OY)
     ..hasRequiredFields = false;
 
@@ -1543,7 +1529,7 @@ class SignMessageRequest extends $pb.GeneratedMessage {
 
 class SignMessageResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('SignMessageResponse',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..aOS(1, 'signature')
     ..hasRequiredFields = false;
 
@@ -1579,7 +1565,7 @@ class SignMessageResponse extends $pb.GeneratedMessage {
 
 class VerifyMessageRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('VerifyMessageRequest',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..a<$core.List<$core.int>>(1, 'msg', $pb.PbFieldType.OY)
     ..aOS(2, 'signature')
     ..hasRequiredFields = false;
@@ -1625,7 +1611,7 @@ class VerifyMessageRequest extends $pb.GeneratedMessage {
 
 class VerifyMessageResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('VerifyMessageResponse',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..aOB(1, 'valid')
     ..aOS(2, 'pubkey')
     ..hasRequiredFields = false;
@@ -1672,9 +1658,10 @@ class VerifyMessageResponse extends $pb.GeneratedMessage {
 
 class ConnectPeerRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('ConnectPeerRequest',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..a<LightningAddress>(1, 'addr', $pb.PbFieldType.OM,
-        LightningAddress.getDefault, LightningAddress.create)
+        defaultOrMaker: LightningAddress.getDefault,
+        subBuilder: LightningAddress.create)
     ..aOB(2, 'perm')
     ..hasRequiredFields = false;
 
@@ -1718,7 +1705,7 @@ class ConnectPeerRequest extends $pb.GeneratedMessage {
 
 class ConnectPeerResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('ConnectPeerResponse',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..hasRequiredFields = false;
 
   ConnectPeerResponse._() : super();
@@ -1745,8 +1732,8 @@ class ConnectPeerResponse extends $pb.GeneratedMessage {
 
 class DisconnectPeerRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('DisconnectPeerRequest',
-      package: const $pb.PackageName('lnrpc'))
-    ..aOS(1, 'pubKey')
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..aOS(1, 'pub_key')
     ..hasRequiredFields = false;
 
   DisconnectPeerRequest._() : super();
@@ -1783,7 +1770,7 @@ class DisconnectPeerRequest extends $pb.GeneratedMessage {
 
 class DisconnectPeerResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('DisconnectPeerResponse',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..hasRequiredFields = false;
 
   DisconnectPeerResponse._() : super();
@@ -1811,13 +1798,13 @@ class DisconnectPeerResponse extends $pb.GeneratedMessage {
 }
 
 class HTLC extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo('HTLC', package: const $pb.PackageName('lnrpc'))
-        ..aOB(1, 'incoming')
-        ..aInt64(2, 'amount')
-        ..a<$core.List<$core.int>>(3, 'hashLock', $pb.PbFieldType.OY)
-        ..a<$core.int>(4, 'expirationHeight', $pb.PbFieldType.OU3)
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('HTLC',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..aOB(1, 'incoming')
+    ..aInt64(2, 'amount')
+    ..a<$core.List<$core.int>>(3, 'hash_lock', $pb.PbFieldType.OY)
+    ..a<$core.int>(4, 'expiration_height', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false;
 
   HTLC._() : super();
   factory HTLC() => create();
@@ -1872,30 +1859,31 @@ class HTLC extends $pb.GeneratedMessage {
 }
 
 class Channel extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo('Channel', package: const $pb.PackageName('lnrpc'))
-        ..aOB(1, 'active')
-        ..aOS(2, 'remotePubkey')
-        ..aOS(3, 'channelPoint')
-        ..a<Int64>(4, 'chanId', $pb.PbFieldType.OU6, Int64.ZERO)
-        ..aInt64(5, 'capacity')
-        ..aInt64(6, 'localBalance')
-        ..aInt64(7, 'remoteBalance')
-        ..aInt64(8, 'commitFee')
-        ..aInt64(9, 'commitWeight')
-        ..aInt64(10, 'feePerKw')
-        ..aInt64(11, 'unsettledBalance')
-        ..aInt64(12, 'totalSatoshisSent')
-        ..aInt64(13, 'totalSatoshisReceived')
-        ..a<Int64>(14, 'numUpdates', $pb.PbFieldType.OU6, Int64.ZERO)
-        ..pc<HTLC>(15, 'pendingHtlcs', $pb.PbFieldType.PM, HTLC.create)
-        ..a<$core.int>(16, 'csvDelay', $pb.PbFieldType.OU3)
-        ..aOB(17, 'private')
-        ..aOB(18, 'initiator')
-        ..aOS(19, 'chanStatusFlags')
-        ..aInt64(20, 'localChanReserveSat')
-        ..aInt64(21, 'remoteChanReserveSat')
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('Channel',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..aOB(1, 'active')
+    ..aOS(2, 'remote_pubkey')
+    ..aOS(3, 'channel_point')
+    ..a<Int64>(4, 'chan_id', $pb.PbFieldType.OU6, defaultOrMaker: Int64.ZERO)
+    ..aInt64(5, 'capacity')
+    ..aInt64(6, 'local_balance')
+    ..aInt64(7, 'remote_balance')
+    ..aInt64(8, 'commit_fee')
+    ..aInt64(9, 'commit_weight')
+    ..aInt64(10, 'fee_per_kw')
+    ..aInt64(11, 'unsettled_balance')
+    ..aInt64(12, 'total_satoshis_sent')
+    ..aInt64(13, 'total_satoshis_received')
+    ..a<Int64>(14, 'num_updates', $pb.PbFieldType.OU6,
+        defaultOrMaker: Int64.ZERO)
+    ..pc<HTLC>(15, 'pending_htlcs', $pb.PbFieldType.PM, subBuilder: HTLC.create)
+    ..a<$core.int>(16, 'csv_delay', $pb.PbFieldType.OU3)
+    ..aOB(17, 'private')
+    ..aOB(18, 'initiator')
+    ..aOS(19, 'chan_status_flags')
+    ..aInt64(20, 'local_chan_reserve_sat')
+    ..aInt64(21, 'remote_chan_reserve_sat')
+    ..hasRequiredFields = false;
 
   Channel._() : super();
   factory Channel() => create();
@@ -2081,7 +2069,7 @@ class Channel extends $pb.GeneratedMessage {
 
 class ListChannelsRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('ListChannelsRequest',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..aOB(1, 'activeOnly')
     ..aOB(2, 'inactiveOnly')
     ..aOB(3, 'publicOnly')
@@ -2144,8 +2132,9 @@ class ListChannelsRequest extends $pb.GeneratedMessage {
 
 class ListChannelsResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('ListChannelsResponse',
-      package: const $pb.PackageName('lnrpc'))
-    ..pc<Channel>(11, 'channels', $pb.PbFieldType.PM, Channel.create)
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..pc<Channel>(11, 'channels', $pb.PbFieldType.PM,
+        subBuilder: Channel.create)
     ..hasRequiredFields = false;
 
   ListChannelsResponse._() : super();
@@ -2175,23 +2164,20 @@ class ListChannelsResponse extends $pb.GeneratedMessage {
 
 class ChannelCloseSummary extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('ChannelCloseSummary',
-      package: const $pb.PackageName('lnrpc'))
-    ..aOS(1, 'channelPoint')
-    ..a<Int64>(2, 'chanId', $pb.PbFieldType.OU6, Int64.ZERO)
-    ..aOS(3, 'chainHash')
-    ..aOS(4, 'closingTxHash')
-    ..aOS(5, 'remotePubkey')
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..aOS(1, 'channel_point')
+    ..a<Int64>(2, 'chan_id', $pb.PbFieldType.OU6, defaultOrMaker: Int64.ZERO)
+    ..aOS(3, 'chain_hash')
+    ..aOS(4, 'closing_tx_hash')
+    ..aOS(5, 'remote_pubkey')
     ..aInt64(6, 'capacity')
-    ..a<$core.int>(7, 'closeHeight', $pb.PbFieldType.OU3)
-    ..aInt64(8, 'settledBalance')
-    ..aInt64(9, 'timeLockedBalance')
-    ..e<ChannelCloseSummary_ClosureType>(
-        10,
-        'closeType',
-        $pb.PbFieldType.OE,
-        ChannelCloseSummary_ClosureType.COOPERATIVE_CLOSE,
-        ChannelCloseSummary_ClosureType.valueOf,
-        ChannelCloseSummary_ClosureType.values)
+    ..a<$core.int>(7, 'close_height', $pb.PbFieldType.OU3)
+    ..aInt64(8, 'settled_balance')
+    ..aInt64(9, 'time_locked_balance')
+    ..e<ChannelCloseSummary_ClosureType>(10, 'close_type', $pb.PbFieldType.OE,
+        defaultOrMaker: ChannelCloseSummary_ClosureType.COOPERATIVE_CLOSE,
+        valueOf: ChannelCloseSummary_ClosureType.valueOf,
+        enumValues: ChannelCloseSummary_ClosureType.values)
     ..hasRequiredFields = false;
 
   ChannelCloseSummary._() : super();
@@ -2298,7 +2284,7 @@ class ChannelCloseSummary extends $pb.GeneratedMessage {
 
 class ClosedChannelsRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('ClosedChannelsRequest',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..aOB(1, 'cooperative')
     ..aOB(2, 'localForce')
     ..aOB(3, 'remoteForce')
@@ -2381,9 +2367,9 @@ class ClosedChannelsRequest extends $pb.GeneratedMessage {
 
 class ClosedChannelsResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('ClosedChannelsResponse',
-      package: const $pb.PackageName('lnrpc'))
-    ..pc<ChannelCloseSummary>(
-        1, 'channels', $pb.PbFieldType.PM, ChannelCloseSummary.create)
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..pc<ChannelCloseSummary>(1, 'channels', $pb.PbFieldType.PM,
+        subBuilder: ChannelCloseSummary.create)
     ..hasRequiredFields = false;
 
   ClosedChannelsResponse._() : super();
@@ -2413,24 +2399,21 @@ class ClosedChannelsResponse extends $pb.GeneratedMessage {
 }
 
 class Peer extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo('Peer', package: const $pb.PackageName('lnrpc'))
-        ..aOS(1, 'pubKey')
-        ..aOS(3, 'address')
-        ..a<Int64>(4, 'bytesSent', $pb.PbFieldType.OU6, Int64.ZERO)
-        ..a<Int64>(5, 'bytesRecv', $pb.PbFieldType.OU6, Int64.ZERO)
-        ..aInt64(6, 'satSent')
-        ..aInt64(7, 'satRecv')
-        ..aOB(8, 'inbound')
-        ..aInt64(9, 'pingTime')
-        ..e<Peer_SyncType>(
-            10,
-            'syncType',
-            $pb.PbFieldType.OE,
-            Peer_SyncType.UNKNOWN_SYNC,
-            Peer_SyncType.valueOf,
-            Peer_SyncType.values)
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('Peer',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..aOS(1, 'pub_key')
+    ..aOS(3, 'address')
+    ..a<Int64>(4, 'bytes_sent', $pb.PbFieldType.OU6, defaultOrMaker: Int64.ZERO)
+    ..a<Int64>(5, 'bytes_recv', $pb.PbFieldType.OU6, defaultOrMaker: Int64.ZERO)
+    ..aInt64(6, 'sat_sent')
+    ..aInt64(7, 'sat_recv')
+    ..aOB(8, 'inbound')
+    ..aInt64(9, 'ping_time')
+    ..e<Peer_SyncType>(10, 'sync_type', $pb.PbFieldType.OE,
+        defaultOrMaker: Peer_SyncType.UNKNOWN_SYNC,
+        valueOf: Peer_SyncType.valueOf,
+        enumValues: Peer_SyncType.values)
+    ..hasRequiredFields = false;
 
   Peer._() : super();
   factory Peer() => create();
@@ -2526,7 +2509,7 @@ class Peer extends $pb.GeneratedMessage {
 
 class ListPeersRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('ListPeersRequest',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..hasRequiredFields = false;
 
   ListPeersRequest._() : super();
@@ -2553,8 +2536,8 @@ class ListPeersRequest extends $pb.GeneratedMessage {
 
 class ListPeersResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('ListPeersResponse',
-      package: const $pb.PackageName('lnrpc'))
-    ..pc<Peer>(1, 'peers', $pb.PbFieldType.PM, Peer.create)
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..pc<Peer>(1, 'peers', $pb.PbFieldType.PM, subBuilder: Peer.create)
     ..hasRequiredFields = false;
 
   ListPeersResponse._() : super();
@@ -2582,9 +2565,9 @@ class ListPeersResponse extends $pb.GeneratedMessage {
 }
 
 class GetInfoRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo('GetInfoRequest', package: const $pb.PackageName('lnrpc'))
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('GetInfoRequest',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..hasRequiredFields = false;
 
   GetInfoRequest._() : super();
   factory GetInfoRequest() => create();
@@ -2609,23 +2592,23 @@ class GetInfoRequest extends $pb.GeneratedMessage {
 
 class GetInfoResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('GetInfoResponse',
-      package: const $pb.PackageName('lnrpc'))
-    ..aOS(1, 'identityPubkey')
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..aOS(1, 'identity_pubkey')
     ..aOS(2, 'alias')
-    ..a<$core.int>(3, 'numPendingChannels', $pb.PbFieldType.OU3)
-    ..a<$core.int>(4, 'numActiveChannels', $pb.PbFieldType.OU3)
-    ..a<$core.int>(5, 'numPeers', $pb.PbFieldType.OU3)
-    ..a<$core.int>(6, 'blockHeight', $pb.PbFieldType.OU3)
-    ..aOS(8, 'blockHash')
-    ..aOB(9, 'syncedToChain')
+    ..a<$core.int>(3, 'num_pending_channels', $pb.PbFieldType.OU3)
+    ..a<$core.int>(4, 'num_active_channels', $pb.PbFieldType.OU3)
+    ..a<$core.int>(5, 'num_peers', $pb.PbFieldType.OU3)
+    ..a<$core.int>(6, 'block_height', $pb.PbFieldType.OU3)
+    ..aOS(8, 'block_hash')
+    ..aOB(9, 'synced_to_chain')
     ..aOB(10, 'testnet')
     ..pPS(12, 'uris')
-    ..aInt64(13, 'bestHeaderTimestamp')
+    ..aInt64(13, 'best_header_timestamp')
     ..aOS(14, 'version')
-    ..a<$core.int>(15, 'numInactiveChannels', $pb.PbFieldType.OU3)
-    ..pc<Chain>(16, 'chains', $pb.PbFieldType.PM, Chain.create)
+    ..a<$core.int>(15, 'num_inactive_channels', $pb.PbFieldType.OU3)
+    ..pc<Chain>(16, 'chains', $pb.PbFieldType.PM, subBuilder: Chain.create)
     ..aOS(17, 'color')
-    ..aOB(18, 'syncedToGraph')
+    ..aOB(18, 'synced_to_graph')
     ..hasRequiredFields = false;
 
   GetInfoResponse._() : super();
@@ -2771,11 +2754,11 @@ class GetInfoResponse extends $pb.GeneratedMessage {
 }
 
 class Chain extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo('Chain', package: const $pb.PackageName('lnrpc'))
-        ..aOS(1, 'chain')
-        ..aOS(2, 'network')
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('Chain',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..aOS(1, 'chain')
+    ..aOS(2, 'network')
+    ..hasRequiredFields = false;
 
   Chain._() : super();
   factory Chain() => create();
@@ -2815,7 +2798,7 @@ class Chain extends $pb.GeneratedMessage {
 
 class ConfirmationUpdate extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('ConfirmationUpdate',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..a<$core.List<$core.int>>(1, 'blockSha', $pb.PbFieldType.OY)
     ..a<$core.int>(2, 'blockHeight', $pb.PbFieldType.O3)
     ..a<$core.int>(3, 'numConfsLeft', $pb.PbFieldType.OU3)
@@ -2869,9 +2852,10 @@ class ConfirmationUpdate extends $pb.GeneratedMessage {
 
 class ChannelOpenUpdate extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('ChannelOpenUpdate',
-      package: const $pb.PackageName('lnrpc'))
-    ..a<ChannelPoint>(1, 'channelPoint', $pb.PbFieldType.OM,
-        ChannelPoint.getDefault, ChannelPoint.create)
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..a<ChannelPoint>(1, 'channel_point', $pb.PbFieldType.OM,
+        defaultOrMaker: ChannelPoint.getDefault,
+        subBuilder: ChannelPoint.create)
     ..hasRequiredFields = false;
 
   ChannelOpenUpdate._() : super();
@@ -2906,8 +2890,8 @@ class ChannelOpenUpdate extends $pb.GeneratedMessage {
 
 class ChannelCloseUpdate extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('ChannelCloseUpdate',
-      package: const $pb.PackageName('lnrpc'))
-    ..a<$core.List<$core.int>>(1, 'closingTxid', $pb.PbFieldType.OY)
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..a<$core.List<$core.int>>(1, 'closing_txid', $pb.PbFieldType.OY)
     ..aOB(2, 'success')
     ..hasRequiredFields = false;
 
@@ -2951,9 +2935,10 @@ class ChannelCloseUpdate extends $pb.GeneratedMessage {
 
 class CloseChannelRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('CloseChannelRequest',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..a<ChannelPoint>(1, 'channelPoint', $pb.PbFieldType.OM,
-        ChannelPoint.getDefault, ChannelPoint.create)
+        defaultOrMaker: ChannelPoint.getDefault,
+        subBuilder: ChannelPoint.create)
     ..aOB(2, 'force')
     ..a<$core.int>(3, 'targetConf', $pb.PbFieldType.O3)
     ..aInt64(4, 'satPerByte')
@@ -3023,12 +3008,14 @@ class CloseStatusUpdate extends $pb.GeneratedMessage {
     0: CloseStatusUpdate_Update.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('CloseStatusUpdate',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..oo(0, [1, 3])
-    ..a<PendingUpdate>(1, 'closePending', $pb.PbFieldType.OM,
-        PendingUpdate.getDefault, PendingUpdate.create)
-    ..a<ChannelCloseUpdate>(3, 'chanClose', $pb.PbFieldType.OM,
-        ChannelCloseUpdate.getDefault, ChannelCloseUpdate.create)
+    ..a<PendingUpdate>(1, 'close_pending', $pb.PbFieldType.OM,
+        defaultOrMaker: PendingUpdate.getDefault,
+        subBuilder: PendingUpdate.create)
+    ..a<ChannelCloseUpdate>(3, 'chan_close', $pb.PbFieldType.OM,
+        defaultOrMaker: ChannelCloseUpdate.getDefault,
+        subBuilder: ChannelCloseUpdate.create)
     ..hasRequiredFields = false;
 
   CloseStatusUpdate._() : super();
@@ -3074,11 +3061,11 @@ class CloseStatusUpdate extends $pb.GeneratedMessage {
 }
 
 class PendingUpdate extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo('PendingUpdate', package: const $pb.PackageName('lnrpc'))
-        ..a<$core.List<$core.int>>(1, 'txid', $pb.PbFieldType.OY)
-        ..a<$core.int>(2, 'outputIndex', $pb.PbFieldType.OU3)
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('PendingUpdate',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..a<$core.List<$core.int>>(1, 'txid', $pb.PbFieldType.OY)
+    ..a<$core.int>(2, 'output_index', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false;
 
   PendingUpdate._() : super();
   factory PendingUpdate() => create();
@@ -3119,18 +3106,18 @@ class PendingUpdate extends $pb.GeneratedMessage {
 
 class OpenChannelRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('OpenChannelRequest',
-      package: const $pb.PackageName('lnrpc'))
-    ..a<$core.List<$core.int>>(2, 'nodePubkey', $pb.PbFieldType.OY)
-    ..aOS(3, 'nodePubkeyString')
-    ..aInt64(4, 'localFundingAmount')
-    ..aInt64(5, 'pushSat')
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..a<$core.List<$core.int>>(2, 'node_pubkey', $pb.PbFieldType.OY)
+    ..aOS(3, 'node_pubkey_string')
+    ..aInt64(4, 'local_funding_amount')
+    ..aInt64(5, 'push_sat')
     ..a<$core.int>(6, 'targetConf', $pb.PbFieldType.O3)
     ..aInt64(7, 'satPerByte')
     ..aOB(8, 'private')
-    ..aInt64(9, 'minHtlcMsat')
-    ..a<$core.int>(10, 'remoteCsvDelay', $pb.PbFieldType.OU3)
-    ..a<$core.int>(11, 'minConfs', $pb.PbFieldType.O3)
-    ..aOB(12, 'spendUnconfirmed')
+    ..aInt64(9, 'min_htlc_msat')
+    ..a<$core.int>(10, 'remote_csv_delay', $pb.PbFieldType.OU3)
+    ..a<$core.int>(11, 'min_confs', $pb.PbFieldType.O3)
+    ..aOB(12, 'spend_unconfirmed')
     ..hasRequiredFields = false;
 
   OpenChannelRequest._() : super();
@@ -3253,12 +3240,14 @@ class OpenStatusUpdate extends $pb.GeneratedMessage {
     0: OpenStatusUpdate_Update.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('OpenStatusUpdate',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..oo(0, [1, 3])
-    ..a<PendingUpdate>(1, 'chanPending', $pb.PbFieldType.OM,
-        PendingUpdate.getDefault, PendingUpdate.create)
-    ..a<ChannelOpenUpdate>(3, 'chanOpen', $pb.PbFieldType.OM,
-        ChannelOpenUpdate.getDefault, ChannelOpenUpdate.create)
+    ..a<PendingUpdate>(1, 'chan_pending', $pb.PbFieldType.OM,
+        defaultOrMaker: PendingUpdate.getDefault,
+        subBuilder: PendingUpdate.create)
+    ..a<ChannelOpenUpdate>(3, 'chan_open', $pb.PbFieldType.OM,
+        defaultOrMaker: ChannelOpenUpdate.getDefault,
+        subBuilder: ChannelOpenUpdate.create)
     ..hasRequiredFields = false;
 
   OpenStatusUpdate._() : super();
@@ -3304,15 +3293,15 @@ class OpenStatusUpdate extends $pb.GeneratedMessage {
 }
 
 class PendingHTLC extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo('PendingHTLC', package: const $pb.PackageName('lnrpc'))
-        ..aOB(1, 'incoming')
-        ..aInt64(2, 'amount')
-        ..aOS(3, 'outpoint')
-        ..a<$core.int>(4, 'maturityHeight', $pb.PbFieldType.OU3)
-        ..a<$core.int>(5, 'blocksTilMaturity', $pb.PbFieldType.O3)
-        ..a<$core.int>(6, 'stage', $pb.PbFieldType.OU3)
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('PendingHTLC',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..aOB(1, 'incoming')
+    ..aInt64(2, 'amount')
+    ..aOS(3, 'outpoint')
+    ..a<$core.int>(4, 'maturity_height', $pb.PbFieldType.OU3)
+    ..a<$core.int>(5, 'blocks_til_maturity', $pb.PbFieldType.O3)
+    ..a<$core.int>(6, 'stage', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false;
 
   PendingHTLC._() : super();
   factory PendingHTLC() => create();
@@ -3384,7 +3373,7 @@ class PendingHTLC extends $pb.GeneratedMessage {
 
 class PendingChannelsRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('PendingChannelsRequest',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..hasRequiredFields = false;
 
   PendingChannelsRequest._() : super();
@@ -3414,14 +3403,15 @@ class PendingChannelsRequest extends $pb.GeneratedMessage {
 class PendingChannelsResponse_PendingChannel extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       'PendingChannelsResponse.PendingChannel',
-      package: const $pb.PackageName('lnrpc'))
-    ..aOS(1, 'remoteNodePub')
-    ..aOS(2, 'channelPoint')
+      package: const $pb.PackageName('lnrpc'),
+      createEmptyInstance: create)
+    ..aOS(1, 'remote_node_pub')
+    ..aOS(2, 'channel_point')
     ..aInt64(3, 'capacity')
-    ..aInt64(4, 'localBalance')
-    ..aInt64(5, 'remoteBalance')
-    ..aInt64(6, 'localChanReserveSat')
-    ..aInt64(7, 'remoteChanReserveSat')
+    ..aInt64(4, 'local_balance')
+    ..aInt64(5, 'remote_balance')
+    ..aInt64(6, 'local_chan_reserve_sat')
+    ..aInt64(7, 'remote_chan_reserve_sat')
     ..hasRequiredFields = false;
 
   PendingChannelsResponse_PendingChannel._() : super();
@@ -3510,17 +3500,16 @@ class PendingChannelsResponse_PendingChannel extends $pb.GeneratedMessage {
 class PendingChannelsResponse_PendingOpenChannel extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       'PendingChannelsResponse.PendingOpenChannel',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'),
+      createEmptyInstance: create)
     ..a<PendingChannelsResponse_PendingChannel>(
-        1,
-        'channel',
-        $pb.PbFieldType.OM,
-        PendingChannelsResponse_PendingChannel.getDefault,
-        PendingChannelsResponse_PendingChannel.create)
-    ..a<$core.int>(2, 'confirmationHeight', $pb.PbFieldType.OU3)
-    ..aInt64(4, 'commitFee')
-    ..aInt64(5, 'commitWeight')
-    ..aInt64(6, 'feePerKw')
+        1, 'channel', $pb.PbFieldType.OM,
+        defaultOrMaker: PendingChannelsResponse_PendingChannel.getDefault,
+        subBuilder: PendingChannelsResponse_PendingChannel.create)
+    ..a<$core.int>(2, 'confirmation_height', $pb.PbFieldType.OU3)
+    ..aInt64(4, 'commit_fee')
+    ..aInt64(5, 'commit_weight')
+    ..aInt64(6, 'fee_per_kw')
     ..hasRequiredFields = false;
 
   PendingChannelsResponse_PendingOpenChannel._() : super();
@@ -3594,14 +3583,13 @@ class PendingChannelsResponse_PendingOpenChannel extends $pb.GeneratedMessage {
 class PendingChannelsResponse_WaitingCloseChannel extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       'PendingChannelsResponse.WaitingCloseChannel',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'),
+      createEmptyInstance: create)
     ..a<PendingChannelsResponse_PendingChannel>(
-        1,
-        'channel',
-        $pb.PbFieldType.OM,
-        PendingChannelsResponse_PendingChannel.getDefault,
-        PendingChannelsResponse_PendingChannel.create)
-    ..aInt64(2, 'limboBalance')
+        1, 'channel', $pb.PbFieldType.OM,
+        defaultOrMaker: PendingChannelsResponse_PendingChannel.getDefault,
+        subBuilder: PendingChannelsResponse_PendingChannel.create)
+    ..aInt64(2, 'limbo_balance')
     ..hasRequiredFields = false;
 
   PendingChannelsResponse_WaitingCloseChannel._() : super();
@@ -3651,14 +3639,13 @@ class PendingChannelsResponse_WaitingCloseChannel extends $pb.GeneratedMessage {
 class PendingChannelsResponse_ClosedChannel extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       'PendingChannelsResponse.ClosedChannel',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'),
+      createEmptyInstance: create)
     ..a<PendingChannelsResponse_PendingChannel>(
-        1,
-        'channel',
-        $pb.PbFieldType.OM,
-        PendingChannelsResponse_PendingChannel.getDefault,
-        PendingChannelsResponse_PendingChannel.create)
-    ..aOS(2, 'closingTxid')
+        1, 'channel', $pb.PbFieldType.OM,
+        defaultOrMaker: PendingChannelsResponse_PendingChannel.getDefault,
+        subBuilder: PendingChannelsResponse_PendingChannel.create)
+    ..aOS(2, 'closing_txid')
     ..hasRequiredFields = false;
 
   PendingChannelsResponse_ClosedChannel._() : super();
@@ -3707,19 +3694,19 @@ class PendingChannelsResponse_ClosedChannel extends $pb.GeneratedMessage {
 class PendingChannelsResponse_ForceClosedChannel extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       'PendingChannelsResponse.ForceClosedChannel',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'),
+      createEmptyInstance: create)
     ..a<PendingChannelsResponse_PendingChannel>(
-        1,
-        'channel',
-        $pb.PbFieldType.OM,
-        PendingChannelsResponse_PendingChannel.getDefault,
-        PendingChannelsResponse_PendingChannel.create)
-    ..aOS(2, 'closingTxid')
-    ..aInt64(3, 'limboBalance')
-    ..a<$core.int>(4, 'maturityHeight', $pb.PbFieldType.OU3)
-    ..a<$core.int>(5, 'blocksTilMaturity', $pb.PbFieldType.O3)
-    ..aInt64(6, 'recoveredBalance')
-    ..pc<PendingHTLC>(8, 'pendingHtlcs', $pb.PbFieldType.PM, PendingHTLC.create)
+        1, 'channel', $pb.PbFieldType.OM,
+        defaultOrMaker: PendingChannelsResponse_PendingChannel.getDefault,
+        subBuilder: PendingChannelsResponse_PendingChannel.create)
+    ..aOS(2, 'closing_txid')
+    ..aInt64(3, 'limbo_balance')
+    ..a<$core.int>(4, 'maturity_height', $pb.PbFieldType.OU3)
+    ..a<$core.int>(5, 'blocks_til_maturity', $pb.PbFieldType.O3)
+    ..aInt64(6, 'recovered_balance')
+    ..pc<PendingHTLC>(8, 'pending_htlcs', $pb.PbFieldType.PM,
+        subBuilder: PendingHTLC.create)
     ..hasRequiredFields = false;
 
   PendingChannelsResponse_ForceClosedChannel._() : super();
@@ -3802,19 +3789,20 @@ class PendingChannelsResponse_ForceClosedChannel extends $pb.GeneratedMessage {
 
 class PendingChannelsResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('PendingChannelsResponse',
-      package: const $pb.PackageName('lnrpc'))
-    ..aInt64(1, 'totalLimboBalance')
-    ..pc<PendingChannelsResponse_PendingOpenChannel>(2, 'pendingOpenChannels',
-        $pb.PbFieldType.PM, PendingChannelsResponse_PendingOpenChannel.create)
-    ..pc<PendingChannelsResponse_ClosedChannel>(3, 'pendingClosingChannels',
-        $pb.PbFieldType.PM, PendingChannelsResponse_ClosedChannel.create)
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..aInt64(1, 'total_limbo_balance')
+    ..pc<PendingChannelsResponse_PendingOpenChannel>(
+        2, 'pending_open_channels', $pb.PbFieldType.PM,
+        subBuilder: PendingChannelsResponse_PendingOpenChannel.create)
+    ..pc<PendingChannelsResponse_ClosedChannel>(
+        3, 'pending_closing_channels', $pb.PbFieldType.PM,
+        subBuilder: PendingChannelsResponse_ClosedChannel.create)
     ..pc<PendingChannelsResponse_ForceClosedChannel>(
-        4,
-        'pendingForceClosingChannels',
-        $pb.PbFieldType.PM,
-        PendingChannelsResponse_ForceClosedChannel.create)
-    ..pc<PendingChannelsResponse_WaitingCloseChannel>(5, 'waitingCloseChannels',
-        $pb.PbFieldType.PM, PendingChannelsResponse_WaitingCloseChannel.create)
+        4, 'pending_force_closing_channels', $pb.PbFieldType.PM,
+        subBuilder: PendingChannelsResponse_ForceClosedChannel.create)
+    ..pc<PendingChannelsResponse_WaitingCloseChannel>(
+        5, 'waiting_close_channels', $pb.PbFieldType.PM,
+        subBuilder: PendingChannelsResponse_WaitingCloseChannel.create)
     ..hasRequiredFields = false;
 
   PendingChannelsResponse._() : super();
@@ -3863,7 +3851,7 @@ class PendingChannelsResponse extends $pb.GeneratedMessage {
 
 class ChannelEventSubscription extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('ChannelEventSubscription',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..hasRequiredFields = false;
 
   ChannelEventSubscription._() : super();
@@ -3908,23 +3896,23 @@ class ChannelEventUpdate extends $pb.GeneratedMessage {
     0: ChannelEventUpdate_Channel.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('ChannelEventUpdate',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..oo(0, [1, 2, 3, 4])
-    ..a<Channel>(1, 'openChannel', $pb.PbFieldType.OM, Channel.getDefault,
-        Channel.create)
-    ..a<ChannelCloseSummary>(2, 'closedChannel', $pb.PbFieldType.OM,
-        ChannelCloseSummary.getDefault, ChannelCloseSummary.create)
-    ..a<ChannelPoint>(3, 'activeChannel', $pb.PbFieldType.OM,
-        ChannelPoint.getDefault, ChannelPoint.create)
-    ..a<ChannelPoint>(4, 'inactiveChannel', $pb.PbFieldType.OM,
-        ChannelPoint.getDefault, ChannelPoint.create)
-    ..e<ChannelEventUpdate_UpdateType>(
-        5,
-        'type',
-        $pb.PbFieldType.OE,
-        ChannelEventUpdate_UpdateType.OPEN_CHANNEL,
-        ChannelEventUpdate_UpdateType.valueOf,
-        ChannelEventUpdate_UpdateType.values)
+    ..a<Channel>(1, 'open_channel', $pb.PbFieldType.OM,
+        defaultOrMaker: Channel.getDefault, subBuilder: Channel.create)
+    ..a<ChannelCloseSummary>(2, 'closed_channel', $pb.PbFieldType.OM,
+        defaultOrMaker: ChannelCloseSummary.getDefault,
+        subBuilder: ChannelCloseSummary.create)
+    ..a<ChannelPoint>(3, 'active_channel', $pb.PbFieldType.OM,
+        defaultOrMaker: ChannelPoint.getDefault,
+        subBuilder: ChannelPoint.create)
+    ..a<ChannelPoint>(4, 'inactive_channel', $pb.PbFieldType.OM,
+        defaultOrMaker: ChannelPoint.getDefault,
+        subBuilder: ChannelPoint.create)
+    ..e<ChannelEventUpdate_UpdateType>(5, 'type', $pb.PbFieldType.OE,
+        defaultOrMaker: ChannelEventUpdate_UpdateType.OPEN_CHANNEL,
+        valueOf: ChannelEventUpdate_UpdateType.valueOf,
+        enumValues: ChannelEventUpdate_UpdateType.values)
     ..hasRequiredFields = false;
 
   ChannelEventUpdate._() : super();
@@ -3995,7 +3983,7 @@ class ChannelEventUpdate extends $pb.GeneratedMessage {
 
 class WalletBalanceRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('WalletBalanceRequest',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..hasRequiredFields = false;
 
   WalletBalanceRequest._() : super();
@@ -4023,10 +4011,10 @@ class WalletBalanceRequest extends $pb.GeneratedMessage {
 
 class WalletBalanceResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('WalletBalanceResponse',
-      package: const $pb.PackageName('lnrpc'))
-    ..aInt64(1, 'totalBalance')
-    ..aInt64(2, 'confirmedBalance')
-    ..aInt64(3, 'unconfirmedBalance')
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..aInt64(1, 'total_balance')
+    ..aInt64(2, 'confirmed_balance')
+    ..aInt64(3, 'unconfirmed_balance')
     ..hasRequiredFields = false;
 
   WalletBalanceResponse._() : super();
@@ -4079,7 +4067,7 @@ class WalletBalanceResponse extends $pb.GeneratedMessage {
 
 class ChannelBalanceRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('ChannelBalanceRequest',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..hasRequiredFields = false;
 
   ChannelBalanceRequest._() : super();
@@ -4108,9 +4096,9 @@ class ChannelBalanceRequest extends $pb.GeneratedMessage {
 
 class ChannelBalanceResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('ChannelBalanceResponse',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..aInt64(1, 'balance')
-    ..aInt64(2, 'pendingOpenBalance')
+    ..aInt64(2, 'pending_open_balance')
     ..hasRequiredFields = false;
 
   ChannelBalanceResponse._() : super();
@@ -4155,27 +4143,24 @@ class ChannelBalanceResponse extends $pb.GeneratedMessage {
 
 class QueryRoutesRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('QueryRoutesRequest',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..aOS(1, 'pubKey')
     ..aInt64(2, 'amt')
     ..a<$core.int>(4, 'finalCltvDelta', $pb.PbFieldType.O3)
-    ..a<FeeLimit>(
-        5, 'feeLimit', $pb.PbFieldType.OM, FeeLimit.getDefault, FeeLimit.create)
+    ..a<FeeLimit>(5, 'feeLimit', $pb.PbFieldType.OM,
+        defaultOrMaker: FeeLimit.getDefault, subBuilder: FeeLimit.create)
     ..p<$core.List<$core.int>>(6, 'ignoredNodes', $pb.PbFieldType.PY)
-    ..pc<EdgeLocator>(7, 'ignoredEdges', $pb.PbFieldType.PM, EdgeLocator.create)
+    ..pc<EdgeLocator>(7, 'ignoredEdges', $pb.PbFieldType.PM,
+        subBuilder: EdgeLocator.create)
     ..aOS(8, 'sourcePubKey')
     ..aOB(9, 'useMissionControl')
-    ..pc<NodePair>(10, 'ignoredPairs', $pb.PbFieldType.PM, NodePair.create)
-    ..m<Int64, $core.List<$core.int>>(
-        11,
-        'destTlv',
-        'QueryRoutesRequest.DestTlvEntry',
-        $pb.PbFieldType.OU6,
-        $pb.PbFieldType.OY,
-        null,
-        null,
-        null,
-        const $pb.PackageName('lnrpc'))
+    ..pc<NodePair>(10, 'ignoredPairs', $pb.PbFieldType.PM,
+        subBuilder: NodePair.create)
+    ..m<Int64, $core.List<$core.int>>(11, 'destTlv',
+        entryClassName: 'QueryRoutesRequest.DestTlvEntry',
+        keyFieldType: $pb.PbFieldType.OU6,
+        valueFieldType: $pb.PbFieldType.OY,
+        packageName: const $pb.PackageName('lnrpc'))
     ..hasRequiredFields = false;
 
   QueryRoutesRequest._() : super();
@@ -4258,11 +4243,11 @@ class QueryRoutesRequest extends $pb.GeneratedMessage {
 }
 
 class NodePair extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo('NodePair', package: const $pb.PackageName('lnrpc'))
-        ..a<$core.List<$core.int>>(1, 'from', $pb.PbFieldType.OY)
-        ..a<$core.List<$core.int>>(2, 'to', $pb.PbFieldType.OY)
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('NodePair',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..a<$core.List<$core.int>>(1, 'from', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(2, 'to', $pb.PbFieldType.OY)
+    ..hasRequiredFields = false;
 
   NodePair._() : super();
   factory NodePair() => create();
@@ -4301,11 +4286,11 @@ class NodePair extends $pb.GeneratedMessage {
 }
 
 class EdgeLocator extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo('EdgeLocator', package: const $pb.PackageName('lnrpc'))
-        ..a<Int64>(1, 'channelId', $pb.PbFieldType.OU6, Int64.ZERO)
-        ..aOB(2, 'directionReverse')
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('EdgeLocator',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..a<Int64>(1, 'channelId', $pb.PbFieldType.OU6, defaultOrMaker: Int64.ZERO)
+    ..aOB(2, 'directionReverse')
+    ..hasRequiredFields = false;
 
   EdgeLocator._() : super();
   factory EdgeLocator() => create();
@@ -4345,9 +4330,9 @@ class EdgeLocator extends $pb.GeneratedMessage {
 
 class QueryRoutesResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('QueryRoutesResponse',
-      package: const $pb.PackageName('lnrpc'))
-    ..pc<Route>(1, 'routes', $pb.PbFieldType.PM, Route.create)
-    ..a<$core.double>(2, 'successProb', $pb.PbFieldType.OD)
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..pc<Route>(1, 'routes', $pb.PbFieldType.PM, subBuilder: Route.create)
+    ..a<$core.double>(2, 'success_prob', $pb.PbFieldType.OD)
     ..hasRequiredFields = false;
 
   QueryRoutesResponse._() : super();
@@ -4383,28 +4368,23 @@ class QueryRoutesResponse extends $pb.GeneratedMessage {
 }
 
 class Hop extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo('Hop', package: const $pb.PackageName('lnrpc'))
-        ..a<Int64>(1, 'chanId', $pb.PbFieldType.OU6, Int64.ZERO)
-        ..aInt64(2, 'chanCapacity')
-        ..aInt64(3, 'amtToForward')
-        ..aInt64(4, 'fee')
-        ..a<$core.int>(5, 'expiry', $pb.PbFieldType.OU3)
-        ..aInt64(6, 'amtToForwardMsat')
-        ..aInt64(7, 'feeMsat')
-        ..aOS(8, 'pubKey')
-        ..aOB(9, 'tlvPayload')
-        ..m<Int64, $core.List<$core.int>>(
-            10,
-            'tlvRecords',
-            'Hop.TlvRecordsEntry',
-            $pb.PbFieldType.OU6,
-            $pb.PbFieldType.OY,
-            null,
-            null,
-            null,
-            const $pb.PackageName('lnrpc'))
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('Hop',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..a<Int64>(1, 'chan_id', $pb.PbFieldType.OU6, defaultOrMaker: Int64.ZERO)
+    ..aInt64(2, 'chan_capacity')
+    ..aInt64(3, 'amt_to_forward')
+    ..aInt64(4, 'fee')
+    ..a<$core.int>(5, 'expiry', $pb.PbFieldType.OU3)
+    ..aInt64(6, 'amt_to_forward_msat')
+    ..aInt64(7, 'fee_msat')
+    ..aOS(8, 'pub_key')
+    ..aOB(9, 'tlv_payload')
+    ..m<Int64, $core.List<$core.int>>(10, 'tlv_records',
+        entryClassName: 'Hop.TlvRecordsEntry',
+        keyFieldType: $pb.PbFieldType.OU6,
+        valueFieldType: $pb.PbFieldType.OY,
+        packageName: const $pb.PackageName('lnrpc'))
+    ..hasRequiredFields = false;
 
   Hop._() : super();
   factory Hop() => create();
@@ -4509,15 +4489,15 @@ class Hop extends $pb.GeneratedMessage {
 }
 
 class Route extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo('Route', package: const $pb.PackageName('lnrpc'))
-        ..a<$core.int>(1, 'totalTimeLock', $pb.PbFieldType.OU3)
-        ..aInt64(2, 'totalFees')
-        ..aInt64(3, 'totalAmt')
-        ..pc<Hop>(4, 'hops', $pb.PbFieldType.PM, Hop.create)
-        ..aInt64(5, 'totalFeesMsat')
-        ..aInt64(6, 'totalAmtMsat')
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('Route',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..a<$core.int>(1, 'total_time_lock', $pb.PbFieldType.OU3)
+    ..aInt64(2, 'total_fees')
+    ..aInt64(3, 'total_amt')
+    ..pc<Hop>(4, 'hops', $pb.PbFieldType.PM, subBuilder: Hop.create)
+    ..aInt64(5, 'total_fees_msat')
+    ..aInt64(6, 'total_amt_msat')
+    ..hasRequiredFields = false;
 
   Route._() : super();
   factory Route() => create();
@@ -4591,7 +4571,7 @@ class Route extends $pb.GeneratedMessage {
 
 class NodeInfoRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('NodeInfoRequest',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..aOS(1, 'pubKey')
     ..aOB(2, 'includeChannels')
     ..hasRequiredFields = false;
@@ -4635,14 +4615,16 @@ class NodeInfoRequest extends $pb.GeneratedMessage {
 }
 
 class NodeInfo extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo('NodeInfo', package: const $pb.PackageName('lnrpc'))
-        ..a<LightningNode>(1, 'node', $pb.PbFieldType.OM,
-            LightningNode.getDefault, LightningNode.create)
-        ..a<$core.int>(2, 'numChannels', $pb.PbFieldType.OU3)
-        ..aInt64(3, 'totalCapacity')
-        ..pc<ChannelEdge>(4, 'channels', $pb.PbFieldType.PM, ChannelEdge.create)
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('NodeInfo',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..a<LightningNode>(1, 'node', $pb.PbFieldType.OM,
+        defaultOrMaker: LightningNode.getDefault,
+        subBuilder: LightningNode.create)
+    ..a<$core.int>(2, 'num_channels', $pb.PbFieldType.OU3)
+    ..aInt64(3, 'total_capacity')
+    ..pc<ChannelEdge>(4, 'channels', $pb.PbFieldType.PM,
+        subBuilder: ChannelEdge.create)
+    ..hasRequiredFields = false;
 
   NodeInfo._() : super();
   factory NodeInfo() => create();
@@ -4692,11 +4674,12 @@ class NodeInfo extends $pb.GeneratedMessage {
 
 class LightningNode extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('LightningNode',
-      package: const $pb.PackageName('lnrpc'))
-    ..a<$core.int>(1, 'lastUpdate', $pb.PbFieldType.OU3)
-    ..aOS(2, 'pubKey')
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..a<$core.int>(1, 'last_update', $pb.PbFieldType.OU3)
+    ..aOS(2, 'pub_key')
     ..aOS(3, 'alias')
-    ..pc<NodeAddress>(4, 'addresses', $pb.PbFieldType.PM, NodeAddress.create)
+    ..pc<NodeAddress>(4, 'addresses', $pb.PbFieldType.PM,
+        subBuilder: NodeAddress.create)
     ..aOS(5, 'color')
     ..hasRequiredFields = false;
 
@@ -4756,11 +4739,11 @@ class LightningNode extends $pb.GeneratedMessage {
 }
 
 class NodeAddress extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo('NodeAddress', package: const $pb.PackageName('lnrpc'))
-        ..aOS(1, 'network')
-        ..aOS(2, 'addr')
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('NodeAddress',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..aOS(1, 'network')
+    ..aOS(2, 'addr')
+    ..hasRequiredFields = false;
 
   NodeAddress._() : super();
   factory NodeAddress() => create();
@@ -4799,16 +4782,17 @@ class NodeAddress extends $pb.GeneratedMessage {
 }
 
 class RoutingPolicy extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo('RoutingPolicy', package: const $pb.PackageName('lnrpc'))
-        ..a<$core.int>(1, 'timeLockDelta', $pb.PbFieldType.OU3)
-        ..aInt64(2, 'minHtlc')
-        ..aInt64(3, 'feeBaseMsat')
-        ..aInt64(4, 'feeRateMilliMsat')
-        ..aOB(5, 'disabled')
-        ..a<Int64>(6, 'maxHtlcMsat', $pb.PbFieldType.OU6, Int64.ZERO)
-        ..a<$core.int>(7, 'lastUpdate', $pb.PbFieldType.OU3)
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('RoutingPolicy',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..a<$core.int>(1, 'time_lock_delta', $pb.PbFieldType.OU3)
+    ..aInt64(2, 'min_htlc')
+    ..aInt64(3, 'fee_base_msat')
+    ..aInt64(4, 'fee_rate_milli_msat')
+    ..aOB(5, 'disabled')
+    ..a<Int64>(6, 'max_htlc_msat', $pb.PbFieldType.OU6,
+        defaultOrMaker: Int64.ZERO)
+    ..a<$core.int>(7, 'last_update', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false;
 
   RoutingPolicy._() : super();
   factory RoutingPolicy() => create();
@@ -4888,19 +4872,21 @@ class RoutingPolicy extends $pb.GeneratedMessage {
 }
 
 class ChannelEdge extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo('ChannelEdge', package: const $pb.PackageName('lnrpc'))
-        ..a<Int64>(1, 'channelId', $pb.PbFieldType.OU6, Int64.ZERO)
-        ..aOS(2, 'chanPoint')
-        ..a<$core.int>(3, 'lastUpdate', $pb.PbFieldType.OU3)
-        ..aOS(4, 'node1Pub')
-        ..aOS(5, 'node2Pub')
-        ..aInt64(6, 'capacity')
-        ..a<RoutingPolicy>(7, 'node1Policy', $pb.PbFieldType.OM,
-            RoutingPolicy.getDefault, RoutingPolicy.create)
-        ..a<RoutingPolicy>(8, 'node2Policy', $pb.PbFieldType.OM,
-            RoutingPolicy.getDefault, RoutingPolicy.create)
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('ChannelEdge',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..a<Int64>(1, 'channel_id', $pb.PbFieldType.OU6, defaultOrMaker: Int64.ZERO)
+    ..aOS(2, 'chan_point')
+    ..a<$core.int>(3, 'last_update', $pb.PbFieldType.OU3)
+    ..aOS(4, 'node1_pub')
+    ..aOS(5, 'node2_pub')
+    ..aInt64(6, 'capacity')
+    ..a<RoutingPolicy>(7, 'node1_policy', $pb.PbFieldType.OM,
+        defaultOrMaker: RoutingPolicy.getDefault,
+        subBuilder: RoutingPolicy.create)
+    ..a<RoutingPolicy>(8, 'node2_policy', $pb.PbFieldType.OM,
+        defaultOrMaker: RoutingPolicy.getDefault,
+        subBuilder: RoutingPolicy.create)
+    ..hasRequiredFields = false;
 
   ChannelEdge._() : super();
   factory ChannelEdge() => create();
@@ -4992,8 +4978,8 @@ class ChannelEdge extends $pb.GeneratedMessage {
 
 class ChannelGraphRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('ChannelGraphRequest',
-      package: const $pb.PackageName('lnrpc'))
-    ..aOB(1, 'includeUnannounced')
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..aOB(1, 'include_unannounced')
     ..hasRequiredFields = false;
 
   ChannelGraphRequest._() : super();
@@ -5028,9 +5014,11 @@ class ChannelGraphRequest extends $pb.GeneratedMessage {
 
 class ChannelGraph extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('ChannelGraph',
-      package: const $pb.PackageName('lnrpc'))
-    ..pc<LightningNode>(1, 'nodes', $pb.PbFieldType.PM, LightningNode.create)
-    ..pc<ChannelEdge>(2, 'edges', $pb.PbFieldType.PM, ChannelEdge.create)
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..pc<LightningNode>(1, 'nodes', $pb.PbFieldType.PM,
+        subBuilder: LightningNode.create)
+    ..pc<ChannelEdge>(2, 'edges', $pb.PbFieldType.PM,
+        subBuilder: ChannelEdge.create)
     ..hasRequiredFields = false;
 
   ChannelGraph._() : super();
@@ -5060,8 +5048,8 @@ class ChannelGraph extends $pb.GeneratedMessage {
 
 class ChanInfoRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('ChanInfoRequest',
-      package: const $pb.PackageName('lnrpc'))
-    ..a<Int64>(1, 'chanId', $pb.PbFieldType.OU6, Int64.ZERO)
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..a<Int64>(1, 'chanId', $pb.PbFieldType.OU6, defaultOrMaker: Int64.ZERO)
     ..hasRequiredFields = false;
 
   ChanInfoRequest._() : super();
@@ -5096,7 +5084,7 @@ class ChanInfoRequest extends $pb.GeneratedMessage {
 
 class NetworkInfoRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('NetworkInfoRequest',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..hasRequiredFields = false;
 
   NetworkInfoRequest._() : super();
@@ -5122,20 +5110,21 @@ class NetworkInfoRequest extends $pb.GeneratedMessage {
 }
 
 class NetworkInfo extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo('NetworkInfo', package: const $pb.PackageName('lnrpc'))
-        ..a<$core.int>(1, 'graphDiameter', $pb.PbFieldType.OU3)
-        ..a<$core.double>(2, 'avgOutDegree', $pb.PbFieldType.OD)
-        ..a<$core.int>(3, 'maxOutDegree', $pb.PbFieldType.OU3)
-        ..a<$core.int>(4, 'numNodes', $pb.PbFieldType.OU3)
-        ..a<$core.int>(5, 'numChannels', $pb.PbFieldType.OU3)
-        ..aInt64(6, 'totalNetworkCapacity')
-        ..a<$core.double>(7, 'avgChannelSize', $pb.PbFieldType.OD)
-        ..aInt64(8, 'minChannelSize')
-        ..aInt64(9, 'maxChannelSize')
-        ..aInt64(10, 'medianChannelSizeSat')
-        ..a<Int64>(11, 'numZombieChans', $pb.PbFieldType.OU6, Int64.ZERO)
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('NetworkInfo',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..a<$core.int>(1, 'graph_diameter', $pb.PbFieldType.OU3)
+    ..a<$core.double>(2, 'avg_out_degree', $pb.PbFieldType.OD)
+    ..a<$core.int>(3, 'max_out_degree', $pb.PbFieldType.OU3)
+    ..a<$core.int>(4, 'num_nodes', $pb.PbFieldType.OU3)
+    ..a<$core.int>(5, 'num_channels', $pb.PbFieldType.OU3)
+    ..aInt64(6, 'total_network_capacity')
+    ..a<$core.double>(7, 'avg_channel_size', $pb.PbFieldType.OD)
+    ..aInt64(8, 'min_channel_size')
+    ..aInt64(9, 'max_channel_size')
+    ..aInt64(10, 'median_channel_size_sat')
+    ..a<Int64>(11, 'num_zombie_chans', $pb.PbFieldType.OU6,
+        defaultOrMaker: Int64.ZERO)
+    ..hasRequiredFields = false;
 
   NetworkInfo._() : super();
   factory NetworkInfo() => create();
@@ -5246,9 +5235,9 @@ class NetworkInfo extends $pb.GeneratedMessage {
 }
 
 class StopRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo('StopRequest', package: const $pb.PackageName('lnrpc'))
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('StopRequest',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..hasRequiredFields = false;
 
   StopRequest._() : super();
   factory StopRequest() => create();
@@ -5271,9 +5260,9 @@ class StopRequest extends $pb.GeneratedMessage {
 }
 
 class StopResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo('StopResponse', package: const $pb.PackageName('lnrpc'))
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('StopResponse',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..hasRequiredFields = false;
 
   StopResponse._() : super();
   factory StopResponse() => create();
@@ -5298,7 +5287,7 @@ class StopResponse extends $pb.GeneratedMessage {
 
 class GraphTopologySubscription extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('GraphTopologySubscription',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..hasRequiredFields = false;
 
   GraphTopologySubscription._() : super();
@@ -5328,12 +5317,13 @@ class GraphTopologySubscription extends $pb.GeneratedMessage {
 
 class GraphTopologyUpdate extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('GraphTopologyUpdate',
-      package: const $pb.PackageName('lnrpc'))
-    ..pc<NodeUpdate>(1, 'nodeUpdates', $pb.PbFieldType.PM, NodeUpdate.create)
-    ..pc<ChannelEdgeUpdate>(
-        2, 'channelUpdates', $pb.PbFieldType.PM, ChannelEdgeUpdate.create)
-    ..pc<ClosedChannelUpdate>(
-        3, 'closedChans', $pb.PbFieldType.PM, ClosedChannelUpdate.create)
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..pc<NodeUpdate>(1, 'nodeUpdates', $pb.PbFieldType.PM,
+        subBuilder: NodeUpdate.create)
+    ..pc<ChannelEdgeUpdate>(2, 'channelUpdates', $pb.PbFieldType.PM,
+        subBuilder: ChannelEdgeUpdate.create)
+    ..pc<ClosedChannelUpdate>(3, 'closedChans', $pb.PbFieldType.PM,
+        subBuilder: ClosedChannelUpdate.create)
     ..hasRequiredFields = false;
 
   GraphTopologyUpdate._() : super();
@@ -5365,14 +5355,14 @@ class GraphTopologyUpdate extends $pb.GeneratedMessage {
 }
 
 class NodeUpdate extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo('NodeUpdate', package: const $pb.PackageName('lnrpc'))
-        ..pPS(1, 'addresses')
-        ..aOS(2, 'identityKey')
-        ..a<$core.List<$core.int>>(3, 'globalFeatures', $pb.PbFieldType.OY)
-        ..aOS(4, 'alias')
-        ..aOS(5, 'color')
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('NodeUpdate',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..pPS(1, 'addresses')
+    ..aOS(2, 'identityKey')
+    ..a<$core.List<$core.int>>(3, 'globalFeatures', $pb.PbFieldType.OY)
+    ..aOS(4, 'alias')
+    ..aOS(5, 'color')
+    ..hasRequiredFields = false;
 
   NodeUpdate._() : super();
   factory NodeUpdate() => create();
@@ -5430,13 +5420,15 @@ class NodeUpdate extends $pb.GeneratedMessage {
 
 class ChannelEdgeUpdate extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('ChannelEdgeUpdate',
-      package: const $pb.PackageName('lnrpc'))
-    ..a<Int64>(1, 'chanId', $pb.PbFieldType.OU6, Int64.ZERO)
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..a<Int64>(1, 'chanId', $pb.PbFieldType.OU6, defaultOrMaker: Int64.ZERO)
     ..a<ChannelPoint>(2, 'chanPoint', $pb.PbFieldType.OM,
-        ChannelPoint.getDefault, ChannelPoint.create)
+        defaultOrMaker: ChannelPoint.getDefault,
+        subBuilder: ChannelPoint.create)
     ..aInt64(3, 'capacity')
     ..a<RoutingPolicy>(4, 'routingPolicy', $pb.PbFieldType.OM,
-        RoutingPolicy.getDefault, RoutingPolicy.create)
+        defaultOrMaker: RoutingPolicy.getDefault,
+        subBuilder: RoutingPolicy.create)
     ..aOS(5, 'advertisingNode')
     ..aOS(6, 'connectingNode')
     ..hasRequiredFields = false;
@@ -5513,12 +5505,13 @@ class ChannelEdgeUpdate extends $pb.GeneratedMessage {
 
 class ClosedChannelUpdate extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('ClosedChannelUpdate',
-      package: const $pb.PackageName('lnrpc'))
-    ..a<Int64>(1, 'chanId', $pb.PbFieldType.OU6, Int64.ZERO)
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..a<Int64>(1, 'chanId', $pb.PbFieldType.OU6, defaultOrMaker: Int64.ZERO)
     ..aInt64(2, 'capacity')
     ..a<$core.int>(3, 'closedHeight', $pb.PbFieldType.OU3)
     ..a<ChannelPoint>(4, 'chanPoint', $pb.PbFieldType.OM,
-        ChannelPoint.getDefault, ChannelPoint.create)
+        defaultOrMaker: ChannelPoint.getDefault,
+        subBuilder: ChannelPoint.create)
     ..hasRequiredFields = false;
 
   ClosedChannelUpdate._() : super();
@@ -5576,14 +5569,14 @@ class ClosedChannelUpdate extends $pb.GeneratedMessage {
 }
 
 class HopHint extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo('HopHint', package: const $pb.PackageName('lnrpc'))
-        ..aOS(1, 'nodeId')
-        ..a<Int64>(2, 'chanId', $pb.PbFieldType.OU6, Int64.ZERO)
-        ..a<$core.int>(3, 'feeBaseMsat', $pb.PbFieldType.OU3)
-        ..a<$core.int>(4, 'feeProportionalMillionths', $pb.PbFieldType.OU3)
-        ..a<$core.int>(5, 'cltvExpiryDelta', $pb.PbFieldType.OU3)
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('HopHint',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..aOS(1, 'node_id')
+    ..a<Int64>(2, 'chan_id', $pb.PbFieldType.OU6, defaultOrMaker: Int64.ZERO)
+    ..a<$core.int>(3, 'fee_base_msat', $pb.PbFieldType.OU3)
+    ..a<$core.int>(4, 'fee_proportional_millionths', $pb.PbFieldType.OU3)
+    ..a<$core.int>(5, 'cltv_expiry_delta', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false;
 
   HopHint._() : super();
   factory HopHint() => create();
@@ -5646,10 +5639,11 @@ class HopHint extends $pb.GeneratedMessage {
 }
 
 class RouteHint extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo('RouteHint', package: const $pb.PackageName('lnrpc'))
-        ..pc<HopHint>(1, 'hopHints', $pb.PbFieldType.PM, HopHint.create)
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('RouteHint',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..pc<HopHint>(1, 'hop_hints', $pb.PbFieldType.PM,
+        subBuilder: HopHint.create)
+    ..hasRequiredFields = false;
 
   RouteHint._() : super();
   factory RouteHint() => create();
@@ -5674,37 +5668,38 @@ class RouteHint extends $pb.GeneratedMessage {
 }
 
 class Invoice extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo('Invoice', package: const $pb.PackageName('lnrpc'))
-        ..aOS(1, 'memo')
-        ..a<$core.List<$core.int>>(2, 'receipt', $pb.PbFieldType.OY)
-        ..a<$core.List<$core.int>>(3, 'rPreimage', $pb.PbFieldType.OY)
-        ..a<$core.List<$core.int>>(4, 'rHash', $pb.PbFieldType.OY)
-        ..aInt64(5, 'value')
-        ..aOB(6, 'settled')
-        ..aInt64(7, 'creationDate')
-        ..aInt64(8, 'settleDate')
-        ..aOS(9, 'paymentRequest')
-        ..a<$core.List<$core.int>>(10, 'descriptionHash', $pb.PbFieldType.OY)
-        ..aInt64(11, 'expiry')
-        ..aOS(12, 'fallbackAddr')
-        ..a<Int64>(13, 'cltvExpiry', $pb.PbFieldType.OU6, Int64.ZERO)
-        ..pc<RouteHint>(14, 'routeHints', $pb.PbFieldType.PM, RouteHint.create)
-        ..aOB(15, 'private')
-        ..a<Int64>(16, 'addIndex', $pb.PbFieldType.OU6, Int64.ZERO)
-        ..a<Int64>(17, 'settleIndex', $pb.PbFieldType.OU6, Int64.ZERO)
-        ..aInt64(18, 'amtPaid')
-        ..aInt64(19, 'amtPaidSat')
-        ..aInt64(20, 'amtPaidMsat')
-        ..e<Invoice_InvoiceState>(
-            21,
-            'state',
-            $pb.PbFieldType.OE,
-            Invoice_InvoiceState.OPEN,
-            Invoice_InvoiceState.valueOf,
-            Invoice_InvoiceState.values)
-        ..pc<InvoiceHTLC>(22, 'htlcs', $pb.PbFieldType.PM, InvoiceHTLC.create)
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('Invoice',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..aOS(1, 'memo')
+    ..a<$core.List<$core.int>>(2, 'receipt', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(3, 'r_preimage', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(4, 'r_hash', $pb.PbFieldType.OY)
+    ..aInt64(5, 'value')
+    ..aOB(6, 'settled')
+    ..aInt64(7, 'creation_date')
+    ..aInt64(8, 'settle_date')
+    ..aOS(9, 'payment_request')
+    ..a<$core.List<$core.int>>(10, 'description_hash', $pb.PbFieldType.OY)
+    ..aInt64(11, 'expiry')
+    ..aOS(12, 'fallback_addr')
+    ..a<Int64>(13, 'cltv_expiry', $pb.PbFieldType.OU6,
+        defaultOrMaker: Int64.ZERO)
+    ..pc<RouteHint>(14, 'route_hints', $pb.PbFieldType.PM,
+        subBuilder: RouteHint.create)
+    ..aOB(15, 'private')
+    ..a<Int64>(16, 'add_index', $pb.PbFieldType.OU6, defaultOrMaker: Int64.ZERO)
+    ..a<Int64>(17, 'settle_index', $pb.PbFieldType.OU6,
+        defaultOrMaker: Int64.ZERO)
+    ..aInt64(18, 'amt_paid')
+    ..aInt64(19, 'amt_paid_sat')
+    ..aInt64(20, 'amt_paid_msat')
+    ..e<Invoice_InvoiceState>(21, 'state', $pb.PbFieldType.OE,
+        defaultOrMaker: Invoice_InvoiceState.OPEN,
+        valueOf: Invoice_InvoiceState.valueOf,
+        enumValues: Invoice_InvoiceState.values)
+    ..pc<InvoiceHTLC>(22, 'htlcs', $pb.PbFieldType.PM,
+        subBuilder: InvoiceHTLC.create)
+    ..hasRequiredFields = false;
 
   Invoice._() : super();
   factory Invoice() => create();
@@ -5903,23 +5898,20 @@ class Invoice extends $pb.GeneratedMessage {
 }
 
 class InvoiceHTLC extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo('InvoiceHTLC', package: const $pb.PackageName('lnrpc'))
-        ..a<Int64>(1, 'chanId', $pb.PbFieldType.OU6, Int64.ZERO)
-        ..a<Int64>(2, 'htlcIndex', $pb.PbFieldType.OU6, Int64.ZERO)
-        ..a<Int64>(3, 'amtMsat', $pb.PbFieldType.OU6, Int64.ZERO)
-        ..a<$core.int>(4, 'acceptHeight', $pb.PbFieldType.O3)
-        ..aInt64(5, 'acceptTime')
-        ..aInt64(6, 'resolveTime')
-        ..a<$core.int>(7, 'expiryHeight', $pb.PbFieldType.O3)
-        ..e<InvoiceHTLCState>(
-            8,
-            'state',
-            $pb.PbFieldType.OE,
-            InvoiceHTLCState.ACCEPTED,
-            InvoiceHTLCState.valueOf,
-            InvoiceHTLCState.values)
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('InvoiceHTLC',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..a<Int64>(1, 'chan_id', $pb.PbFieldType.OU6, defaultOrMaker: Int64.ZERO)
+    ..a<Int64>(2, 'htlc_index', $pb.PbFieldType.OU6, defaultOrMaker: Int64.ZERO)
+    ..a<Int64>(3, 'amt_msat', $pb.PbFieldType.OU6, defaultOrMaker: Int64.ZERO)
+    ..a<$core.int>(4, 'accept_height', $pb.PbFieldType.O3)
+    ..aInt64(5, 'accept_time')
+    ..aInt64(6, 'resolve_time')
+    ..a<$core.int>(7, 'expiry_height', $pb.PbFieldType.O3)
+    ..e<InvoiceHTLCState>(8, 'state', $pb.PbFieldType.OE,
+        defaultOrMaker: InvoiceHTLCState.ACCEPTED,
+        valueOf: InvoiceHTLCState.valueOf,
+        enumValues: InvoiceHTLCState.values)
+    ..hasRequiredFields = false;
 
   InvoiceHTLC._() : super();
   factory InvoiceHTLC() => create();
@@ -6007,10 +5999,10 @@ class InvoiceHTLC extends $pb.GeneratedMessage {
 
 class AddInvoiceResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('AddInvoiceResponse',
-      package: const $pb.PackageName('lnrpc'))
-    ..a<$core.List<$core.int>>(1, 'rHash', $pb.PbFieldType.OY)
-    ..aOS(2, 'paymentRequest')
-    ..a<Int64>(16, 'addIndex', $pb.PbFieldType.OU6, Int64.ZERO)
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..a<$core.List<$core.int>>(1, 'r_hash', $pb.PbFieldType.OY)
+    ..aOS(2, 'payment_request')
+    ..a<Int64>(16, 'add_index', $pb.PbFieldType.OU6, defaultOrMaker: Int64.ZERO)
     ..hasRequiredFields = false;
 
   AddInvoiceResponse._() : super();
@@ -6060,11 +6052,11 @@ class AddInvoiceResponse extends $pb.GeneratedMessage {
 }
 
 class PaymentHash extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo('PaymentHash', package: const $pb.PackageName('lnrpc'))
-        ..aOS(1, 'rHashStr')
-        ..a<$core.List<$core.int>>(2, 'rHash', $pb.PbFieldType.OY)
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('PaymentHash',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..aOS(1, 'r_hash_str')
+    ..a<$core.List<$core.int>>(2, 'r_hash', $pb.PbFieldType.OY)
+    ..hasRequiredFields = false;
 
   PaymentHash._() : super();
   factory PaymentHash() => create();
@@ -6104,10 +6096,12 @@ class PaymentHash extends $pb.GeneratedMessage {
 
 class ListInvoiceRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('ListInvoiceRequest',
-      package: const $pb.PackageName('lnrpc'))
-    ..aOB(1, 'pendingOnly')
-    ..a<Int64>(4, 'indexOffset', $pb.PbFieldType.OU6, Int64.ZERO)
-    ..a<Int64>(5, 'numMaxInvoices', $pb.PbFieldType.OU6, Int64.ZERO)
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..aOB(1, 'pending_only')
+    ..a<Int64>(4, 'index_offset', $pb.PbFieldType.OU6,
+        defaultOrMaker: Int64.ZERO)
+    ..a<Int64>(5, 'num_max_invoices', $pb.PbFieldType.OU6,
+        defaultOrMaker: Int64.ZERO)
     ..aOB(6, 'reversed')
     ..hasRequiredFields = false;
 
@@ -6167,10 +6161,12 @@ class ListInvoiceRequest extends $pb.GeneratedMessage {
 
 class ListInvoiceResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('ListInvoiceResponse',
-      package: const $pb.PackageName('lnrpc'))
-    ..pc<Invoice>(1, 'invoices', $pb.PbFieldType.PM, Invoice.create)
-    ..a<Int64>(2, 'lastIndexOffset', $pb.PbFieldType.OU6, Int64.ZERO)
-    ..a<Int64>(3, 'firstIndexOffset', $pb.PbFieldType.OU6, Int64.ZERO)
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..pc<Invoice>(1, 'invoices', $pb.PbFieldType.PM, subBuilder: Invoice.create)
+    ..a<Int64>(2, 'last_index_offset', $pb.PbFieldType.OU6,
+        defaultOrMaker: Int64.ZERO)
+    ..a<Int64>(3, 'first_index_offset', $pb.PbFieldType.OU6,
+        defaultOrMaker: Int64.ZERO)
     ..hasRequiredFields = false;
 
   ListInvoiceResponse._() : super();
@@ -6215,9 +6211,10 @@ class ListInvoiceResponse extends $pb.GeneratedMessage {
 
 class InvoiceSubscription extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('InvoiceSubscription',
-      package: const $pb.PackageName('lnrpc'))
-    ..a<Int64>(1, 'addIndex', $pb.PbFieldType.OU6, Int64.ZERO)
-    ..a<Int64>(2, 'settleIndex', $pb.PbFieldType.OU6, Int64.ZERO)
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..a<Int64>(1, 'add_index', $pb.PbFieldType.OU6, defaultOrMaker: Int64.ZERO)
+    ..a<Int64>(2, 'settle_index', $pb.PbFieldType.OU6,
+        defaultOrMaker: Int64.ZERO)
     ..hasRequiredFields = false;
 
   InvoiceSubscription._() : super();
@@ -6259,27 +6256,24 @@ class InvoiceSubscription extends $pb.GeneratedMessage {
 }
 
 class Payment extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo('Payment', package: const $pb.PackageName('lnrpc'))
-        ..aOS(1, 'paymentHash')
-        ..aInt64(2, 'value')
-        ..aInt64(3, 'creationDate')
-        ..pPS(4, 'path')
-        ..aInt64(5, 'fee')
-        ..aOS(6, 'paymentPreimage')
-        ..aInt64(7, 'valueSat')
-        ..aInt64(8, 'valueMsat')
-        ..aOS(9, 'paymentRequest')
-        ..e<Payment_PaymentStatus>(
-            10,
-            'status',
-            $pb.PbFieldType.OE,
-            Payment_PaymentStatus.UNKNOWN,
-            Payment_PaymentStatus.valueOf,
-            Payment_PaymentStatus.values)
-        ..aInt64(11, 'feeSat')
-        ..aInt64(12, 'feeMsat')
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('Payment',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..aOS(1, 'payment_hash')
+    ..aInt64(2, 'value')
+    ..aInt64(3, 'creation_date')
+    ..pPS(4, 'path')
+    ..aInt64(5, 'fee')
+    ..aOS(6, 'payment_preimage')
+    ..aInt64(7, 'value_sat')
+    ..aInt64(8, 'value_msat')
+    ..aOS(9, 'payment_request')
+    ..e<Payment_PaymentStatus>(10, 'status', $pb.PbFieldType.OE,
+        defaultOrMaker: Payment_PaymentStatus.UNKNOWN,
+        valueOf: Payment_PaymentStatus.valueOf,
+        enumValues: Payment_PaymentStatus.values)
+    ..aInt64(11, 'fee_sat')
+    ..aInt64(12, 'fee_msat')
+    ..hasRequiredFields = false;
 
   Payment._() : super();
   factory Payment() => create();
@@ -6401,7 +6395,7 @@ class Payment extends $pb.GeneratedMessage {
 
 class ListPaymentsRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('ListPaymentsRequest',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..aOB(1, 'includeIncomplete')
     ..hasRequiredFields = false;
 
@@ -6437,8 +6431,8 @@ class ListPaymentsRequest extends $pb.GeneratedMessage {
 
 class ListPaymentsResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('ListPaymentsResponse',
-      package: const $pb.PackageName('lnrpc'))
-    ..pc<Payment>(1, 'payments', $pb.PbFieldType.PM, Payment.create)
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..pc<Payment>(1, 'payments', $pb.PbFieldType.PM, subBuilder: Payment.create)
     ..hasRequiredFields = false;
 
   ListPaymentsResponse._() : super();
@@ -6468,7 +6462,7 @@ class ListPaymentsResponse extends $pb.GeneratedMessage {
 
 class DeleteAllPaymentsRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('DeleteAllPaymentsRequest',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..hasRequiredFields = false;
 
   DeleteAllPaymentsRequest._() : super();
@@ -6497,7 +6491,7 @@ class DeleteAllPaymentsRequest extends $pb.GeneratedMessage {
 
 class DeleteAllPaymentsResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('DeleteAllPaymentsResponse',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..hasRequiredFields = false;
 
   DeleteAllPaymentsResponse._() : super();
@@ -6527,9 +6521,10 @@ class DeleteAllPaymentsResponse extends $pb.GeneratedMessage {
 
 class AbandonChannelRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('AbandonChannelRequest',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..a<ChannelPoint>(1, 'channelPoint', $pb.PbFieldType.OM,
-        ChannelPoint.getDefault, ChannelPoint.create)
+        defaultOrMaker: ChannelPoint.getDefault,
+        subBuilder: ChannelPoint.create)
     ..hasRequiredFields = false;
 
   AbandonChannelRequest._() : super();
@@ -6566,7 +6561,7 @@ class AbandonChannelRequest extends $pb.GeneratedMessage {
 
 class AbandonChannelResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('AbandonChannelResponse',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..hasRequiredFields = false;
 
   AbandonChannelResponse._() : super();
@@ -6595,7 +6590,7 @@ class AbandonChannelResponse extends $pb.GeneratedMessage {
 
 class DebugLevelRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('DebugLevelRequest',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..aOB(1, 'show')
     ..aOS(2, 'levelSpec')
     ..hasRequiredFields = false;
@@ -6640,8 +6635,8 @@ class DebugLevelRequest extends $pb.GeneratedMessage {
 
 class DebugLevelResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('DebugLevelResponse',
-      package: const $pb.PackageName('lnrpc'))
-    ..aOS(1, 'subSystems')
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..aOS(1, 'sub_systems')
     ..hasRequiredFields = false;
 
   DebugLevelResponse._() : super();
@@ -6675,10 +6670,10 @@ class DebugLevelResponse extends $pb.GeneratedMessage {
 }
 
 class PayReqString extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo('PayReqString', package: const $pb.PackageName('lnrpc'))
-        ..aOS(1, 'payReq')
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('PayReqString',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..aOS(1, 'payReq')
+    ..hasRequiredFields = false;
 
   PayReqString._() : super();
   factory PayReqString() => create();
@@ -6710,19 +6705,20 @@ class PayReqString extends $pb.GeneratedMessage {
 }
 
 class PayReq extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo('PayReq', package: const $pb.PackageName('lnrpc'))
-        ..aOS(1, 'destination')
-        ..aOS(2, 'paymentHash')
-        ..aInt64(3, 'numSatoshis')
-        ..aInt64(4, 'timestamp')
-        ..aInt64(5, 'expiry')
-        ..aOS(6, 'description')
-        ..aOS(7, 'descriptionHash')
-        ..aOS(8, 'fallbackAddr')
-        ..aInt64(9, 'cltvExpiry')
-        ..pc<RouteHint>(10, 'routeHints', $pb.PbFieldType.PM, RouteHint.create)
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('PayReq',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..aOS(1, 'destination')
+    ..aOS(2, 'payment_hash')
+    ..aInt64(3, 'num_satoshis')
+    ..aInt64(4, 'timestamp')
+    ..aInt64(5, 'expiry')
+    ..aOS(6, 'description')
+    ..aOS(7, 'description_hash')
+    ..aOS(8, 'fallback_addr')
+    ..aInt64(9, 'cltv_expiry')
+    ..pc<RouteHint>(10, 'route_hints', $pb.PbFieldType.PM,
+        subBuilder: RouteHint.create)
+    ..hasRequiredFields = false;
 
   PayReq._() : super();
   factory PayReq() => create();
@@ -6820,7 +6816,7 @@ class PayReq extends $pb.GeneratedMessage {
 
 class FeeReportRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('FeeReportRequest',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..hasRequiredFields = false;
 
   FeeReportRequest._() : super();
@@ -6847,11 +6843,11 @@ class FeeReportRequest extends $pb.GeneratedMessage {
 
 class ChannelFeeReport extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('ChannelFeeReport',
-      package: const $pb.PackageName('lnrpc'))
-    ..aOS(1, 'chanPoint')
-    ..aInt64(2, 'baseFeeMsat')
-    ..aInt64(3, 'feePerMil')
-    ..a<$core.double>(4, 'feeRate', $pb.PbFieldType.OD)
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..aOS(1, 'channel_point', protoName: 'chan_point')
+    ..aInt64(2, 'base_fee_msat')
+    ..aInt64(3, 'fee_per_mil')
+    ..a<$core.double>(4, 'fee_rate', $pb.PbFieldType.OD)
     ..hasRequiredFields = false;
 
   ChannelFeeReport._() : super();
@@ -6910,12 +6906,15 @@ class ChannelFeeReport extends $pb.GeneratedMessage {
 
 class FeeReportResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('FeeReportResponse',
-      package: const $pb.PackageName('lnrpc'))
-    ..pc<ChannelFeeReport>(
-        1, 'channelFees', $pb.PbFieldType.PM, ChannelFeeReport.create)
-    ..a<Int64>(2, 'dayFeeSum', $pb.PbFieldType.OU6, Int64.ZERO)
-    ..a<Int64>(3, 'weekFeeSum', $pb.PbFieldType.OU6, Int64.ZERO)
-    ..a<Int64>(4, 'monthFeeSum', $pb.PbFieldType.OU6, Int64.ZERO)
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..pc<ChannelFeeReport>(1, 'channel_fees', $pb.PbFieldType.PM,
+        subBuilder: ChannelFeeReport.create)
+    ..a<Int64>(2, 'day_fee_sum', $pb.PbFieldType.OU6,
+        defaultOrMaker: Int64.ZERO)
+    ..a<Int64>(3, 'week_fee_sum', $pb.PbFieldType.OU6,
+        defaultOrMaker: Int64.ZERO)
+    ..a<Int64>(4, 'month_fee_sum', $pb.PbFieldType.OU6,
+        defaultOrMaker: Int64.ZERO)
     ..hasRequiredFields = false;
 
   FeeReportResponse._() : super();
@@ -6976,14 +6975,15 @@ class PolicyUpdateRequest extends $pb.GeneratedMessage {
     0: PolicyUpdateRequest_Scope.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('PolicyUpdateRequest',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..oo(0, [1, 2])
     ..aOB(1, 'global')
-    ..a<ChannelPoint>(2, 'chanPoint', $pb.PbFieldType.OM,
-        ChannelPoint.getDefault, ChannelPoint.create)
-    ..aInt64(3, 'baseFeeMsat')
-    ..a<$core.double>(4, 'feeRate', $pb.PbFieldType.OD)
-    ..a<$core.int>(5, 'timeLockDelta', $pb.PbFieldType.OU3)
+    ..a<ChannelPoint>(2, 'chan_point', $pb.PbFieldType.OM,
+        defaultOrMaker: ChannelPoint.getDefault,
+        subBuilder: ChannelPoint.create)
+    ..aInt64(3, 'base_fee_msat')
+    ..a<$core.double>(4, 'fee_rate', $pb.PbFieldType.OD)
+    ..a<$core.int>(5, 'time_lock_delta', $pb.PbFieldType.OU3)
     ..hasRequiredFields = false;
 
   PolicyUpdateRequest._() : super();
@@ -7054,7 +7054,7 @@ class PolicyUpdateRequest extends $pb.GeneratedMessage {
 
 class PolicyUpdateResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('PolicyUpdateResponse',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..hasRequiredFields = false;
 
   PolicyUpdateResponse._() : super();
@@ -7082,11 +7082,11 @@ class PolicyUpdateResponse extends $pb.GeneratedMessage {
 
 class ForwardingHistoryRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('ForwardingHistoryRequest',
-      package: const $pb.PackageName('lnrpc'))
-    ..a<Int64>(1, 'startTime', $pb.PbFieldType.OU6, Int64.ZERO)
-    ..a<Int64>(2, 'endTime', $pb.PbFieldType.OU6, Int64.ZERO)
-    ..a<$core.int>(3, 'indexOffset', $pb.PbFieldType.OU3)
-    ..a<$core.int>(4, 'numMaxEvents', $pb.PbFieldType.OU3)
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..a<Int64>(1, 'start_time', $pb.PbFieldType.OU6, defaultOrMaker: Int64.ZERO)
+    ..a<Int64>(2, 'end_time', $pb.PbFieldType.OU6, defaultOrMaker: Int64.ZERO)
+    ..a<$core.int>(3, 'index_offset', $pb.PbFieldType.OU3)
+    ..a<$core.int>(4, 'num_max_events', $pb.PbFieldType.OU3)
     ..hasRequiredFields = false;
 
   ForwardingHistoryRequest._() : super();
@@ -7147,14 +7147,15 @@ class ForwardingHistoryRequest extends $pb.GeneratedMessage {
 
 class ForwardingEvent extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('ForwardingEvent',
-      package: const $pb.PackageName('lnrpc'))
-    ..a<Int64>(1, 'timestamp', $pb.PbFieldType.OU6, Int64.ZERO)
-    ..a<Int64>(2, 'chanIdIn', $pb.PbFieldType.OU6, Int64.ZERO)
-    ..a<Int64>(4, 'chanIdOut', $pb.PbFieldType.OU6, Int64.ZERO)
-    ..a<Int64>(5, 'amtIn', $pb.PbFieldType.OU6, Int64.ZERO)
-    ..a<Int64>(6, 'amtOut', $pb.PbFieldType.OU6, Int64.ZERO)
-    ..a<Int64>(7, 'fee', $pb.PbFieldType.OU6, Int64.ZERO)
-    ..a<Int64>(8, 'feeMsat', $pb.PbFieldType.OU6, Int64.ZERO)
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..a<Int64>(1, 'timestamp', $pb.PbFieldType.OU6, defaultOrMaker: Int64.ZERO)
+    ..a<Int64>(2, 'chan_id_in', $pb.PbFieldType.OU6, defaultOrMaker: Int64.ZERO)
+    ..a<Int64>(4, 'chan_id_out', $pb.PbFieldType.OU6,
+        defaultOrMaker: Int64.ZERO)
+    ..a<Int64>(5, 'amt_in', $pb.PbFieldType.OU6, defaultOrMaker: Int64.ZERO)
+    ..a<Int64>(6, 'amt_out', $pb.PbFieldType.OU6, defaultOrMaker: Int64.ZERO)
+    ..a<Int64>(7, 'fee', $pb.PbFieldType.OU6, defaultOrMaker: Int64.ZERO)
+    ..a<Int64>(8, 'fee_msat', $pb.PbFieldType.OU6, defaultOrMaker: Int64.ZERO)
     ..hasRequiredFields = false;
 
   ForwardingEvent._() : super();
@@ -7237,10 +7238,10 @@ class ForwardingEvent extends $pb.GeneratedMessage {
 
 class ForwardingHistoryResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('ForwardingHistoryResponse',
-      package: const $pb.PackageName('lnrpc'))
-    ..pc<ForwardingEvent>(
-        1, 'forwardingEvents', $pb.PbFieldType.PM, ForwardingEvent.create)
-    ..a<$core.int>(2, 'lastOffsetIndex', $pb.PbFieldType.OU3)
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..pc<ForwardingEvent>(1, 'forwarding_events', $pb.PbFieldType.PM,
+        subBuilder: ForwardingEvent.create)
+    ..a<$core.int>(2, 'last_offset_index', $pb.PbFieldType.OU3)
     ..hasRequiredFields = false;
 
   ForwardingHistoryResponse._() : super();
@@ -7281,9 +7282,11 @@ class ForwardingHistoryResponse extends $pb.GeneratedMessage {
 class ExportChannelBackupRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       'ExportChannelBackupRequest',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'),
+      createEmptyInstance: create)
     ..a<ChannelPoint>(1, 'chanPoint', $pb.PbFieldType.OM,
-        ChannelPoint.getDefault, ChannelPoint.create)
+        defaultOrMaker: ChannelPoint.getDefault,
+        subBuilder: ChannelPoint.create)
     ..hasRequiredFields = false;
 
   ExportChannelBackupRequest._() : super();
@@ -7320,12 +7323,13 @@ class ExportChannelBackupRequest extends $pb.GeneratedMessage {
 }
 
 class ChannelBackup extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo('ChannelBackup', package: const $pb.PackageName('lnrpc'))
-        ..a<ChannelPoint>(1, 'chanPoint', $pb.PbFieldType.OM,
-            ChannelPoint.getDefault, ChannelPoint.create)
-        ..a<$core.List<$core.int>>(2, 'chanBackup', $pb.PbFieldType.OY)
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('ChannelBackup',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..a<ChannelPoint>(1, 'chan_point', $pb.PbFieldType.OM,
+        defaultOrMaker: ChannelPoint.getDefault,
+        subBuilder: ChannelPoint.create)
+    ..a<$core.List<$core.int>>(2, 'chan_backup', $pb.PbFieldType.OY)
+    ..hasRequiredFields = false;
 
   ChannelBackup._() : super();
   factory ChannelBackup() => create();
@@ -7366,9 +7370,10 @@ class ChannelBackup extends $pb.GeneratedMessage {
 
 class MultiChanBackup extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('MultiChanBackup',
-      package: const $pb.PackageName('lnrpc'))
-    ..pc<ChannelPoint>(1, 'chanPoints', $pb.PbFieldType.PM, ChannelPoint.create)
-    ..a<$core.List<$core.int>>(2, 'multiChanBackup', $pb.PbFieldType.OY)
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..pc<ChannelPoint>(1, 'chan_points', $pb.PbFieldType.PM,
+        subBuilder: ChannelPoint.create)
+    ..a<$core.List<$core.int>>(2, 'multi_chan_backup', $pb.PbFieldType.OY)
     ..hasRequiredFields = false;
 
   MultiChanBackup._() : super();
@@ -7405,7 +7410,7 @@ class MultiChanBackup extends $pb.GeneratedMessage {
 
 class ChanBackupExportRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('ChanBackupExportRequest',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..hasRequiredFields = false;
 
   ChanBackupExportRequest._() : super();
@@ -7434,11 +7439,13 @@ class ChanBackupExportRequest extends $pb.GeneratedMessage {
 
 class ChanBackupSnapshot extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('ChanBackupSnapshot',
-      package: const $pb.PackageName('lnrpc'))
-    ..a<ChannelBackups>(1, 'singleChanBackups', $pb.PbFieldType.OM,
-        ChannelBackups.getDefault, ChannelBackups.create)
-    ..a<MultiChanBackup>(2, 'multiChanBackup', $pb.PbFieldType.OM,
-        MultiChanBackup.getDefault, MultiChanBackup.create)
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..a<ChannelBackups>(1, 'single_chan_backups', $pb.PbFieldType.OM,
+        defaultOrMaker: ChannelBackups.getDefault,
+        subBuilder: ChannelBackups.create)
+    ..a<MultiChanBackup>(2, 'multi_chan_backup', $pb.PbFieldType.OM,
+        defaultOrMaker: MultiChanBackup.getDefault,
+        subBuilder: MultiChanBackup.create)
     ..hasRequiredFields = false;
 
   ChanBackupSnapshot._() : super();
@@ -7480,11 +7487,11 @@ class ChanBackupSnapshot extends $pb.GeneratedMessage {
 }
 
 class ChannelBackups extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo('ChannelBackups', package: const $pb.PackageName('lnrpc'))
-        ..pc<ChannelBackup>(
-            1, 'chanBackups', $pb.PbFieldType.PM, ChannelBackup.create)
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('ChannelBackups',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..pc<ChannelBackup>(1, 'chan_backups', $pb.PbFieldType.PM,
+        subBuilder: ChannelBackup.create)
+    ..hasRequiredFields = false;
 
   ChannelBackups._() : super();
   factory ChannelBackups() => create();
@@ -7519,11 +7526,12 @@ class RestoreChanBackupRequest extends $pb.GeneratedMessage {
     0: RestoreChanBackupRequest_Backup.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('RestoreChanBackupRequest',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..oo(0, [1, 2])
-    ..a<ChannelBackups>(1, 'chanBackups', $pb.PbFieldType.OM,
-        ChannelBackups.getDefault, ChannelBackups.create)
-    ..a<$core.List<$core.int>>(2, 'multiChanBackup', $pb.PbFieldType.OY)
+    ..a<ChannelBackups>(1, 'chan_backups', $pb.PbFieldType.OM,
+        defaultOrMaker: ChannelBackups.getDefault,
+        subBuilder: ChannelBackups.create)
+    ..a<$core.List<$core.int>>(2, 'multi_chan_backup', $pb.PbFieldType.OY)
     ..hasRequiredFields = false;
 
   RestoreChanBackupRequest._() : super();
@@ -7572,7 +7580,7 @@ class RestoreChanBackupRequest extends $pb.GeneratedMessage {
 
 class RestoreBackupResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('RestoreBackupResponse',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..hasRequiredFields = false;
 
   RestoreBackupResponse._() : super();
@@ -7601,7 +7609,7 @@ class RestoreBackupResponse extends $pb.GeneratedMessage {
 
 class ChannelBackupSubscription extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('ChannelBackupSubscription',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..hasRequiredFields = false;
 
   ChannelBackupSubscription._() : super();
@@ -7631,7 +7639,7 @@ class ChannelBackupSubscription extends $pb.GeneratedMessage {
 
 class VerifyChanBackupResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('VerifyChanBackupResponse',
-      package: const $pb.PackageName('lnrpc'))
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..hasRequiredFields = false;
 
   VerifyChanBackupResponse._() : super();

@@ -26,8 +26,8 @@ dependencies:
   meta: ^1.1.6
   flutter_spinkit: ^4.0.0
   shared_preferences: ^0.5.3+4
-  grpc: ^2.1.1
-  protobuf: ^0.13.15
+  grpc: ^2.1.2
+  protobuf: ^0.14.1
   fixnum: ^0.10.9
   qr_code_scanner: ^0.0.12
   timeago: ^2.0.18
