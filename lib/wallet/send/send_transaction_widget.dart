@@ -1,9 +1,9 @@
+import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:share/share.dart';
 import 'package:torden/common/constants.dart';
 import 'package:torden/common/utils.dart';
 import 'package:torden/common/widgets/widgets.dart';
@@ -222,7 +222,7 @@ class _SendTransactionWidgetState extends State<SendTransactionWidget> {
   }
 
   void _shareTxid(String txid) {
-    Share.share(txid);
+    Share.text("", txid, 'text/plain');
   }
 
   Widget _buildRetryButton() {

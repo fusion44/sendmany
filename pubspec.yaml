@@ -34,7 +34,7 @@ dependencies:
   url_launcher: ^5.1.2
   qr_flutter: ^3.0.1
   material_design_icons_flutter: ^3.2.4096
-  share: ^0.6.2+1
+  esys_flutter_share: ^1.0.2
   flutter_secure_storage: ^3.2.1+1
   
   # The following adds the Cupertino Icons font to your application.
