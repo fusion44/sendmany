@@ -50,7 +50,7 @@ class TransactionModel {
     DateTime date =
         DateTime.fromMillisecondsSinceEpoch(tx.timeStamp.toInt() * 1000);
     return TransactionModel(
-      tx.blockHash,
+      tx.txHash,
       tx.amount,
       tx.numConfirmations,
       tx.blockHash,
