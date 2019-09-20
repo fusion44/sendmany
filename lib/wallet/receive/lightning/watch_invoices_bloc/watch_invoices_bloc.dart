@@ -35,12 +35,6 @@ class WatchInvoicesBloc extends Bloc<WatchInvoicesEvent, WatchInvoicesState> {
   }
 
   @override
-  void dispose() {
-    if (_responseStream != null) _responseStream.cancel();
-    super.dispose();
-  }
-
-  @override
   WatchInvoicesState get initialState => InitialWatchInvoicesState();
 
   @override

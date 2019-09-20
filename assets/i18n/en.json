@@ -1,4 +1,5 @@
 {
+  "amount": "amount",
   "auth": {
     "check": "Check",
     "pin": "Enter your PIN"
@@ -80,8 +81,11 @@
       "header": "Invoice",
       "invoice_invalid": "Invalid invoice",
       "invoice_paid": "Invoice paid",
+      "invoice_qr_image": "Invoice QR Image",
       "invoices": "Invoices",
       "is_expired": "Invoice is expired!",
+      "lightning_invoice": " Lightning Invoice",
+      "lightning_uri": "Lightning URI",
       "paid_go_back_to_home": "Back to overview",
       "paste_invoice_here": "Paste your invoice here",
       "pay": "Pay",
@@ -97,6 +101,15 @@
       "paying": "Paying"
     },
     "receive": "Receive",
+    "receive_page": {
+      "confirm_amount_and_show_qr": "OK",
+      "force_onchain": "Onchain transaction",
+      "include_onchain_fallback_hint": "Include Onchain fallback",
+      "max_incoming_capacity": "Max incoming channel capacity",
+      "optional_memo_input_hint": "Memo (optional)",
+      "show_receive_invoice_ln": "Lightning Invoice",
+      "show_receive_invoice_onchain": "Onchain Invoice"
+    },
     "send": "Send",
     "send_page": {
       "next_step": "Next",
@@ -110,7 +123,9 @@
       "close_txid_qr_dlg": "OK",
       "confirmations": "Confirmations",
       "destination_address": "Destination Address",
+      "hash": "Transaction Hash",
       "insert_address_here": "Insert the destination address here",
+      "invoice_for_x_sats": "Invoice for",
       "loading": "Loading Transactions",
       "next_transaction_button": "Next Transaction",
       "send": "Send",

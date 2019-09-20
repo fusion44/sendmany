@@ -6,12 +6,12 @@ import 'package:meta/meta.dart';
 class AddInvoiceEvent extends Equatable {
   final String memo;
   final Int64 value;
-  final bool fallbackOnchain;
+  final String fallbackOnchain;
 
   AddInvoiceEvent(
     this.memo,
     this.value, [
-    this.fallbackOnchain = false,
+    this.fallbackOnchain = "",
     List props = const <dynamic>[],
   ]) : super(props);
 }

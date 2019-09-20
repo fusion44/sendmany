@@ -2,12 +2,14 @@ import 'package:fixnum/fixnum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:torden/channels/listchannels/bloc/bloc.dart';
 import 'package:torden/common/constants.dart';
 import 'package:torden/common/utils.dart';
 import 'package:torden/common/widgets/charts/charts.dart';
 import 'package:torden/common/widgets/money_value_view.dart';
 import 'package:torden/common/widgets/torden_card.dart';
 import 'package:torden/common/widgets/widgets.dart';
+import 'package:torden/wallet/receive/receive_page.dart';
 import 'package:torden/wallet/send/send_page.dart';
 
 import 'bloc/bloc.dart';
@@ -19,10 +21,12 @@ class BalanceOverviewWidget extends StatefulWidget {
 
 class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
   LnInfoBloc _infoBloc;
+  ListChannelsBloc _listChannelsBloc;
 
   @override
   initState() {
     _infoBloc = BlocProvider.of<LnInfoBloc>(context);
+    _listChannelsBloc = BlocProvider.of<ListChannelsBloc>(context);
     super.initState();
   }
 
@@ -106,7 +110,7 @@ class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
         Container(
           width: 150,
           child: RaisedButton.icon(
-            onPressed: () => Navigator.pushNamed(context, "/receive"),
+            onPressed: _navigateToReceivePage,
             icon: Icon(Icons.call_received),
             label: TranslatedText("wallet.receive"),
             color: tordenDarkGreen,
@@ -120,8 +124,8 @@ class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
                 context,
                 MaterialPageRoute(
                     builder: (context) {
-                      return BlocProvider<LnInfoBloc>(
-                        builder: (context) => _infoBloc,
+                      return BlocProvider.value(
+                        value: _infoBloc,
                         child: SendPage(),
                       );
                     },
@@ -134,6 +138,25 @@ class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
           ),
         )
       ],
+    );
+  }
+
+  void _navigateToReceivePage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) {
+            return MultiBlocProvider(
+              providers: [
+                BlocProvider<LnInfoBloc>.value(value: _infoBloc),
+                BlocProvider<ListChannelsBloc>.value(
+                  value: _listChannelsBloc,
+                ),
+              ],
+              child: ReceivePage(),
+            );
+          },
+          settings: RouteSettings(name: SendPage.route_name)),
     );
   }
 }

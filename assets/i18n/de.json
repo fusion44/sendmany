@@ -1,4 +1,5 @@
 {
+  "amount": "Betrag",
   "auth": {
     "check": "Prüfen",
     "pin": "Gib deinen PIN ein"
@@ -80,8 +81,11 @@
       "header": "Rechnung",
       "invoice_invalid": "Rechnung ungültig",
       "invoice_paid": "Rechnung bezahlt",
+      "invoice_qr_image": "Invoice QR Image",
       "invoices": "Rechnungen",
       "is_expired": "Rechnung ist abgelaufen",
+      "lightning_invoice": " Lightning Rechnung",
+      "lightning_uri": "Lightning URI",
       "paid_go_back_to_home": "Zurück zur Übersicht",
       "paste_invoice_here": "Füge deine Rechnung hier ein",
       "pay": "Bezahlen",
@@ -97,6 +101,15 @@
       "paying": "Bezahle"
     },
     "receive": "Empfangen",
+    "receive_page": {
+      "confirm_amount_and_show_qr": "OK",
+      "force_onchain": "On-Chain Transaktion",
+      "include_onchain_fallback_hint": "Include Onchain fallback",
+      "max_incoming_capacity": "Maximal eingehende Kapazitaet",
+      "optional_memo_input_hint": "Memo (optional)",
+      "show_receive_invoice_ln": "Lightning Invoice",
+      "show_receive_invoice_onchain": "Onchain Invoice"
+    },
     "send": "Senden",
     "send_page": {
       "next_step": "Fortfahren",
@@ -110,7 +123,9 @@
       "close_txid_qr_dlg": "Fertig",
       "confirmations": "Bestätigungen",
       "destination_address": "Zieladresse",
+      "hash": "Hash der Transaktion",
       "insert_address_here": "Füge die Zieladresse hier ein",
+      "invoice_for_x_sats": "Rechnung über",
       "loading": "Lade Transaktionen",
       "next_transaction_button": "Nächste Transaktion",
       "send": "Senden",

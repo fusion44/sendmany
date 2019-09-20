@@ -1,4 +1,5 @@
 {
+  "amount": "beløp",
   "auth": {
     "check": "Sjekke",
     "pin": "Skriv inn din PIN-kode"
@@ -80,8 +81,11 @@
       "header": "Faktura",
       "invoice_invalid": "Ugyldig faktura",
       "invoice_paid": "Regningen betalt",
+      "invoice_qr_image": "Invoice QR Image",
       "invoices": "Sedler",
       "is_expired": "Faktura er utløpt!",
+      "lightning_invoice": " Lightning Invoice",
+      "lightning_uri": "Lightning URI",
       "paid_go_back_to_home": "Tilbake til oversikten",
       "paste_invoice_here": "Lim inn fakturaen din her",
       "pay": "Betale",
@@ -97,6 +101,15 @@
       "paying": "Betale"
     },
     "receive": "Empfange",
+    "receive_page": {
+      "confirm_amount_and_show_qr": "OK",
+      "force_onchain": "Onchain transaction",
+      "include_onchain_fallback_hint": "Include Onchain fallback",
+      "max_incoming_capacity": "Max incoming channel capacity",
+      "optional_memo_input_hint": "Memo (optional)",
+      "show_receive_invoice_ln": "Lightning Invoice",
+      "show_receive_invoice_onchain": "Onchain Invoice"
+    },
     "send": "Sende",
     "send_page": {
       "next_step": "Fortsette",
@@ -110,7 +123,9 @@
       "close_txid_qr_dlg": "Ferdig",
       "confirmations": "Bekreftelser",
       "destination_address": "destinasjon adresse",
+      "hash": "Transaction Hash",
       "insert_address_here": "Lim inn destinasjonsadressen her",
+      "invoice_for_x_sats": "Faktura for",
       "loading": "Laster transaksjoner",
       "next_transaction_button": "Neste transaksjon",
       "send": "Sende",
