@@ -22,7 +22,7 @@ class Invoice {
   final Int64 addIndex;
   final Int64 settleIndex;
   final Int64 amtPaidSat;
-  final Int64 amtPaidMsat;
+  final Int64 amtPaidmSat;
   final InvoiceState state;
 
   Invoice({
@@ -41,7 +41,7 @@ class Invoice {
     this.addIndex,
     this.settleIndex,
     this.amtPaidSat,
-    this.amtPaidMsat,
+    this.amtPaidmSat,
     this.state,
   });
 
@@ -81,7 +81,7 @@ class Invoice {
       addIndex: grpcInvoice.addIndex,
       settleIndex: grpcInvoice.settleIndex,
       amtPaidSat: grpcInvoice.amtPaidSat,
-      amtPaidMsat: grpcInvoice.amtPaidMsat,
+      amtPaidmSat: grpcInvoice.amtPaidMsat,
       state: state,
     );
   }

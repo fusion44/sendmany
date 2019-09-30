@@ -8,6 +8,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.3.0"
+  bech32:
+    dependency: transitive
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "281e2f39705a7184b7c2ae1b7194271894cb5376"
+      url: "https://github.com/fusion44/bech32"
+    source: git
+    version: "0.1.1"
   bloc:
     dependency: transitive
     description:
@@ -15,6 +24,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.15.0"
+  bolt11_decoder:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "33f6b72cf940319686d8a63dc1c3b99b7a68bf20"
+      url: "https://github.com/fusion44/dart_bolt11_decoder"
+    source: git
+    version: "0.0.0"
   boolean_selector:
     dependency: transitive
     description:
@@ -57,6 +75,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.2"
+  decimal:
+    dependency: transitive
+    description:
+      name: decimal
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.5"
   equatable:
     dependency: "direct main"
     description:
@@ -268,6 +293,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.5"
+  rational:
+    dependency: transitive
+    description:
+      name: rational
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.6"
   rxdart:
     dependency: transitive
     description:
@@ -365,5 +397,5 @@ packages:
     source: hosted
     version: "2.0.8"
 sdks:
-  dart: ">=2.2.2 <3.0.0"
+  dart: ">=2.5.0 <3.0.0"
   flutter: ">=1.7.8+hotfix.3 <2.0.0"

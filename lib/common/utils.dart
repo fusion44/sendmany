@@ -1,5 +1,6 @@
 library torden.utils;
 
+import 'package:bolt11_decoder/bolt11_decoder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -152,4 +153,16 @@ String fillString(text, {int powerOf = 4, String fillerChar = "="}) {
   String fillText = "";
   for (int i = 0; i < rest; i++) fillText += fillerChar;
   return "$text$fillText";
+}
+
+String getMemoFromPaymentRequst(String req) {
+  Bolt11PaymentRequest r = Bolt11PaymentRequest(req);
+  if (r.tags.length > 1 && r.tags[1].type == "description") {
+    return r.tags[1].data;
+  } else {
+    r.tags.forEach((tag) {
+      if (tag.type == "description") return tag.data;
+    });
+  }
+  return "";
 }

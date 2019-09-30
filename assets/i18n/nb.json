@@ -93,6 +93,7 @@
       "try_another_invoice": "Prøv på nytt"
     },
     "lightning": "Lightning",
+    "lightning_transactions": "Lightning Transactions",
     "onchain": "On Chain",
     "payments": {
       "amnt_total_fees": "Avgifter",

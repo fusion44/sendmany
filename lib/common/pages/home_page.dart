@@ -119,6 +119,7 @@ class _HomePageState extends State<HomePage>
               children: <Widget>[
                 BalanceOverviewWidget(),
                 TransactionsWidget(),
+                LightningWidget(),
               ],
             ),
           ),
