@@ -15,6 +15,7 @@ import 'package:torden/preferences/bloc.dart';
 import 'package:torden/preferences/preferences_page.dart';
 import 'package:torden/wallet/balance/balance_overview_widget.dart';
 import 'package:torden/wallet/balance/bloc/bloc.dart';
+import 'package:torden/wallet/balance/lightning_widget.dart';
 import 'package:torden/wallet/balance/load_transactions/bloc/bloc.dart';
 import 'package:torden/wallet/balance/transactions_widget.dart';
 
@@ -56,15 +57,15 @@ class _HomePageState extends State<HomePage>
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<LnInfoBloc>(
-          builder: (context) => _lnInfoBloc,
+        BlocProvider<LnInfoBloc>.value(
+          value: _lnInfoBloc,
         ),
-        BlocProvider<ListChannelsBloc>(
-          builder: (context) => _listChannelsBloc,
+        BlocProvider<ListChannelsBloc>.value(
+          value: _listChannelsBloc,
         ),
-        BlocProvider<LoadTransactionsBloc>(
-          builder: (context) => _loadTransactionsBloc,
-        )
+        BlocProvider<LoadTransactionsBloc>.value(
+          value: _loadTransactionsBloc,
+        ),
       ],
       child: BlocListener(
         bloc: _loadTransactionsBloc,
