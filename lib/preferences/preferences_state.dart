@@ -16,7 +16,16 @@ class PreferencesState extends Equatable {
     @required this.onboardingFinished,
     @required this.numNodes,
     @required this.pinActive,
-  }) : super([language, theme, onboardingFinished, numNodes, pinActive]);
+  });
+
+  @override
+  List<Object> get props => [
+        language,
+        theme,
+        onboardingFinished,
+        numNodes,
+        pinActive,
+      ];
 }
 
 class PreferencesLoadingState extends PreferencesState {

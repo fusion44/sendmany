@@ -9,6 +9,9 @@ class _SendResponseReceivedEvent extends SendPaymentEvent {
   final SendResponse response;
 
   _SendResponseReceivedEvent(this.response);
+
+  @override
+  List<Object> get props => [response];
 }
 
 class SendPaymentBloc extends Bloc<SendPaymentEvent, SendPaymentState> {

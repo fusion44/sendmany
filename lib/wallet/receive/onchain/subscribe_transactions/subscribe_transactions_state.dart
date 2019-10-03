@@ -3,14 +3,18 @@ import 'package:meta/meta.dart';
 import 'package:torden/common/models/models.dart';
 
 @immutable
-abstract class SubscribeTransactionsState extends Equatable {
-  SubscribeTransactionsState([List props = const <dynamic>[]]) : super(props);
-}
+abstract class SubscribeTransactionsState extends Equatable {}
 
-class InitialSubscribeTransactionsState extends SubscribeTransactionsState {}
+class InitialSubscribeTransactionsState extends SubscribeTransactionsState {
+  @override
+  List<Object> get props => const [];
+}
 
 class TransactionChangedState extends SubscribeTransactionsState {
   final TransactionModel tx;
 
-  TransactionChangedState(this.tx) : super([tx]);
+  TransactionChangedState(this.tx);
+
+  @override
+  List<Object> get props => [tx];
 }

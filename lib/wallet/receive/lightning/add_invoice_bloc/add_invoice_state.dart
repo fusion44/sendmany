@@ -3,17 +3,18 @@ import 'package:meta/meta.dart';
 import 'package:torden/common/models/models.dart';
 
 @immutable
-abstract class AddInvoiceState extends Equatable {
-  AddInvoiceState([List props = const <dynamic>[]]) : super(props);
-}
+abstract class AddInvoiceState extends Equatable {}
 
-class InitialAddinvoiceState extends AddInvoiceState {}
+class InitialAddinvoiceState extends AddInvoiceState {
+  @override
+  List<Object> get props => const [];
+}
 
 class AddedInvoiceState extends AddInvoiceState {
   final Invoice invoice;
 
-  AddedInvoiceState(
-    this.invoice, [
-    List props = const <dynamic>[],
-  ]) : super(props);
+  AddedInvoiceState(this.invoice);
+
+  @override
+  List<Object> get props => [invoice];
 }

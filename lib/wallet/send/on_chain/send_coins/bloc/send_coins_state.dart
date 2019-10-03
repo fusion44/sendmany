@@ -3,18 +3,25 @@ import 'package:fixnum/fixnum.dart';
 import 'package:meta/meta.dart';
 
 @immutable
-abstract class SendCoinsState extends Equatable {
-  SendCoinsState([List props = const []]) : super(props);
+abstract class SendCoinsState extends Equatable {}
+
+class InitialSendCoinsState extends SendCoinsState {
+  @override
+  List<Object> get props => const [];
 }
 
-class InitialSendCoinsState extends SendCoinsState {}
-
-class SubmittingTransactionState extends SendCoinsState {}
+class SubmittingTransactionState extends SendCoinsState {
+  @override
+  List<Object> get props => const [];
+}
 
 class TransactionSubmittedState extends SendCoinsState {
   final String transactionId;
 
   TransactionSubmittedState(this.transactionId);
+
+  @override
+  List<Object> get props => [transactionId];
 }
 
 class SendCoinsErrorState extends SendCoinsState {
@@ -26,5 +33,8 @@ class SendCoinsErrorState extends SendCoinsState {
     this.error, {
     this.address,
     this.amount,
-  }) : super([error, address, amount]);
+  });
+
+  @override
+  List<Object> get props => [error, address, amount];
 }

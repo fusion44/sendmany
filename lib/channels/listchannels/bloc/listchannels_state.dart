@@ -3,16 +3,23 @@ import 'package:meta/meta.dart';
 import 'package:torden/common/connection/lnd_rpc/lnd_rpc.dart';
 
 @immutable
-abstract class ListChannelsState extends Equatable {
-  ListChannelsState([List props = const []]) : super(props);
+abstract class ListChannelsState extends Equatable {}
+
+class InitialListchannelsState extends ListChannelsState {
+  @override
+  List<Object> get props => const [];
 }
 
-class InitialListchannelsState extends ListChannelsState {}
-
-class ChannelsLoadingState extends ListChannelsState {}
+class ChannelsLoadingState extends ListChannelsState {
+  @override
+  List<Object> get props => const [];
+}
 
 class ChannelsLoadedState extends ListChannelsState {
   final ListChannelsResponse channels;
 
-  ChannelsLoadedState(this.channels, [List props = const []]) : super(props);
+  ChannelsLoadedState(this.channels);
+
+  @override
+  List<Object> get props => [channels];
 }

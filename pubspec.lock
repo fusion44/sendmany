@@ -88,7 +88,7 @@ packages:
       name: equatable
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.1"
+    version: "0.6.1"
   esys_flutter_share:
     dependency: "direct main"
     description:
@@ -109,14 +109,14 @@ packages:
       name: flare_dart
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.4.6"
+    version: "1.4.8"
   flare_flutter:
     dependency: "direct main"
     description:
       name: flare_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.5.8"
+    version: "1.5.9"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -135,7 +135,7 @@ packages:
       name: flutter_i18n
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.4"
+    version: "0.7.0"
   flutter_localizations:
     dependency: transitive
     description: flutter
@@ -147,7 +147,7 @@ packages:
       name: flutter_secure_storage
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.3.1"
+    version: "3.3.1+1"
   flutter_spinkit:
     dependency: "direct main"
     description:
@@ -215,7 +215,7 @@ packages:
       name: material_design_icons_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.2.4096"
+    version: "3.2.4495"
   meta:
     dependency: "direct main"
     description:
@@ -257,7 +257,7 @@ packages:
       name: protobuf
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.14.1"
+    version: "1.0.0"
   provider:
     dependency: transitive
     description:
@@ -367,7 +367,7 @@ packages:
       name: timeago
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.18"
+    version: "2.0.20"
   typed_data:
     dependency: transitive
     description:
@@ -388,7 +388,7 @@ packages:
       name: url_launcher
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.1.2"
+    version: "5.1.4"
   vector_math:
     dependency: transitive
     description:

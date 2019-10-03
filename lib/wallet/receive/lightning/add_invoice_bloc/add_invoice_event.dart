@@ -12,6 +12,8 @@ class AddInvoiceEvent extends Equatable {
     this.memo,
     this.value, [
     this.fallbackOnchain = "",
-    List props = const <dynamic>[],
-  ]) : super(props);
+  ]);
+
+  @override
+  List<Object> get props => [memo, value, fallbackOnchain];
 }

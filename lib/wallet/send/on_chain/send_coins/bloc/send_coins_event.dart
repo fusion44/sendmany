@@ -4,7 +4,8 @@ import 'package:meta/meta.dart';
 
 @immutable
 class SendCoinsEvent extends Equatable {
-  SendCoinsEvent({props = const []}) : super(props);
+  @override
+  List<Object> get props => const [];
 }
 
 @immutable
@@ -21,8 +22,13 @@ class DoSendCoinsEvent extends SendCoinsEvent {
     this.targetConf = 6,
     this.satPerByte = Int64.ZERO,
     this.sendAll = false,
-    List props = const [],
-  }) : super(props: props);
+  });
+
+  @override
+  List<Object> get props => [address, amount, targetConf, satPerByte, sendAll];
 }
 
-class ResetSendCoinsEvent extends SendCoinsEvent {}
+class ResetSendCoinsEvent extends SendCoinsEvent {
+  @override
+  List<Object> get props => const [];
+}

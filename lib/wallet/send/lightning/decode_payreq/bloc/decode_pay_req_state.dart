@@ -3,16 +3,20 @@ import 'package:meta/meta.dart';
 import 'package:torden/common/connection/lnd_rpc/rpc.pbgrpc.dart';
 
 @immutable
-abstract class DecodePayReqState extends Equatable {
-  DecodePayReqState([List props = const []]) : super(props);
-}
+abstract class DecodePayReqState extends Equatable {}
 
-class InitialDecodePayReqBlocState extends DecodePayReqState {}
+class InitialDecodePayReqBlocState extends DecodePayReqState {
+  @override
+  List<Object> get props => const [];
+}
 
 class DecodingPayReqState extends DecodePayReqState {
   final String payReq;
 
   DecodingPayReqState(this.payReq);
+
+  @override
+  List<Object> get props => [payReq];
 }
 
 class DecodedPayReqState extends DecodePayReqState {
@@ -20,6 +24,9 @@ class DecodedPayReqState extends DecodePayReqState {
   final String reqString;
 
   DecodedPayReqState(this.req, this.reqString);
+
+  @override
+  List<Object> get props => [req, reqString];
 }
 
 class DecodingPayReqErrorState extends DecodePayReqState {
@@ -27,4 +34,7 @@ class DecodingPayReqErrorState extends DecodePayReqState {
   final String message;
 
   DecodingPayReqErrorState(this.payReq, this.message);
+
+  @override
+  List<Object> get props => [payReq, message];
 }

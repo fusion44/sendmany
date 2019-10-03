@@ -3,13 +3,17 @@ import 'package:meta/meta.dart';
 import 'package:torden/common/connection/lnd_rpc/lnd_rpc.dart';
 
 @immutable
-abstract class CheckLNDConnectionState extends Equatable {
-  CheckLNDConnectionState([List props = const <dynamic>[]]) : super(props);
+abstract class CheckLNDConnectionState extends Equatable {}
+
+class InitialCheckLNDConnectionState extends CheckLNDConnectionState {
+  @override
+  List<Object> get props => const [];
 }
 
-class InitialCheckLNDConnectionState extends CheckLNDConnectionState {}
-
-class CheckingLNDConnectionState extends CheckLNDConnectionState {}
+class CheckingLNDConnectionState extends CheckLNDConnectionState {
+  @override
+  List<Object> get props => const [];
+}
 
 class CheckLNDConnectionSuccessState extends CheckLNDConnectionState {
   final GetInfoResponse info;
@@ -17,6 +21,9 @@ class CheckLNDConnectionSuccessState extends CheckLNDConnectionState {
   CheckLNDConnectionSuccessState({
     this.info,
   });
+
+  @override
+  List<Object> get props => [info];
 }
 
 class CheckLNDConnectionErrorState extends CheckLNDConnectionState {
@@ -25,4 +32,7 @@ class CheckLNDConnectionErrorState extends CheckLNDConnectionState {
   CheckLNDConnectionErrorState({
     this.error,
   });
+
+  @override
+  List<Object> get props => [error];
 }

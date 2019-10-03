@@ -7,13 +7,19 @@ import 'package:torden/common/models/models.dart';
 import './bloc.dart';
 
 // Exclusive for reload event originating from polling timer
-class _ReloadTransactionsEvent extends GetTransactionsEvent {}
+class _ReloadTransactionsEvent extends GetTransactionsEvent {
+  @override
+  List<Object> get props => const [];
+}
 
 // Event when a new message from the update subscription is received
 class _SubscribeTransactionEvent extends GetTransactionsEvent {
   final Transaction tx;
 
   _SubscribeTransactionEvent(this.tx);
+
+  @override
+  List<Object> get props => [tx];
 }
 
 class LoadTransactionsBloc
@@ -97,7 +103,8 @@ class LoadTransactionsBloc
   }
 
   @override
-  LoadTransactionsState get initialState => InitialLoadTransactionsState();
+  LoadTransactionsState get initialState =>
+      InitialLoadTransactionsState(const []);
 
   @override
   Stream<LoadTransactionsState> mapEventToState(

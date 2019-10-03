@@ -3,14 +3,18 @@ import 'package:meta/meta.dart';
 import 'package:torden/common/connection/lnd_rpc/lnd_rpc.dart';
 
 @immutable
-abstract class SendPaymentState extends Equatable {
-  SendPaymentState([List props = const []]) : super(props);
-}
+abstract class SendPaymentState extends Equatable {}
 
-class InitialSendPaymentState extends SendPaymentState {}
+class InitialSendPaymentState extends SendPaymentState {
+  @override
+  List<Object> get props => const [];
+}
 
 class SendPaymentResponseState extends SendPaymentState {
   final SendResponse response;
 
   SendPaymentResponseState(this.response);
+
+  @override
+  List<Object> get props => [response];
 }

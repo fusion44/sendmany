@@ -2,11 +2,10 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
 @immutable
-abstract class ListChannelsEvent extends Equatable {
-  ListChannelsEvent([List props = const []]) : super(props);
-}
+abstract class ListChannelsEvent extends Equatable {}
 
 @immutable
 class LoadChannels extends ListChannelsEvent {
-  LoadChannels([List props = const []]) : super(props);
+  @override
+  List<Object> get props => const [];
 }

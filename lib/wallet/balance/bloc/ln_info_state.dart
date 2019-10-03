@@ -3,13 +3,17 @@ import 'package:meta/meta.dart';
 import 'package:torden/common/connection/lnd_rpc/lnd_rpc.dart';
 
 @immutable
-abstract class LnInfoState extends Equatable {
-  LnInfoState([List props = const []]) : super(props);
+abstract class LnInfoState extends Equatable {}
+
+class InitialLnInfoState extends LnInfoState {
+  @override
+  List<Object> get props => const [];
 }
 
-class InitialLnInfoState extends LnInfoState {}
-
-class LnInfoStateLoading extends LnInfoState {}
+class LnInfoStateLoading extends LnInfoState {
+  @override
+  List<Object> get props => const [];
+}
 
 class LnInfoStateReloading extends LnInfoState {
   final GetInfoResponse infoResponse;
@@ -20,7 +24,10 @@ class LnInfoStateReloading extends LnInfoState {
     this.infoResponse,
     this.walletBalance,
     this.channelBalance,
-  ) : super([infoResponse, walletBalance, channelBalance]);
+  );
+
+  @override
+  List<Object> get props => [infoResponse, walletBalance, channelBalance];
 }
 
 class LnInfoStateLoadingFinished extends LnInfoState {
@@ -32,5 +39,8 @@ class LnInfoStateLoadingFinished extends LnInfoState {
     this.infoResponse,
     this.walletBalance,
     this.channelBalance,
-  ) : super([infoResponse, walletBalance, channelBalance]);
+  );
+
+  @override
+  List<Object> get props => [infoResponse, walletBalance, channelBalance];
 }

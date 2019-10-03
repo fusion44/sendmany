@@ -7,7 +7,8 @@ enum AddressType { witnessPubkeyHash, nestedPubkeyHash }
 class NewAddressEvent extends Equatable {
   final AddressType addressType;
 
-  NewAddressEvent([
-    this.addressType = AddressType.witnessPubkeyHash,
-  ]) : super([addressType]);
+  NewAddressEvent([this.addressType = AddressType.witnessPubkeyHash]);
+
+  @override
+  List<Object> get props => [addressType];
 }

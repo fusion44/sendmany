@@ -2,10 +2,14 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
 @immutable
-abstract class ConnectionManagerEvent extends Equatable {
-  ConnectionManagerEvent([List props = const []]) : super(props);
+abstract class ConnectionManagerEvent extends Equatable {}
+
+class AppStart extends ConnectionManagerEvent {
+  @override
+  List<Object> get props => const [];
 }
 
-class AppStart extends ConnectionManagerEvent {}
-
-class ConnectionEstablishedEvent extends ConnectionManagerEvent {}
+class ConnectionEstablishedEvent extends ConnectionManagerEvent {
+  @override
+  List<Object> get props => const [];
+}
