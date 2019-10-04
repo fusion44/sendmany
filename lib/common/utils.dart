@@ -95,7 +95,7 @@ class QrInfo {
 /// an onchain address.
 QrInfo checkQrCode(String code) {
   if (code.contains(":")) {
-    code = code.split(":")[1];
+    code = code.split(":")[1].toLowerCase();
   }
 
   QrInfo info = QrInfo();
