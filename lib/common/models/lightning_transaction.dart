@@ -20,5 +20,13 @@ class LightningTxInvoice extends LightningTx {
   final Invoice invoice;
 
   LightningTxInvoice(this.invoice)
-      : super(invoice.memo, invoice.amtPaidSat, invoice.settleDate);
+      : super(
+          invoice.memo,
+          invoice.state == InvoiceState.settled
+              ? invoice.amtPaidSat
+              : invoice.value,
+          invoice.state == InvoiceState.settled
+              ? invoice.settleDate
+              : invoice.creationDate,
+        );
 }

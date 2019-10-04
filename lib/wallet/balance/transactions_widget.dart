@@ -50,14 +50,22 @@ class _TransactionsWidgetState extends State<TransactionsWidget> {
   Widget _buildTxnListItem(TransactionModel txn) {
     ThemeData theme = Theme.of(context);
     Icon icon;
+    bool settled = true;
+    if (txn.numConfirmations == 0) settled = false;
     if (txn.amount > 0) {
-      icon = Icon(Icons.arrow_forward, color: Colors.greenAccent);
+      icon = Icon(
+        Icons.arrow_forward,
+        color: settled ? Colors.greenAccent : Colors.grey,
+      );
     } else {
-      icon = Icon(Icons.arrow_back, color: Colors.redAccent);
+      icon = Icon(
+        Icons.arrow_back,
+        color: settled ? Colors.redAccent : Colors.grey,
+      );
     }
 
     var textStyle = theme.textTheme.caption;
-    if (txn.numConfirmations == 0) {
+    if (!settled) {
       textStyle = theme.textTheme.caption.copyWith(
         color: Colors.deepOrangeAccent,
       );
@@ -78,7 +86,7 @@ class _TransactionsWidgetState extends State<TransactionsWidget> {
           ],
         ),
         Expanded(child: Container()),
-        MoneyValueView(amount: txn.amount)
+        MoneyValueView(amount: txn.amount, settled: settled)
       ],
     );
   }

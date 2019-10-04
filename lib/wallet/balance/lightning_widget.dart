@@ -51,15 +51,18 @@ class _LightningWidgetState extends State<LightningWidget> {
   Widget _buildTxListItem(LightningTx tx) {
     ThemeData theme = Theme.of(context);
 
+    bool settled = true;
     Icon icon;
     if (tx is LightningTxInvoice) {
       if (tx.invoice.state == InvoiceState.settled) {
         icon = Icon(Icons.arrow_forward, color: Colors.greenAccent);
       } else {
         icon = Icon(Icons.arrow_forward, color: Colors.grey);
+        settled = false;
       }
     } else if (tx is LightningTxPayment) {
       icon = Icon(Icons.arrow_back, color: Colors.redAccent);
+      if (tx.payment.status != PaymentStatus.succeeded) settled = false;
     }
     return Row(
       children: <Widget>[
@@ -85,6 +88,7 @@ class _LightningWidgetState extends State<LightningWidget> {
           child: MoneyValueView(
             amount: tx.amountSat,
             textAlign: TextAlign.end,
+            settled: settled,
           ),
         )
       ],

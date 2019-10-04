@@ -7,13 +7,14 @@ import 'package:torden/preferences/bloc.dart';
 class MoneyValueView extends StatelessWidget {
   final Int64 amount;
   final bool hero;
-
+  final bool settled;
   final TextAlign textAlign;
 
   const MoneyValueView({
     Key key,
     this.amount,
     this.hero = false,
+    this.settled = true,
     this.textAlign = TextAlign.start,
   }) : super(key: key);
 
@@ -30,9 +31,12 @@ class MoneyValueView extends StatelessWidget {
           decimalDigits: 0,
         );
 
+        TextStyle style = hero ? textTheme.headline : textTheme.body1;
+        if (!settled) style = style.copyWith(color: Colors.grey);
+
         return Text(
           numberFormat.format(amount),
-          style: hero ? textTheme.headline : textTheme.body1,
+          style: style,
           textAlign: textAlign,
         );
       },
