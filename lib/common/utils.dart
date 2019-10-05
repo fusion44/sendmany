@@ -149,9 +149,10 @@ showSnackbar(BuildContext context, String message) {
 }
 
 String fillString(text, {int powerOf = 4, String fillerChar = "="}) {
-  int rest = powerOf - text.length % 4;
+  int remainder = text.length % 4;
+  if (remainder == 0) return text;
   String fillText = "";
-  for (int i = 0; i < rest; i++) fillText += fillerChar;
+  for (int i = 0; i < (powerOf - remainder); i++) fillText += fillerChar;
   return "$text$fillText";
 }
 
