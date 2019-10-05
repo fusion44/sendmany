@@ -159,18 +159,7 @@ class _ReceivePageState extends State<ReceivePage> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (BuildContext context) {
-            AddInvoiceBloc bloc = AddInvoiceBloc();
-            bloc.dispatch(
-              AddInvoiceEvent(
-                _memo,
-                _amount,
-                _onchainAddress,
-              ),
-            );
-            return BlocProvider(
-              builder: (context) => bloc,
-              child: ShowLightningInvoice(),
-            );
+            return ShowLightningInvoice(_memo, _amount, _onchainAddress);
           }),
         );
       };

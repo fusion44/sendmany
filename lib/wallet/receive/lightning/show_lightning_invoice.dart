@@ -18,6 +18,13 @@ import 'package:unicorndial/unicorndial.dart';
 import 'add_invoice_bloc/bloc.dart';
 
 class ShowLightningInvoice extends StatefulWidget {
+  final String memo;
+
+  final Int64 amount;
+  final String onchainAddress;
+
+  ShowLightningInvoice(this.memo, this.amount, this.onchainAddress);
+
   @override
   _ShowLightningInvoiceState createState() => _ShowLightningInvoiceState();
 }
@@ -25,10 +32,25 @@ class ShowLightningInvoice extends StatefulWidget {
 class _ShowLightningInvoiceState extends State<ShowLightningInvoice> {
   Int64 _addIndex = Int64.ZERO;
   WatchInvoicesBloc _watchInvoicesBloc = WatchInvoicesBloc();
+  AddInvoiceBloc _addInvoicesBloc = AddInvoiceBloc();
+
+  @override
+  void initState() {
+    _addInvoicesBloc.dispatch(
+      AddInvoiceEvent(
+        widget.memo,
+        widget.amount,
+        widget.onchainAddress,
+      ),
+    );
+
+    super.initState();
+  }
 
   @override
   void dispose() {
     _watchInvoicesBloc.dispose();
+    _addInvoicesBloc.dispose();
     super.dispose();
   }
 
@@ -36,6 +58,7 @@ class _ShowLightningInvoiceState extends State<ShowLightningInvoice> {
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
     return BlocBuilder<AddInvoiceBloc, AddInvoiceState>(
+      bloc: _addInvoicesBloc,
       builder: (context, state) {
         if (state is InitialAddinvoiceState) {
           return Center(child: SpinKitRipple(color: tordenBlue200, size: 150));
