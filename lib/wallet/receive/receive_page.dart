@@ -10,8 +10,6 @@ import 'package:torden/wallet/receive/onchain/new_address_bloc/bloc.dart';
 import 'package:torden/wallet/receive/onchain/show_onchain_invoice.dart';
 import 'package:torden/wallet/receive/onchain/subscribe_transactions/subscribe_transactions_bloc.dart';
 
-import 'lightning/add_invoice_bloc/bloc.dart';
-
 class ReceivePage extends StatefulWidget {
   @override
   _ReceivePageState createState() => _ReceivePageState();
