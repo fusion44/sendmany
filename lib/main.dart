@@ -39,6 +39,7 @@ class _TordenAppState extends State<TordenApp> {
   PreferencesBloc _preferencesBloc;
   ConnectionManagerBloc _connectionManagerBloc;
   Map<String, WidgetBuilder> _routes;
+  bool _navigationScheduled = false;
 
   @override
   void initState() {
@@ -89,8 +90,11 @@ class _TordenAppState extends State<TordenApp> {
   }
 
   _navigateToNamedRoute(BuildContext context, String r) {
+    if (_navigationScheduled) return;
+    _navigationScheduled = true;
     WidgetsBinding.instance.addPostFrameCallback(
       (_) async {
+        _navigationScheduled = false;
         Navigator.pushNamedAndRemoveUntil(
           context,
           r,
