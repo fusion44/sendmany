@@ -1,65 +1,43 @@
 import 'package:fixnum/fixnum.dart';
+import 'package:torden/common/models/models.dart';
 
-import 'package:torden/common/connection/lnd_rpc/lnd_rpc.dart' as rpc;
+class Tx {
+  final String memo;
+  final Int64 amountSat;
+  final DateTime date;
 
-class TransactionModel {
-  // The transaction hash
-  final String hash;
+  Tx(this.memo, this.amountSat, this.date);
+}
 
-  // The transaction amount, denominated in satoshis
-  final Int64 amount;
+class TxLightningPayment extends Tx {
+  final Payment payment;
 
-  // The number of confirmations
-  final int numConfirmations;
+  TxLightningPayment(this.payment)
+      : super(payment.memo, payment.valueSat, payment.creationDate);
+}
 
-  // The hash of the block this transaction was included in
-  final String blockHash;
+class TxLightningInvoice extends Tx {
+  final Invoice invoice;
 
-  // The height of the block this transaction was included in
-  final int blockHeight;
+  TxLightningInvoice(this.invoice)
+      : super(
+          invoice.memo,
+          invoice.state == InvoiceState.settled
+              ? invoice.amtPaidSat
+              : invoice.value,
+          invoice.state == InvoiceState.settled
+              ? invoice.settleDate
+              : invoice.creationDate,
+        );
+}
 
-  // Raw timestamp of this transaction
-  final Int64 timeStamp;
+class TxOnchain extends Tx {
+  final OnchainTransaction tx;
 
-  // Timestamp of this transaction as a DateTime
-  final DateTime timsStampDateTime;
-
-  // Fees paid for this transaction
-  final Int64 totalFees;
-
-  // Addresses that received funds for this transaction
-  final List<String> destAddresses;
-
-  // The raw transaction hex
-  final String rawTxHex;
-
-  TransactionModel(
-    this.hash,
-    this.amount,
-    this.numConfirmations,
-    this.blockHash,
-    this.blockHeight,
-    this.timeStamp,
-    this.timsStampDateTime,
-    this.totalFees,
-    this.destAddresses,
-    this.rawTxHex,
-  );
-
-  static TransactionModel fromLND(rpc.Transaction tx) {
-    DateTime date =
-        DateTime.fromMillisecondsSinceEpoch(tx.timeStamp.toInt() * 1000);
-    return TransactionModel(
-      tx.txHash,
-      tx.amount,
-      tx.numConfirmations,
-      tx.blockHash,
-      tx.blockHeight,
-      tx.timeStamp,
-      date,
-      tx.totalFees,
-      tx.destAddresses,
-      tx.rawTxHex,
-    );
-  }
+  TxOnchain(this.tx, {memo: ""})
+      : super(
+          memo,
+          tx.amount,
+          tx.timsStampDateTime,
+        );
 }

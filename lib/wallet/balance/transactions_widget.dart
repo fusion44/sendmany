@@ -3,11 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:torden/common/models/models.dart';
 import 'package:torden/common/utils.dart';
 import 'package:torden/common/widgets/widgets.dart';
-import 'package:torden/wallet/balance/load_transactions/bloc/load_transactions_state.dart';
 
-import 'load_transactions/bloc/load_transactions_bloc.dart';
+import 'list_transactions/bloc.dart';
 
-const numTransactions = 6;
+const numPayments = 12;
 
 class TransactionsWidget extends StatefulWidget {
   @override
@@ -18,19 +17,17 @@ class _TransactionsWidgetState extends State<TransactionsWidget> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder(
-      bloc: BlocProvider.of<LoadTransactionsBloc>(context),
+      bloc: BlocProvider.of<ListTxBloc>(context),
       condition: (oldState, newState) {
-        return !(newState is ReloadingTransactionsState);
+        return !(newState is ReloadingTxState);
       },
       builder: (context, state) {
-        if (state is InitialLoadTransactionsState ||
-            state is LoadingTransactionsState) {
-          return Center(child: TranslatedText("wallet.transactions.loading"));
-        } else if (state is LoadingTransactionsFinishedState) {
+        if (state is InitialListTxState || state is LoadingTxState) {
+          return Center(child: TranslatedText("network.loading"));
+        } else if (state is LoadingTxFinishedState) {
           List widgets = state.transactions
-              .where((tx) => tx.amount != 0)
-              .take(numTransactions)
-              .map((tx) => _buildTxnListItem(tx))
+              .take(numPayments)
+              .map((tx) => _buildTxListItem(tx))
               .toList();
 
           for (int i = 1; i < widgets.length; i += 2) {
@@ -47,46 +44,73 @@ class _TransactionsWidgetState extends State<TransactionsWidget> {
     );
   }
 
-  Widget _buildTxnListItem(TransactionModel txn) {
+  Widget _buildTxListItem(Tx tx) {
     ThemeData theme = Theme.of(context);
-    Icon icon;
+
+    String memo = tx.memo;
     bool settled = true;
-    if (txn.numConfirmations == 0) settled = false;
-    if (txn.amount > 0) {
-      icon = Icon(
-        Icons.arrow_forward,
-        color: settled ? Colors.greenAccent : Colors.grey,
-      );
-    } else {
-      icon = Icon(
-        Icons.arrow_back,
-        color: settled ? Colors.redAccent : Colors.grey,
-      );
-    }
+    Icon icon;
 
     var textStyle = theme.textTheme.caption;
-    if (!settled) {
-      textStyle = theme.textTheme.caption.copyWith(
-        color: Colors.deepOrangeAccent,
-      );
+    if (tx is TxLightningInvoice) {
+      if (tx.invoice.state == InvoiceState.settled) {
+        icon = Icon(Icons.arrow_forward, color: Colors.greenAccent);
+      } else {
+        icon = Icon(Icons.arrow_forward, color: Colors.grey);
+        settled = false;
+      }
+    } else if (tx is TxLightningPayment) {
+      icon = Icon(Icons.arrow_back, color: Colors.redAccent);
+      if (tx.payment.status != PaymentStatus.succeeded) settled = false;
+    } else if (tx is TxOnchain) {
+      if (tx.tx.numConfirmations == 0) settled = false;
+      if (tx.tx.amount > 0) {
+        icon = Icon(
+          Icons.arrow_forward,
+          color: settled ? Colors.greenAccent : Colors.grey,
+        );
+      } else {
+        icon = Icon(
+          Icons.arrow_back,
+          color: settled ? Colors.redAccent : Colors.grey,
+        );
+      }
+      if (!settled) {
+        textStyle = theme.textTheme.caption.copyWith(
+          color: Colors.deepOrangeAccent,
+        );
+      }
+      memo =
+          "${tr(context, "wallet.transactions.confirmations")}: ${tx.tx.numConfirmations}";
     }
 
     return Row(
       children: <Widget>[
         icon,
         Container(width: 8.0),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            TimeAgoTextWidget(txn.timsStampDateTime, allowFromNow: false),
-            Text(
-              "${tr(context, "wallet.transactions.confirmations")}: ${txn.numConfirmations}",
-              style: textStyle,
-            )
-          ],
+        Expanded(
+          flex: 3,
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              TimeAgoTextWidget(tx.date, allowFromNow: false),
+              Text(
+                memo,
+                style: textStyle,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              )
+            ],
+          ),
         ),
-        Expanded(child: Container()),
-        MoneyValueView(amount: txn.amount, settled: settled)
+        Expanded(
+          child: MoneyValueView(
+            amount: tx.amountSat,
+            textAlign: TextAlign.end,
+            settled: settled,
+          ),
+        )
       ],
     );
   }

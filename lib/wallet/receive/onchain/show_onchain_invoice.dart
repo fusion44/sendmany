@@ -23,7 +23,7 @@ class ShowOnchainInvoice extends StatefulWidget {
 }
 
 class _ShowOnchainInvoiceState extends State<ShowOnchainInvoice> {
-  TransactionModel _tx;
+  OnchainTransaction _tx;
 
   @override
   Widget build(BuildContext context) {

@@ -3,7 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:grpc/grpc.dart';
 import 'package:torden/common/connection/connection_manager/bloc.dart';
 import 'package:torden/common/connection/lnd_rpc/lnd_rpc.dart' as grpc;
-import 'package:torden/common/models/transaction.dart';
+import 'package:torden/common/models/models.dart';
 import './bloc.dart';
 
 class SubscribeTransactionsBloc
@@ -40,7 +40,7 @@ class SubscribeTransactionsBloc
     );
 
     stream.listen((onData) {
-      TransactionModel m = TransactionModel.fromLND(onData);
+      OnchainTransaction m = OnchainTransaction.fromLND(onData);
       dispatch(TransactionChangedEvent(m));
     });
   }

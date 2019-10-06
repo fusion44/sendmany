@@ -11,7 +11,7 @@ class InitialSubscribeTransactionsState extends SubscribeTransactionsState {
 }
 
 class TransactionChangedState extends SubscribeTransactionsState {
-  final TransactionModel tx;
+  final OnchainTransaction tx;
 
   TransactionChangedState(this.tx);
 
