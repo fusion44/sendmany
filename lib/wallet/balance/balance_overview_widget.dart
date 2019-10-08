@@ -4,10 +4,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:torden/channels/listchannels/bloc/bloc.dart';
 import 'package:torden/common/constants.dart';
-import 'package:torden/common/utils.dart';
 import 'package:torden/common/widgets/charts/charts.dart';
 import 'package:torden/common/widgets/money_value_view.dart';
-import 'package:torden/common/widgets/torden_card.dart';
 import 'package:torden/common/widgets/widgets.dart';
 import 'package:torden/wallet/receive/receive_page.dart';
 import 'package:torden/wallet/send/send_page.dart';
@@ -52,51 +50,82 @@ class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
                 state.channelBalance.balance.toDouble(), tordenChannelBalance),
           ];
 
-          return TordenCard(
-              tr(context, "wallet.balance"),
-              [
-                TranslatedText("wallet.total"),
-                MoneyValueView(amount: total, hero: true),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: FlatLineChart(
-                    values: i,
-                    total: total.toDouble(),
-                    strokeWidth: 3,
-                  ),
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: TranslatedText("wallet.balance",
+                    style: theme.textTheme.title),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: TranslatedText("wallet.total"),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: MoneyValueView(amount: total, hero: true),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 16.0,
+                  right: 16.0,
+                  bottom: 8.0,
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    BalanceDisplayListItem(
-                      theme: theme,
-                      title: tr(context, "wallet.onchain"),
-                      subtitle: tr(context, "wallet.confirmed"),
-                      amount: state.walletBalance.confirmedBalance,
+                child: FlatLineChart(
+                  values: i,
+                  total: total.toDouble(),
+                  strokeWidth: 3,
+                ),
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  ListTile(
+                    leading: Container(
+                      width: 4.0,
                       color: tordenConfirmedBalance,
                     ),
-                    Divider(),
-                    BalanceDisplayListItem(
-                      theme: theme,
-                      title: tr(context, "wallet.onchain"),
-                      subtitle: tr(context, "wallet.unconfirmed"),
-                      amount: state.walletBalance.unconfirmedBalance,
+                    title: TranslatedText("wallet.onchain"),
+                    subtitle: TranslatedText("wallet.confirmed"),
+                    trailing: MoneyValueView(
+                      amount: state.walletBalance.confirmedBalance,
+                      textAlign: TextAlign.end,
+                    ),
+                    dense: false,
+                  ),
+                  ListTile(
+                    leading: Container(
+                      width: 4.0,
                       color: tordenUnconfirmedBalance,
                     ),
-                    Divider(),
-                    BalanceDisplayListItem(
-                      theme: theme,
-                      title: tr(context, "wallet.channel"),
-                      amount: state.channelBalance.balance,
+                    title: TranslatedText("wallet.onchain"),
+                    subtitle: TranslatedText("wallet.unconfirmed"),
+                    trailing: MoneyValueView(
+                      amount: state.walletBalance.unconfirmedBalance,
+                      textAlign: TextAlign.end,
+                    ),
+                    dense: false,
+                  ),
+                  ListTile(
+                    leading: Container(
+                      width: 4.0,
                       color: tordenChannelBalance,
                     ),
-                    Divider(),
-                    Container(height: 16.0),
-                    _buildSendReceiveButtons(),
-                  ],
-                ),
-              ],
-              CrossAxisAlignment.stretch);
+                    title: TranslatedText("wallet.channel"),
+                    subtitle: Text("Total"),
+                    trailing: MoneyValueView(
+                      amount: state.channelBalance.balance,
+                      textAlign: TextAlign.end,
+                    ),
+                    dense: false,
+                  ),
+                  Container(height: 16.0),
+                  _buildSendReceiveButtons(),
+                ],
+              ),
+            ],
+          );
         }
         return Text("Unknown State? $state");
       },

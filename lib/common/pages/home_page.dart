@@ -13,10 +13,9 @@ import 'package:torden/common/widgets/widgets.dart';
 import 'package:torden/node/node_overview_widget.dart';
 import 'package:torden/preferences/bloc.dart';
 import 'package:torden/preferences/preferences_page.dart';
-import 'package:torden/wallet/balance/balance_overview_widget.dart';
 import 'package:torden/wallet/balance/bloc/bloc.dart';
 import 'package:torden/wallet/balance/list_transactions/bloc.dart';
-import 'package:torden/wallet/balance/transactions_widget.dart';
+import 'package:torden/wallet/wallet_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -97,14 +96,7 @@ class _HomePageState extends State<HomePage>
       body: TabBarView(
         controller: _controller,
         children: <Widget>[
-          SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                BalanceOverviewWidget(),
-                TransactionsWidget(),
-              ],
-            ),
-          ),
+          WalletPage(),
           Column(
             children: <Widget>[
               ListChannelsWidget(),
