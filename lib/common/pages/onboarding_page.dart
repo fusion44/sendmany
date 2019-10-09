@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:torden/common/connection/connection_manager/bloc.dart';
 import 'package:torden/common/constants.dart';
 import 'package:torden/common/widgets/widgets.dart';
 import 'package:torden/preferences/bloc.dart';
@@ -123,6 +124,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
               onPressed: () {
                 PreferencesBloc bloc = BlocProvider.of(context);
                 bloc.dispatch(SetOnboardingFinishedEvent());
+
+                ConnectionManagerBloc connBloc = BlocProvider.of(context);
+                connBloc.dispatch(AppStart());
+
                 Navigator.pushNamedAndRemoveUntil(
                   context,
                   "/splash",

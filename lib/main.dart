@@ -62,28 +62,34 @@ class _TordenAppState extends State<TordenApp> {
 
   Widget _buildSplashPage() {
     return BlocBuilder(
-      bloc: _preferencesBloc,
-      builder: (BuildContext context, PreferencesState prefsState) {
-        // possible states:
-        // PreferencesLoadingState -> Show splash screen
-        // PreferencesLoadedState:
-        //  onboardingFinished false -> show Onboarding screen
-        //  onboardingFinished true:
-        //    pinActive false -> go to HomePage
-        //    pinActive true -> go to LoginPage
-        if (prefsState is PreferencesLoadedState) {
-          if (prefsState.onboardingFinished) {
-            if (prefsState.pinActive) {
-              _navigateToNamedRoute(context, "/login");
-            } else {
-              _navigateToNamedRoute(context, "/home");
+      bloc: _connectionManagerBloc,
+      builder: (context, ConnectionManagerState connState) {
+        return BlocBuilder(
+          bloc: _preferencesBloc,
+          builder: (BuildContext context, PreferencesState prefsState) {
+            // possible states:
+            // PreferencesLoadingState -> Show splash screen
+            // PreferencesLoadedState:
+            //  onboardingFinished false -> show Onboarding screen
+            //  onboardingFinished true:
+            //    pinActive false -> go to HomePage
+            //    pinActive true -> go to LoginPage
+            bool connection = connState is ConnectionEstablishedState;
+            if (prefsState is PreferencesLoadedState) {
+              if (prefsState.onboardingFinished && connection) {
+                if (prefsState.pinActive) {
+                  _navigateToNamedRoute(context, "/login");
+                } else {
+                  _navigateToNamedRoute(context, "/home");
+                }
+              } else {
+                _navigateToNamedRoute(context, "/onboarding");
+              }
             }
-          } else {
-            _navigateToNamedRoute(context, "/onboarding");
-          }
-        }
-        return Scaffold(
-          body: Center(child: Text("Splash")),
+            return Scaffold(
+              body: Center(child: Text("Splash")),
+            );
+          },
         );
       },
     );
@@ -105,8 +111,11 @@ class _TordenAppState extends State<TordenApp> {
   }
 
   Widget _buildOnboardingPage() {
-    return BlocProvider.value(
-      value: _preferencesBloc,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider.value(value: _preferencesBloc),
+        BlocProvider.value(value: _connectionManagerBloc),
+      ],
       child: OnboardingPage(),
     );
   }
