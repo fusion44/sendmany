@@ -141,7 +141,7 @@ class _RetrieveConnectionInfoPageState
               textChanged: (String text) => _macaroon = text,
             ),
             Container(height: 8.0),
-            _buildIpWidget(),
+            _buildHostWidget(),
             _buildActionButton(),
           ],
         ),
@@ -149,7 +149,7 @@ class _RetrieveConnectionInfoPageState
     );
   }
 
-  Stack _buildIpWidget({double padding = 16.0}) {
+  Stack _buildHostWidget({double padding = 16.0}) {
     double gap = 8.0;
     double portWidth = 120.0;
     double size = MediaQuery.of(context).size.width - portWidth - gap - padding;
@@ -163,10 +163,13 @@ class _RetrieveConnectionInfoPageState
               text: _host,
               textHint: tr(context, "onboarding.host"),
               keyboardType: TextInputType.number,
-              validator: (String ip) {
-                // TODO: Add TOR support
+              validator: (String host) {
+                Validator v = Validator();
                 String ret;
-                if (Validator().ip(ip)) {
+
+                if (v.onionAddress(host)) {
+                  _hostValid = true;
+                } else if (v.ip(host)) {
                   _hostValid = true;
                 } else {
                   _hostValid = false;

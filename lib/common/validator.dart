@@ -17,4 +17,9 @@ class Validator {
 
     return _regex.hasMatch(ip);
   }
+
+  bool onionAddress(String address) {
+    final RegExp _regex = RegExp(r"^([a-z2-7]{16}|[a-z2-7]{56})\.onion$");
+    return _regex.hasMatch(address);
+  }
 }
