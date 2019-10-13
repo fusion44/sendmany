@@ -99,6 +99,7 @@ class _RetrieveConnectionInfoPageState
                 _checkActionButtonEnabled();
                 return ret;
               },
+              textChanged: (String text) => _name = text,
             ),
             Container(height: 8.0),
             FilledTextField(
@@ -274,6 +275,7 @@ class _RetrieveConnectionInfoPageState
 
   void _navigateToCheckConnectionPage() async {
     LndConnectionData cdata = LndConnectionData(
+      name: _name,
       certificate: _prepareCertificate(_cert),
       macaroon: _prepareMacaroon(_macaroon),
       host: _host,
@@ -323,6 +325,9 @@ class _RetrieveConnectionInfoPageState
     }
 
     connectionData.add(newConnection);
+
+    // set the new node as active by default
+    await storage.write(key: prefActiveConnection, value: newConnection.name);
 
     await storage.write(
       key: prefConnectionData,

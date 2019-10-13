@@ -3,16 +3,16 @@ import 'dart:convert';
 import 'package:meta/meta.dart';
 
 class LndConnectionData {
-  String name;
+  final String name;
 
   // utf8 formatted certificate
-  List<int> certificate;
-  String macaroon;
-  String host;
-  int port;
+  final List<int> certificate;
+  final String macaroon;
+  final String host;
+  final int port;
 
   LndConnectionData({
-    this.name = "",
+    @required this.name,
     @required this.certificate,
     @required this.macaroon,
     @required this.host,
