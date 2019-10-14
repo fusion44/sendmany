@@ -45,8 +45,7 @@ class _TordenAppState extends State<TordenApp> {
   void initState() {
     _preferencesBloc = PreferencesBloc();
     _preferencesBloc.dispatch(LoadPreferencesEvent());
-    _connectionManagerBloc = ConnectionManagerBloc();
-    _connectionManagerBloc.dispatch(AppStart());
+    _connectionManagerBloc = ConnectionManagerBloc(_preferencesBloc);
 
     _routes = <String, WidgetBuilder>{
       "/": (BuildContext context) => _buildSplashPage(),
@@ -82,6 +81,8 @@ class _TordenAppState extends State<TordenApp> {
                 } else {
                   _navigateToNamedRoute(context, "/home");
                 }
+              } else if (prefsState.onboardingFinished && !connection) {
+                _buildSplashPage();
               } else {
                 _navigateToNamedRoute(context, "/onboarding");
               }

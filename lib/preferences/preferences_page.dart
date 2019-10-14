@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:torden/common/models/models.dart';
+import 'package:torden/common/pages/retrieve_connection_info_page.dart';
 import 'package:torden/common/utils.dart';
 import 'package:torden/common/widgets/widgets.dart';
 import 'package:torden/preferences/bloc.dart';
@@ -23,38 +25,39 @@ class _PreferencesPageState extends State<PreferencesPage> {
             body: Center(
               child: Column(
                 children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      TranslatedText("prefs.language_label"),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 16.0),
-                        child: DropdownButton(
-                          value: state.language,
-                          onChanged: (value) {
-                            prefsBloc.dispatch(
-                                ChangeLanguageEvent(languageCode: value));
-                          },
-                          items: _getLanguageItems(),
-                        ),
-                      ),
-                    ],
+                  ListTile(
+                    title: TranslatedText("prefs.language_label"),
+                    trailing: DropdownButton(
+                      value: state.language,
+                      onChanged: (value) {
+                        prefsBloc.dispatch(
+                          ChangeLanguageEvent(languageCode: value),
+                        );
+                      },
+                      items: _getLanguageItems(),
+                    ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      TranslatedText("prefs.theme_label"),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 16.0),
-                        child: DropdownButton(
-                          value: state.theme,
-                          onChanged: (value) {
-                            prefsBloc.dispatch(ChangeThemeEvent(theme: value));
-                          },
-                          items: _getThemeItems(),
-                        ),
-                      ),
-                    ],
+                  Divider(),
+                  ListTile(
+                    title: TranslatedText("prefs.theme_label"),
+                    trailing: DropdownButton(
+                      value: state.theme,
+                      onChanged: (value) {
+                        prefsBloc.dispatch(ChangeThemeEvent(theme: value));
+                      },
+                      items: _getThemeItems(),
+                    ),
+                  ),
+                  Divider(),
+                  ListTile(
+                    title: TranslatedText("prefs.node_dropdown"),
+                    trailing: DropdownButton<String>(
+                      value: state.activeConnection.name,
+                      onChanged: (value) {
+                        prefsBloc.dispatch(ChangeActiveConnectionEvent(value));
+                      },
+                      items: _buildNodeItems(state.connections),
+                    ),
                   ),
                 ],
               ),
@@ -98,5 +101,43 @@ class _PreferencesPageState extends State<PreferencesPage> {
         );
       },
     ).toList();
+  }
+
+  List<DropdownMenuItem<String>> _buildNodeItems(
+    List<LndConnectionData> connections,
+  ) {
+    List<DropdownMenuItem<String>> l =
+        connections.map<DropdownMenuItem<String>>(
+      (LndConnectionData data) {
+        return DropdownMenuItem<String>(
+          value: data.name,
+          child: Text(data.name),
+        );
+      },
+    ).toList();
+    l.add(
+      DropdownMenuItem<String>(
+        value: "add_node",
+        child: RaisedButton(
+          child: TranslatedText("prefs.add_node_btn"),
+          onPressed: () {
+            _navigateToAddRemoteNode();
+          },
+        ),
+      ),
+    );
+    return l;
+  }
+
+  void _navigateToAddRemoteNode() async {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) {
+        return BlocProvider.value(
+          value: BlocProvider.of<PreferencesBloc>(context),
+          child: RetrieveConnectionInfoPage(doScan: true),
+        );
+      }),
+    );
   }
 }

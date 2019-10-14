@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:torden/common/constants.dart';
+import 'package:torden/common/models/lnd_connection_data.dart';
 
 @immutable
 class PreferencesState extends Equatable {
@@ -9,6 +10,8 @@ class PreferencesState extends Equatable {
   final bool onboardingFinished;
   final int numNodes;
   final bool pinActive;
+  final LndConnectionData activeConnection;
+  final List<LndConnectionData> connections;
 
   PreferencesState({
     @required this.language,
@@ -16,6 +19,8 @@ class PreferencesState extends Equatable {
     @required this.onboardingFinished,
     @required this.numNodes,
     @required this.pinActive,
+    @required this.activeConnection,
+    @required this.connections,
   });
 
   @override
@@ -25,49 +30,47 @@ class PreferencesState extends Equatable {
         onboardingFinished,
         numNodes,
         pinActive,
+        activeConnection,
+        connections,
       ];
 }
 
 class PreferencesLoadingState extends PreferencesState {
-  final String language;
-  final String theme;
-  final bool onboardingFinished;
-  final int numNodes;
-  final bool pinActive;
-
   PreferencesLoadingState({
-    this.language = "EN",
-    this.theme = themeTorden,
-    this.onboardingFinished = false,
-    this.numNodes = 0,
-    this.pinActive = true,
+    String language = "EN",
+    String theme = themeTorden,
+    bool onboardingFinished = false,
+    int numNodes = 0,
+    bool pinActive = true,
+    LndConnectionData activeConnection,
+    List<LndConnectionData> connections = const <LndConnectionData>[],
   }) : super(
           language: language,
           theme: theme,
           onboardingFinished: onboardingFinished,
           numNodes: numNodes,
           pinActive: pinActive,
+          activeConnection: activeConnection,
+          connections: connections,
         );
 }
 
 class PreferencesLoadedState extends PreferencesState {
-  final String language;
-  final String theme;
-  final bool onboardingFinished;
-  final int numNodes;
-  final bool pinActive;
-
   PreferencesLoadedState({
-    @required this.language,
-    @required this.theme,
-    @required this.onboardingFinished,
-    @required this.numNodes,
-    @required this.pinActive,
+    @required String language,
+    @required String theme,
+    @required bool onboardingFinished,
+    @required int numNodes,
+    @required bool pinActive,
+    @required LndConnectionData activeConnection,
+    @required List<LndConnectionData> connections,
   }) : super(
           language: language,
           theme: theme,
           onboardingFinished: onboardingFinished,
           numNodes: numNodes,
           pinActive: pinActive,
+          activeConnection: activeConnection,
+          connections: connections,
         );
 }

@@ -1,15 +1,15 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:torden/common/connection/check_lnd_connection/check_lnd_connection_page.dart';
-import 'package:torden/common/constants.dart';
 import 'package:torden/common/models/lnd_connection_data.dart';
 import 'package:torden/common/utils.dart';
 import 'package:torden/common/validator.dart';
 import 'package:torden/common/widgets/widgets.dart';
 
 import 'package:convert/convert.dart';
+import 'package:torden/preferences/bloc.dart';
 
 class RetrieveConnectionInfoPage extends StatefulWidget {
   final bool doScan;
@@ -309,39 +309,8 @@ class _RetrieveConnectionInfoPageState
       _connectionDataSaved = false;
     });
 
-    final storage = FlutterSecureStorage();
-    String connectionJSON = await storage.read(key: prefConnectionData);
-    List<dynamic> connectionData;
-    if (connectionJSON != null) {
-      connectionData = json.decode(connectionJSON, reviver: (a, b) {
-        if (b is String) {
-          return LndConnectionData.fromJSON(b);
-        } else {
-          return b;
-        }
-      });
-    } else {
-      connectionData = [];
-    }
-
-    connectionData.add(newConnection);
-
-    // set the new node as active by default
-    await storage.write(key: prefActiveConnection, value: newConnection.name);
-
-    await storage.write(
-      key: prefConnectionData,
-      value: json.encode(
-        connectionData,
-        toEncodable: (object) {
-          if (object is LndConnectionData) {
-            return object.toJSON();
-          } else {
-            throw TypeError();
-          }
-        },
-      ),
-    );
+    PreferencesBloc blc = BlocProvider.of<PreferencesBloc>(context);
+    blc.dispatch(AddConnectionEvent(newConnection));
 
     setState(() {
       _savingConnectionData = false;

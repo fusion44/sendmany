@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
+import 'package:torden/common/models/models.dart';
 
 @immutable
 abstract class PreferencesEvent extends Equatable {}
@@ -48,4 +49,22 @@ class SetPinActiveEvent extends PreferencesEvent {
 
   @override
   List<Object> get props => [pinActive];
+}
+
+class ChangeActiveConnectionEvent extends PreferencesEvent {
+  final String connectionName;
+
+  ChangeActiveConnectionEvent(this.connectionName);
+
+  @override
+  List<Object> get props => [connectionName];
+}
+
+class AddConnectionEvent extends PreferencesEvent {
+  final LndConnectionData connection;
+
+  AddConnectionEvent(this.connection);
+
+  @override
+  List<Object> get props => [connection];
 }

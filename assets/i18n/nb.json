@@ -58,8 +58,10 @@
     "second_header": "Safety First"
   },
   "prefs": {
+    "add_node_btn": "Add a node",
     "btn": "Innstillinger",
     "language_label": "Språk",
+    "node_dropdown": "Active Node",
     "theme_label": "Theme",
     "title": "Innstillinger"
   },
