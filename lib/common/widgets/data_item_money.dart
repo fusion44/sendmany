@@ -1,7 +1,7 @@
 import 'package:fixnum/fixnum.dart';
 import 'package:flutter/material.dart';
-import 'package:torden/common/constants.dart';
-import 'package:torden/common/widgets/money_value_view.dart';
+import 'package:sendmany/common/constants.dart';
+import 'package:sendmany/common/widgets/money_value_view.dart';
 
 class DataItemMoney extends StatelessWidget {
   final Int64 amount;
@@ -12,7 +12,7 @@ class DataItemMoney extends StatelessWidget {
     Key key,
     @required this.amount,
     @required this.label,
-    this.color = tordenBackground,
+    this.color = sendManyBackground,
   }) : super(key: key);
 
   @override

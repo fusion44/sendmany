@@ -8,11 +8,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:torden/common/constants.dart';
-import 'package:torden/common/models/models.dart';
-import 'package:torden/common/utils.dart';
-import 'package:torden/common/widgets/widgets.dart';
-import 'package:torden/wallet/receive/lightning/watch_invoices_bloc/bloc.dart';
+import 'package:sendmany/common/constants.dart';
+import 'package:sendmany/common/models/models.dart';
+import 'package:sendmany/common/utils.dart';
+import 'package:sendmany/common/widgets/widgets.dart';
+import 'package:sendmany/wallet/receive/lightning/watch_invoices_bloc/bloc.dart';
 import 'package:unicorndial/unicorndial.dart';
 
 import 'add_invoice_bloc/bloc.dart';
@@ -61,7 +61,8 @@ class _ShowLightningInvoiceState extends State<ShowLightningInvoice> {
       bloc: _addInvoicesBloc,
       builder: (context, state) {
         if (state is InitialAddinvoiceState) {
-          return Center(child: SpinKitRipple(color: tordenBlue200, size: 150));
+          return Center(
+              child: SpinKitRipple(color: sendManyBlue200, size: 150));
         } else if (state is AddedInvoiceState) {
           _addIndex = state.invoice.addIndex;
           return Scaffold(

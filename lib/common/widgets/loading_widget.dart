@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:torden/common/constants.dart';
+import 'package:sendmany/common/constants.dart';
 
 import 'translated_text.dart';
 
@@ -28,7 +28,7 @@ class LoadingWidget extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(top: 64.0),
-            child: SpinKitRipple(color: tordenBlue200, size: 100),
+            child: SpinKitRipple(color: sendManyBlue200, size: 100),
           ),
         ],
       ),

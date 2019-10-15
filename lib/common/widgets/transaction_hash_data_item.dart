@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:torden/common/utils.dart';
-import 'package:torden/common/widgets/widgets.dart';
-import 'package:torden/wallet/balance/bloc/bloc.dart';
+import 'package:sendmany/common/utils.dart';
+import 'package:sendmany/common/widgets/widgets.dart';
+import 'package:sendmany/wallet/balance/bloc/bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TransactionHashDataItem extends StatelessWidget {

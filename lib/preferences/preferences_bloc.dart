@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:torden/common/constants.dart';
+import 'package:sendmany/common/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:torden/common/models/models.dart';
+import 'package:sendmany/common/models/models.dart';
 import './bloc.dart';
 
 class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
@@ -22,7 +22,7 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
 
       String theme = prefs.getString(prefTheme);
       if (theme == null) {
-        theme = themeTorden;
+        theme = themeSendMany;
         prefs.setString(prefTheme, theme);
       }
 

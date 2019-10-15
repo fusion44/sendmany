@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:torden/common/connection/lnd_rpc/lnd_rpc.dart';
-import 'package:torden/common/utils.dart';
-import 'package:torden/common/widgets/compact_channel_list_item.dart';
-import 'package:torden/common/widgets/widgets.dart';
+import 'package:sendmany/common/connection/lnd_rpc/lnd_rpc.dart';
+import 'package:sendmany/common/utils.dart';
+import 'package:sendmany/common/widgets/compact_channel_list_item.dart';
+import 'package:sendmany/common/widgets/widgets.dart';
 
 import 'bloc/bloc.dart';
 
@@ -32,7 +32,7 @@ class _ListChannelsWidgetState extends State<ListChannelsWidget> {
             }
           }
 
-          return TordenCard(
+          return SendManyCard(
             tr(context, "channels.info"),
             widgets,
           );

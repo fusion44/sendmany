@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:torden/common/models/models.dart';
+import 'package:sendmany/common/models/models.dart';
 
 @immutable
 abstract class AddInvoiceState extends Equatable {}

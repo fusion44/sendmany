@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:torden/common/constants.dart';
+import 'package:sendmany/common/constants.dart';
 
-class TordenLogoHeroWidget extends StatelessWidget {
-  const TordenLogoHeroWidget({
+class SendManyLogoHeroWidget extends StatelessWidget {
+  const SendManyLogoHeroWidget({
     Key key,
   }) : super(key: key);
 
@@ -11,7 +11,7 @@ class TordenLogoHeroWidget extends StatelessWidget {
     // Currently there is a bug in Flare that doesn't display the logo correctly.
     // Use a static version until the bug is fixed: https://github.com/2d-inc/support/issues/221
     return Hero(
-      tag: heroTagTordenLogo,
+      tag: heroTagSendManyLogo,
       child: Image.asset("assets/logo_static.png"),
     );
   }

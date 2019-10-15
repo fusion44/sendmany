@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import 'package:torden/common/validator.dart';
+import 'package:sendmany/common/validator.dart';
 
 void main() {
   group("Validator", () {

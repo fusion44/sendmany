@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:torden/common/models/models.dart';
-import 'package:torden/common/utils.dart';
-import 'package:torden/common/widgets/widgets.dart';
-import 'package:torden/wallet/balance/balance_overview_widget.dart';
+import 'package:sendmany/common/models/models.dart';
+import 'package:sendmany/common/utils.dart';
+import 'package:sendmany/common/widgets/widgets.dart';
+import 'package:sendmany/wallet/balance/balance_overview_widget.dart';
 
 import 'balance/list_transactions/bloc.dart';
 

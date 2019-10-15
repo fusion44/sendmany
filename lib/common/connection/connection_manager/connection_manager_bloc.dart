@@ -2,11 +2,11 @@ import 'dart:async';
 import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:grpc/grpc.dart';
-import 'package:torden/common/connection/connection_manager/bloc.dart';
-import 'package:torden/common/connection/lnd_rpc/lnd_rpc.dart';
-import 'package:torden/common/models/models.dart';
-import 'package:torden/preferences/bloc.dart';
-import 'package:torden/preferences/preferences_bloc.dart';
+import 'package:sendmany/common/connection/connection_manager/bloc.dart';
+import 'package:sendmany/common/connection/lnd_rpc/lnd_rpc.dart';
+import 'package:sendmany/common/models/models.dart';
+import 'package:sendmany/preferences/bloc.dart';
+import 'package:sendmany/preferences/preferences_bloc.dart';
 
 import 'connection_manager_event.dart';
 import 'connection_manager_state.dart';

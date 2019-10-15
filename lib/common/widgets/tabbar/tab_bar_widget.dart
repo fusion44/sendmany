@@ -3,21 +3,21 @@ import 'package:flutter/material.dart';
 import 'tab.dart';
 import 'tab_data.dart';
 
-class TordenTabBar extends StatefulWidget {
+class SendManyTabBar extends StatefulWidget {
   final TabController controller;
   final List<TabData> tabs;
 
-  const TordenTabBar({
+  const SendManyTabBar({
     Key key,
     @required this.tabs,
     @required this.controller,
   }) : super(key: key);
 
   @override
-  _TordenTabBarState createState() => _TordenTabBarState();
+  _SendManyTabBarState createState() => _SendManyTabBarState();
 }
 
-class _TordenTabBarState extends State<TordenTabBar>
+class _SendManyTabBarState extends State<SendManyTabBar>
     with SingleTickerProviderStateMixin {
   int selectedIndex = 0;
 
@@ -36,7 +36,7 @@ class _TordenTabBarState extends State<TordenTabBar>
   Widget build(BuildContext context) {
     List<Widget> tabs = widget.tabs.map((data) {
       bool selected = widget.tabs.indexOf(data) == selectedIndex;
-      return TordenTab(
+      return SendManyTab(
         index: widget.tabs.indexOf(data),
         onTap: _onChangeTab,
         labelText: data.title,

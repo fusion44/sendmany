@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
-import 'package:torden/common/constants.dart';
-import 'package:torden/common/widgets/widgets.dart';
+import 'package:sendmany/common/constants.dart';
+import 'package:sendmany/common/widgets/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashPage extends StatefulWidget {
@@ -29,7 +29,7 @@ class _SplashPageState extends State<SplashPage> {
         child: SizedBox(
           width: 200,
           height: 200,
-          child: TordenLogoHeroWidget(),
+          child: SendManyLogoHeroWidget(),
         ),
       ),
     );

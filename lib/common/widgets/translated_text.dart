@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:torden/common/utils.dart';
+import 'package:sendmany/common/utils.dart';
 
 class TranslatedText extends StatelessWidget {
   final String text;

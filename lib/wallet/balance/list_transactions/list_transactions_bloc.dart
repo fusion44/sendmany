@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:grpc/grpc.dart';
-import 'package:torden/common/connection/connection_manager/bloc.dart';
-import 'package:torden/common/models/models.dart';
-import 'package:torden/common/connection/lnd_rpc/lnd_rpc.dart' as lngrpc;
-import 'package:torden/wallet/balance/bloc/bloc.dart';
-import 'package:torden/wallet/balance/bloc/ln_info_bloc.dart';
+import 'package:sendmany/common/connection/connection_manager/bloc.dart';
+import 'package:sendmany/common/models/models.dart';
+import 'package:sendmany/common/connection/lnd_rpc/lnd_rpc.dart' as lngrpc;
+import 'package:sendmany/wallet/balance/bloc/bloc.dart';
+import 'package:sendmany/wallet/balance/bloc/ln_info_bloc.dart';
 
 import 'list_transactions_event.dart';
 import 'list_transactions_state.dart';

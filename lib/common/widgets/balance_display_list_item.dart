@@ -1,7 +1,7 @@
 import 'package:fixnum/fixnum.dart';
 import 'package:flutter/material.dart';
-import 'package:torden/common/constants.dart';
-import 'package:torden/common/widgets/widgets.dart';
+import 'package:sendmany/common/constants.dart';
+import 'package:sendmany/common/widgets/widgets.dart';
 
 class BalanceDisplayListItem extends StatelessWidget {
   final ThemeData theme;
@@ -16,7 +16,7 @@ class BalanceDisplayListItem extends StatelessWidget {
     @required this.title,
     this.subtitle = "",
     @required this.amount,
-    this.color = tordenBackground,
+    this.color = sendManyBackground,
   }) : super(key: key);
 
   @override

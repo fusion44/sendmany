@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:torden/common/constants.dart';
+import 'package:sendmany/common/constants.dart';
 
 class DataItem extends StatelessWidget {
   final String text;
@@ -10,7 +10,7 @@ class DataItem extends StatelessWidget {
     Key key,
     @required this.text,
     @required this.label,
-    this.color = tordenBackground,
+    this.color = sendManyBackground,
   }) : super(key: key);
 
   @override

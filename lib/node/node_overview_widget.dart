@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:torden/common/utils.dart';
-import 'package:torden/common/widgets/widgets.dart';
-import 'package:torden/wallet/balance/bloc/bloc.dart';
+import 'package:sendmany/common/utils.dart';
+import 'package:sendmany/common/widgets/widgets.dart';
+import 'package:sendmany/wallet/balance/bloc/bloc.dart';
 
 class NodeOverviewWidget extends StatefulWidget {
   @override

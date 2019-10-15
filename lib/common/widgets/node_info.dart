@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:torden/common/connection/lnd_rpc/rpc.pb.dart';
-import 'package:torden/common/utils.dart';
-import 'package:torden/common/widgets/widgets.dart';
+import 'package:sendmany/common/connection/lnd_rpc/rpc.pb.dart';
+import 'package:sendmany/common/utils.dart';
+import 'package:sendmany/common/widgets/widgets.dart';
 
 class NodeInfo extends StatefulWidget {
   final GetInfoResponse info;
@@ -16,7 +16,7 @@ class NodeInfo extends StatefulWidget {
 class _NodeInfoState extends State<NodeInfo> {
   @override
   Widget build(BuildContext context) {
-    return TordenCard(
+    return SendManyCard(
       widget.header,
       [
         _buildRowAliasAndChain(widget.info),

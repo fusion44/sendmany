@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:torden/common/constants.dart';
-import 'package:torden/common/models/models.dart';
-import 'package:torden/common/utils.dart';
-import 'package:torden/common/widgets/widgets.dart';
-import 'package:torden/wallet/receive/onchain/subscribe_transactions/bloc.dart';
+import 'package:sendmany/common/constants.dart';
+import 'package:sendmany/common/models/models.dart';
+import 'package:sendmany/common/utils.dart';
+import 'package:sendmany/common/widgets/widgets.dart';
+import 'package:sendmany/wallet/receive/onchain/subscribe_transactions/bloc.dart';
 
 class ShowOnchainInvoice extends StatefulWidget {
   final String address;
@@ -99,7 +99,7 @@ class _ShowOnchainInvoiceState extends State<ShowOnchainInvoice> {
                           ],
                         )
                       : SpinKitRipple(
-                          color: tordenBlue200,
+                          color: sendManyBlue200,
                           size: 100,
                         ),
                   RaisedButton(

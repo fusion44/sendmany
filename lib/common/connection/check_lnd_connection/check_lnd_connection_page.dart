@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:torden/common/connection/check_lnd_connection/bloc.dart';
-import 'package:torden/common/models/models.dart';
-import 'package:torden/common/utils.dart';
-import 'package:torden/common/widgets/widgets.dart';
+import 'package:sendmany/common/connection/check_lnd_connection/bloc.dart';
+import 'package:sendmany/common/models/models.dart';
+import 'package:sendmany/common/utils.dart';
+import 'package:sendmany/common/widgets/widgets.dart';
 
 enum CheckConnectionResultReason {
   // Connection successful and user pressed OK

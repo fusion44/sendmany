@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:torden/auth/login/bloc.dart';
-import 'package:torden/auth/login/login_form.dart';
-import 'package:torden/common/widgets/widgets.dart';
+import 'package:sendmany/auth/login/bloc.dart';
+import 'package:sendmany/auth/login/login_form.dart';
+import 'package:sendmany/common/widgets/widgets.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -40,7 +40,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: SizedBox(
                     width: 150,
                     height: 150,
-                    child: TordenLogoHeroWidget(),
+                    child: SendManyLogoHeroWidget(),
                   ),
                 ),
                 Padding(padding: EdgeInsets.only(top: 16.0)),

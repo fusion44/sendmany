@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:torden/common/connection/lnd_rpc/lnd_rpc.dart';
-import 'package:torden/common/constants.dart';
-import 'package:torden/common/widgets/charts/charts.dart';
-import 'package:torden/common/widgets/money_value_view.dart';
-import 'package:torden/common/widgets/widgets.dart';
+import 'package:sendmany/common/connection/lnd_rpc/lnd_rpc.dart';
+import 'package:sendmany/common/constants.dart';
+import 'package:sendmany/common/widgets/charts/charts.dart';
+import 'package:sendmany/common/widgets/money_value_view.dart';
+import 'package:sendmany/common/widgets/widgets.dart';
 
 class CompactChannelListItem extends StatelessWidget {
   final Channel channel;
@@ -15,8 +15,11 @@ class CompactChannelListItem extends StatelessWidget {
     double total =
         channel.localBalance.toDouble() + channel.remoteBalance.toDouble();
     List<ChartSectionInput> sections = [
-      ChartSectionInput(channel.localBalance.toDouble(), tordenLocalBalance),
-      ChartSectionInput(channel.remoteBalance.toDouble(), tordenRemoteBalance),
+      ChartSectionInput(channel.localBalance.toDouble(), sendManyLocalBalance),
+      ChartSectionInput(
+        channel.remoteBalance.toDouble(),
+        sendManyRemoteBalance,
+      ),
     ];
 
     return Stack(

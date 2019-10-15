@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:torden/auth/login/login_event.dart';
-import 'package:torden/auth/login/login_state.dart';
+import 'package:sendmany/auth/login/login_event.dart';
+import 'package:sendmany/auth/login/login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginState get initialState => LoginSuccess();

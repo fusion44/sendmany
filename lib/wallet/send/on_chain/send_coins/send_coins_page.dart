@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:torden/common/constants.dart';
-import 'package:torden/common/utils.dart';
-import 'package:torden/common/widgets/widgets.dart';
-import 'package:torden/wallet/balance/bloc/bloc.dart';
-import 'package:torden/wallet/send/send_page.dart';
+import 'package:sendmany/common/constants.dart';
+import 'package:sendmany/common/utils.dart';
+import 'package:sendmany/common/widgets/widgets.dart';
+import 'package:sendmany/wallet/balance/bloc/bloc.dart';
+import 'package:sendmany/wallet/send/send_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'bloc/bloc.dart';
@@ -103,7 +103,7 @@ class _SendCoinsPageState extends State<SendCoinsPage> {
   }
 
   Widget _buildTransactionSubmittedUI(String txid, Function onPressed) {
-    return TordenCard(
+    return SendManyCard(
       tr(context, "wallet.transactions.submitted_to_mempool"),
       [
         Row(
@@ -141,7 +141,7 @@ class _SendCoinsPageState extends State<SendCoinsPage> {
 
   RaisedButton _buildViewTxOnlineButton(Function onPressed) {
     return RaisedButton(
-      color: tordenDarkGreen,
+      color: sendManyDarkGreen,
       child: TranslatedText(
         "wallet.transactions.view_on_blockstream_info",
       ),
@@ -153,7 +153,7 @@ class _SendCoinsPageState extends State<SendCoinsPage> {
     return RaisedButton.icon(
       icon: Icon(Icons.camera_alt),
       label: TranslatedText("wallet.transactions.next_transaction_button"),
-      color: tordenConfirmedBalance,
+      color: sendManyConfirmedBalance,
       onPressed: () {
         Navigator.popUntil(
           context,

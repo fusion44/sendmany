@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class TordenTab extends StatefulWidget {
+class SendManyTab extends StatefulWidget {
   static int selectedIndex = 0;
   final int index;
   final Function onTap;
@@ -8,7 +8,7 @@ class TordenTab extends StatefulWidget {
   final IconData iconData;
   final bool selected;
   final TabController controller;
-  const TordenTab({
+  const SendManyTab({
     @required this.index,
     @required this.onTap,
     @required this.labelText,
@@ -18,10 +18,10 @@ class TordenTab extends StatefulWidget {
     Key key,
   }) : super(key: key);
   @override
-  _TordenTabState createState() => _TordenTabState();
+  _SendManyTabState createState() => _SendManyTabState();
 }
 
-class _TordenTabState extends State<TordenTab> {
+class _SendManyTabState extends State<SendManyTab> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;

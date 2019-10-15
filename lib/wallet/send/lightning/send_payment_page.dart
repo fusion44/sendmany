@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:torden/common/connection/lnd_rpc/lnd_rpc.dart' as lnrpc;
-import 'package:torden/common/constants.dart';
-import 'package:torden/common/utils.dart';
-import 'package:torden/common/widgets/widgets.dart';
+import 'package:sendmany/common/connection/lnd_rpc/lnd_rpc.dart' as lnrpc;
+import 'package:sendmany/common/constants.dart';
+import 'package:sendmany/common/utils.dart';
+import 'package:sendmany/common/widgets/widgets.dart';
 
 import 'decode_payreq/bloc/bloc.dart';
 import 'send_payment/bloc/bloc.dart';
@@ -91,7 +91,7 @@ class _SendPaymentPageState extends State<SendPaymentPage> {
     bool expired = diff > (state.req.expiry.toInt() * 1000);
 
     return SingleChildScrollView(
-      child: TordenCard(
+      child: SendManyCard(
         tr(context, "wallet.invoices.header"),
         <Widget>[
           MoneyValueView(amount: state.req.numSatoshis, hero: true),
@@ -114,7 +114,7 @@ class _SendPaymentPageState extends State<SendPaymentPage> {
           TimeAgoListItem(
             expDate,
             tr(context, "wallet.invoices.expiration_date"),
-            color: expired ? Colors.redAccent : tordenBackground,
+            color: expired ? Colors.redAccent : sendManyBackground,
           ),
           expired
               ? Text(
@@ -173,7 +173,7 @@ class _SendPaymentPageState extends State<SendPaymentPage> {
   }
 
   Widget _buildPaymentSentWidget(SendPaymentResponseState state) {
-    return TordenCard(
+    return SendManyCard(
       tr(context, "wallet.invoices.invoice_paid"),
       <Widget>[
         MoneyValueView(
@@ -228,7 +228,7 @@ class _SendPaymentPageState extends State<SendPaymentPage> {
                   _navigateHome();
                 }
               },
-              color: tordenPrimaryGreen700,
+              color: sendManyPrimaryGreen700,
             ),
           ],
         ),

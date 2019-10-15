@@ -2,13 +2,13 @@ import 'package:fixnum/fixnum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:torden/channels/listchannels/bloc/bloc.dart';
-import 'package:torden/common/constants.dart';
-import 'package:torden/common/widgets/charts/charts.dart';
-import 'package:torden/common/widgets/money_value_view.dart';
-import 'package:torden/common/widgets/widgets.dart';
-import 'package:torden/wallet/receive/receive_page.dart';
-import 'package:torden/wallet/send/send_page.dart';
+import 'package:sendmany/channels/listchannels/bloc/bloc.dart';
+import 'package:sendmany/common/constants.dart';
+import 'package:sendmany/common/widgets/charts/charts.dart';
+import 'package:sendmany/common/widgets/money_value_view.dart';
+import 'package:sendmany/common/widgets/widgets.dart';
+import 'package:sendmany/wallet/receive/receive_page.dart';
+import 'package:sendmany/wallet/send/send_page.dart';
 
 import 'bloc/bloc.dart';
 
@@ -43,11 +43,11 @@ class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
 
           List<ChartSectionInput> i = [
             ChartSectionInput(state.walletBalance.confirmedBalance.toDouble(),
-                tordenConfirmedBalance),
+                sendManyConfirmedBalance),
             ChartSectionInput(state.walletBalance.unconfirmedBalance.toDouble(),
-                tordenUnconfirmedBalance),
-            ChartSectionInput(
-                state.channelBalance.balance.toDouble(), tordenChannelBalance),
+                sendManyUnconfirmedBalance),
+            ChartSectionInput(state.channelBalance.balance.toDouble(),
+                sendManyChannelBalance),
           ];
 
           return Column(
@@ -84,7 +84,7 @@ class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
                   ListTile(
                     leading: Container(
                       width: 4.0,
-                      color: tordenConfirmedBalance,
+                      color: sendManyConfirmedBalance,
                     ),
                     title: TranslatedText("wallet.onchain"),
                     subtitle: TranslatedText("wallet.confirmed"),
@@ -97,7 +97,7 @@ class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
                   ListTile(
                     leading: Container(
                       width: 4.0,
-                      color: tordenUnconfirmedBalance,
+                      color: sendManyUnconfirmedBalance,
                     ),
                     title: TranslatedText("wallet.onchain"),
                     subtitle: TranslatedText("wallet.unconfirmed"),
@@ -110,7 +110,7 @@ class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
                   ListTile(
                     leading: Container(
                       width: 4.0,
-                      color: tordenChannelBalance,
+                      color: sendManyChannelBalance,
                     ),
                     title: TranslatedText("wallet.channel"),
                     subtitle: Text("Total"),
@@ -142,7 +142,7 @@ class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
             onPressed: _navigateToReceivePage,
             icon: Icon(Icons.call_received),
             label: TranslatedText("wallet.receive"),
-            color: tordenDarkGreen,
+            color: sendManyDarkGreen,
           ),
         ),
         Container(
@@ -163,7 +163,7 @@ class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
             },
             icon: Icon(Icons.send),
             label: TranslatedText("wallet.send"),
-            color: tordenBlue700,
+            color: sendManyBlue700,
           ),
         )
       ],

@@ -2,7 +2,7 @@ import 'package:fixnum/fixnum.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:torden/preferences/bloc.dart';
+import 'package:sendmany/preferences/bloc.dart';
 
 class MoneyValueView extends StatelessWidget {
   final Int64 amount;
@@ -21,7 +21,7 @@ class MoneyValueView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
-    TextTheme textTheme = _buildTordenTextThemeEczar(theme.textTheme);
+    TextTheme textTheme = _buildSendManyTextThemeEczar(theme.textTheme);
     return BlocBuilder(
       bloc: BlocProvider.of<PreferencesBloc>(context),
       builder: (BuildContext context, PreferencesState state) {
@@ -43,7 +43,7 @@ class MoneyValueView extends StatelessWidget {
     );
   }
 
-  TextTheme _buildTordenTextThemeEczar(TextTheme base) {
+  TextTheme _buildSendManyTextThemeEczar(TextTheme base) {
     return base
         .copyWith(
           body1: base.body1.copyWith(fontSize: 16),

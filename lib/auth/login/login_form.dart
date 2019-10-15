@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:torden/auth/login/bloc.dart';
+import 'package:sendmany/auth/login/bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:torden/common/widgets/widgets.dart';
+import 'package:sendmany/common/widgets/widgets.dart';
 
 class LoginForm extends StatefulWidget {
   final LoginBloc loginBloc;

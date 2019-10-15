@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:torden/common/constants.dart';
-import 'package:torden/common/utils.dart';
-import 'package:torden/common/widgets/widgets.dart';
-import 'package:torden/wallet/balance/bloc/bloc.dart';
+import 'package:sendmany/common/constants.dart';
+import 'package:sendmany/common/utils.dart';
+import 'package:sendmany/common/widgets/widgets.dart';
+import 'package:sendmany/wallet/balance/bloc/bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'on_chain/send_coins/bloc/bloc.dart';
@@ -181,7 +181,7 @@ class _SendTransactionWidgetState extends State<SendTransactionWidget> {
   }
 
   Widget _buildTransactionSubmittedUI(String txid, Function onPressed) {
-    return TordenCard(
+    return SendManyCard(
       tr(context, "wallet.transactions.submitted_to_mempool"),
       [
         Row(
@@ -229,7 +229,7 @@ class _SendTransactionWidgetState extends State<SendTransactionWidget> {
     return RaisedButton.icon(
       icon: Icon(Icons.camera_alt),
       label: TranslatedText("wallet.transactions.next_transaction_button"),
-      color: tordenConfirmedBalance,
+      color: sendManyConfirmedBalance,
       onPressed: () {
         _showPasteView = false;
         widget.showFAB(true);

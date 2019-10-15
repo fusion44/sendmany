@@ -1,7 +1,7 @@
 // Represents a payment using the lighnting network
 import 'package:fixnum/fixnum.dart';
-import 'package:torden/common/connection/lnd_rpc/lnd_rpc.dart' as lngrpc;
-import 'package:torden/common/utils.dart';
+import 'package:sendmany/common/connection/lnd_rpc/lnd_rpc.dart' as lngrpc;
+import 'package:sendmany/common/utils.dart';
 
 enum PaymentStatus { unkown, inFlight, succeeded, failed }
 

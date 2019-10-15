@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:torden/common/models/models.dart';
-import 'package:torden/common/utils.dart';
-import 'package:torden/common/widgets/widgets.dart';
+import 'package:sendmany/common/models/models.dart';
+import 'package:sendmany/common/utils.dart';
+import 'package:sendmany/common/widgets/widgets.dart';
 
 import 'list_transactions/bloc.dart';
 
@@ -33,7 +33,7 @@ class _TransactionsWidgetState extends State<TransactionsWidget> {
           for (int i = 1; i < widgets.length; i += 2) {
             widgets.insert(i, Divider());
           }
-          return TordenCard(
+          return SendManyCard(
             tr(context, "wallet.transactions.transactions"),
             widgets,
           );

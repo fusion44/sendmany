@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:torden/common/constants.dart';
-import 'package:torden/common/widgets/widgets.dart';
-import 'package:torden/preferences/bloc.dart';
+import 'package:sendmany/common/constants.dart';
+import 'package:sendmany/common/widgets/widgets.dart';
+import 'package:sendmany/preferences/bloc.dart';
 
 import 'retrieve_connection_info_page.dart';
 
@@ -81,7 +81,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
               onPressed: () {
                 _navigateToAddRemoteNode(scan: false);
               },
-              color: tordenDarkGreen,
+              color: sendManyDarkGreen,
             ),
             Container(width: 16.0),
             RaisedButton(
@@ -91,7 +91,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
               onPressed: () {
                 _navigateToAddRemoteNode(scan: true);
               },
-              color: tordenDarkGreen,
+              color: sendManyDarkGreen,
             )
           ],
         ),
@@ -130,7 +130,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   (Route<dynamic> route) => false,
                 );
               },
-              color: tordenDarkGreen,
+              color: sendManyDarkGreen,
             ),
             Container(width: 16.0),
             RaisedButton(
@@ -138,7 +138,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 "onboarding.button_setup_pin",
               ),
               onPressed: null, // TODO: implement me
-              color: tordenDarkGreen,
+              color: sendManyDarkGreen,
             )
           ],
         ),

@@ -1,5 +1,5 @@
 import 'package:fixnum/fixnum.dart';
-import 'package:torden/common/connection/lnd_rpc/lnd_rpc.dart' as grpc;
+import 'package:sendmany/common/connection/lnd_rpc/lnd_rpc.dart' as grpc;
 
 import 'hop_hint.dart';
 

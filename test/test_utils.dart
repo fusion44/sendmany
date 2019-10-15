@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import 'package:torden/common/utils.dart';
+import 'package:sendmany/common/utils.dart';
 
 void main() {
   test('fillString should fill strings correctly', () {

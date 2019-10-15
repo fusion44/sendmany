@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:grpc/service_api.dart';
-import 'package:torden/common/connection/connection_manager/bloc.dart';
-import 'package:torden/common/connection/lnd_rpc/lnd_rpc.dart';
+import 'package:sendmany/common/connection/connection_manager/bloc.dart';
+import 'package:sendmany/common/connection/lnd_rpc/lnd_rpc.dart';
 import 'ln_info_event.dart';
 import 'ln_info_state.dart';
 

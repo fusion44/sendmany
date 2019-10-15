@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:torden/common/models/models.dart';
-import 'package:torden/common/pages/retrieve_connection_info_page.dart';
-import 'package:torden/common/utils.dart';
-import 'package:torden/common/widgets/widgets.dart';
-import 'package:torden/preferences/bloc.dart';
+import 'package:sendmany/common/models/models.dart';
+import 'package:sendmany/common/pages/retrieve_connection_info_page.dart';
+import 'package:sendmany/common/utils.dart';
+import 'package:sendmany/common/widgets/widgets.dart';
+import 'package:sendmany/preferences/bloc.dart';
 
 class PreferencesPage extends StatefulWidget {
   PreferencesPage({Key key}) : super(key: key);
@@ -90,7 +90,7 @@ class _PreferencesPageState extends State<PreferencesPage> {
 
   _getThemeItems() {
     return [
-      "Torden",
+      "SendMany",
       "Dark",
       "Light",
     ].map<DropdownMenuItem<String>>(

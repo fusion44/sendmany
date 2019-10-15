@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:grpc/grpc.dart';
-import 'package:torden/common/connection/check_lnd_connection/check_lnd_connection_event.dart';
-import 'package:torden/common/connection/check_lnd_connection/check_lnd_connection_state.dart';
-import 'package:torden/common/connection/lnd_rpc/lnd_rpc.dart';
+import 'package:sendmany/common/connection/check_lnd_connection/check_lnd_connection_event.dart';
+import 'package:sendmany/common/connection/check_lnd_connection/check_lnd_connection_state.dart';
+import 'package:sendmany/common/connection/lnd_rpc/lnd_rpc.dart';
 import 'package:bloc/bloc.dart';
 
 class CheckLndConnectionBloc

@@ -1,14 +1,14 @@
 import 'package:fixnum/fixnum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:torden/channels/listchannels/bloc/bloc.dart';
-import 'package:torden/common/utils.dart';
-import 'package:torden/common/widgets/widgets.dart';
-import 'package:torden/wallet/balance/bloc/bloc.dart';
-import 'package:torden/wallet/receive/lightning/show_lightning_invoice.dart';
-import 'package:torden/wallet/receive/onchain/new_address_bloc/bloc.dart';
-import 'package:torden/wallet/receive/onchain/show_onchain_invoice.dart';
-import 'package:torden/wallet/receive/onchain/subscribe_transactions/subscribe_transactions_bloc.dart';
+import 'package:sendmany/channels/listchannels/bloc/bloc.dart';
+import 'package:sendmany/common/utils.dart';
+import 'package:sendmany/common/widgets/widgets.dart';
+import 'package:sendmany/wallet/balance/bloc/bloc.dart';
+import 'package:sendmany/wallet/receive/lightning/show_lightning_invoice.dart';
+import 'package:sendmany/wallet/receive/onchain/new_address_bloc/bloc.dart';
+import 'package:sendmany/wallet/receive/onchain/show_onchain_invoice.dart';
+import 'package:sendmany/wallet/receive/onchain/subscribe_transactions/subscribe_transactions_bloc.dart';
 
 class ReceivePage extends StatefulWidget {
   @override

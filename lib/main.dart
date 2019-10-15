@@ -4,9 +4,9 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_i18n/flutter_i18n_delegate.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:torden/common/constants.dart';
-import 'package:torden/common/pages/home_page.dart';
-import 'package:torden/preferences/bloc.dart';
+import 'package:sendmany/common/constants.dart';
+import 'package:sendmany/common/pages/home_page.dart';
+import 'package:sendmany/preferences/bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'common/connection/connection_manager/bloc.dart';
@@ -24,18 +24,18 @@ class SimpleBlocDelegate extends BlocDelegate {
 void main() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   BlocSupervisor.delegate = SimpleBlocDelegate();
-  runApp(TordenApp(sharedPreferences: prefs));
+  runApp(SendManyApp(sharedPreferences: prefs));
 }
 
-class TordenApp extends StatefulWidget {
+class SendManyApp extends StatefulWidget {
   final SharedPreferences sharedPreferences;
-  TordenApp({Key key, @required this.sharedPreferences}) : super(key: key);
+  SendManyApp({Key key, @required this.sharedPreferences}) : super(key: key);
 
   @override
-  State<TordenApp> createState() => _TordenAppState();
+  State<SendManyApp> createState() => _SendManyAppState();
 }
 
-class _TordenAppState extends State<TordenApp> {
+class _SendManyAppState extends State<SendManyApp> {
   PreferencesBloc _preferencesBloc;
   ConnectionManagerBloc _connectionManagerBloc;
   Map<String, WidgetBuilder> _routes;
@@ -182,46 +182,46 @@ class _TordenAppState extends State<TordenApp> {
 
   _getTheme(String theme) {
     switch (theme) {
-      case themeTorden:
-        return _buildTordenTheme();
+      case themeSendMany:
+        return _buildSendManyTheme();
       case themeDark:
-        return _buildTordenThemeDark();
+        return _buildSendManyThemeDark();
       case themeLight:
-        return _buildTordenThemeLight();
+        return _buildSendManyThemeLight();
       default:
         return ThemeData.dark();
     }
   }
 
-  _buildTordenTheme() {
+  _buildSendManyTheme() {
     final ThemeData base = ThemeData.dark();
     return base.copyWith(
         appBarTheme: base.appBarTheme.copyWith(
-          color: tordenBackground,
+          color: sendManyBackground,
           elevation: 0,
         ),
-        accentColor: tordenOrange200,
-        cardTheme: _buildTordenCardTheme(base.cardTheme),
-        primaryColor: tordenPrimaryGreen500,
-        scaffoldBackgroundColor: tordenBackground,
-        textTheme: _buildTordenTextThemeRoboto(base.textTheme));
+        accentColor: sendManyOrange200,
+        cardTheme: _buildSendManyCardTheme(base.cardTheme),
+        primaryColor: sendManyPrimaryGreen500,
+        scaffoldBackgroundColor: sendManyBackground,
+        textTheme: _buildSendManyTextThemeRoboto(base.textTheme));
   }
 
-  ThemeData _buildTordenThemeDark() {
+  ThemeData _buildSendManyThemeDark() {
     final ThemeData base = ThemeData.dark();
     return base.copyWith(
-      textTheme: _buildTordenTextThemeRoboto(base.textTheme),
+      textTheme: _buildSendManyTextThemeRoboto(base.textTheme),
     );
   }
 
-  ThemeData _buildTordenThemeLight() {
+  ThemeData _buildSendManyThemeLight() {
     final ThemeData base = ThemeData.light();
     return base.copyWith(
-      textTheme: _buildTordenTextThemeRoboto(base.textTheme),
+      textTheme: _buildSendManyTextThemeRoboto(base.textTheme),
     );
   }
 
-  TextTheme _buildTordenTextThemeRoboto(TextTheme base) {
+  TextTheme _buildSendManyTextThemeRoboto(TextTheme base) {
     return base
         .copyWith(
           headline: base.headline.copyWith(
@@ -247,9 +247,9 @@ class _TordenAppState extends State<TordenApp> {
     return delegates;
   }
 
-  _buildTordenCardTheme(CardTheme cardTheme) {
+  _buildSendManyCardTheme(CardTheme cardTheme) {
     return cardTheme.copyWith(
-      color: tordenBackgroundCard,
+      color: sendManyBackgroundCard,
       shape: Border(),
       elevation: 0,
     );

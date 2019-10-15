@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class TordenCard extends Card {
+class SendManyCard extends Card {
   final String header;
   final List<Widget> cardChildren;
   final CrossAxisAlignment crossAxisAlignment;
 
-  TordenCard(
+  SendManyCard(
     this.header,
     this.cardChildren, [
     this.crossAxisAlignment = CrossAxisAlignment.start,

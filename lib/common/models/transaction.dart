@@ -1,5 +1,5 @@
 import 'package:fixnum/fixnum.dart';
-import 'package:torden/common/models/models.dart';
+import 'package:sendmany/common/models/models.dart';
 
 class Tx {
   final String memo;

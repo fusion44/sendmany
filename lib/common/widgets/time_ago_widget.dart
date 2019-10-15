@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:timeago/timeago.dart';
-import 'package:torden/preferences/bloc.dart';
+import 'package:sendmany/preferences/bloc.dart';
 
 class TimeAgoTextWidget extends StatelessWidget {
   final bool allowFromNow;

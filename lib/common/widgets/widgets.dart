@@ -1,4 +1,4 @@
-library torden.widgets;
+library sendmany.widgets;
 
 export "data_item.dart";
 export "data_item_money.dart";
@@ -12,7 +12,7 @@ export "money_value_view.dart";
 export "node_info.dart";
 export "timeago_list_item.dart";
 export "time_ago_widget.dart";
-export "torden_card.dart";
+export "sendmany_card.dart";
 export "transaction_hash_data_item.dart";
 export "translated_text.dart";
 export "qr_scanner_widget.dart";

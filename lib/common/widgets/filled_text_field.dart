@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:torden/common/constants.dart';
+import 'package:sendmany/common/constants.dart';
 
 class FilledTextField extends StatefulWidget {
   final String text;
@@ -78,7 +78,7 @@ class _FilledTextFieldState extends State<FilledTextField> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: tordenBackgroundAccent,
+      color: sendManyBackgroundAccent,
       child: Padding(
         padding: const EdgeInsets.only(left: 8.0),
         child: _buildTextFormField(),
@@ -144,13 +144,13 @@ class _FilledTextFieldState extends State<FilledTextField> {
           padding: const EdgeInsets.only(right: 80.0),
           child: Icon(
             Icons.check,
-            color: validated ? tordenPrimaryGreen300 : tordenOrange200,
+            color: validated ? sendManyPrimaryGreen300 : sendManyOrange200,
           ),
         );
       } else {
         return Icon(
           Icons.check,
-          color: validated ? tordenPrimaryGreen300 : tordenOrange200,
+          color: validated ? sendManyPrimaryGreen300 : sendManyOrange200,
         );
       }
     }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:torden/common/constants.dart';
-import 'package:torden/common/widgets/time_ago_widget.dart';
+import 'package:sendmany/common/constants.dart';
+import 'package:sendmany/common/widgets/time_ago_widget.dart';
 
 class TimeAgoListItem extends StatelessWidget {
   final DateTime dateTime;
@@ -11,7 +11,7 @@ class TimeAgoListItem extends StatelessWidget {
     this.dateTime,
     this.label, {
     Key key,
-    this.color = tordenBackground,
+    this.color = sendManyBackground,
   }) : super(key: key);
 
   @override

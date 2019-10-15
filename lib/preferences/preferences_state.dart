@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:torden/common/constants.dart';
-import 'package:torden/common/models/lnd_connection_data.dart';
+import 'package:sendmany/common/constants.dart';
+import 'package:sendmany/common/models/lnd_connection_data.dart';
 
 @immutable
 class PreferencesState extends Equatable {
@@ -38,7 +38,7 @@ class PreferencesState extends Equatable {
 class PreferencesLoadingState extends PreferencesState {
   PreferencesLoadingState({
     String language = "EN",
-    String theme = themeTorden,
+    String theme = themeSendMany,
     bool onboardingFinished = false,
     int numNodes = 0,
     bool pinActive = true,

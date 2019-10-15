@@ -46,7 +46,7 @@
     "first_header": "First Things First",
     "host": "Host",
     "initializing": "Initializing...",
-    "intro_text_long": "With Torden you can use Bitcoin Lightning to pay for your expenses. Currently you can connect to your own remote LND node. You need to have your Certificate, Macaraoon, Server-ip and the port ready. At a later stage you'll be able to run it directly on your phone.",
+    "intro_text_long": "With SendMany you can use Bitcoin Lightning to pay for your expenses. Currently you can connect to your own remote LND node. You need to have your Certificate, Macaraoon, Server-ip and the port ready. At a later stage you'll be able to run it directly on your phone.",
     "macaroon": "Macaroon",
     "node_name": "Node Name",
     "pin_text_long": "We recommend to use a pin to lock your wallet against unauthorized use.",
@@ -68,7 +68,7 @@
   "qr": {
     "open_qr_scanner": "Open QR-Code scanne"
   },
-  "title": "Torden App",
+  "title": "SendMany App",
   "wallet": {
     "balance": "Balance",
     "channel": "Channel",

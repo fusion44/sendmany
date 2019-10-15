@@ -1,4 +1,4 @@
-package me.stammberger.torden.torden;
+package app.sendmany.app;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;

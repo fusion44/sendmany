@@ -2,14 +2,14 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:torden/common/connection/check_lnd_connection/check_lnd_connection_page.dart';
-import 'package:torden/common/models/lnd_connection_data.dart';
-import 'package:torden/common/utils.dart';
-import 'package:torden/common/validator.dart';
-import 'package:torden/common/widgets/widgets.dart';
+import 'package:sendmany/common/connection/check_lnd_connection/check_lnd_connection_page.dart';
+import 'package:sendmany/common/models/lnd_connection_data.dart';
+import 'package:sendmany/common/utils.dart';
+import 'package:sendmany/common/validator.dart';
+import 'package:sendmany/common/widgets/widgets.dart';
 
 import 'package:convert/convert.dart';
-import 'package:torden/preferences/bloc.dart';
+import 'package:sendmany/preferences/bloc.dart';
 
 class RetrieveConnectionInfoPage extends StatefulWidget {
   final bool doScan;

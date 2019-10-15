@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:grpc/grpc.dart';
-import 'package:torden/common/connection/connection_manager/bloc.dart';
-import 'package:torden/common/connection/lnd_rpc/lnd_rpc.dart' as grpc;
-import 'package:torden/common/models/models.dart';
-import 'package:torden/wallet/receive/lightning/add_invoice_bloc/add_invoice_event.dart';
-import 'package:torden/wallet/receive/lightning/add_invoice_bloc/add_invoice_state.dart';
+import 'package:sendmany/common/connection/connection_manager/bloc.dart';
+import 'package:sendmany/common/connection/lnd_rpc/lnd_rpc.dart' as grpc;
+import 'package:sendmany/common/models/models.dart';
+import 'package:sendmany/wallet/receive/lightning/add_invoice_bloc/add_invoice_event.dart';
+import 'package:sendmany/wallet/receive/lightning/add_invoice_bloc/add_invoice_state.dart';
 
 class AddInvoiceBloc extends Bloc<AddInvoiceEvent, AddInvoiceState> {
   @override

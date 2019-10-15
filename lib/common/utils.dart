@@ -1,4 +1,4 @@
-library torden.utils;
+library sendmany.utils;
 
 import 'package:bolt11_decoder/bolt11_decoder.dart';
 import 'package:flutter/material.dart';
