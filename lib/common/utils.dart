@@ -157,6 +157,7 @@ String fillString(text, {int powerOf = 4, String fillerChar = "="}) {
 }
 
 String getMemoFromPaymentRequst(String req) {
+  if (req.isEmpty) return "";
   Bolt11PaymentRequest r = Bolt11PaymentRequest(req);
   if (r.tags.length > 1 && r.tags[1].type == "description") {
     return r.tags[1].data;
