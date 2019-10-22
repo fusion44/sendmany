@@ -33,21 +33,21 @@ class _HomePageState extends State<HomePage>
   void initState() {
     _controller = new TabController(length: 4, vsync: this);
     _lnInfoBloc = LnInfoBloc();
-    _lnInfoBloc.dispatch(LoadLnInfo());
+    _lnInfoBloc.add(LoadLnInfo());
     _listChannelsBloc = ListChannelsBloc();
-    _listChannelsBloc.dispatch(LoadChannels());
+    _listChannelsBloc.add(LoadChannels());
     _listTxBloc = ListTxBloc(_lnInfoBloc);
-    _listTxBloc.dispatch(LoadTxEvent());
-    _listTxBloc.dispatch(ChangePollTxIntervalEvent(30));
+    _listTxBloc.add(LoadTxEvent());
+    _listTxBloc.add(ChangePollTxIntervalEvent(30));
     super.initState();
   }
 
   @override
   void dispose() {
     _controller.dispose();
-    _listTxBloc.dispose(); // contains a reference to _lnInfoBloc, dispose first
-    _lnInfoBloc.dispose();
-    _listChannelsBloc.dispose();
+    _listTxBloc.close(); // contains a reference to _lnInfoBloc, dispose first
+    _lnInfoBloc.close();
+    _listChannelsBloc.close();
     super.dispose();
   }
 

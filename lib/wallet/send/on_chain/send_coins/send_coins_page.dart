@@ -31,7 +31,7 @@ class _SendCoinsPageState extends State<SendCoinsPage> {
 
   @override
   void dispose() {
-    _sendCoinsBloc.dispose();
+    _sendCoinsBloc.close();
     super.dispose();
   }
 
@@ -176,7 +176,7 @@ class _SendCoinsPageState extends State<SendCoinsPage> {
   }
 
   _submitTransaction(Int64 amount) {
-    _sendCoinsBloc.dispatch(
+    _sendCoinsBloc.add(
       DoSendCoinsEvent(
         address: widget.qrinfo.address,
         amount: amount,

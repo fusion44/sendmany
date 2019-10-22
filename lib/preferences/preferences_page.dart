@@ -16,10 +16,8 @@ class PreferencesPage extends StatefulWidget {
 class _PreferencesPageState extends State<PreferencesPage> {
   @override
   Widget build(BuildContext context) {
-    final PreferencesBloc prefsBloc = BlocProvider.of<PreferencesBloc>(context);
-
     return BlocBuilder(
-        bloc: prefsBloc,
+        bloc: BlocProvider.of<PreferencesBloc>(context),
         builder: (BuildContext context, PreferencesState state) {
           return Scaffold(
             body: Center(
@@ -30,7 +28,7 @@ class _PreferencesPageState extends State<PreferencesPage> {
                     trailing: DropdownButton(
                       value: state.language,
                       onChanged: (value) {
-                        prefsBloc.dispatch(
+                        BlocProvider.of<PreferencesBloc>(context).add(
                           ChangeLanguageEvent(languageCode: value),
                         );
                       },
@@ -43,7 +41,9 @@ class _PreferencesPageState extends State<PreferencesPage> {
                     trailing: DropdownButton(
                       value: state.theme,
                       onChanged: (value) {
-                        prefsBloc.dispatch(ChangeThemeEvent(theme: value));
+                        BlocProvider.of<PreferencesBloc>(context).add(
+                          ChangeThemeEvent(theme: value),
+                        );
                       },
                       items: _getThemeItems(),
                     ),
@@ -54,7 +54,9 @@ class _PreferencesPageState extends State<PreferencesPage> {
                     trailing: DropdownButton<String>(
                       value: state.activeConnection.name,
                       onChanged: (value) {
-                        prefsBloc.dispatch(ChangeActiveConnectionEvent(value));
+                        BlocProvider.of<PreferencesBloc>(context).add(
+                          ChangeActiveConnectionEvent(value),
+                        );
                       },
                       items: _buildNodeItems(state.connections),
                     ),

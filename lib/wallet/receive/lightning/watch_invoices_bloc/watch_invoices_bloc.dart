@@ -30,7 +30,7 @@ class WatchInvoicesBloc extends Bloc<WatchInvoicesEvent, WatchInvoicesState> {
       options: opts,
     );
     _responseStream.listen((onData) {
-      dispatch(_SubscribeInvoicesEvent(onData));
+      add(_SubscribeInvoicesEvent(onData));
     });
   }
 

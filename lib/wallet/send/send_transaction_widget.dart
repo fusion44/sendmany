@@ -39,7 +39,7 @@ class _SendTransactionWidgetState extends State<SendTransactionWidget> {
 
   @override
   void dispose() {
-    _sendCoinsBloc.dispose();
+    _sendCoinsBloc.close();
     _addressController.dispose();
     _amountController.dispose();
     super.dispose();
@@ -47,9 +47,8 @@ class _SendTransactionWidgetState extends State<SendTransactionWidget> {
 
   @override
   Widget build(BuildContext context) {
-    LnInfoBloc infoBloc = BlocProvider.of<LnInfoBloc>(context);
     return BlocBuilder(
-      bloc: infoBloc,
+      bloc: BlocProvider.of<LnInfoBloc>(context),
       builder: (BuildContext context, LnInfoState infoState) {
         return BlocBuilder(
           bloc: _sendCoinsBloc,
@@ -159,7 +158,7 @@ class _SendTransactionWidgetState extends State<SendTransactionWidget> {
                 onPressed: () {
                   String address = _addressController.value.text;
                   String amount = _amountController.value.text;
-                  _sendCoinsBloc.dispatch(
+                  _sendCoinsBloc.add(
                     DoSendCoinsEvent(
                       address: address,
                       amount: Int64.parseInt(amount),
@@ -234,7 +233,7 @@ class _SendTransactionWidgetState extends State<SendTransactionWidget> {
         _showPasteView = false;
         widget.showFAB(true);
         _amountController.text = "";
-        _sendCoinsBloc.dispatch(ResetSendCoinsEvent());
+        _sendCoinsBloc.add(ResetSendCoinsEvent());
       },
     );
   }

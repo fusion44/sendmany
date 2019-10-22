@@ -19,7 +19,6 @@ class SendPage extends StatefulWidget {
 
 class _SendPageState extends State<SendPage> {
   bool _showPasteView = false;
-  LnInfoBloc _infoBloc;
   bool _pushedRoute = false;
 
   TextEditingController _invoiceController = TextEditingController();
@@ -28,7 +27,6 @@ class _SendPageState extends State<SendPage> {
 
   @override
   initState() {
-    _infoBloc = BlocProvider.of<LnInfoBloc>(context);
     super.initState();
   }
 
@@ -156,7 +154,7 @@ class _SendPageState extends State<SendPage> {
       MaterialPageRoute(
         builder: (context) {
           return BlocProvider<LnInfoBloc>(
-            builder: (context) => _infoBloc,
+            builder: (context) => BlocProvider.of<LnInfoBloc>(context),
             child: SendPaymentPage(qrinfo: qrinfo),
           );
         },
@@ -179,7 +177,7 @@ class _SendPageState extends State<SendPage> {
       MaterialPageRoute(
         builder: (context) {
           return BlocProvider<LnInfoBloc>(
-            builder: (context) => _infoBloc,
+            builder: (context) => BlocProvider.of<LnInfoBloc>(context),
             child: SendCoinsPage(qrinfo: qrinfo),
           );
         },

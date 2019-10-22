@@ -68,7 +68,7 @@ class _LoginFormState extends State<LoginForm> {
 
   _onLoginButtonPressed() {
     FocusScope.of(context).requestFocus(new FocusNode());
-    _loginBloc.dispatch(
+    _loginBloc.add(
       LoginButtonPressed(pin: [1, 2, 3, 4]),
     );
   }

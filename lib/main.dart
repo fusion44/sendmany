@@ -44,7 +44,7 @@ class _SendManyAppState extends State<SendManyApp> {
   @override
   void initState() {
     _preferencesBloc = PreferencesBloc();
-    _preferencesBloc.dispatch(LoadPreferencesEvent());
+    _preferencesBloc.add(LoadPreferencesEvent());
     _connectionManagerBloc = ConnectionManagerBloc(_preferencesBloc);
 
     _routes = <String, WidgetBuilder>{
@@ -123,8 +123,8 @@ class _SendManyAppState extends State<SendManyApp> {
 
   @override
   void dispose() {
-    _preferencesBloc.dispose();
-    _connectionManagerBloc.dispose();
+    _preferencesBloc.close();
+    _connectionManagerBloc.close();
     super.dispose();
   }
 
@@ -169,7 +169,7 @@ class _SendManyAppState extends State<SendManyApp> {
     SharedPreferences prefs = widget.sharedPreferences;
     String langCode = prefs.getString(prefLanguageCode);
     if (langCode == null) {
-      _preferencesBloc.dispatch(
+      _preferencesBloc.add(
         ChangeLanguageEvent(
           languageCode: deviceLocale.languageCode,
         ),

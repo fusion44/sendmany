@@ -18,21 +18,11 @@ class BalanceOverviewWidget extends StatefulWidget {
 }
 
 class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
-  LnInfoBloc _infoBloc;
-  ListChannelsBloc _listChannelsBloc;
-
-  @override
-  initState() {
-    _infoBloc = BlocProvider.of<LnInfoBloc>(context);
-    _listChannelsBloc = BlocProvider.of<ListChannelsBloc>(context);
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
     return BlocBuilder(
-      bloc: _infoBloc,
+      bloc: BlocProvider.of<LnInfoBloc>(context),
       builder: (BuildContext context, LnInfoState state) {
         if (state is LnInfoStateLoading) {
           return TranslatedText("network.loading");
@@ -154,7 +144,7 @@ class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
                 MaterialPageRoute(
                     builder: (context) {
                       return BlocProvider.value(
-                        value: _infoBloc,
+                        value: BlocProvider.of<LnInfoBloc>(context),
                         child: SendPage(),
                       );
                     },
@@ -177,9 +167,11 @@ class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
           builder: (context) {
             return MultiBlocProvider(
               providers: [
-                BlocProvider<LnInfoBloc>.value(value: _infoBloc),
+                BlocProvider<LnInfoBloc>.value(
+                  value: BlocProvider.of<LnInfoBloc>(context),
+                ),
                 BlocProvider<ListChannelsBloc>.value(
-                  value: _listChannelsBloc,
+                  value: BlocProvider.of<ListChannelsBloc>(context),
                 ),
               ],
               child: ReceivePage(),

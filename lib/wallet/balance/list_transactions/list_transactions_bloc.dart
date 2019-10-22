@@ -44,12 +44,12 @@ class ListTxBloc extends Bloc<ListTxEvent, ListTxState> {
   }
 
   @override
-  void dispose() {
+  void close() {
     if (_timer != null && _timer.isActive) {
       _timer.cancel();
     }
 
-    super.dispose();
+    super.close();
   }
 
   void _setupTransactionSubscription() {
@@ -66,8 +66,8 @@ class ListTxBloc extends Bloc<ListTxEvent, ListTxState> {
       options: opts,
     );
     _responseStream.listen((onData) {
-      _lnInfoBloc.dispatch(LoadLnInfo());
-      dispatch(_SubscribeTransactionEvent(onData));
+      _lnInfoBloc.add(LoadLnInfo());
+      add(_SubscribeTransactionEvent(onData));
     });
   }
 
@@ -105,8 +105,8 @@ class ListTxBloc extends Bloc<ListTxEvent, ListTxState> {
     );
 
     if (info.blockHeight != _lastBlockHight) {
-      _lnInfoBloc.dispatch(LoadLnInfo());
-      dispatch(LoadTxEvent());
+      _lnInfoBloc.add(LoadLnInfo());
+      add(LoadTxEvent());
       _lastBlockHight = info.blockHeight;
     }
     _checkingBlockHeight = false;
@@ -137,8 +137,8 @@ class ListTxBloc extends Bloc<ListTxEvent, ListTxState> {
       reversed = true;
       yield _buildTxList();
     } else if (event is LoadTxEvent) {
-      if (currentState is LoadingTxFinishedState) {
-        LoadingTxFinishedState tx = currentState;
+      if (state is LoadingTxFinishedState) {
+        LoadingTxFinishedState tx = state;
         yield LoadingTxState(tx.transactions);
       } else {
         yield LoadingTxState([]);

@@ -309,8 +309,9 @@ class _RetrieveConnectionInfoPageState
       _connectionDataSaved = false;
     });
 
-    PreferencesBloc blc = BlocProvider.of<PreferencesBloc>(context);
-    blc.dispatch(AddConnectionEvent(newConnection));
+    BlocProvider.of<PreferencesBloc>(context).add(
+      AddConnectionEvent(newConnection),
+    );
 
     setState(() {
       _savingConnectionData = false;

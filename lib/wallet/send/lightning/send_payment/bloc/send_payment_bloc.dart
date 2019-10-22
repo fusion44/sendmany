@@ -37,14 +37,14 @@ class SendPaymentBloc extends Bloc<SendPaymentEvent, SendPaymentState> {
       options: opts,
     );
     _responseStream.listen((onData) {
-      dispatch(_SendResponseReceivedEvent(onData));
+      add(_SendResponseReceivedEvent(onData));
     });
   }
 
   @override
-  void dispose() {
+  void close() {
     _sendPaymentController.close();
-    super.dispose();
+    super.close();
   }
 
   @override

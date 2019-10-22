@@ -121,8 +121,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 "onboarding.button_skip_pin",
               ),
               onPressed: () {
-                PreferencesBloc bloc = BlocProvider.of(context);
-                bloc.dispatch(SetOnboardingFinishedEvent());
+                BlocProvider.of(context).add(SetOnboardingFinishedEvent());
 
                 Navigator.pushNamedAndRemoveUntil(
                   context,

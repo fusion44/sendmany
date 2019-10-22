@@ -77,47 +77,47 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
     } else if (event is ChangeLanguageEvent) {
       yield PreferencesLoadedState(
         language: event.languageCode,
-        theme: currentState.theme,
-        onboardingFinished: currentState.onboardingFinished,
-        numNodes: currentState.numNodes,
-        pinActive: currentState.pinActive,
-        activeConnection: currentState.activeConnection,
-        connections: currentState.connections,
+        theme: state.theme,
+        onboardingFinished: state.onboardingFinished,
+        numNodes: state.numNodes,
+        pinActive: state.pinActive,
+        activeConnection: state.activeConnection,
+        connections: state.connections,
       );
 
       await prefs.setString(prefLanguageCode, event.languageCode);
     } else if (event is ChangeThemeEvent) {
       await prefs.setString(prefTheme, event.theme);
       yield PreferencesLoadedState(
-        language: currentState.language,
+        language: state.language,
         theme: event.theme,
-        onboardingFinished: currentState.onboardingFinished,
-        numNodes: currentState.numNodes,
-        pinActive: currentState.pinActive,
-        activeConnection: currentState.activeConnection,
-        connections: currentState.connections,
+        onboardingFinished: state.onboardingFinished,
+        numNodes: state.numNodes,
+        pinActive: state.pinActive,
+        activeConnection: state.activeConnection,
+        connections: state.connections,
       );
     } else if (event is SetOnboardingFinishedEvent) {
       await prefs.setBool(prefOnboardingFinished, event.onboardingFinished);
       yield PreferencesLoadedState(
-        language: currentState.language,
-        theme: currentState.theme,
+        language: state.language,
+        theme: state.theme,
         onboardingFinished: event.onboardingFinished,
-        numNodes: currentState.numNodes,
-        pinActive: currentState.pinActive,
-        activeConnection: currentState.activeConnection,
-        connections: currentState.connections,
+        numNodes: state.numNodes,
+        pinActive: state.pinActive,
+        activeConnection: state.activeConnection,
+        connections: state.connections,
       );
     } else if (event is SetPinActiveEvent) {
       await prefs.setBool(prefOnboardingFinished, event.pinActive);
       yield PreferencesLoadedState(
-        language: currentState.language,
-        theme: currentState.theme,
-        onboardingFinished: currentState.onboardingFinished,
-        numNodes: currentState.numNodes,
+        language: state.language,
+        theme: state.theme,
+        onboardingFinished: state.onboardingFinished,
+        numNodes: state.numNodes,
         pinActive: event.pinActive,
-        activeConnection: currentState.activeConnection,
-        connections: currentState.connections,
+        activeConnection: state.activeConnection,
+        connections: state.connections,
       );
     } else if (event is ChangeActiveConnectionEvent) {
       final storage = FlutterSecureStorage();
@@ -128,19 +128,19 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
       );
 
       yield PreferencesLoadedState(
-        language: currentState.language,
-        theme: currentState.theme,
-        onboardingFinished: currentState.onboardingFinished,
-        numNodes: currentState.numNodes,
-        pinActive: currentState.pinActive,
+        language: state.language,
+        theme: state.theme,
+        onboardingFinished: state.onboardingFinished,
+        numNodes: state.numNodes,
+        pinActive: state.pinActive,
         activeConnection: _getConnectionByName(event.connectionName),
-        connections: currentState.connections,
+        connections: state.connections,
       );
     } else if (event is AddConnectionEvent) {
       final storage = FlutterSecureStorage();
       try {
         List<LndConnectionData> connectionData = List<LndConnectionData>.from(
-          currentState.connections,
+          state.connections,
         );
         connectionData.add(event.connection);
 
@@ -165,11 +165,11 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
         );
 
         yield PreferencesLoadedState(
-          language: currentState.language,
-          theme: currentState.theme,
-          onboardingFinished: currentState.onboardingFinished,
-          numNodes: currentState.numNodes,
-          pinActive: currentState.pinActive,
+          language: state.language,
+          theme: state.theme,
+          onboardingFinished: state.onboardingFinished,
+          numNodes: state.numNodes,
+          pinActive: state.pinActive,
           activeConnection: event.connection,
           connections: connectionData,
         );
@@ -180,7 +180,7 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
   }
 
   LndConnectionData _getConnectionByName(String name) {
-    for (LndConnectionData connection in currentState.connections) {
+    for (LndConnectionData connection in state.connections) {
       if (connection.name == name) return connection;
     }
     return null;

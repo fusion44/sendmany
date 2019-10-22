@@ -17,14 +17,14 @@ class LnInfoBloc extends Bloc<LnInfoEvent, LnInfoState> {
     if (event is LoadLnInfo) {
       var client = LnConnectionDataProvider().lightningClient;
       var macaroon = LnConnectionDataProvider().macaroon;
-      if (currentState is InitialLnInfoState) {
+      if (state is InitialLnInfoState) {
         yield LnInfoStateLoading();
-      } else if (currentState is LnInfoStateLoadingFinished) {
-        LnInfoStateLoadingFinished state = currentState;
+      } else if (state is LnInfoStateLoadingFinished) {
+        LnInfoStateLoadingFinished currentState = state;
         LnInfoStateReloading(
-          state.infoResponse,
-          state.walletBalance,
-          state.channelBalance,
+          currentState.infoResponse,
+          currentState.walletBalance,
+          currentState.channelBalance,
         );
       }
       var infoRequest = GetInfoRequest();

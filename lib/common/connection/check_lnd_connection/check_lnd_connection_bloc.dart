@@ -12,9 +12,9 @@ class CheckLndConnectionBloc
   LightningClient _lightningClient;
 
   @override
-  void dispose() async {
+  void close() async {
     await _clientChannel.shutdown();
-    super.dispose();
+    super.close();
   }
 
   @override

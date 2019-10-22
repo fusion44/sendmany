@@ -41,7 +41,7 @@ class SubscribeTransactionsBloc
 
     stream.listen((onData) {
       OnchainTransaction m = OnchainTransaction.fromLND(onData);
-      dispatch(TransactionChangedEvent(m));
+      add(TransactionChangedEvent(m));
     });
   }
 }

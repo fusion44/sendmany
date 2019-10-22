@@ -1,4 +1,4 @@
-name: torden
+name: sendmany
 description: An app to connect to your LND node
 
 # The following defines the version and build number for your application.
@@ -21,19 +21,19 @@ dependencies:
     sdk: flutter
   flutter_i18n: ^0.7.0
   equatable: ^0.6.1
-  flutter_bloc: ^0.21.0
-  flare_flutter: ^1.5.9
+  flutter_bloc: ^1.0.0
+  flare_flutter: ^1.6.2
   meta: ^1.1.7
   flutter_spinkit: ^4.0.0
-  shared_preferences: ^0.5.3+4
+  shared_preferences: ^0.5.4
   grpc: ^2.1.2
   protobuf: ^1.0.0
   fixnum: ^0.10.9
   qr_code_scanner: ^0.0.12
-  timeago: ^2.0.20
-  url_launcher: ^5.1.4
+  timeago: ^2.0.21
+  url_launcher: ^5.2.3
   qr_flutter: ^3.0.1
-  material_design_icons_flutter: ^3.2.4495
+  material_design_icons_flutter: ^3.2.4595
   esys_flutter_share: ^1.0.2
   flutter_secure_storage: ^3.3.1+1
   unicorndial: ^1.1.5

@@ -37,7 +37,7 @@ packages:
       name: bloc
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.15.0"
+    version: "1.0.0"
   bolt11_decoder:
     dependency: "direct main"
     description:
@@ -130,14 +130,14 @@ packages:
       name: flare_dart
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.4.8"
+    version: "2.2.2"
   flare_flutter:
     dependency: "direct main"
     description:
       name: flare_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.5.9"
+    version: "1.6.2"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -149,7 +149,7 @@ packages:
       name: flutter_bloc
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.21.0"
+    version: "1.0.0"
   flutter_i18n:
     dependency: "direct main"
     description:
@@ -292,7 +292,7 @@ packages:
       name: material_design_icons_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.2.4495"
+    version: "3.2.4595"
   meta:
     dependency: "direct main"
     description:
@@ -439,7 +439,7 @@ packages:
       name: shared_preferences
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.3+4"
+    version: "0.5.4"
   shelf:
     dependency: transitive
     description:
@@ -549,7 +549,7 @@ packages:
       name: timeago
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.20"
+    version: "2.0.21"
   typed_data:
     dependency: transitive
     description:
@@ -570,7 +570,7 @@ packages:
       name: url_launcher
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.1.4"
+    version: "5.2.3"
   vector_math:
     dependency: transitive
     description:
@@ -608,4 +608,4 @@ packages:
     version: "2.2.0"
 sdks:
   dart: ">=2.5.0 <3.0.0"
-  flutter: ">=1.7.8+hotfix.3 <2.0.0"
+  flutter: ">=1.9.1+hotfix.4 <2.0.0"

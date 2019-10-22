@@ -25,14 +25,14 @@ class _SendPaymentPageState extends State<SendPaymentPage> {
 
   @override
   initState() {
-    _decodePayReqBloc.dispatch(DecodePayReqEvent(widget.qrinfo.address));
+    _decodePayReqBloc.add(DecodePayReqEvent(widget.qrinfo.address));
     super.initState();
   }
 
   @override
   void dispose() {
-    _decodePayReqBloc.dispose();
-    _sendPaymentBloc.dispose();
+    _decodePayReqBloc.close();
+    _sendPaymentBloc.close();
     _invoiceController.dispose();
     super.dispose();
   }
@@ -150,7 +150,7 @@ class _SendPaymentPageState extends State<SendPaymentPage> {
       icon: Icon(Icons.flash_on),
       label: TranslatedText("wallet.invoices.pay"),
       onPressed: () {
-        _sendPaymentBloc.dispatch(SendPaymentViaInvoiceEvent(state.reqString));
+        _sendPaymentBloc.add(SendPaymentViaInvoiceEvent(state.reqString));
         setState(() {
           _paymentSent = true;
           _inflightPayment = state.req;

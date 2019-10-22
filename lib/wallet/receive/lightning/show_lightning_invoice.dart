@@ -36,7 +36,7 @@ class _ShowLightningInvoiceState extends State<ShowLightningInvoice> {
 
   @override
   void initState() {
-    _addInvoicesBloc.dispatch(
+    _addInvoicesBloc.add(
       AddInvoiceEvent(
         widget.memo,
         widget.amount,
@@ -49,8 +49,8 @@ class _ShowLightningInvoiceState extends State<ShowLightningInvoice> {
 
   @override
   void dispose() {
-    _watchInvoicesBloc.dispose();
-    _addInvoicesBloc.dispose();
+    _watchInvoicesBloc.close();
+    _addInvoicesBloc.close();
     super.dispose();
   }
 

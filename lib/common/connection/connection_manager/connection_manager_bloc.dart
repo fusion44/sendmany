@@ -21,14 +21,14 @@ class ConnectionManagerBloc
   StreamSubscription _prefsSubscription;
 
   ConnectionManagerBloc(this._prefsBloc) {
-    _prefsBloc.state.listen((state) {
+    _prefsBloc.listen((state) {
       if (state is PreferencesLoadedState) {
         // listen to preference state changes and switch the active connection appropriately
         if (_currentActiveConnection == null) {
-          dispatch(AppStart(state.activeConnection));
+          add(AppStart(state.activeConnection));
         } else {
           if (state.activeConnection.name != _currentActiveConnection.name) {
-            dispatch(SwitchConnectionEvent(state.activeConnection));
+            add(SwitchConnectionEvent(state.activeConnection));
           }
         }
       }
@@ -39,10 +39,10 @@ class ConnectionManagerBloc
   ConnectionManagerState get initialState => InitialConnectionManagerState();
 
   @override
-  void dispose() async {
+  void close() async {
     _prefsSubscription.cancel();
     await _clientChannel.shutdown();
-    super.dispose();
+    super.close();
   }
 
   @override

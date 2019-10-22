@@ -41,7 +41,7 @@ class _CheckLNDConnectionPageState extends State<CheckLNDConnectionPage> {
   CheckLndConnectionBloc _bloc = CheckLndConnectionBloc();
   @override
   void initState() {
-    _bloc.dispatch(DoCheckLNDConnectionEvent(data: widget.data));
+    _bloc.add(DoCheckLNDConnectionEvent(data: widget.data));
     super.initState();
   }
 

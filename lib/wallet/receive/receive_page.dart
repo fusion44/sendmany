@@ -28,15 +28,14 @@ class _ReceivePageState extends State<ReceivePage> {
 
   @override
   void initState() {
-    ListChannelsBloc bloc = BlocProvider.of<ListChannelsBloc>(context);
     // We require the most recent channel state => reload channels
-    bloc.dispatch(LoadChannels());
+    BlocProvider.of<ListChannelsBloc>(context).add(LoadChannels());
     super.initState();
   }
 
   @override
   void dispose() {
-    _newAddressBloc.dispose();
+    _newAddressBloc.close();
     super.dispose();
   }
 
@@ -76,7 +75,7 @@ class _ReceivePageState extends State<ReceivePage> {
                 }
 
                 if (!enoughCap && _onchainAddress == "") {
-                  _newAddressBloc.dispatch(NewAddressEvent());
+                  _newAddressBloc.add(NewAddressEvent());
                 }
 
                 setState(() {
@@ -107,7 +106,7 @@ class _ReceivePageState extends State<ReceivePage> {
                 onChanged: _hasEnoughChanCapacity
                     ? (bool value) {
                         if (value && _onchainAddress == "") {
-                          _newAddressBloc.dispatch(NewAddressEvent());
+                          _newAddressBloc.add(NewAddressEvent());
                         }
                         setState(() {
                           _isOnChain = value;
