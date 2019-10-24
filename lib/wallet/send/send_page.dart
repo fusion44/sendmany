@@ -149,12 +149,13 @@ class _SendPageState extends State<SendPage> {
   }
 
   Future _navigateToLnPayment(QrInfo qrinfo) async {
+    var infoBloc = BlocProvider.of<LnInfoBloc>(context);
     var result = await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) {
           return BlocProvider<LnInfoBloc>(
-            builder: (context) => BlocProvider.of<LnInfoBloc>(context),
+            builder: (context) => infoBloc,
             child: SendPaymentPage(qrinfo: qrinfo),
           );
         },
@@ -162,7 +163,7 @@ class _SendPageState extends State<SendPage> {
     );
 
     // payment succeeded, reset the state
-    if (result) {
+    if (result != null) {
       _qrinfo = null;
       _qrTestPassed = false;
       _invoiceController.clear();
@@ -172,12 +173,13 @@ class _SendPageState extends State<SendPage> {
   }
 
   void _navigateToSendCoins(QrInfo qrinfo) async {
+    var infoBloc = BlocProvider.of<LnInfoBloc>(context);
     await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) {
           return BlocProvider<LnInfoBloc>(
-            builder: (context) => BlocProvider.of<LnInfoBloc>(context),
+            builder: (context) => infoBloc,
             child: SendCoinsPage(qrinfo: qrinfo),
           );
         },

@@ -139,12 +139,13 @@ class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
           width: 150,
           child: RaisedButton.icon(
             onPressed: () {
+              var infoBloc = BlocProvider.of<LnInfoBloc>(context);
               Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (context) {
                       return BlocProvider.value(
-                        value: BlocProvider.of<LnInfoBloc>(context),
+                        value: infoBloc,
                         child: SendPage(),
                       );
                     },
@@ -161,6 +162,8 @@ class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
   }
 
   void _navigateToReceivePage() {
+    var infoBloc = BlocProvider.of<LnInfoBloc>(context);
+    var channelsBloc = BlocProvider.of<ListChannelsBloc>(context);
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -168,10 +171,10 @@ class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
             return MultiBlocProvider(
               providers: [
                 BlocProvider<LnInfoBloc>.value(
-                  value: BlocProvider.of<LnInfoBloc>(context),
+                  value: infoBloc,
                 ),
                 BlocProvider<ListChannelsBloc>.value(
-                  value: BlocProvider.of<ListChannelsBloc>(context),
+                  value: channelsBloc,
                 ),
               ],
               child: ReceivePage(),

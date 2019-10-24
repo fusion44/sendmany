@@ -5,6 +5,7 @@ import 'package:sendmany/common/utils.dart';
 import 'package:sendmany/common/widgets/widgets.dart';
 import 'package:sendmany/wallet/balance/balance_overview_widget.dart';
 
+import 'balance/bloc/bloc.dart';
 import 'balance/list_transactions/bloc.dart';
 
 class WalletPage extends StatefulWidget {
@@ -24,6 +25,7 @@ class _WalletPageState extends State<WalletPage> {
         if (state is InitialListTxState || state is LoadingTxState) {
           return Center(child: TranslatedText("network.loading"));
         } else if (state is LoadingTxFinishedState) {
+          var infoBloc = BlocProvider.of<LnInfoBloc>(context);
           return Column(
             children: <Widget>[
               Expanded(
@@ -31,7 +33,10 @@ class _WalletPageState extends State<WalletPage> {
                   itemCount: state.transactions.length,
                   itemBuilder: (context, i) {
                     if (i == 0) {
-                      return BalanceOverviewWidget();
+                      return BlocProvider.value(
+                        value: infoBloc,
+                        child: BalanceOverviewWidget(),
+                      );
                     }
                     return _buildListTile(state.transactions[i - 1]);
                   },
