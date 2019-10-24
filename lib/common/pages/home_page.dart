@@ -4,7 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:sendmany/channels/listchannels/bloc/bloc.dart';
-import 'package:sendmany/channels/listchannels/list_channels_widget.dart';
+import 'package:sendmany/channels/listchannels/list_channels_page.dart';
 import 'package:sendmany/common/connection/connection_manager/bloc.dart';
 import 'package:sendmany/common/constants.dart';
 import 'package:sendmany/common/utils.dart';
@@ -97,11 +97,7 @@ class _HomePageState extends State<HomePage>
         controller: _controller,
         children: <Widget>[
           WalletPage(),
-          Column(
-            children: <Widget>[
-              ListChannelsWidget(),
-            ],
-          ),
+          ListChannelsPage(),
           Column(
             children: <Widget>[
               NodeOverviewWidget(),
