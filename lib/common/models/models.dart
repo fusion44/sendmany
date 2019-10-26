@@ -4,3 +4,4 @@ export "transaction.dart";
 export "lnd_connection_data.dart";
 export "payment.dart";
 export "onchain_transaction.dart";
+export 'pending_channels/pending_channels.dart';

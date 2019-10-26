@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:sendmany/channels/list_channels/bloc/bloc.dart';
 import 'package:sendmany/channels/list_channels_page.dart';
+import 'package:sendmany/channels/list_pending_channels/bloc/bloc.dart';
 import 'package:sendmany/common/connection/connection_manager/bloc.dart';
 import 'package:sendmany/common/constants.dart';
 import 'package:sendmany/common/utils.dart';
@@ -27,6 +28,7 @@ class _HomePageState extends State<HomePage>
   TabController _controller;
   LnInfoBloc _lnInfoBloc;
   ListChannelsBloc _listChannelsBloc;
+  ListPendingChannelsBloc _listPendingChannelsBloc;
   ListTxBloc _listTxBloc;
 
   @override
@@ -36,6 +38,8 @@ class _HomePageState extends State<HomePage>
     _lnInfoBloc.add(LoadLnInfo());
     _listChannelsBloc = ListChannelsBloc();
     _listChannelsBloc.add(LoadChannelList());
+    _listPendingChannelsBloc = ListPendingChannelsBloc();
+    _listPendingChannelsBloc.add(ListPendingChannelsEvent());
     _listTxBloc = ListTxBloc(_lnInfoBloc);
     _listTxBloc.add(LoadTxEvent());
     _listTxBloc.add(ChangePollTxIntervalEvent(30));
@@ -48,6 +52,7 @@ class _HomePageState extends State<HomePage>
     _listTxBloc.close(); // contains a reference to _lnInfoBloc, dispose first
     _lnInfoBloc.close();
     _listChannelsBloc.close();
+    _listPendingChannelsBloc.close();
     super.dispose();
   }
 
@@ -57,6 +62,9 @@ class _HomePageState extends State<HomePage>
       providers: [
         BlocProvider<LnInfoBloc>.value(value: _lnInfoBloc),
         BlocProvider<ListChannelsBloc>.value(value: _listChannelsBloc),
+        BlocProvider<ListPendingChannelsBloc>.value(
+          value: _listPendingChannelsBloc,
+        ),
         BlocProvider<ListTxBloc>.value(value: _listTxBloc),
       ],
       child: BlocListener(
