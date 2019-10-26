@@ -5,7 +5,7 @@ import 'package:sendmany/common/connection/lnd_rpc/lnd_rpc.dart';
 @immutable
 abstract class ListChannelsState extends Equatable {}
 
-class InitialListchannelsState extends ListChannelsState {
+class InitialListChannelsState extends ListChannelsState {
   @override
   List<Object> get props => const [];
 }

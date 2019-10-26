@@ -5,7 +5,7 @@ import 'package:sendmany/common/constants.dart';
 import 'package:sendmany/common/widgets/charts/charts.dart';
 import 'package:sendmany/common/widgets/widgets.dart';
 
-import 'bloc/bloc.dart';
+import 'list_channels/bloc/bloc.dart';
 
 class ListChannelsPage extends StatefulWidget {
   @override
@@ -19,7 +19,7 @@ class _ListChannelsPageState extends State<ListChannelsPage> {
       bloc: BlocProvider.of<ListChannelsBloc>(context),
       builder: (BuildContext context, ListChannelsState state) {
         if (state is ChannelsLoadingState) {
-          return TranslatedText("network.loading");
+          return TranslatedText('network.loading');
         } else if (state is ChannelsLoadedState) {
           int length = state.channels.channels.length;
           List<Channel> channels = state.channels.channels;
@@ -44,7 +44,7 @@ class _ListChannelsPageState extends State<ListChannelsPage> {
             ],
           );
         }
-        return Text("Unknown State? $state");
+        return Text('Unknown State? $state');
       },
     );
   }
@@ -59,7 +59,7 @@ class _ListChannelsPageState extends State<ListChannelsPage> {
             Padding(
               padding: const EdgeInsets.only(top: 1.0),
               child: TranslatedText(
-                "channels.id",
+                'channels.id',
                 style: theme.textTheme.caption,
               ),
             ),
@@ -77,7 +77,7 @@ class _ListChannelsPageState extends State<ListChannelsPage> {
         ),
         Row(
           children: <Widget>[
-            TranslatedText("channels.local", style: theme.textTheme.caption),
+            TranslatedText('channels.local', style: theme.textTheme.caption),
             Padding(
               padding: const EdgeInsets.only(left: 8.0),
               child: MoneyValueView(amount: channel.localBalance),
@@ -86,7 +86,7 @@ class _ListChannelsPageState extends State<ListChannelsPage> {
             Padding(
               padding: const EdgeInsets.only(right: 6.0),
               child: TranslatedText(
-                "channels.remote",
+                'channels.remote',
                 style: theme.textTheme.caption,
               ),
             ),

@@ -1,7 +1,7 @@
 import 'package:fixnum/fixnum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sendmany/channels/listchannels/bloc/bloc.dart';
+import 'package:sendmany/channels/list_channels/bloc/bloc.dart';
 import 'package:sendmany/common/utils.dart';
 import 'package:sendmany/common/widgets/widgets.dart';
 import 'package:sendmany/wallet/balance/bloc/bloc.dart';
@@ -16,20 +16,20 @@ class ReceivePage extends StatefulWidget {
 }
 
 class _ReceivePageState extends State<ReceivePage> {
-  Int64 _maxIncomingChanCapacity = Int64.parseInt("-1");
+  Int64 _maxIncomingChanCapacity = Int64.parseInt('-1');
   Int64 _amount;
-  String _memo = "";
+  String _memo = '';
   bool _includeOnchainFallback = false;
 
   NewAddressBloc _newAddressBloc = NewAddressBloc();
   bool _hasEnoughChanCapacity = true;
   bool _isOnChain = false;
-  String _onchainAddress = "";
+  String _onchainAddress = '';
 
   @override
   void initState() {
     // We require the most recent channel state => reload channels
-    BlocProvider.of<ListChannelsBloc>(context).add(LoadChannels());
+    BlocProvider.of<ListChannelsBloc>(context).add(LoadChannelList());
     super.initState();
   }
 
@@ -50,7 +50,7 @@ class _ReceivePageState extends State<ReceivePage> {
 
   Scaffold _buildScaffold() {
     return Scaffold(
-      appBar: AppBar(title: TranslatedText("wallet.receive")),
+      appBar: AppBar(title: TranslatedText('wallet.receive')),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: SingleChildScrollView(
@@ -59,11 +59,11 @@ class _ReceivePageState extends State<ReceivePage> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Row(children: <Widget>[
-                  TranslatedText("wallet.receive_page.max_incoming_capacity"),
+                  TranslatedText('wallet.receive_page.max_incoming_capacity'),
                   Container(width: 6.0),
                   _maxIncomingChanCapacity != -1
                       ? MoneyValueView(amount: _maxIncomingChanCapacity)
-                      : TranslatedText("network.loading")
+                      : TranslatedText('network.loading')
                 ]),
               ),
               MoneyValueInput(amountChanged: (Int64 amount) {
@@ -74,7 +74,7 @@ class _ReceivePageState extends State<ReceivePage> {
                   enoughCap = _hasEngoughChanCapacity(amount);
                 }
 
-                if (!enoughCap && _onchainAddress == "") {
+                if (!enoughCap && _onchainAddress == '') {
                   _newAddressBloc.add(NewAddressEvent());
                 }
 
@@ -88,7 +88,7 @@ class _ReceivePageState extends State<ReceivePage> {
                 text: _memo,
                 textHint: tr(
                   context,
-                  "wallet.receive_page.optional_memo_input_hint",
+                  'wallet.receive_page.optional_memo_input_hint',
                 ),
                 textChanged: (String text) {
                   _memo = text;
@@ -97,7 +97,7 @@ class _ReceivePageState extends State<ReceivePage> {
               _buildOnchainFallbackSwitch(),
               SwitchListTile(
                 title: TranslatedText(
-                  "wallet.receive_page.force_onchain",
+                  'wallet.receive_page.force_onchain',
                 ),
                 // If we have enough channel capacity use the current user manipulatable switch
                 // If we are out of channel capacity set this always to true since
@@ -105,7 +105,7 @@ class _ReceivePageState extends State<ReceivePage> {
                 value: _hasEnoughChanCapacity ? _isOnChain : true,
                 onChanged: _hasEnoughChanCapacity
                     ? (bool value) {
-                        if (value && _onchainAddress == "") {
+                        if (value && _onchainAddress == '') {
                           _newAddressBloc.add(NewAddressEvent());
                         }
                         setState(() {
@@ -163,7 +163,7 @@ class _ReceivePageState extends State<ReceivePage> {
     }
 
     return RaisedButton(
-      child: TranslatedText("wallet.receive_page.confirm_amount_and_show_qr"),
+      child: TranslatedText('wallet.receive_page.confirm_amount_and_show_qr'),
       onPressed: onClick,
     );
   }
@@ -186,7 +186,7 @@ class _ReceivePageState extends State<ReceivePage> {
         duration: duration,
         child: SwitchListTile(
           title: TranslatedText(
-            "wallet.receive_page.include_onchain_fallback_hint",
+            'wallet.receive_page.include_onchain_fallback_hint',
           ),
           value: _includeOnchainFallback,
           onChanged: (bool value) {

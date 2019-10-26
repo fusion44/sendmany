@@ -3,8 +3,8 @@ import 'package:flutter/rendering.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
-import 'package:sendmany/channels/listchannels/bloc/bloc.dart';
-import 'package:sendmany/channels/listchannels/list_channels_page.dart';
+import 'package:sendmany/channels/list_channels/bloc/bloc.dart';
+import 'package:sendmany/channels/list_channels_page.dart';
 import 'package:sendmany/common/connection/connection_manager/bloc.dart';
 import 'package:sendmany/common/constants.dart';
 import 'package:sendmany/common/utils.dart';
@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage>
     _lnInfoBloc = LnInfoBloc();
     _lnInfoBloc.add(LoadLnInfo());
     _listChannelsBloc = ListChannelsBloc();
-    _listChannelsBloc.add(LoadChannels());
+    _listChannelsBloc.add(LoadChannelList());
     _listTxBloc = ListTxBloc(_lnInfoBloc);
     _listTxBloc.add(LoadTxEvent());
     _listTxBloc.add(ChangePollTxIntervalEvent(30));
@@ -76,7 +76,7 @@ class _HomePageState extends State<HomePage>
             }
             return Scaffold(
               body: Center(
-                child: TranslatedText("network.not_yet_established"),
+                child: TranslatedText('network.not_yet_established'),
               ),
             );
           },
@@ -112,10 +112,10 @@ class _HomePageState extends State<HomePage>
   _getTabBar() {
     List<TabData> tabs = [];
     tabs.add(
-        TabData(tr(context, "wallet.wallet"), Icons.account_balance_wallet));
-    tabs.add(TabData(tr(context, "channels.info"), Icons.scatter_plot));
-    tabs.add(TabData(tr(context, "node.info"), Icons.star));
-    tabs.add(TabData(tr(context, "prefs.title"), Icons.settings));
+        TabData(tr(context, 'wallet.wallet'), Icons.account_balance_wallet));
+    tabs.add(TabData(tr(context, 'channels.info'), Icons.scatter_plot));
+    tabs.add(TabData(tr(context, 'node.info'), Icons.star));
+    tabs.add(TabData(tr(context, 'prefs.title'), Icons.settings));
 
     return SendManyTabBar(controller: _controller, tabs: tabs);
   }

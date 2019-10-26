@@ -5,7 +5,7 @@ import 'package:meta/meta.dart';
 abstract class ListChannelsEvent extends Equatable {}
 
 @immutable
-class LoadChannels extends ListChannelsEvent {
+class LoadChannelList extends ListChannelsEvent {
   @override
   List<Object> get props => const [];
 }

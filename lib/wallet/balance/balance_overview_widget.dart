@@ -2,7 +2,7 @@ import 'package:fixnum/fixnum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sendmany/channels/listchannels/bloc/bloc.dart';
+import 'package:sendmany/channels/list_channels/bloc/bloc.dart';
 import 'package:sendmany/common/constants.dart';
 import 'package:sendmany/common/widgets/charts/charts.dart';
 import 'package:sendmany/common/widgets/money_value_view.dart';
