@@ -9,7 +9,7 @@ export "loading_widget.dart";
 export "logo_hero_widget.dart";
 export "money_value_input.dart";
 export "money_value_view.dart";
-export "node_info.dart";
+export "local_node_info_widget.dart";
 export "timeago_list_item.dart";
 export "time_ago_widget.dart";
 export "sendmany_card.dart";

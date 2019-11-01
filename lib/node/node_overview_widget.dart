@@ -19,7 +19,8 @@ class _NodeOverviewWidgetState extends State<NodeOverviewWidget> {
         if (state is LnInfoStateLoading) {
           return TranslatedText("network.loading");
         } else if (state is LnInfoStateLoadingFinished) {
-          return NodeInfo(state.infoResponse, tr(context, "node.info"));
+          return LocalNodeInfoWidget(
+              state.infoResponse, tr(context, "node.info"));
         }
         return Text("Unknown State? $state");
       },

@@ -3,17 +3,17 @@ import 'package:sendmany/common/connection/lnd_rpc/rpc.pb.dart';
 import 'package:sendmany/common/utils.dart';
 import 'package:sendmany/common/widgets/widgets.dart';
 
-class NodeInfo extends StatefulWidget {
+class LocalNodeInfoWidget extends StatefulWidget {
   final GetInfoResponse info;
   final bool showShareButton;
   final String header;
-  NodeInfo(this.info, this.header, {this.showShareButton = true});
+  LocalNodeInfoWidget(this.info, this.header, {this.showShareButton = true});
 
   @override
-  _NodeInfoState createState() => _NodeInfoState();
+  _LocalNodeInfoWidgetState createState() => _LocalNodeInfoWidgetState();
 }
 
-class _NodeInfoState extends State<NodeInfo> {
+class _LocalNodeInfoWidgetState extends State<LocalNodeInfoWidget> {
   @override
   Widget build(BuildContext context) {
     return SendManyCard(
