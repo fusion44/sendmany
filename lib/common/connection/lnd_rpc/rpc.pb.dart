@@ -892,6 +892,200 @@ class SendToRouteRequest extends $pb.GeneratedMessage {
   void clearRoute() => clearField(4);
 }
 
+class ChannelAcceptRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('ChannelAcceptRequest',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..a<$core.List<$core.int>>(1, 'nodePubkey', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(2, 'chainHash', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(3, 'pendingChanId', $pb.PbFieldType.OY)
+    ..a<Int64>(4, 'fundingAmt', $pb.PbFieldType.OU6, defaultOrMaker: Int64.ZERO)
+    ..a<Int64>(5, 'pushAmt', $pb.PbFieldType.OU6, defaultOrMaker: Int64.ZERO)
+    ..a<Int64>(6, 'dustLimit', $pb.PbFieldType.OU6, defaultOrMaker: Int64.ZERO)
+    ..a<Int64>(7, 'maxValueInFlight', $pb.PbFieldType.OU6,
+        defaultOrMaker: Int64.ZERO)
+    ..a<Int64>(8, 'channelReserve', $pb.PbFieldType.OU6,
+        defaultOrMaker: Int64.ZERO)
+    ..a<Int64>(9, 'minHtlc', $pb.PbFieldType.OU6, defaultOrMaker: Int64.ZERO)
+    ..a<Int64>(10, 'feePerKw', $pb.PbFieldType.OU6, defaultOrMaker: Int64.ZERO)
+    ..a<$core.int>(11, 'csvDelay', $pb.PbFieldType.OU3)
+    ..a<$core.int>(12, 'maxAcceptedHtlcs', $pb.PbFieldType.OU3)
+    ..a<$core.int>(13, 'channelFlags', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false;
+
+  ChannelAcceptRequest._() : super();
+  factory ChannelAcceptRequest() => create();
+  factory ChannelAcceptRequest.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory ChannelAcceptRequest.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  ChannelAcceptRequest clone() =>
+      ChannelAcceptRequest()..mergeFromMessage(this);
+  ChannelAcceptRequest copyWith(void Function(ChannelAcceptRequest) updates) =>
+      super.copyWith((message) => updates(message as ChannelAcceptRequest));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static ChannelAcceptRequest create() => ChannelAcceptRequest._();
+  ChannelAcceptRequest createEmptyInstance() => create();
+  static $pb.PbList<ChannelAcceptRequest> createRepeated() =>
+      $pb.PbList<ChannelAcceptRequest>();
+  static ChannelAcceptRequest getDefault() =>
+      _defaultInstance ??= create()..freeze();
+  static ChannelAcceptRequest _defaultInstance;
+
+  $core.List<$core.int> get nodePubkey => $_getN(0);
+  set nodePubkey($core.List<$core.int> v) {
+    $_setBytes(0, v);
+  }
+
+  $core.bool hasNodePubkey() => $_has(0);
+  void clearNodePubkey() => clearField(1);
+
+  $core.List<$core.int> get chainHash => $_getN(1);
+  set chainHash($core.List<$core.int> v) {
+    $_setBytes(1, v);
+  }
+
+  $core.bool hasChainHash() => $_has(1);
+  void clearChainHash() => clearField(2);
+
+  $core.List<$core.int> get pendingChanId => $_getN(2);
+  set pendingChanId($core.List<$core.int> v) {
+    $_setBytes(2, v);
+  }
+
+  $core.bool hasPendingChanId() => $_has(2);
+  void clearPendingChanId() => clearField(3);
+
+  Int64 get fundingAmt => $_getI64(3);
+  set fundingAmt(Int64 v) {
+    $_setInt64(3, v);
+  }
+
+  $core.bool hasFundingAmt() => $_has(3);
+  void clearFundingAmt() => clearField(4);
+
+  Int64 get pushAmt => $_getI64(4);
+  set pushAmt(Int64 v) {
+    $_setInt64(4, v);
+  }
+
+  $core.bool hasPushAmt() => $_has(4);
+  void clearPushAmt() => clearField(5);
+
+  Int64 get dustLimit => $_getI64(5);
+  set dustLimit(Int64 v) {
+    $_setInt64(5, v);
+  }
+
+  $core.bool hasDustLimit() => $_has(5);
+  void clearDustLimit() => clearField(6);
+
+  Int64 get maxValueInFlight => $_getI64(6);
+  set maxValueInFlight(Int64 v) {
+    $_setInt64(6, v);
+  }
+
+  $core.bool hasMaxValueInFlight() => $_has(6);
+  void clearMaxValueInFlight() => clearField(7);
+
+  Int64 get channelReserve => $_getI64(7);
+  set channelReserve(Int64 v) {
+    $_setInt64(7, v);
+  }
+
+  $core.bool hasChannelReserve() => $_has(7);
+  void clearChannelReserve() => clearField(8);
+
+  Int64 get minHtlc => $_getI64(8);
+  set minHtlc(Int64 v) {
+    $_setInt64(8, v);
+  }
+
+  $core.bool hasMinHtlc() => $_has(8);
+  void clearMinHtlc() => clearField(9);
+
+  Int64 get feePerKw => $_getI64(9);
+  set feePerKw(Int64 v) {
+    $_setInt64(9, v);
+  }
+
+  $core.bool hasFeePerKw() => $_has(9);
+  void clearFeePerKw() => clearField(10);
+
+  $core.int get csvDelay => $_get(10, 0);
+  set csvDelay($core.int v) {
+    $_setUnsignedInt32(10, v);
+  }
+
+  $core.bool hasCsvDelay() => $_has(10);
+  void clearCsvDelay() => clearField(11);
+
+  $core.int get maxAcceptedHtlcs => $_get(11, 0);
+  set maxAcceptedHtlcs($core.int v) {
+    $_setUnsignedInt32(11, v);
+  }
+
+  $core.bool hasMaxAcceptedHtlcs() => $_has(11);
+  void clearMaxAcceptedHtlcs() => clearField(12);
+
+  $core.int get channelFlags => $_get(12, 0);
+  set channelFlags($core.int v) {
+    $_setUnsignedInt32(12, v);
+  }
+
+  $core.bool hasChannelFlags() => $_has(12);
+  void clearChannelFlags() => clearField(13);
+}
+
+class ChannelAcceptResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('ChannelAcceptResponse',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..aOB(1, 'accept')
+    ..a<$core.List<$core.int>>(2, 'pendingChanId', $pb.PbFieldType.OY)
+    ..hasRequiredFields = false;
+
+  ChannelAcceptResponse._() : super();
+  factory ChannelAcceptResponse() => create();
+  factory ChannelAcceptResponse.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory ChannelAcceptResponse.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  ChannelAcceptResponse clone() =>
+      ChannelAcceptResponse()..mergeFromMessage(this);
+  ChannelAcceptResponse copyWith(
+          void Function(ChannelAcceptResponse) updates) =>
+      super.copyWith((message) => updates(message as ChannelAcceptResponse));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static ChannelAcceptResponse create() => ChannelAcceptResponse._();
+  ChannelAcceptResponse createEmptyInstance() => create();
+  static $pb.PbList<ChannelAcceptResponse> createRepeated() =>
+      $pb.PbList<ChannelAcceptResponse>();
+  static ChannelAcceptResponse getDefault() =>
+      _defaultInstance ??= create()..freeze();
+  static ChannelAcceptResponse _defaultInstance;
+
+  $core.bool get accept => $_get(0, false);
+  set accept($core.bool v) {
+    $_setBool(0, v);
+  }
+
+  $core.bool hasAccept() => $_has(0);
+  void clearAccept() => clearField(1);
+
+  $core.List<$core.int> get pendingChanId => $_getN(1);
+  set pendingChanId($core.List<$core.int> v) {
+    $_setBytes(1, v);
+  }
+
+  $core.bool hasPendingChanId() => $_has(1);
+  void clearPendingChanId() => clearField(2);
+}
+
 enum ChannelPoint_FundingTxid { fundingTxidBytes, fundingTxidStr, notSet }
 
 class ChannelPoint extends $pb.GeneratedMessage {
@@ -1883,6 +2077,7 @@ class Channel extends $pb.GeneratedMessage {
     ..aOS(19, 'chan_status_flags')
     ..aInt64(20, 'local_chan_reserve_sat')
     ..aInt64(21, 'remote_chan_reserve_sat')
+    ..aOB(22, 'static_remote_key')
     ..hasRequiredFields = false;
 
   Channel._() : super();
@@ -2065,6 +2260,14 @@ class Channel extends $pb.GeneratedMessage {
 
   $core.bool hasRemoteChanReserveSat() => $_has(20);
   void clearRemoteChanReserveSat() => clearField(21);
+
+  $core.bool get staticRemoteKey => $_get(21, false);
+  set staticRemoteKey($core.bool v) {
+    $_setBool(21, v);
+  }
+
+  $core.bool hasStaticRemoteKey() => $_has(21);
+  void clearStaticRemoteKey() => clearField(22);
 }
 
 class ListChannelsRequest extends $pb.GeneratedMessage {
@@ -4156,11 +4359,7 @@ class QueryRoutesRequest extends $pb.GeneratedMessage {
     ..aOB(9, 'useMissionControl')
     ..pc<NodePair>(10, 'ignoredPairs', $pb.PbFieldType.PM,
         subBuilder: NodePair.create)
-    ..m<Int64, $core.List<$core.int>>(11, 'destTlv',
-        entryClassName: 'QueryRoutesRequest.DestTlvEntry',
-        keyFieldType: $pb.PbFieldType.OU6,
-        valueFieldType: $pb.PbFieldType.OY,
-        packageName: const $pb.PackageName('lnrpc'))
+    ..a<$core.int>(11, 'cltvLimit', $pb.PbFieldType.OU3)
     ..hasRequiredFields = false;
 
   QueryRoutesRequest._() : super();
@@ -4239,7 +4438,13 @@ class QueryRoutesRequest extends $pb.GeneratedMessage {
 
   $core.List<NodePair> get ignoredPairs => $_getList(8);
 
-  $core.Map<Int64, $core.List<$core.int>> get destTlv => $_getMap(9);
+  $core.int get cltvLimit => $_get(9, 0);
+  set cltvLimit($core.int v) {
+    $_setUnsignedInt32(9, v);
+  }
+
+  $core.bool hasCltvLimit() => $_has(9);
+  void clearCltvLimit() => clearField(11);
 }
 
 class NodePair extends $pb.GeneratedMessage {
@@ -4379,11 +4584,6 @@ class Hop extends $pb.GeneratedMessage {
     ..aInt64(7, 'fee_msat')
     ..aOS(8, 'pub_key')
     ..aOB(9, 'tlv_payload')
-    ..m<Int64, $core.List<$core.int>>(10, 'tlv_records',
-        entryClassName: 'Hop.TlvRecordsEntry',
-        keyFieldType: $pb.PbFieldType.OU6,
-        valueFieldType: $pb.PbFieldType.OY,
-        packageName: const $pb.PackageName('lnrpc'))
     ..hasRequiredFields = false;
 
   Hop._() : super();
@@ -4484,8 +4684,6 @@ class Hop extends $pb.GeneratedMessage {
 
   $core.bool hasTlvPayload() => $_has(8);
   void clearTlvPayload() => clearField(9);
-
-  $core.Map<Int64, $core.List<$core.int>> get tlvRecords => $_getMap(9);
 }
 
 class Route extends $pb.GeneratedMessage {
@@ -6984,6 +7182,8 @@ class PolicyUpdateRequest extends $pb.GeneratedMessage {
     ..aInt64(3, 'base_fee_msat')
     ..a<$core.double>(4, 'fee_rate', $pb.PbFieldType.OD)
     ..a<$core.int>(5, 'time_lock_delta', $pb.PbFieldType.OU3)
+    ..a<Int64>(6, 'max_htlc_msat', $pb.PbFieldType.OU6,
+        defaultOrMaker: Int64.ZERO)
     ..hasRequiredFields = false;
 
   PolicyUpdateRequest._() : super();
@@ -7050,6 +7250,14 @@ class PolicyUpdateRequest extends $pb.GeneratedMessage {
 
   $core.bool hasTimeLockDelta() => $_has(4);
   void clearTimeLockDelta() => clearField(5);
+
+  Int64 get maxHtlcMsat => $_getI64(5);
+  set maxHtlcMsat(Int64 v) {
+    $_setInt64(5, v);
+  }
+
+  $core.bool hasMaxHtlcMsat() => $_has(5);
+  void clearMaxHtlcMsat() => clearField(6);
 }
 
 class PolicyUpdateResponse extends $pb.GeneratedMessage {

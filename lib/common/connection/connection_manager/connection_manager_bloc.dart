@@ -39,10 +39,10 @@ class ConnectionManagerBloc
   ConnectionManagerState get initialState => InitialConnectionManagerState();
 
   @override
-  void close() async {
-    _prefsSubscription.cancel();
+  Future<void> close() async {
+    await _prefsSubscription.cancel();
     await _clientChannel.shutdown();
-    super.close();
+    await super.close();
   }
 
   @override

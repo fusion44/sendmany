@@ -20,7 +20,7 @@ const InvoiceHTLCState$json = const {
   '2': const [
     const {'1': 'ACCEPTED', '2': 0},
     const {'1': 'SETTLED', '2': 1},
-    const {'1': 'CANCELLED', '2': 2},
+    const {'1': 'CANCELED', '2': 2},
   ],
 };
 
@@ -175,6 +175,33 @@ const SendToRouteRequest$json = const {
   ],
   '9': const [
     const {'1': 3, '2': 4},
+  ],
+};
+
+const ChannelAcceptRequest$json = const {
+  '1': 'ChannelAcceptRequest',
+  '2': const [
+    const {'1': 'node_pubkey', '3': 1, '4': 1, '5': 12, '10': 'nodePubkey'},
+    const {'1': 'chain_hash', '3': 2, '4': 1, '5': 12, '10': 'chainHash'},
+    const {'1': 'pending_chan_id', '3': 3, '4': 1, '5': 12, '10': 'pendingChanId'},
+    const {'1': 'funding_amt', '3': 4, '4': 1, '5': 4, '10': 'fundingAmt'},
+    const {'1': 'push_amt', '3': 5, '4': 1, '5': 4, '10': 'pushAmt'},
+    const {'1': 'dust_limit', '3': 6, '4': 1, '5': 4, '10': 'dustLimit'},
+    const {'1': 'max_value_in_flight', '3': 7, '4': 1, '5': 4, '10': 'maxValueInFlight'},
+    const {'1': 'channel_reserve', '3': 8, '4': 1, '5': 4, '10': 'channelReserve'},
+    const {'1': 'min_htlc', '3': 9, '4': 1, '5': 4, '10': 'minHtlc'},
+    const {'1': 'fee_per_kw', '3': 10, '4': 1, '5': 4, '10': 'feePerKw'},
+    const {'1': 'csv_delay', '3': 11, '4': 1, '5': 13, '10': 'csvDelay'},
+    const {'1': 'max_accepted_htlcs', '3': 12, '4': 1, '5': 13, '10': 'maxAcceptedHtlcs'},
+    const {'1': 'channel_flags', '3': 13, '4': 1, '5': 13, '10': 'channelFlags'},
+  ],
+};
+
+const ChannelAcceptResponse$json = const {
+  '1': 'ChannelAcceptResponse',
+  '2': const [
+    const {'1': 'accept', '3': 1, '4': 1, '5': 8, '10': 'accept'},
+    const {'1': 'pending_chan_id', '3': 2, '4': 1, '5': 12, '10': 'pendingChanId'},
   ],
 };
 
@@ -393,6 +420,7 @@ const Channel$json = const {
     const {'1': 'chan_status_flags', '3': 19, '4': 1, '5': 9, '10': 'chan_status_flags'},
     const {'1': 'local_chan_reserve_sat', '3': 20, '4': 1, '5': 3, '10': 'local_chan_reserve_sat'},
     const {'1': 'remote_chan_reserve_sat', '3': 21, '4': 1, '5': 3, '10': 'remote_chan_reserve_sat'},
+    const {'1': 'static_remote_key', '3': 22, '4': 1, '5': 8, '10': 'static_remote_key'},
   ],
 };
 
@@ -777,21 +805,11 @@ const QueryRoutesRequest$json = const {
     const {'1': 'source_pub_key', '3': 8, '4': 1, '5': 9, '10': 'sourcePubKey'},
     const {'1': 'use_mission_control', '3': 9, '4': 1, '5': 8, '10': 'useMissionControl'},
     const {'1': 'ignored_pairs', '3': 10, '4': 3, '5': 11, '6': '.lnrpc.NodePair', '10': 'ignoredPairs'},
-    const {'1': 'dest_tlv', '3': 11, '4': 3, '5': 11, '6': '.lnrpc.QueryRoutesRequest.DestTlvEntry', '10': 'destTlv'},
+    const {'1': 'cltv_limit', '3': 11, '4': 1, '5': 13, '10': 'cltvLimit'},
   ],
-  '3': const [QueryRoutesRequest_DestTlvEntry$json],
   '9': const [
     const {'1': 3, '2': 4},
   ],
-};
-
-const QueryRoutesRequest_DestTlvEntry$json = const {
-  '1': 'DestTlvEntry',
-  '2': const [
-    const {'1': 'key', '3': 1, '4': 1, '5': 4, '10': 'key'},
-    const {'1': 'value', '3': 2, '4': 1, '5': 12, '10': 'value'},
-  ],
-  '7': const {'7': true},
 };
 
 const NodePair$json = const {
@@ -844,18 +862,7 @@ const Hop$json = const {
     const {'1': 'fee_msat', '3': 7, '4': 1, '5': 3, '10': 'fee_msat'},
     const {'1': 'pub_key', '3': 8, '4': 1, '5': 9, '10': 'pub_key'},
     const {'1': 'tlv_payload', '3': 9, '4': 1, '5': 8, '10': 'tlv_payload'},
-    const {'1': 'tlv_records', '3': 10, '4': 3, '5': 11, '6': '.lnrpc.Hop.TlvRecordsEntry', '10': 'tlv_records'},
   ],
-  '3': const [Hop_TlvRecordsEntry$json],
-};
-
-const Hop_TlvRecordsEntry$json = const {
-  '1': 'TlvRecordsEntry',
-  '2': const [
-    const {'1': 'key', '3': 1, '4': 1, '5': 4, '10': 'key'},
-    const {'1': 'value', '3': 2, '4': 1, '5': 12, '10': 'value'},
-  ],
-  '7': const {'7': true},
 };
 
 const Route$json = const {
@@ -1334,6 +1341,7 @@ const PolicyUpdateRequest$json = const {
     const {'1': 'base_fee_msat', '3': 3, '4': 1, '5': 3, '10': 'base_fee_msat'},
     const {'1': 'fee_rate', '3': 4, '4': 1, '5': 1, '10': 'fee_rate'},
     const {'1': 'time_lock_delta', '3': 5, '4': 1, '5': 13, '10': 'time_lock_delta'},
+    const {'1': 'max_htlc_msat', '3': 6, '4': 1, '5': 4, '10': 'max_htlc_msat'},
   ],
   '8': const [
     const {'1': 'scope'},

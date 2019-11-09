@@ -36,12 +36,12 @@ class AddressType extends $pb.ProtobufEnum {
 class InvoiceHTLCState extends $pb.ProtobufEnum {
   static const InvoiceHTLCState ACCEPTED = InvoiceHTLCState._(0, 'ACCEPTED');
   static const InvoiceHTLCState SETTLED = InvoiceHTLCState._(1, 'SETTLED');
-  static const InvoiceHTLCState CANCELLED = InvoiceHTLCState._(2, 'CANCELLED');
+  static const InvoiceHTLCState CANCELED = InvoiceHTLCState._(2, 'CANCELED');
 
   static const $core.List<InvoiceHTLCState> values = <InvoiceHTLCState>[
     ACCEPTED,
     SETTLED,
-    CANCELLED,
+    CANCELED,
   ];
 
   static final $core.Map<$core.int, InvoiceHTLCState> _byValue =

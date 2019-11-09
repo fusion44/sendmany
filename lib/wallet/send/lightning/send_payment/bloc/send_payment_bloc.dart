@@ -42,9 +42,9 @@ class SendPaymentBloc extends Bloc<SendPaymentEvent, SendPaymentState> {
   }
 
   @override
-  void close() {
-    _sendPaymentController.close();
-    super.close();
+  Future<void> close() async {
+    await _sendPaymentController.close();
+    await super.close();
   }
 
   @override

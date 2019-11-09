@@ -44,12 +44,12 @@ class ListTxBloc extends Bloc<ListTxEvent, ListTxState> {
   }
 
   @override
-  void close() {
+  Future<void> close() async {
     if (_timer != null && _timer.isActive) {
       _timer.cancel();
     }
 
-    super.close();
+    await super.close();
   }
 
   void _setupTransactionSubscription() {

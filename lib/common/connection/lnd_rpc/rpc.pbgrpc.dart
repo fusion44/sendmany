@@ -272,6 +272,12 @@ class LightningClient extends $grpc.Client {
           ($0.OpenChannelRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $0.OpenStatusUpdate.fromBuffer(value));
+  static final _$channelAcceptor =
+      $grpc.ClientMethod<$0.ChannelAcceptResponse, $0.ChannelAcceptRequest>(
+          '/lnrpc.Lightning/ChannelAcceptor',
+          ($0.ChannelAcceptResponse value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $0.ChannelAcceptRequest.fromBuffer(value));
   static final _$closeChannel =
       $grpc.ClientMethod<$0.CloseChannelRequest, $0.CloseStatusUpdate>(
           '/lnrpc.Lightning/CloseChannel',
@@ -615,6 +621,13 @@ class LightningClient extends $grpc.Client {
     final call = $createCall(
         _$openChannel, $async.Stream.fromIterable([request]),
         options: options);
+    return $grpc.ResponseStream(call);
+  }
+
+  $grpc.ResponseStream<$0.ChannelAcceptRequest> channelAcceptor(
+      $async.Stream<$0.ChannelAcceptResponse> request,
+      {$grpc.CallOptions options}) {
+    final call = $createCall(_$channelAcceptor, request, options: options);
     return $grpc.ResponseStream(call);
   }
 
@@ -1048,6 +1061,15 @@ abstract class LightningServiceBase extends $grpc.Service {
         ($core.List<$core.int> value) =>
             $0.OpenChannelRequest.fromBuffer(value),
         ($0.OpenStatusUpdate value) => value.writeToBuffer()));
+    $addMethod(
+        $grpc.ServiceMethod<$0.ChannelAcceptResponse, $0.ChannelAcceptRequest>(
+            'ChannelAcceptor',
+            channelAcceptor,
+            true,
+            true,
+            ($core.List<$core.int> value) =>
+                $0.ChannelAcceptResponse.fromBuffer(value),
+            ($0.ChannelAcceptRequest value) => value.writeToBuffer()));
     $addMethod(
         $grpc.ServiceMethod<$0.CloseChannelRequest, $0.CloseStatusUpdate>(
             'CloseChannel',
@@ -1589,6 +1611,8 @@ abstract class LightningServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.OpenChannelRequest request);
   $async.Stream<$0.OpenStatusUpdate> openChannel(
       $grpc.ServiceCall call, $0.OpenChannelRequest request);
+  $async.Stream<$0.ChannelAcceptRequest> channelAcceptor(
+      $grpc.ServiceCall call, $async.Stream<$0.ChannelAcceptResponse> request);
   $async.Stream<$0.CloseStatusUpdate> closeChannel(
       $grpc.ServiceCall call, $0.CloseChannelRequest request);
   $async.Future<$0.AbandonChannelResponse> abandonChannel(
