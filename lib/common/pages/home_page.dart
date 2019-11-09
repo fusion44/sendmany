@@ -114,6 +114,7 @@ class _HomePageState extends State<HomePage>
           PreferencesPage(),
         ],
       ),
+      floatingActionButton: _buildFAB(),
     );
   }
 
@@ -126,5 +127,37 @@ class _HomePageState extends State<HomePage>
     tabs.add(TabData(tr(context, 'prefs.title'), Icons.settings));
 
     return SendManyTabBar(controller: _controller, tabs: tabs);
+  }
+
+  Widget _buildFAB() {
+    Widget channelPageFAB = ListChannelsPage.buildFAB(context);
+    return AnimatedBuilder(
+      animation: _controller.animation,
+      builder: (context, child) {
+        double animState = _controller.animation.value;
+        if (animState > 0 && animState < 1) {
+          return Transform.scale(
+            scale: animState,
+            child: Opacity(
+              opacity: animState,
+              child: channelPageFAB,
+            ),
+          );
+        } else if (animState == 1) {
+          return channelPageFAB;
+        } else if (animState > 1 && animState < 2) {
+          double state = 1 - (animState - 1);
+          return Transform.scale(
+            scale: state,
+            child: Opacity(
+              opacity: state,
+              child: channelPageFAB,
+            ),
+          );
+        } else {
+          return Container();
+        }
+      },
+    );
   }
 }

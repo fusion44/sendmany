@@ -8,6 +8,24 @@
     "id": "ID",
     "info": "Channels",
     "local": "Lokal",
+    "open": {
+      "advanced_settings": "Advanced",
+      "channel_settings": "Channel Settings",
+      "check_connection": "Check",
+      "enter_partner_pubkey": "Public Key",
+      "fee_manual_sat_per_byte": "Manual Fee",
+      "fee_target_block": "Target Block",
+      "get_from_clipboard": "Clipboard",
+      "local_funding_amount": "Local funding amount",
+      "open_channel": "Open",
+      "retry_connection_test": "Retry",
+      "title": "Create Channel"
+    },
+    "partner": "Partner",
+    "partner_alias": "Alias",
+    "partner_num_channels": "Channels",
+    "partner_pubkey": "Public Node Key",
+    "partner_total_capacity": "Total Capacity",
     "remote": "Fjern"
   },
   "network": {
@@ -21,11 +39,13 @@
     "channels": "Channels",
     "identity_pubkey": "Identity Pubkey",
     "info": "Noden din",
+    "peer": "Peer",
     "peers": "Peers",
     "synced_to_chain": "Synced to chain",
     "synced_to_chain_no": "Nei",
     "synced_to_chain_yes": "Ja"
   },
+  "not_implemented_yet": "Not implemented yet",
   "onboarding": {
     "add_node": "Add",
     "button_connect": "Connect",

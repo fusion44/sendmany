@@ -22,4 +22,9 @@ class Validator {
     final RegExp _regex = RegExp(r"^([a-z2-7]{16}|[a-z2-7]{56})\.onion$");
     return _regex.hasMatch(address);
   }
+
+  bool lnPubKey(String pubKey) {
+    if (pubKey == null || pubKey.length != 66) return false;
+    return true;
+  }
 }

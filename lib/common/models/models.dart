@@ -3,5 +3,7 @@ export "invoice.dart";
 export "transaction.dart";
 export "lnd_connection_data.dart";
 export "payment.dart";
+export 'onchain_feetype.dart';
 export "onchain_transaction.dart";
 export 'pending_channels/pending_channels.dart';
+export 'node_info/node_info.dart';

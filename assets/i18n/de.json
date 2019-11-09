@@ -8,6 +8,24 @@
     "id": "ID",
     "info": "Kanäle",
     "local": "Lokal",
+    "open": {
+      "advanced_settings": "Erweitert",
+      "channel_settings": "Kanal Einstellungen",
+      "check_connection": "Prüfen",
+      "enter_partner_pubkey": "Öffentlicher Schlüssel",
+      "fee_manual_sat_per_byte": "Manuelle Gebühr",
+      "fee_target_block": "Zielblock",
+      "get_from_clipboard": "Zwischenablage",
+      "local_funding_amount": "Local funding amount",
+      "open_channel": "Öffnen",
+      "retry_connection_test": "Nochmal",
+      "title": "Öffne Kanal"
+    },
+    "partner": "Partner",
+    "partner_alias": "Alias",
+    "partner_num_channels": "Kanäle",
+    "partner_pubkey": "Public Node Schlüssel",
+    "partner_total_capacity": "Gesamtkapazität",
     "remote": "Fern"
   },
   "network": {
@@ -21,11 +39,13 @@
     "channels": "Kanäle",
     "identity_pubkey": "Öffentlicher Key",
     "info": "Deine Node",
+    "peer": "Peer",
     "peers": "Peers",
     "synced_to_chain": "Sync mit Chain",
     "synced_to_chain_no": "Nein",
     "synced_to_chain_yes": "Ja"
   },
+  "not_implemented_yet": "Noch nicht implementiert",
   "onboarding": {
     "add_node": "Hinzufügen",
     "button_connect": "Verbinden",

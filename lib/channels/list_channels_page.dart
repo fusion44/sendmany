@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sendmany/channels/create_channel_page.dart';
 import 'package:sendmany/common/connection/lnd_rpc/lnd_rpc.dart';
 import 'package:sendmany/common/constants.dart';
 import 'package:sendmany/common/widgets/charts/charts.dart';
@@ -10,6 +11,20 @@ import 'list_channels/bloc/bloc.dart';
 class ListChannelsPage extends StatefulWidget {
   @override
   _ListChannelsPageState createState() => _ListChannelsPageState();
+
+  static Widget buildFAB(BuildContext context) {
+    return FloatingActionButton(
+      child: Icon(Icons.add),
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return CreateChannelPage();
+          }),
+        );
+      },
+    );
+  }
 }
 
 class _ListChannelsPageState extends State<ListChannelsPage> {

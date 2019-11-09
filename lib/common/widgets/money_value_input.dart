@@ -4,9 +4,21 @@ import 'package:sendmany/common/utils.dart';
 import 'package:sendmany/common/widgets/widgets.dart';
 
 class MoneyValueInput extends StatefulWidget {
+  /// Initial amount to display
+  final Int64 amount;
+
+  /// Callback when amount has changed
   final Function amountChanged;
 
-  const MoneyValueInput({Key key, this.amountChanged}) : super(key: key);
+  /// ID of the text to use
+  final String textHintId;
+
+  const MoneyValueInput({
+    Key key,
+    this.amount,
+    this.amountChanged,
+    this.textHintId = "wallet.transactions.amount_in_sats",
+  }) : super(key: key);
 
   @override
   _MoneyValueInputState createState() => _MoneyValueInputState();
@@ -16,8 +28,9 @@ class _MoneyValueInputState extends State<MoneyValueInput> {
   @override
   Widget build(BuildContext context) {
     return FilledTextField(
+      text: widget.amount == null ? "" : widget.amount.toString(),
       textAlign: TextAlign.center,
-      textHint: tr(context, "wallet.transactions.amount_in_sats"),
+      textHint: tr(context, widget.textHintId),
       keyboardType: TextInputType.numberWithOptions(
         decimal: false,
         signed: false,
