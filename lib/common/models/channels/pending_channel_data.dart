@@ -1,9 +1,10 @@
 import 'package:fixnum/fixnum.dart';
 import 'package:sendmany/common/connection/lnd_rpc/lnd_rpc.dart' as grpc;
+import 'package:sendmany/common/models/channels/models.dart';
 
 class PendingChannelData {
   final String remoteNodePub;
-  final String channelPoint;
+  final ChannelPoint channelPoint;
   final Int64 capacity;
   final Int64 localBalance;
   final Int64 remoteBalance;
@@ -25,7 +26,7 @@ class PendingChannelData {
   ) {
     return PendingChannelData(
       remoteNodePub: channel.remoteNodePub,
-      channelPoint: channel.channelPoint,
+      channelPoint: ChannelPoint.fromString(channel.channelPoint),
       capacity: channel.capacity,
       localBalance: channel.localBalance,
       remoteBalance: channel.remoteBalance,
