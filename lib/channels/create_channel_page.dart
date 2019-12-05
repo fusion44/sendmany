@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:sendmany/channels/manual_partner_input.dart';
+import 'package:sendmany/channels/open_channel/bloc/bloc.dart';
 import 'package:sendmany/channels/open_channel_settings_widget.dart';
+import 'package:sendmany/channels/subscribe_channel_events/bloc/bloc.dart';
 import 'package:sendmany/common/blocs/get_remote_node_info/bloc.dart';
 import 'package:sendmany/common/constants.dart';
 import 'package:sendmany/common/models/models.dart';
@@ -24,6 +26,7 @@ enum _CreateChannelPageStateState {
 
 class _CreateChannelPageState extends State<CreateChannelPage> {
   final GetRemoteNodeInfoBloc _getNodeInfoBloc = GetRemoteNodeInfoBloc();
+  OpenChannelBloc _openChannelBloc;
   NodeInfo _nodeInfo;
   _CreateChannelPageStateState _state = _CreateChannelPageStateState.scanQr;
   String _pubKey = '';
@@ -52,10 +55,29 @@ class _CreateChannelPageState extends State<CreateChannelPage> {
         });
       }
     });
+
+    _openChannelBloc = OpenChannelBloc();
+    _openChannelBloc.listen((state) {
+      if (state is InitiateOpenChannelState) {
+        // loading - open loading thing
+      } else if (state is OpenChannelInitiatedState) {
+        // got the channel point
+        BlocProvider.of<SubscribeChannelEventsBloc>(context).add(
+          OpeningNewChannelEvent(state.channelPoint),
+        );
+        Navigator.pop(context, true);
+      } else if (state is OpenChannelErrorState) {
+        // error??
+        print(state.errorMessage);
+      } else {
+        print('Unknown OpenChannelState: $state');
+      }
+    });
   }
 
   @override
   void dispose() {
+    _openChannelBloc.close();
     _getNodeInfoBloc.close();
     super.dispose();
   }
@@ -91,19 +113,29 @@ class _CreateChannelPageState extends State<CreateChannelPage> {
         return BlocProvider.value(
           value: _getNodeInfoBloc,
           child: OpenChannelSettingsWidget(
-              nodeInfo: _nodeInfo,
-              openChannelClicked: (
-                OnchainFeeType feeType,
-                Int64 fee,
-                Int64 localAmount,
-              ) {
-                // TODO: implement me
-              }),
+            nodeInfo: _nodeInfo,
+            openChannelClicked: (
+              OnchainFeeType feeType,
+              Int64 fee,
+              Int64 localAmount,
+            ) {
+              _openChannelBloc.add(
+                OpenChannelEvent(
+                  address: LightningAddress(_pubKey, '$_host:$_port'),
+                  localFundingAmount: localAmount,
+                  targetConf: feeType == OnchainFeeType.blockTarget
+                      ? fee.toInt()
+                      : null,
+                  satPerByte: feeType == OnchainFeeType.manual ? fee : null,
+                ),
+              );
+            },
+          ),
         );
       case _CreateChannelPageStateState.nodeInfoLoadError:
         return _buildNodeInfoLoadingError();
       default:
-        return Center(child: Text('Unkown State $_state'));
+        return Center(child: Text('Unknown State $_state'));
     }
   }
 
@@ -121,7 +153,7 @@ class _CreateChannelPageState extends State<CreateChannelPage> {
           if (spl[1].contains(':')) {
             var spl2 = spl[1].split(':');
             host = spl2[0];
-            port = int.tryParse(spl[1]);
+            port = int.tryParse(spl2[1]);
             if (port == null) port = 0;
           } else {
             host = spl[1];
@@ -145,7 +177,7 @@ class _CreateChannelPageState extends State<CreateChannelPage> {
   }
 
   Widget _buildNodeInfoLoadingError() {
-    String errorText = 'Unkown error while loading partner node info';
+    String errorText = 'Unknown error while loading partner node info';
     if (_errorMessage.isNotEmpty) {
       errorText = 'Error while loading partner node info: $_errorMessage';
     }

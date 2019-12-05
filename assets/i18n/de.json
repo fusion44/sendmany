@@ -5,6 +5,14 @@
     "pin": "Gib deinen PIN ein"
   },
   "channels": {
+    "capacity": "Kapazität",
+    "close": {
+      "closing": "Schliesse",
+      "force_closing": "Erzwinge schliessen",
+      "limbo_balance": "Limbo",
+      "receive_amt": "Empfange",
+      "waiting_close": "Erwarte Schliessung"
+    },
     "id": "ID",
     "info": "Kanäle",
     "local": "Lokal",
@@ -12,12 +20,14 @@
       "advanced_settings": "Erweitert",
       "channel_settings": "Kanal Einstellungen",
       "check_connection": "Prüfen",
+      "confirmations": "Bestätigungen",
       "enter_partner_pubkey": "Öffentlicher Schlüssel",
       "fee_manual_sat_per_byte": "Manuelle Gebühr",
       "fee_target_block": "Zielblock",
       "get_from_clipboard": "Zwischenablage",
       "local_funding_amount": "Local funding amount",
       "open_channel": "Öffnen",
+      "opening": "Öffne",
       "retry_connection_test": "Nochmal",
       "title": "Öffne Kanal"
     },

@@ -43,3 +43,5 @@ const sendManyRemoteBalance = Colors.amberAccent;
 const themeSendMany = "sendmany";
 const themeDark = "dark";
 const themeLight = "light";
+
+const double defaultHorizontalWhiteSpace = 4.0;

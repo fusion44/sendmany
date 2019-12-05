@@ -5,6 +5,14 @@
     "pin": "Enter your PIN"
   },
   "channels": {
+    "capacity": "Capacity",
+    "close": {
+      "closing": "Closing",
+      "force_closing": "Force Closing",
+      "limbo_balance": "Limbo",
+      "receive_amt": "Receiving",
+      "waiting_close": "Waiting Close"
+    },
     "id": "ID",
     "info": "Channels",
     "local": "Local",
@@ -12,12 +20,14 @@
       "advanced_settings": "Advanced",
       "channel_settings": "Channel Settings",
       "check_connection": "Check Connection",
+      "confirmations": "Confirmations",
       "enter_partner_pubkey": "Public Key",
       "fee_manual_sat_per_byte": "Manual Fee",
       "fee_target_block": "Target Block",
       "get_from_clipboard": "Clipboard",
       "local_funding_amount": "Local funding amount",
       "open_channel": "Open",
+      "opening": "Opening",
       "retry_connection_test": "Retry",
       "title": "Create Channel"
     },

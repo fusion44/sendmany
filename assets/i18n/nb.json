@@ -5,6 +5,14 @@
     "pin": "Skriv inn din PIN-kode"
   },
   "channels": {
+    "capacity": "Capacity",
+    "close": {
+      "closing": "Lukking",
+      "force_closing": "Tvinge lukking",
+      "limbo_balance": "Limbo",
+      "receive_amt": "Motta",
+      "waiting_close": "Venter i nærheten"
+    },
     "id": "ID",
     "info": "Channels",
     "local": "Lokal",
@@ -12,12 +20,14 @@
       "advanced_settings": "Advanced",
       "channel_settings": "Channel Settings",
       "check_connection": "Check",
+      "confirmations": "Bekreftelser",
       "enter_partner_pubkey": "Public Key",
       "fee_manual_sat_per_byte": "Manual Fee",
       "fee_target_block": "Target Block",
       "get_from_clipboard": "Clipboard",
       "local_funding_amount": "Local funding amount",
       "open_channel": "Open",
+      "opening": "Åpning",
       "retry_connection_test": "Retry",
       "title": "Create Channel"
     },
