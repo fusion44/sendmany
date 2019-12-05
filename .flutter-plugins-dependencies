@@ -1,0 +1,1 @@
+{"dependencyGraph":[{"name":"esys_flutter_share","dependencies":["path_provider"]},{"name":"flutter_secure_storage","dependencies":[]},{"name":"path_provider","dependencies":[]},{"name":"qr_code_scanner","dependencies":[]},{"name":"shared_preferences","dependencies":[]},{"name":"url_launcher","dependencies":[]}]}
