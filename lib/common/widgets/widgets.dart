@@ -13,6 +13,7 @@ export "money_value_view.dart";
 export "local_node_info_widget.dart";
 export "onchain_fee_select.dart";
 export 'peer_info_widget.dart';
+export 'peer_list_tile.dart';
 export "timeago_list_item.dart";
 export "time_ago_widget.dart";
 export "sendmany_card.dart";

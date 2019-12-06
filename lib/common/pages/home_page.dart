@@ -12,6 +12,8 @@ import 'package:sendmany/common/utils.dart';
 import 'package:sendmany/common/widgets/tabbar/tab_bar.dart';
 import 'package:sendmany/common/widgets/widgets.dart';
 import 'package:sendmany/node/node_overview_widget.dart';
+import 'package:sendmany/node/peers/bloc/bloc.dart';
+import 'package:sendmany/node/peers_list_widget.dart';
 import 'package:sendmany/preferences/bloc.dart';
 import 'package:sendmany/preferences/preferences_page.dart';
 import 'package:sendmany/wallet/balance/bloc/bloc.dart';
@@ -29,6 +31,7 @@ class _HomePageState extends State<HomePage>
   LnInfoBloc _lnInfoBloc;
   SubscribeChannelEventsBloc _subscribeChannelEventsBloc;
   ListChannelsBloc _listChannelsBloc;
+  ListPeersBloc _listPeersBloc;
   ListTxBloc _listTxBloc;
 
   @override
@@ -40,6 +43,8 @@ class _HomePageState extends State<HomePage>
     _subscribeChannelEventsBloc.add(SubscribeChannelEventsAppStart());
     _listChannelsBloc = ListChannelsBloc();
     _listChannelsBloc.add(LoadChannelList());
+    _listPeersBloc = ListPeersBloc();
+    _listPeersBloc.add(LoadPeersList());
     _listTxBloc = ListTxBloc(_lnInfoBloc);
     _listTxBloc.add(LoadTxEvent());
     _listTxBloc.add(ChangePollTxIntervalEvent(30));
@@ -52,6 +57,7 @@ class _HomePageState extends State<HomePage>
     _listTxBloc.close(); // contains a reference to _lnInfoBloc, dispose first
     _lnInfoBloc.close();
     _listChannelsBloc.close();
+    _listPeersBloc.close();
     _subscribeChannelEventsBloc.close();
     super.dispose();
   }
@@ -65,6 +71,7 @@ class _HomePageState extends State<HomePage>
         BlocProvider<SubscribeChannelEventsBloc>.value(
           value: _subscribeChannelEventsBloc,
         ),
+        BlocProvider<ListPeersBloc>.value(value: _listPeersBloc),
         BlocProvider<ListTxBloc>.value(value: _listTxBloc),
       ],
       child: BlocListener(
@@ -106,10 +113,13 @@ class _HomePageState extends State<HomePage>
         children: <Widget>[
           WalletPage(),
           ListChannelsPage(),
-          Column(
-            children: <Widget>[
-              NodeOverviewWidget(),
-            ],
+          SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                NodeOverviewWidget(),
+                PeerListWidget(),
+              ],
+            ),
           ),
           PreferencesPage(),
         ],
