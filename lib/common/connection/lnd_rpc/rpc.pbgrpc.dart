@@ -437,6 +437,12 @@ class LightningClient extends $grpc.Client {
           ($0.ChannelBackupSubscription value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $0.ChanBackupSnapshot.fromBuffer(value));
+  static final _$bakeMacaroon =
+      $grpc.ClientMethod<$0.BakeMacaroonRequest, $0.BakeMacaroonResponse>(
+          '/lnrpc.Lightning/BakeMacaroon',
+          ($0.BakeMacaroonRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $0.BakeMacaroonResponse.fromBuffer(value));
 
   LightningClient($grpc.ClientChannel channel, {$grpc.CallOptions options})
       : super(channel, options: options);
@@ -879,6 +885,15 @@ class LightningClient extends $grpc.Client {
         options: options);
     return $grpc.ResponseStream(call);
   }
+
+  $grpc.ResponseFuture<$0.BakeMacaroonResponse> bakeMacaroon(
+      $0.BakeMacaroonRequest request,
+      {$grpc.CallOptions options}) {
+    final call = $createCall(
+        _$bakeMacaroon, $async.Stream.fromIterable([request]),
+        options: options);
+    return $grpc.ResponseFuture(call);
+  }
 }
 
 abstract class LightningServiceBase extends $grpc.Service {
@@ -1306,6 +1321,15 @@ abstract class LightningServiceBase extends $grpc.Service {
         ($core.List<$core.int> value) =>
             $0.ChannelBackupSubscription.fromBuffer(value),
         ($0.ChanBackupSnapshot value) => value.writeToBuffer()));
+    $addMethod(
+        $grpc.ServiceMethod<$0.BakeMacaroonRequest, $0.BakeMacaroonResponse>(
+            'BakeMacaroon',
+            bakeMacaroon_Pre,
+            false,
+            false,
+            ($core.List<$core.int> value) =>
+                $0.BakeMacaroonRequest.fromBuffer(value),
+            ($0.BakeMacaroonResponse value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.WalletBalanceResponse> walletBalance_Pre(
@@ -1569,6 +1593,12 @@ abstract class LightningServiceBase extends $grpc.Service {
     yield* subscribeChannelBackups(call, await request);
   }
 
+  $async.Future<$0.BakeMacaroonResponse> bakeMacaroon_Pre(
+      $grpc.ServiceCall call,
+      $async.Future<$0.BakeMacaroonRequest> request) async {
+    return bakeMacaroon(call, await request);
+  }
+
   $async.Future<$0.WalletBalanceResponse> walletBalance(
       $grpc.ServiceCall call, $0.WalletBalanceRequest request);
   $async.Future<$0.ChannelBalanceResponse> channelBalance(
@@ -1671,4 +1701,6 @@ abstract class LightningServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.RestoreChanBackupRequest request);
   $async.Stream<$0.ChanBackupSnapshot> subscribeChannelBackups(
       $grpc.ServiceCall call, $0.ChannelBackupSubscription request);
+  $async.Future<$0.BakeMacaroonResponse> bakeMacaroon(
+      $grpc.ServiceCall call, $0.BakeMacaroonRequest request);
 }
