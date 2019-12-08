@@ -5,10 +5,7 @@ SendMany is an app to remotely connect to your LND node and use it from your pho
 The app is currently still under heavy development and is not recommended for general use. Use at your own risk.
 
 ## Features
-<img src="docs/screenshots/screenshot_1.png" width="200" /> 
-<img src="docs/screenshots/screenshot_2.png" width="200" /> 
-<img src="docs/screenshots/screenshot_3.png" width="200" /> 
-<img src="docs/screenshots/screenshot_4.png" width="200" />
+<img src="docs/screenshots/screenshot_1.png" width="200" /> <img src="docs/screenshots/screenshot_2.png" width="200" /> <img src="docs/screenshots/screenshot_3.png" width="200" /> <img src="docs/screenshots/screenshot_4.png" width="200" />
 
 * Show onchain and channel balances and transactions
 * Send and receive funds via onchain and LN transactions
