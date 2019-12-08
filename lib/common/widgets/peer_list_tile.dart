@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sendmany/chat/chat_page.dart';
 import 'package:sendmany/common/models/peer.dart';
 import 'package:sendmany/common/utils.dart';
 
@@ -18,6 +19,19 @@ class PeerListTile extends StatelessWidget {
       dense: true,
       title: Text(peer.nodeInfo.node.alias, overflow: TextOverflow.ellipsis),
       subtitle: Text(peer.pubKey, overflow: TextOverflow.ellipsis),
+      trailing: IconButton(
+        icon: Icon(Icons.chat),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return ChatPage(peer);
+              },
+            ),
+          );
+        },
+      ),
     );
   }
 }

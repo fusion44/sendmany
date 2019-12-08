@@ -83,6 +83,7 @@ class ConnectionManagerBloc
       ),
     );
 
+    LnConnectionDataProvider().channel = _clientChannel;
     LnConnectionDataProvider().macaroon = _currentActiveConnection.macaroon;
     LnConnectionDataProvider().lightningClient = _lightningClient;
   }
