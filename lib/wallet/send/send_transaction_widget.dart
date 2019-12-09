@@ -216,7 +216,7 @@ class _SendTransactionWidgetState extends State<SendTransactionWidget> {
           onPressed: onPressed,
         ),
       ],
-      CrossAxisAlignment.stretch,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
     );
   }
 

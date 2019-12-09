@@ -135,7 +135,7 @@ class _SendCoinsPageState extends State<SendCoinsPage> {
         _buildViewTxOnlineButton(onPressed),
         _buildBackToHomeButton(),
       ],
-      CrossAxisAlignment.stretch,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
     );
   }
 

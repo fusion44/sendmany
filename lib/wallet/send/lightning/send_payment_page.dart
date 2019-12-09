@@ -233,7 +233,7 @@ class _SendPaymentPageState extends State<SendPaymentPage> {
           ],
         ),
       ],
-      CrossAxisAlignment.stretch,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
     );
   }
 
