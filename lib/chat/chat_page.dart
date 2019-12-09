@@ -1,8 +1,11 @@
 import 'package:convert/convert.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:grpc/grpc.dart';
 import 'package:nanoid/nanoid.dart';
+import 'package:sendmany/common/blocs/get_remote_node_info/bloc.dart';
 import 'package:sendmany/common/connection/connection_manager/bloc.dart';
 import 'package:sendmany/common/connection/lnd_rpc/router.pbgrpc.dart'
     as router;
@@ -14,7 +17,7 @@ import 'item_not_found_exception.dart';
 import 'models/message_item.dart';
 
 class ChatPage extends StatefulWidget {
-  final Peer peer;
+  final String peer;
 
   ChatPage(this.peer);
 
@@ -23,6 +26,7 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
+  final GetRemoteNodeInfoBloc _getRemoteNodeInfoBloc = GetRemoteNodeInfoBloc();
   final GlobalKey<AnimatedListState> _listKey = GlobalKey();
   List<MessageItem> _messages = [];
   CallOptions _opts;
@@ -30,45 +34,72 @@ class _ChatPageState extends State<ChatPage> {
   Map<String, ResponseStream<router.PaymentStatus>> _sendStreams = {};
   ResponseStream<router.ChatMessage> _receiveStream;
   TextEditingController _controller = TextEditingController();
-  Peer p;
+  NodeInfo _nodeInfo;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("Chat")),
-      body: Padding(
-        padding: const EdgeInsets.only(bottom: 8.0),
-        child: Stack(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(bottom: 40.0),
-              child: Container(
-                color: sendManyBackgroundCard,
-                child: AnimatedList(
-                  key: _listKey,
-                  reverse: true,
-                  itemBuilder:
-                      (BuildContext context, int index, Animation animation) {
-                    return SizeTransition(
-                      sizeFactor: animation,
-                      child: _buildListTile(index),
-                    );
-                  },
+    return BlocBuilder(
+      bloc: _getRemoteNodeInfoBloc,
+      builder: (BuildContext context, GetRemoteNodeInfoState state) {
+        String title = 'Chat';
+        Widget body;
+
+        if (state is InitialGetRemoteNodeInfoState ||
+            state is RemoteNodeInfoLoadingState) {
+          body = Center(
+            child: SpinKitRipple(color: sendManyBlue200, size: 150),
+          );
+        } else if (state is RemoteNodeInfoLoadedState) {
+          _nodeInfo = state.nodeInfo;
+          title = 'Chat with ${_nodeInfo.node.alias}';
+
+          body = Stack(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(bottom: 40.0),
+                child: Container(
+                  color: sendManyBackgroundCard,
+                  child: AnimatedList(
+                    key: _listKey,
+                    reverse: true,
+                    itemBuilder:
+                        (BuildContext context, int index, Animation animation) {
+                      return SizeTransition(
+                        sizeFactor: animation,
+                        child: _buildListTile(index),
+                      );
+                    },
+                  ),
                 ),
               ),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: _buildChatInputBox(),
-            ),
-          ],
-        ),
-      ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: _buildChatInputBox(),
+              ),
+            ],
+          );
+        } else if (state is RemoteNodeInfoErrorState) {
+          body = Center(
+            child: Text("Error: ${state.error}, PubKey: ${state.pubKey}"),
+          );
+        } else {
+          body = Center(child: Text("Error: unknown state: $state"));
+        }
+
+        return Scaffold(
+          appBar: AppBar(title: Text(title, overflow: TextOverflow.fade)),
+          body: Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: body,
+          ),
+        );
+      },
     );
   }
 
   @override
   void dispose() {
+    _getRemoteNodeInfoBloc.close();
     _receiveStream.cancel();
     _controller.dispose();
     super.dispose();
@@ -76,7 +107,18 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   void initState() {
-    p = widget.peer;
+    _getRemoteNodeInfoBloc.add(GetRemoteNodeInfoEvent(widget.peer));
+    // _getRemoteNodeInfoBloc.listen((GetRemoteNodeInfoState state) {
+    //   if (state is RemoteNodeInfoLoadedState &&
+    //       state.nodeInfo.node.pubKey == widget.peer) {
+    //     print("in iniState closure");
+
+    //     setState(() {
+    //       _nodeInfo = state.nodeInfo;
+    //     });
+    //   }
+    // });
+
     _routerClient = router.RouterClient(LnConnectionDataProvider().channel);
     router.ReceiveChatMessagesRequest request =
         router.ReceiveChatMessagesRequest();
@@ -87,7 +129,7 @@ class _ChatPageState extends State<ChatPage> {
     _receiveStream = _routerClient.receiveChatMessages(request, options: _opts);
     _receiveStream.listen((router.ChatMessage m) {
       setState(() {
-        _addMessage(p.nodeInfo.node.alias, m.text);
+        _addMessage(_nodeInfo.node.alias, m.text);
       });
     });
 
@@ -174,7 +216,7 @@ class _ChatPageState extends State<ChatPage> {
     req.chatFree = false;
     req.amtMsat = Int64.parseInt('1000');
     req.finalCltvDelta = 40;
-    req.dest = hex.decode(p.pubKey);
+    req.dest = hex.decode(_nodeInfo.node.pubKey);
     req.feeLimitMsat = Int64.parseInt('10000');
     req.timeoutSeconds = 30;
 

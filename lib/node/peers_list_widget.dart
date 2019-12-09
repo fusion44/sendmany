@@ -7,6 +7,13 @@ import 'package:sendmany/common/widgets/widgets.dart';
 import 'package:sendmany/node/peers/bloc/bloc.dart';
 
 class PeerListWidget extends StatelessWidget {
+  final Function onSearchPeerPressed;
+
+  const PeerListWidget({
+    Key key,
+    @required this.onSearchPeerPressed,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder(
@@ -23,6 +30,8 @@ class PeerListWidget extends StatelessWidget {
           return SendManyCard(
             tr(context, 'node.peers'),
             peers,
+            actionButtonIcon: Icon(Icons.search),
+            onActionButtonPressed: onSearchPeerPressed,
           );
         } else {
           return SendManyCard(

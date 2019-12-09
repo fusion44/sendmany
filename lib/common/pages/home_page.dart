@@ -6,6 +6,7 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:sendmany/channels/list_channels/bloc/bloc.dart';
 import 'package:sendmany/channels/list_channels_page.dart';
 import 'package:sendmany/channels/subscribe_channel_events/bloc/bloc.dart';
+import 'package:sendmany/chat/chat_page.dart';
 import 'package:sendmany/common/connection/connection_manager/bloc.dart';
 import 'package:sendmany/common/constants.dart';
 import 'package:sendmany/common/utils.dart';
@@ -33,6 +34,8 @@ class _HomePageState extends State<HomePage>
   ListChannelsBloc _listChannelsBloc;
   ListPeersBloc _listPeersBloc;
   ListTxBloc _listTxBloc;
+
+  TextEditingController _searchPeerController = TextEditingController();
 
   @override
   void initState() {
@@ -117,7 +120,7 @@ class _HomePageState extends State<HomePage>
             child: Column(
               children: <Widget>[
                 NodeOverviewWidget(),
-                PeerListWidget(),
+                PeerListWidget(onSearchPeerPressed: _buildSearchDialog),
               ],
             ),
           ),
@@ -171,6 +174,38 @@ class _HomePageState extends State<HomePage>
         } else {
           return Container();
         }
+      },
+    );
+  }
+
+  void _buildSearchDialog() async {
+    _searchPeerController.clear();
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Enter pubkey to chat'),
+          content: TextField(
+            controller: _searchPeerController,
+            decoration: InputDecoration(labelText: 'pubkey'),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text("Go!"),
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return ChatPage(_searchPeerController.text);
+                    },
+                  ),
+                );
+              },
+            ),
+          ],
+        );
       },
     );
   }

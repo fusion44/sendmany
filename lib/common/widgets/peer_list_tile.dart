@@ -26,7 +26,7 @@ class PeerListTile extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) {
-                return ChatPage(peer);
+                return ChatPage(peer.pubKey);
               },
             ),
           );
