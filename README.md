@@ -28,6 +28,9 @@ SendMany is build using the [Flutter-Framework](https://flutter.dev/) and is cur
 If you find any issues please report it through the [Github issue tracker](https://github.com/fusion44/sendmany/issues).
 If you are interested in helping push the software forward you are very welcome to submit ideas to the issue tracker and help by opening pull requests.
 
+### Changelog
+See [CHANGELOG](CHANGELOG.md)
+
 ## Connect your node
 Easiest way is to connect via [LNDConnect](https://github.com/LN-Zap/lndconnect). Just scan the QR code and give your node a name.
 
@@ -39,4 +42,4 @@ Gitter: https://gitter.im/sendmany/community
 Lightning (testnet): 0295cebc390927dd91272492f49614fb8c4e66a93686e790352eb4a2e0ca62994f@172.81.181.43:9735
 
 ## LICENSE
-MIT - See the [LICENSE](https://github.com/fusion44/sendmany/blob/master/LICENSE) file.
+MIT - See the [LICENSE](LICENSE) file.
