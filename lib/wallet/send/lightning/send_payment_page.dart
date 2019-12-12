@@ -59,20 +59,20 @@ class _SendPaymentPageState extends State<SendPaymentPage> {
       bloc: _decodePayReqBloc,
       builder: (BuildContext context, DecodePayReqState state) {
         if (state is InitialDecodePayReqBlocState) {
-          return Text("Initial");
+          return Text('Initial');
         } else if (state is DecodingPayReqState) {
-          return LoadingWidget("wallet.invoices.decoding");
+          return LoadingWidget('wallet.invoices.decoding');
         } else if (state is DecodedPayReqState) {
           return _buildShowDecodedPayRequestUI(state, theme);
         } else if (state is DecodingPayReqErrorState) {
           return Column(
             children: <Widget>[
-              Text("Error: ${state.message}"),
+              Text('Error: ${state.message}'),
               _buildRetryButton()
             ],
           );
         } else {
-          return Center(child: Text("Unknown State: $state"));
+          return Center(child: Text('Unknown State: $state'));
         }
       },
     );
@@ -92,33 +92,33 @@ class _SendPaymentPageState extends State<SendPaymentPage> {
 
     return SingleChildScrollView(
       child: SendManyCard(
-        tr(context, "wallet.invoices.header"),
+        tr(context, 'wallet.invoices.header'),
         <Widget>[
           MoneyValueView(amount: state.req.numSatoshis, hero: true),
           Divider(),
           DataItem(
             text: state.req.description,
-            label: tr(context, "wallet.invoices.description"),
+            label: tr(context, 'wallet.invoices.description'),
           ),
           Divider(),
           DataItem(
             text: state.req.destination,
-            label: tr(context, "wallet.invoices.destination"),
+            label: tr(context, 'wallet.invoices.destination'),
           ),
           Divider(),
           TimeAgoListItem(
             reqDate,
-            tr(context, "wallet.invoices.creation_date"),
+            tr(context, 'wallet.invoices.creation_date'),
           ),
           Divider(),
           TimeAgoListItem(
             expDate,
-            tr(context, "wallet.invoices.expiration_date"),
+            tr(context, 'wallet.invoices.expiration_date'),
             color: expired ? Colors.redAccent : sendManyBackground,
           ),
           expired
               ? Text(
-                  tr(context, "wallet.invoices.is_expired"),
+                  tr(context, 'wallet.invoices.is_expired'),
                   style:
                       theme.textTheme.body1.copyWith(color: Colors.redAccent),
                 )
@@ -138,7 +138,7 @@ class _SendPaymentPageState extends State<SendPaymentPage> {
   RaisedButton _buildRetryButton() {
     return RaisedButton.icon(
       icon: Icon(Icons.sync),
-      label: TranslatedText("wallet.invoices.try_another_invoice"),
+      label: TranslatedText('wallet.invoices.try_another_invoice'),
       onPressed: () {
         Navigator.pop(context);
       },
@@ -148,7 +148,7 @@ class _SendPaymentPageState extends State<SendPaymentPage> {
   RaisedButton _buildSendButton(DecodedPayReqState state) {
     return RaisedButton.icon(
       icon: Icon(Icons.flash_on),
-      label: TranslatedText("wallet.invoices.pay"),
+      label: TranslatedText('wallet.invoices.pay'),
       onPressed: () {
         _sendPaymentBloc.add(SendPaymentViaInvoiceEvent(state.reqString));
         setState(() {
@@ -166,7 +166,7 @@ class _SendPaymentPageState extends State<SendPaymentPage> {
         if (state is SendPaymentResponseState) {
           return _buildPaymentSentWidget(state);
         } else {
-          return Center(child: LoadingWidget("wallet.payments.paying"));
+          return Center(child: LoadingWidget('wallet.payments.paying'));
         }
       },
     );
@@ -174,7 +174,7 @@ class _SendPaymentPageState extends State<SendPaymentPage> {
 
   Widget _buildPaymentSentWidget(SendPaymentResponseState state) {
     return SendManyCard(
-      tr(context, "wallet.invoices.invoice_paid"),
+      tr(context, 'wallet.invoices.invoice_paid'),
       <Widget>[
         MoneyValueView(
           amount: state.response.paymentRoute.totalAmtMsat ~/ 1000,
@@ -186,13 +186,13 @@ class _SendPaymentPageState extends State<SendPaymentPage> {
             Expanded(
               child: DataItem(
                 text: state.response.paymentRoute.hops.length.toString(),
-                label: tr(context, "wallet.payments.num_hops"),
+                label: tr(context, 'wallet.payments.num_hops'),
               ),
             ),
             Expanded(
               child: DataItemMoney(
                 amount: (state.response.paymentRoute.totalFeesMsat ~/ 1000),
-                label: tr(context, "wallet.payments.amnt_total_fees"),
+                label: tr(context, 'wallet.payments.amnt_total_fees'),
               ),
             ),
           ],
@@ -200,24 +200,24 @@ class _SendPaymentPageState extends State<SendPaymentPage> {
         Divider(),
         DataItem(
           text: _inflightPayment.description,
-          label: tr(context, "wallet.invoices.description"),
+          label: tr(context, 'wallet.invoices.description'),
         ),
         DataItem(
           text: _inflightPayment.destination,
-          label: tr(context, "wallet.invoices.destination"),
+          label: tr(context, 'wallet.invoices.destination'),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             RaisedButton(
-              child: TranslatedText("wallet.invoices.paid_go_back_to_home"),
+              child: TranslatedText('wallet.invoices.paid_go_back_to_home'),
               onPressed: () {
                 _navigateHome();
               },
             ),
             Container(width: 8.0),
             RaisedButton(
-              child: TranslatedText("wallet.invoices.pay_another"),
+              child: TranslatedText('wallet.invoices.pay_another'),
               onPressed: () {
                 // we've been launched from an URL
                 // the navigator won't be able to pop
@@ -240,7 +240,7 @@ class _SendPaymentPageState extends State<SendPaymentPage> {
   void _navigateHome() {
     Navigator.popUntil(
       context,
-      ModalRoute.withName("/home"),
+      ModalRoute.withName('/home'),
     );
   }
 }

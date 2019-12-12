@@ -30,9 +30,7 @@ class LnInfoBloc extends Bloc<LnInfoEvent, LnInfoState> {
       var infoRequest = GetInfoRequest();
       var walletBalanceRequest = WalletBalanceRequest();
       var channelBalanceRequest = ChannelBalanceRequest();
-      var opts = CallOptions(metadata: {
-        "macaroon": macaroon,
-      });
+      var opts = CallOptions(metadata: {'macaroon': macaroon});
 
       var responseList = await Future.wait([
         client.getInfo(infoRequest, options: opts),

@@ -20,7 +20,7 @@ class TransactionHashDataItem extends StatelessWidget {
         if (state is LnInfoStateLoadingFinished) {
           return _buildRow(context, state.infoResponse.chains[0].network);
         }
-        return _buildRow(context, "mainnet");
+        return _buildRow(context, 'mainnet');
       },
     );
   }
@@ -32,7 +32,7 @@ class TransactionHashDataItem extends StatelessWidget {
           child: DataItem(
             label: tr(
               context,
-              "wallet.transactions.hash",
+              'wallet.transactions.hash',
             ),
             text: txhash,
           ),
@@ -60,7 +60,7 @@ class TransactionHashDataItem extends StatelessWidget {
   }
 
   void _shareTxid() {
-    Share.text("", txhash, "text/plain");
+    Share.text('', txhash, 'text/plain');
   }
 
   Future<void> _showQRDialog(BuildContext context) async {
@@ -69,7 +69,7 @@ class TransactionHashDataItem extends StatelessWidget {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: TranslatedText("wallet.transactions.hash"),
+          title: TranslatedText('wallet.transactions.hash'),
           content: SingleChildScrollView(
             child: Container(
               width: 256,
@@ -82,7 +82,7 @@ class TransactionHashDataItem extends StatelessWidget {
           ),
           actions: <Widget>[
             FlatButton(
-              child: TranslatedText("wallet.transactions.close_txid_qr_dlg"),
+              child: TranslatedText('wallet.transactions.close_txid_qr_dlg'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -94,9 +94,9 @@ class TransactionHashDataItem extends StatelessWidget {
   }
 
   _launchURL(String network) async {
-    String url = "https://blockstream.info/tx/$txhash";
-    if (network == "testnet") {
-      url = "https://blockstream.info/$network/tx/$txhash";
+    String url = 'https://blockstream.info/tx/$txhash';
+    if (network == 'testnet') {
+      url = 'https://blockstream.info/$network/tx/$txhash';
     }
 
     if (await canLaunch(url)) {

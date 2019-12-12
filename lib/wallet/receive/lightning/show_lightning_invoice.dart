@@ -84,7 +84,7 @@ class _ShowLightningInvoiceState extends State<ShowLightningInvoice> {
                       children: <Widget>[
                         Container(height: 24.0),
                         TranslatedText(
-                          "wallet.receive_page.show_receive_invoice_ln",
+                          'wallet.receive_page.show_receive_invoice_ln',
                           style: theme.textTheme.title,
                         ),
                         Container(height: 8.0),
@@ -96,7 +96,7 @@ class _ShowLightningInvoiceState extends State<ShowLightningInvoice> {
                         ),
                         RaisedButton(
                           child: TranslatedText(
-                            "wallet.invoices.paid_go_back_to_home",
+                            'wallet.invoices.paid_go_back_to_home',
                           ),
                           onPressed: () {
                             if (Navigator.canPop(context)) {
@@ -115,7 +115,7 @@ class _ShowLightningInvoiceState extends State<ShowLightningInvoice> {
             ),
           );
         } else {
-          return Center(child: Text("Unknown state: $state"));
+          return Center(child: Text('Unknown state: $state'));
         }
       },
     );
@@ -127,9 +127,9 @@ class _ShowLightningInvoiceState extends State<ShowLightningInvoice> {
     childButtons.add(
       UnicornButton(
         hasLabel: true,
-        labelText: tr(context, "wallet.invoices.invoice_qr_image"),
+        labelText: tr(context, 'wallet.invoices.invoice_qr_image'),
         currentButton: FloatingActionButton(
-          heroTag: "qrImgBtn",
+          heroTag: 'qrImgBtn',
           mini: true,
           child: Icon(MdiIcons.qrcode),
           onPressed: () async {
@@ -143,10 +143,10 @@ class _ShowLightningInvoiceState extends State<ShowLightningInvoice> {
               format: ui.ImageByteFormat.png,
             );
             await Share.file(
-              tr(context, "wallet.invoices.invoice_qr_image"),
-              "invoice.png",
+              tr(context, 'wallet.invoices.invoice_qr_image'),
+              'invoice.png',
               data.buffer.asUint8List(),
-              "image/png",
+              'image/png',
               text: paymentRequest,
             );
           },
@@ -157,16 +157,16 @@ class _ShowLightningInvoiceState extends State<ShowLightningInvoice> {
     childButtons.add(
       UnicornButton(
         hasLabel: true,
-        labelText: tr(context, "wallet.invoices.lightning_uri"),
+        labelText: tr(context, 'wallet.invoices.lightning_uri'),
         currentButton: FloatingActionButton(
-          heroTag: "lnUrlBtn",
+          heroTag: 'lnUrlBtn',
           mini: true,
           child: Icon(Icons.link),
           onPressed: () {
             Share.text(
-              tr(context, "wallet.invoices.lightning_invoice"),
-              "lightning:$paymentRequest",
-              "text/plain",
+              tr(context, 'wallet.invoices.lightning_invoice'),
+              'lightning:$paymentRequest',
+              'text/plain',
             );
           },
         ),
@@ -176,16 +176,16 @@ class _ShowLightningInvoiceState extends State<ShowLightningInvoice> {
     childButtons.add(
       UnicornButton(
         hasLabel: true,
-        labelText: "Payment Request",
+        labelText: 'Payment Request',
         currentButton: FloatingActionButton(
-          heroTag: "payReqBtn",
+          heroTag: 'payReqBtn',
           mini: true,
           child: Icon(Icons.short_text),
           onPressed: () {
             Share.text(
-              tr(context, "wallet.invoices.lightning_invoice"),
+              tr(context, 'wallet.invoices.lightning_invoice'),
               paymentRequest,
-              "text/plain",
+              'text/plain',
             );
           },
         ),

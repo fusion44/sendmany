@@ -21,9 +21,7 @@ class WatchInvoicesBloc extends Bloc<WatchInvoicesEvent, WatchInvoicesState> {
     var client = LnConnectionDataProvider().lightningClient;
     var macaroon = LnConnectionDataProvider().macaroon;
 
-    var opts = CallOptions(metadata: {
-      "macaroon": macaroon,
-    });
+    var opts = CallOptions(metadata: {'macaroon': macaroon});
 
     _responseStream = client.subscribeInvoices(
       grpc.InvoiceSubscription(),

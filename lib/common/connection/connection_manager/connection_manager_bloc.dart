@@ -79,7 +79,7 @@ class ConnectionManagerBloc
     _lightningClient = LightningClient(
       _clientChannel,
       options: CallOptions(
-        metadata: {"macaroon": _currentActiveConnection.macaroon},
+        metadata: {'macaroon': _currentActiveConnection.macaroon},
       ),
     );
 

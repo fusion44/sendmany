@@ -14,7 +14,7 @@ class BalanceDisplayListItem extends StatelessWidget {
     Key key,
     @required this.theme,
     @required this.title,
-    this.subtitle = "",
+    this.subtitle = '',
     @required this.amount,
     this.color = sendManyBackground,
   }) : super(key: key);
@@ -37,7 +37,7 @@ class BalanceDisplayListItem extends StatelessWidget {
                 title,
                 style: theme.textTheme.subhead,
               ),
-              subtitle != ""
+              subtitle != ''
                   ? Text(
                       subtitle,
                       style: theme.textTheme.caption,

@@ -28,10 +28,7 @@ class SubscribeTransactionsBloc
   _subscribeTransactions() {
     var client = LnConnectionDataProvider().lightningClient;
     var macaroon = LnConnectionDataProvider().macaroon;
-
-    var opts = CallOptions(metadata: {
-      "macaroon": macaroon,
-    });
+    var opts = CallOptions(metadata: {'macaroon': macaroon});
 
     grpc.GetTransactionsRequest req = grpc.GetTransactionsRequest();
     ResponseStream stream = client.subscribeTransactions(

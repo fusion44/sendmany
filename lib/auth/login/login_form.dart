@@ -59,7 +59,7 @@ class _LoginFormState extends State<LoginForm> {
                 )
               : RaisedButton(
                   onPressed: _onLoginButtonPressed,
-                  child: TranslatedText("auth.check"),
+                  child: TranslatedText('auth.check'),
                 ),
         );
       },

@@ -21,11 +21,11 @@ class LndConnectionData {
 
   String toJSON() {
     return json.encode({
-      "name": name,
-      "certificate": certificate,
-      "macaroon": macaroon,
-      "host": host,
-      "port": port,
+      'name': name,
+      'certificate': certificate,
+      'macaroon': macaroon,
+      'host': host,
+      'port': port,
     });
   }
 
@@ -33,11 +33,11 @@ class LndConnectionData {
     var decoded = json.decode(data);
 
     return LndConnectionData(
-      name: decoded["name"],
-      certificate: decoded["certificate"].cast<int>(),
-      macaroon: decoded["macaroon"],
-      host: decoded["host"],
-      port: decoded["port"],
+      name: decoded['name'],
+      certificate: decoded['certificate'].cast<int>(),
+      macaroon: decoded['macaroon'],
+      host: decoded['host'],
+      port: decoded['port'],
     );
   }
 }

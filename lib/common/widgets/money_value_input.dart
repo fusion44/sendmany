@@ -17,7 +17,7 @@ class MoneyValueInput extends StatefulWidget {
     Key key,
     this.amount,
     this.amountChanged,
-    this.textHintId = "wallet.transactions.amount_in_sats",
+    this.textHintId = 'wallet.transactions.amount_in_sats',
   }) : super(key: key);
 
   @override
@@ -28,7 +28,7 @@ class _MoneyValueInputState extends State<MoneyValueInput> {
   @override
   Widget build(BuildContext context) {
     return FilledTextField(
-      text: widget.amount == null ? "" : widget.amount.toString(),
+      text: widget.amount == null ? '' : widget.amount.toString(),
       textAlign: TextAlign.center,
       textHint: tr(context, widget.textHintId),
       keyboardType: TextInputType.numberWithOptions(
@@ -50,7 +50,7 @@ class _MoneyValueInputState extends State<MoneyValueInput> {
           widget.amountChanged(null);
           return tr(
             context,
-            "wallet.transactions.amount_invalid",
+            'wallet.transactions.amount_invalid',
           );
         } else {
           widget.amountChanged(amount);

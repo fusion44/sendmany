@@ -11,7 +11,7 @@ class AddInvoiceEvent extends Equatable {
   AddInvoiceEvent(
     this.memo,
     this.value, [
-    this.fallbackOnchain = "",
+    this.fallbackOnchain = '',
   ]);
 
   @override

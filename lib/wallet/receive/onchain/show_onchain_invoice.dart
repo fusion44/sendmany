@@ -48,7 +48,7 @@ class _ShowOnchainInvoiceState extends State<ShowOnchainInvoice> {
                 children: <Widget>[
                   Container(height: 24.0),
                   TranslatedText(
-                    "wallet.receive_page.show_receive_invoice_onchain",
+                    'wallet.receive_page.show_receive_invoice_onchain',
                     style: theme.textTheme.title,
                   ),
                   Container(height: 8.0),
@@ -58,7 +58,7 @@ class _ShowOnchainInvoiceState extends State<ShowOnchainInvoice> {
                       Padding(
                         padding: const EdgeInsets.only(right: 6.0),
                         child: TranslatedText(
-                          "wallet.transactions.invoice_for_x_sats",
+                          'wallet.transactions.invoice_for_x_sats',
                         ),
                       ),
                       MoneyValueView(amount: widget.amount)
@@ -84,7 +84,7 @@ class _ShowOnchainInvoiceState extends State<ShowOnchainInvoice> {
                             Expanded(
                               child: DataItemMoney(
                                 amount: _tx.amount,
-                                label: tr(context, "amount"),
+                                label: tr(context, 'amount'),
                               ),
                             ),
                             Expanded(
@@ -92,7 +92,7 @@ class _ShowOnchainInvoiceState extends State<ShowOnchainInvoice> {
                                 text: _tx.numConfirmations.toString(),
                                 label: tr(
                                   context,
-                                  "wallet.transactions.confirmations",
+                                  'wallet.transactions.confirmations',
                                 ),
                               ),
                             ),
@@ -104,7 +104,7 @@ class _ShowOnchainInvoiceState extends State<ShowOnchainInvoice> {
                         ),
                   RaisedButton(
                     child: TranslatedText(
-                      "wallet.invoices.paid_go_back_to_home",
+                      'wallet.invoices.paid_go_back_to_home',
                     ),
                     onPressed: () {
                       if (Navigator.canPop(context)) {

@@ -48,12 +48,12 @@ class _SendManyAppState extends State<SendManyApp> {
     _connectionManagerBloc = ConnectionManagerBloc(_preferencesBloc);
 
     _routes = <String, WidgetBuilder>{
-      "/": (BuildContext context) => _buildSplashPage(),
-      "/onboarding": (BuildContext conctext) => _buildOnboardingPage(),
-      "/splash": (BuildContext context) => _buildSplashPage(),
-      "/setup": (BuildContext context) => Text("Setup"),
-      "/home": (BuildContext context) => HomePage(),
-      "/preferences": (BuildContext context) => PreferencesPage(),
+      '/': (BuildContext context) => _buildSplashPage(),
+      '/onboarding': (BuildContext context) => _buildOnboardingPage(),
+      '/splash': (BuildContext context) => _buildSplashPage(),
+      '/setup': (BuildContext context) => Text('Setup'),
+      '/home': (BuildContext context) => HomePage(),
+      '/preferences': (BuildContext context) => PreferencesPage(),
     };
 
     super.initState();
@@ -77,18 +77,18 @@ class _SendManyAppState extends State<SendManyApp> {
             if (prefsState is PreferencesLoadedState) {
               if (prefsState.onboardingFinished && connection) {
                 if (prefsState.pinActive) {
-                  _navigateToNamedRoute(context, "/login");
+                  _navigateToNamedRoute(context, '/login');
                 } else {
-                  _navigateToNamedRoute(context, "/home");
+                  _navigateToNamedRoute(context, '/home');
                 }
               } else if (prefsState.onboardingFinished && !connection) {
                 _buildSplashPage();
               } else {
-                _navigateToNamedRoute(context, "/onboarding");
+                _navigateToNamedRoute(context, '/onboarding');
               }
             }
             return Scaffold(
-              body: Center(child: Text("Splash")),
+              body: Center(child: Text('Splash')),
             );
           },
         );
@@ -151,9 +151,9 @@ class _SendManyAppState extends State<SendManyApp> {
       builder: (BuildContext context, PreferencesState prefsState) {
         return MaterialApp(
           theme: _getTheme(prefsState.theme),
-          initialRoute: "/splash",
+          initialRoute: '/splash',
           routes: _routes,
-          supportedLocales: const [Locale("en"), Locale("de"), Locale("nb")],
+          supportedLocales: const [Locale('en'), Locale('de'), Locale('nb')],
           localizationsDelegates: delegates,
           localeResolutionCallback: (deviceLocale, supportedLocales) {
             return _checkLocaleSetting(deviceLocale);
@@ -233,14 +233,14 @@ class _SendManyAppState extends State<SendManyApp> {
             fontWeight: FontWeight.w200,
           ),
         )
-        .apply(fontFamily: "RobotoCondensed");
+        .apply(fontFamily: 'RobotoCondensed');
   }
 
   _buildLocalizationDelegates() {
     var delegates = List<LocalizationsDelegate<dynamic>>();
     delegates.addAll([
       FlutterI18nDelegate(
-          useCountryCode: false, fallbackFile: "en", path: "assets/i18n"),
+          useCountryCode: false, fallbackFile: 'en', path: 'assets/i18n'),
       GlobalMaterialLocalizations.delegate,
       GlobalWidgetsLocalizations.delegate
     ]);

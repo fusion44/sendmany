@@ -24,7 +24,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
           Container(
             height: 96,
             width: 96,
-            child: Image.asset("assets/images/logo.png"),
+            child: Image.asset('assets/images/logo.png'),
           ),
           ..._buildBody(),
         ],
@@ -55,7 +55,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
         Padding(
           padding: const EdgeInsets.only(bottom: 32.0),
           child: TranslatedText(
-            "onboarding.first_header",
+            'onboarding.first_header',
             textAlign: TextAlign.center,
             style: theme.textTheme.display1,
           ),
@@ -63,11 +63,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
         Expanded(
           child: Padding(
             padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-            child: TranslatedText("onboarding.intro_text_long"),
+            child: TranslatedText('onboarding.intro_text_long'),
           ),
         ),
         TranslatedText(
-          "onboarding.question_how_to_input_conn_data",
+          'onboarding.question_how_to_input_conn_data',
           style: theme.textTheme.body2,
           textAlign: TextAlign.center,
         ),
@@ -76,7 +76,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
           children: <Widget>[
             RaisedButton(
               child: TranslatedText(
-                "onboarding.button_enter_conn_data_manual",
+                'onboarding.button_enter_conn_data_manual',
               ),
               onPressed: () {
                 _navigateToAddRemoteNode(scan: false);
@@ -86,7 +86,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
             Container(width: 16.0),
             RaisedButton(
               child: TranslatedText(
-                "onboarding.button_enter_conn_data_qr_scan",
+                'onboarding.button_enter_conn_data_qr_scan',
               ),
               onPressed: () {
                 _navigateToAddRemoteNode(scan: true);
@@ -102,7 +102,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
         Padding(
           padding: const EdgeInsets.only(bottom: 32.0),
           child: TranslatedText(
-            "onboarding.second_header",
+            'onboarding.second_header',
             textAlign: TextAlign.center,
             style: theme.textTheme.display1,
           ),
@@ -110,7 +110,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
         Expanded(
           child: Padding(
             padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-            child: TranslatedText("onboarding.pin_text_long"),
+            child: TranslatedText('onboarding.pin_text_long'),
           ),
         ),
         Row(
@@ -118,7 +118,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
           children: <Widget>[
             RaisedButton(
               child: TranslatedText(
-                "onboarding.button_skip_pin",
+                'onboarding.button_skip_pin',
               ),
               onPressed: () {
                 BlocProvider.of<PreferencesBloc>(context).add(
@@ -127,7 +127,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
                 Navigator.pushNamedAndRemoveUntil(
                   context,
-                  "/splash",
+                  '/splash',
                   (Route<dynamic> route) => false,
                 );
               },
@@ -136,7 +136,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
             Container(width: 16.0),
             RaisedButton(
               child: TranslatedText(
-                "onboarding.button_setup_pin",
+                'onboarding.button_setup_pin',
               ),
               onPressed: null, // TODO: implement me
               color: sendManyDarkGreen,
@@ -146,7 +146,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
         Container(height: 56.0),
       ];
     } else {
-      return [Text("Unknown step $_currentStep")];
+      return [Text('Unknown step $_currentStep')];
     }
   }
 }

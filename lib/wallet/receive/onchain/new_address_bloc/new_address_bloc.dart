@@ -18,10 +18,7 @@ class NewAddressBloc extends Bloc<NewAddressEvent, NewAddressState> {
     yield LoadingNewAddressState();
     var client = LnConnectionDataProvider().lightningClient;
     var macaroon = LnConnectionDataProvider().macaroon;
-
-    var opts = CallOptions(metadata: {
-      "macaroon": macaroon,
-    });
+    var opts = CallOptions(metadata: {'macaroon': macaroon});
 
     rpc.NewAddressRequest req = rpc.NewAddressRequest();
     if (event.addressType == AddressType.witnessPubkeyHash) {

@@ -28,10 +28,8 @@ class SendPaymentBloc extends Bloc<SendPaymentEvent, SendPaymentState> {
   void setupStream() {
     var client = LnConnectionDataProvider().lightningClient;
     var macaroon = LnConnectionDataProvider().macaroon;
+    var opts = CallOptions(metadata: {'macaroon': macaroon});
 
-    var opts = CallOptions(metadata: {
-      "macaroon": macaroon,
-    });
     _responseStream = client.sendPayment(
       _sendPaymentController.stream,
       options: opts,

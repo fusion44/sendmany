@@ -12,7 +12,7 @@ class SendManyLogoHeroWidget extends StatelessWidget {
     // Use a static version until the bug is fixed: https://github.com/2d-inc/support/issues/221
     return Hero(
       tag: heroTagSendManyLogo,
-      child: Image.asset("assets/logo_static.png"),
+      child: Image.asset('assets/logo_static.png'),
     );
   }
 }

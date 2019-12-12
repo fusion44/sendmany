@@ -55,10 +55,7 @@ class ListTxBloc extends Bloc<ListTxEvent, ListTxState> {
   void _setupTransactionSubscription() {
     var client = LnConnectionDataProvider().lightningClient;
     var macaroon = LnConnectionDataProvider().macaroon;
-
-    var opts = CallOptions(metadata: {
-      "macaroon": macaroon,
-    });
+    var opts = CallOptions(metadata: {'macaroon': macaroon});
 
     lngrpc.GetTransactionsRequest req = lngrpc.GetTransactionsRequest();
     _responseStream = client.subscribeTransactions(
@@ -93,10 +90,7 @@ class ListTxBloc extends Bloc<ListTxEvent, ListTxState> {
     _checkingBlockHeight = true;
     var client = LnConnectionDataProvider().lightningClient;
     var macaroon = LnConnectionDataProvider().macaroon;
-
-    var opts = CallOptions(metadata: {
-      "macaroon": macaroon,
-    });
+    var opts = CallOptions(metadata: {'macaroon': macaroon});
 
     lngrpc.GetInfoRequest req = lngrpc.GetInfoRequest();
     lngrpc.GetInfoResponse info = await client.getInfo(

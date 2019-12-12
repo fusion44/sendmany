@@ -27,7 +27,7 @@ class MoneyValueView extends StatelessWidget {
       builder: (BuildContext context, PreferencesState state) {
         final numberFormat = NumberFormat.currency(
           locale: state.language,
-          symbol: "シ",
+          symbol: 'シ',
           decimalDigits: 0,
         );
 
@@ -49,6 +49,6 @@ class MoneyValueView extends StatelessWidget {
           body1: base.body1.copyWith(fontSize: 16),
           headline: base.headline.copyWith(fontSize: 48),
         )
-        .apply(fontFamily: "Eczar");
+        .apply(fontFamily: 'Eczar');
   }
 }

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:qr_code_scanner/qr_scanner_overlay_shape.dart';
 
-const flash_on = "FLASH ON";
-const flash_off = "FLASH OFF";
-const front_camera = "FRONT CAMERA";
-const back_camera = "BACK CAMERA";
+const flash_on = 'FLASH ON';
+const flash_off = 'FLASH OFF';
+const front_camera = 'FRONT CAMERA';
+const back_camera = 'BACK CAMERA';
 
 // TODO: improve me
 class QRScannerWidget extends StatefulWidget {

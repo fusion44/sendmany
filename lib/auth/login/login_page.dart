@@ -21,12 +21,12 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    print("loginPage build");
+    print('loginPage build');
     return BlocListener(
       bloc: _loginBloc,
       listener: (BuildContext context, LoginState state) {
         if (state is LoginSuccess) {
-          Navigator.pushReplacementNamed(context, "/home");
+          Navigator.pushReplacementNamed(context, '/home');
         }
       },
       child: Scaffold(

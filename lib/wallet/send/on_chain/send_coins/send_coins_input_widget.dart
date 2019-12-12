@@ -43,11 +43,11 @@ class _SendCoinsInputWidgetState extends State<SendCoinsInputWidget> {
               children: <Widget>[
                 DataItem(
                   text: widget.address,
-                  label: tr(context, "wallet.transactions.destination_address"),
+                  label: tr(context, 'wallet.transactions.destination_address'),
                 ),
                 FilledTextField(
                   textAlign: TextAlign.center,
-                  textHint: tr(context, "wallet.transactions.amount_in_sats"),
+                  textHint: tr(context, 'wallet.transactions.amount_in_sats'),
                   keyboardType: TextInputType.numberWithOptions(
                     decimal: false,
                     signed: false,
@@ -69,7 +69,7 @@ class _SendCoinsInputWidgetState extends State<SendCoinsInputWidget> {
                       });
                       return tr(
                         context,
-                        "wallet.transactions.amount_invalid",
+                        'wallet.transactions.amount_invalid',
                       );
                     } else {
                       setState(() {
@@ -81,14 +81,14 @@ class _SendCoinsInputWidgetState extends State<SendCoinsInputWidget> {
                   },
                   actionButtonText: tr(
                     context,
-                    "wallet.transactions.send_maximum_short",
+                    'wallet.transactions.send_maximum_short',
                   ),
                   actionButtonClicked: () {
                     // TODO: implement setting send maximum satoshis.
                     // This requires knowing the fees beforehand.
                     showSnackbar(
                       context,
-                      "TODO: implement setting set max sats",
+                      'TODO: implement setting set max sats',
                     );
                   },
                 ),
@@ -104,13 +104,13 @@ class _SendCoinsInputWidgetState extends State<SendCoinsInputWidget> {
   Widget _buildSendButton() {
     if (widget.working) {
       return RaisedButton(
-        child: TranslatedText("wallet.transactions.working"),
+        child: TranslatedText('wallet.transactions.working'),
         onPressed: null,
       );
     } else {
       print(_amountValid);
       return RaisedButton(
-        child: TranslatedText("wallet.transactions.send"),
+        child: TranslatedText('wallet.transactions.send'),
         onPressed: _amountValid
             ? () {
                 if (_amountValid) {

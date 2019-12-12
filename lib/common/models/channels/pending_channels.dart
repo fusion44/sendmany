@@ -32,7 +32,7 @@ class PendingChannels {
   });
 
   PendingChannels operator +(PendingChannels other) {
-    if (other == null) throw ArgumentError.notNull("other");
+    if (other == null) throw ArgumentError.notNull('other');
 
     return PendingChannels(
       totalLimboBalance: this.totalLimboBalance + other.totalLimboBalance,
@@ -106,6 +106,6 @@ class PendingChannels {
 
   @override
   String toString() {
-    return "Limbo: $totalLimboBalance / Open: ${pendingOpenChannels.length} / Close: ${pendingClosingChannels.length} / FClose: ${pendingForceClosingChannels.length} / Wait: ${waitingCloseChannels.length}";
+    return 'Limbo: $totalLimboBalance / Open: ${pendingOpenChannels.length} / Close: ${pendingClosingChannels.length} / FClose: ${pendingForceClosingChannels.length} / Wait: ${waitingCloseChannels.length}';
   }
 }

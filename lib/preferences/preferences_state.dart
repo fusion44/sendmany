@@ -37,7 +37,7 @@ class PreferencesState extends Equatable {
 
 class PreferencesLoadingState extends PreferencesState {
   PreferencesLoadingState({
-    String language = "EN",
+    String language = 'EN',
     String theme = themeSendMany,
     bool onboardingFinished = false,
     int numNodes = 0,
