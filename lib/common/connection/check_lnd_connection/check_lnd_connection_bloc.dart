@@ -40,7 +40,7 @@ class CheckLndConnectionBloc
     );
 
     CallOptions opts = CallOptions(
-      metadata: {"macaroon": event.data.macaroon},
+      metadata: {'macaroon': event.data.macaroon},
     );
 
     _clientChannel = ClientChannel(

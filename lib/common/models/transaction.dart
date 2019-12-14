@@ -34,7 +34,7 @@ class TxLightningInvoice extends Tx {
 class TxOnchain extends Tx {
   final OnchainTransaction tx;
 
-  TxOnchain(this.tx, {memo: ""})
+  TxOnchain(this.tx, {memo: ''})
       : super(
           memo,
           tx.amount,

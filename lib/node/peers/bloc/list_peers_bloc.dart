@@ -26,12 +26,9 @@ class ListPeersBloc extends Bloc<ListPeersEvent, ListPeersState> {
       try {
         grpc.ListPeersResponse resp = await client.listPeers(listPeersReq);
 
-        List<ResponseFuture<grpc.NodeInfo>> nodeInfoRequests = [];
+        List<Future<LoadedPeer>> nodeInfoRequests = [];
         resp.peers.forEach((grpc.Peer p) {
-          grpc.NodeInfoRequest nodeInfoReq = grpc.NodeInfoRequest();
-          nodeInfoReq.pubKey = p.pubKey;
-          nodeInfoReq.includeChannels = false;
-          nodeInfoRequests.add(client.getNodeInfo(nodeInfoReq));
+          nodeInfoRequests.add(_getNodeInfo(Peer.fromGRPC(p)));
         });
 
         var responseList = await Future.wait(
@@ -40,23 +37,50 @@ class ListPeersBloc extends Bloc<ListPeersEvent, ListPeersState> {
           print(error);
         });
 
-        List<Peer> peers = [];
+        // Make sure that the peers with errors always appear last
+        List<LoadedPeer> errorPeers = [];
+        List<LoadedPeer> peers = responseList.toList();
+        peers.removeWhere((LoadedPeer p) {
+          if (p.error != null) {
+            errorPeers.add(p);
+            return true;
+          }
+          return false;
+        });
 
-        for (var i = 0; i < resp.peers.length; i++) {
-          peers.add(
-            Peer.fromGRPC(
-              resp.peers[i],
-              NodeInfo.fromGRPC(responseList[i]),
-            ),
-          );
+        peers.sort((LoadedPeer p1, LoadedPeer p2) {
+          return p1.nodeInfo.node.alias.compareTo(p2.nodeInfo.node.alias);
+        });
+
+        yield PeersLoadedState([...peers, ...errorPeers]);
+      } catch (e) {
+        if (e is GrpcError) {
+          print(e.message);
+          yield PeersLoadingErrorState(e.message);
+        } else {
+          print(e);
+          yield PeersLoadingErrorState(e.toString());
         }
-
-        yield PeersLoadedState(peers);
-      } on GrpcError catch (e) {
-        print(e);
-        yield PeersLoadingErrorState(e.message);
-        return;
       }
+    }
+  }
+
+  Future<LoadedPeer> _getNodeInfo(Peer peer) async {
+    // unfortunately LND doesn't supply the alias, color etc with the peer
+    // so we have to make an extra roundtrip and load the NodeInfo object
+    var client = LnConnectionDataProvider().lightningClient;
+    grpc.NodeInfoRequest nodeInfoReq = grpc.NodeInfoRequest();
+    nodeInfoReq.pubKey = peer.pubKey;
+    nodeInfoReq.includeChannels = false;
+    try {
+      grpc.NodeInfo info = await client.getNodeInfo(nodeInfoReq);
+      return LoadedPeer(peer, nodeInfo: NodeInfo.fromGRPC(info));
+    } on GrpcError catch (e) {
+      // We must catch errors here. For example mainnet nodes can connect to testnet
+      // nodes and vice versa. Of course, a NodeInfoRequest() will not be able find
+      // any info for that particular pubkey if it's on another network. Possible
+      // workaround would be to query a service like www.1ml.com
+      return LoadedPeer(peer, error: PeerLoadError(e.toString(), peer.pubKey));
     }
   }
 }

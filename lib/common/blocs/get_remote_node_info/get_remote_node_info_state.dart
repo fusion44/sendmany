@@ -32,7 +32,7 @@ class RemoteNodeInfoErrorState extends GetRemoteNodeInfoState {
   final String error;
   final String pubKey;
 
-  RemoteNodeInfoErrorState(this.error, {this.pubKey = ""});
+  RemoteNodeInfoErrorState(this.error, {this.pubKey = ''});
 
   @override
   List<Object> get props => [error, pubKey];

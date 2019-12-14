@@ -10,21 +10,21 @@ void main() {
     String len13 = 'aaaaaaaaaaaaa';
 
     String result = fillString(len1); // Default values
-    expect(result, "a===");
+    expect(result, 'a===');
 
     result = fillString(len2); // Default values
-    expect(result, "aa==");
+    expect(result, 'aa==');
 
     result = fillString(len3); // Default values
-    expect(result, "aaa=");
+    expect(result, 'aaa=');
 
     result = fillString(len4); // Default values
-    expect(result, "aaaa");
+    expect(result, 'aaaa');
 
     result = fillString(len13); // Default values
-    expect(result, "aaaaaaaaaaaaa===");
+    expect(result, 'aaaaaaaaaaaaa===');
 
     result = fillString(len2, powerOf: 6, fillerChar: '!');
-    expect(result, "aa!!!!");
+    expect(result, 'aa!!!!');
   });
 }

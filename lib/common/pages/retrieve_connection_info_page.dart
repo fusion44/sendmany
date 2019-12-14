@@ -26,16 +26,16 @@ class RetrieveConnectionInfoPage extends StatefulWidget {
 
 class _RetrieveConnectionInfoPageState
     extends State<RetrieveConnectionInfoPage> {
-  String _name = "";
+  String _name = '';
   bool _nameValid = false;
 
-  String _cert = "";
+  String _cert = '';
   bool _certValid = false;
 
-  String _macaroon = "";
+  String _macaroon = '';
   bool _macaroonValid = false;
 
-  String _host = "";
+  String _host = '';
   bool _hostValid = false;
 
   int _port = 10009;
@@ -63,13 +63,13 @@ class _RetrieveConnectionInfoPageState
   QRScannerWidget _buildQrScannerWidget() {
     return QRScannerWidget(
       onStringFound: (String code) {
-        if (_doScan && code.startsWith("lndconnect")) {
+        if (_doScan && code.startsWith('lndconnect')) {
           _doScan = false;
           Uri uri = Uri.parse(code);
 
           setState(() {
-            _cert = uri.queryParameters["cert"];
-            _macaroon = uri.queryParameters["macaroon"];
+            _cert = uri.queryParameters['cert'];
+            _macaroon = uri.queryParameters['macaroon'];
             _host = uri.host;
             _port = uri.port;
           });
@@ -87,14 +87,14 @@ class _RetrieveConnectionInfoPageState
             Container(height: 40),
             FilledTextField(
               text: _name,
-              textHint: tr(context, "onboarding.node_name"),
+              textHint: tr(context, 'onboarding.node_name'),
               validator: (String text) {
                 String ret;
                 if (text.length > 1) {
                   _nameValid = true;
                 } else {
                   _nameValid = false;
-                  ret = "Invalid";
+                  ret = 'Invalid';
                 }
                 _checkActionButtonEnabled();
                 return ret;
@@ -104,7 +104,7 @@ class _RetrieveConnectionInfoPageState
             Container(height: 8.0),
             FilledTextField(
               text: _cert,
-              textHint: tr(context, "onboarding.certificate"),
+              textHint: tr(context, 'onboarding.certificate'),
               minLines: 3,
               maxLines: 6,
               textInputAction: TextInputAction.newline,
@@ -114,7 +114,7 @@ class _RetrieveConnectionInfoPageState
                   _certValid = true;
                 } else {
                   _certValid = false;
-                  ret = "Invalid";
+                  ret = 'Invalid';
                 }
                 _checkActionButtonEnabled();
                 return ret;
@@ -124,7 +124,7 @@ class _RetrieveConnectionInfoPageState
             Container(height: 8.0),
             FilledTextField(
               text: _macaroon,
-              textHint: tr(context, "onboarding.macaroon"),
+              textHint: tr(context, 'onboarding.macaroon'),
               minLines: 3,
               maxLines: 6,
               textInputAction: TextInputAction.newline,
@@ -134,7 +134,7 @@ class _RetrieveConnectionInfoPageState
                   _macaroonValid = true;
                 } else {
                   _macaroonValid = false;
-                  ret = "Invalid";
+                  ret = 'Invalid';
                 }
                 _checkActionButtonEnabled();
                 return ret;
@@ -162,7 +162,7 @@ class _RetrieveConnectionInfoPageState
             width: size,
             child: FilledTextField(
               text: _host,
-              textHint: tr(context, "onboarding.host"),
+              textHint: tr(context, 'onboarding.host'),
               keyboardType: TextInputType.number,
               validator: (String host) {
                 Validator v = Validator();
@@ -174,7 +174,7 @@ class _RetrieveConnectionInfoPageState
                   _hostValid = true;
                 } else {
                   _hostValid = false;
-                  ret = "Invalid";
+                  ret = 'Invalid';
                 }
                 _checkActionButtonEnabled();
                 return ret;
@@ -189,7 +189,7 @@ class _RetrieveConnectionInfoPageState
             width: portWidth,
             child: FilledTextField(
               text: _port.toString(),
-              textHint: tr(context, "onboarding.port"),
+              textHint: tr(context, 'onboarding.port'),
               keyboardType: TextInputType.number,
               validator: (String text) {
                 String ret;
@@ -197,7 +197,7 @@ class _RetrieveConnectionInfoPageState
                   _portValid = true;
                 } else {
                   _portValid = false;
-                  ret = "Invalid";
+                  ret = 'Invalid';
                 }
                 _checkActionButtonEnabled();
                 return ret;
@@ -215,7 +215,7 @@ class _RetrieveConnectionInfoPageState
       return Padding(
         padding: const EdgeInsets.only(top: 8.0),
         child: FlatButton(
-          child: TranslatedText("onboarding.saving_connection_data"),
+          child: TranslatedText('onboarding.saving_connection_data'),
           onPressed: null,
         ),
       );
@@ -227,7 +227,7 @@ class _RetrieveConnectionInfoPageState
       return Padding(
         padding: const EdgeInsets.only(top: 8.0),
         child: FlatButton(
-          child: TranslatedText("onboarding.finish_connection_data_input"),
+          child: TranslatedText('onboarding.finish_connection_data_input'),
           onPressed: onPressed,
         ),
       );
@@ -240,7 +240,7 @@ class _RetrieveConnectionInfoPageState
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
       child: FlatButton(
-        child: TranslatedText("onboarding.checking_connection"),
+        child: TranslatedText('onboarding.checking_connection'),
         onPressed: _allValid ? onPressed : null,
       ),
     );
@@ -320,25 +320,25 @@ class _RetrieveConnectionInfoPageState
   }
 
   List<int> _prepareCertificate(String certificate) {
-    String cert = certificate.replaceAll(r"-", "+");
-    cert = cert.replaceAll(r"_", "/");
+    String cert = certificate.replaceAll(r'-', '+');
+    cert = cert.replaceAll(r'_', '/');
 
     // The certificate must be power of 4 in length
-    // Base64 defined "=" as the filler character
+    // Base64 defined '=' as the filler character
     cert = fillString(cert);
 
-    cert = """
+    cert = '''
 -----BEGIN CERTIFICATE-----
 $cert
 -----END CERTIFICATE-----
-""";
+''';
 
     return utf8.encode(cert);
   }
 
   String _prepareMacaroon(String macaroon) {
-    String m = macaroon.replaceAll(r"-", "+");
-    m = m.replaceAll(r"_", "/");
+    String m = macaroon.replaceAll(r'-', '+');
+    m = m.replaceAll(r'_', '/');
     m = hex.encode(base64.decode(m));
     return m;
   }

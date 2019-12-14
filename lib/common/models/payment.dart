@@ -1,12 +1,12 @@
-// Represents a payment using the lighnting network
+// Represents a payment using the lightning network
 import 'package:fixnum/fixnum.dart';
 import 'package:sendmany/common/connection/lnd_rpc/lnd_rpc.dart' as lngrpc;
 import 'package:sendmany/common/utils.dart';
 
-enum PaymentStatus { unkown, inFlight, succeeded, failed }
+enum PaymentStatus { unknown, inFlight, succeeded, failed }
 
 class Payment {
-  // it is encoded into the paymentRequest and extractet here as a convenience
+  // it is encoded into the paymentRequest and extracted here as a convenience
   final String memo;
   final String paymentHash;
   final DateTime creationDate;
@@ -37,7 +37,7 @@ class Payment {
     PaymentStatus status;
     switch (grpcPayment.status) {
       case lngrpc.Payment_PaymentStatus.UNKNOWN:
-        status = PaymentStatus.unkown;
+        status = PaymentStatus.unknown;
         break;
       case lngrpc.Payment_PaymentStatus.IN_FLIGHT:
         status = PaymentStatus.inFlight;
@@ -49,14 +49,14 @@ class Payment {
         status = PaymentStatus.failed;
         break;
       default:
-        status = PaymentStatus.unkown;
+        status = PaymentStatus.unknown;
         print(
-          "Unknown lngrpc.Payment_PaymentStatus state ${grpcPayment.status}",
+          'Unknown lngrpc.Payment_PaymentStatus state ${grpcPayment.status}',
         );
     }
 
     return Payment(
-      getMemoFromPaymentRequst(grpcPayment.paymentRequest),
+      getMemoFromPaymentRequest(grpcPayment.paymentRequest),
       grpcPayment.paymentHash,
       DateTime.fromMillisecondsSinceEpoch(
         grpcPayment.creationDate.toInt() * 1000 ?? 0,

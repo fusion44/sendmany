@@ -68,7 +68,7 @@ class _SendTransactionWidgetState extends State<SendTransactionWidget> {
                     : null,
               );
             } else {
-              return Center(child: Text("Unknown state $sendCoinsState"));
+              return Center(child: Text('Unknown state $sendCoinsState'));
             }
           },
         );
@@ -82,7 +82,7 @@ class _SendTransactionWidgetState extends State<SendTransactionWidget> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: TranslatedText("wallet.transactions.transaction_id"),
+          title: TranslatedText('wallet.transactions.transaction_id'),
           content: SingleChildScrollView(
             child: Container(
               width: 256,
@@ -95,7 +95,7 @@ class _SendTransactionWidgetState extends State<SendTransactionWidget> {
           ),
           actions: <Widget>[
             FlatButton(
-              child: TranslatedText("wallet.transactions.close_txid_qr_dlg"),
+              child: TranslatedText('wallet.transactions.close_txid_qr_dlg'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -107,7 +107,7 @@ class _SendTransactionWidgetState extends State<SendTransactionWidget> {
   }
 
   _launchURL(String network, String txid) async {
-    String url = "https://blockstream.info/$network/tx/$txid";
+    String url = 'https://blockstream.info/$network/tx/$txid';
     if (await canLaunch(url)) {
       await launch(url);
     } else {
@@ -131,18 +131,18 @@ class _SendTransactionWidgetState extends State<SendTransactionWidget> {
                         controller: _addressController,
                         decoration: InputDecoration(
                           labelText: tr(context,
-                              "wallet.transactions.insert_address_here"),
+                              'wallet.transactions.insert_address_here'),
                         ),
                         validator: (text) {
                           String reqString = text;
-                          // TODO: Check validiy of the adress for current
+                          // TODO: Check validity of the address for current
                           // network (Mainnet, Testnet)
-                          if (reqString != "" && reqString != null) {
+                          if (reqString != '' && reqString != null) {
                             return null;
                           }
 
                           return tr(
-                              context, "wallet.transactions.address_invalid");
+                              context, 'wallet.transactions.address_invalid');
                         },
                       ),
                       TextFormField(
@@ -154,7 +154,7 @@ class _SendTransactionWidgetState extends State<SendTransactionWidget> {
                 ),
               ),
               RaisedButton(
-                child: TranslatedText("wallet.transactions.send"),
+                child: TranslatedText('wallet.transactions.send'),
                 onPressed: () {
                   String address = _addressController.value.text;
                   String amount = _amountController.value.text;
@@ -181,7 +181,7 @@ class _SendTransactionWidgetState extends State<SendTransactionWidget> {
 
   Widget _buildTransactionSubmittedUI(String txid, Function onPressed) {
     return SendManyCard(
-      tr(context, "wallet.transactions.submitted_to_mempool"),
+      tr(context, 'wallet.transactions.submitted_to_mempool'),
       [
         Row(
           children: <Widget>[
@@ -189,7 +189,7 @@ class _SendTransactionWidgetState extends State<SendTransactionWidget> {
               child: DataItem(
                 label: tr(
                   context,
-                  "wallet.transactions.transaction_id",
+                  'wallet.transactions.transaction_id',
                 ),
                 text: txid,
               ),
@@ -211,7 +211,7 @@ class _SendTransactionWidgetState extends State<SendTransactionWidget> {
         _buildRetryButton(),
         RaisedButton(
           child: TranslatedText(
-            "wallet.transactions.view_on_blockstream_info",
+            'wallet.transactions.view_on_blockstream_info',
           ),
           onPressed: onPressed,
         ),
@@ -221,18 +221,18 @@ class _SendTransactionWidgetState extends State<SendTransactionWidget> {
   }
 
   void _shareTxid(String txid) {
-    Share.text("", txid, 'text/plain');
+    Share.text('', txid, 'text/plain');
   }
 
   Widget _buildRetryButton() {
     return RaisedButton.icon(
       icon: Icon(Icons.camera_alt),
-      label: TranslatedText("wallet.transactions.next_transaction_button"),
+      label: TranslatedText('wallet.transactions.next_transaction_button'),
       color: sendManyConfirmedBalance,
       onPressed: () {
         _showPasteView = false;
         widget.showFAB(true);
-        _amountController.text = "";
+        _amountController.text = '';
         _sendCoinsBloc.add(ResetSendCoinsEvent());
       },
     );

@@ -6,7 +6,6 @@ import 'routing_policy.dart';
 class ChannelEdge {
   final Int64 channelId;
   final String chanPoint;
-  final int lastUpdate;
   final String node1Pub;
   final String node2Pub;
   final Int64 capacity;
@@ -16,7 +15,6 @@ class ChannelEdge {
   ChannelEdge({
     this.channelId,
     this.chanPoint,
-    this.lastUpdate,
     this.node1Pub,
     this.node2Pub,
     this.capacity,
@@ -28,7 +26,6 @@ class ChannelEdge {
     return ChannelEdge(
       channelId: e.channelId,
       chanPoint: e.chanPoint,
-      lastUpdate: e.lastUpdate,
       node1Pub: e.node1Pub,
       node2Pub: e.node2Pub,
       capacity: e.capacity,

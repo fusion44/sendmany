@@ -13,7 +13,7 @@ enum CheckConnectionResultReason {
   // Connection successful but user pressed Cancel
   userNegative,
 
-  // Connection could not be established with given credentions.
+  // Connection could not be established with given credentials.
   // See error message for further details.
   connectionError,
 }
@@ -53,9 +53,9 @@ class _CheckLNDConnectionPageState extends State<CheckLNDConnectionPage> {
         bloc: _bloc,
         builder: (BuildContext context, CheckLNDConnectionState state) {
           if (state is InitialCheckLNDConnectionState) {
-            return Center(child: TranslatedText("onboarding.initializing"));
+            return Center(child: TranslatedText('onboarding.initializing'));
           } else if (state is CheckingLNDConnectionState) {
-            return Center(child: TranslatedText("onboarding.checking"));
+            return Center(child: TranslatedText('onboarding.checking'));
           } else if (state is CheckLNDConnectionSuccessState) {
             return Padding(
               padding: const EdgeInsets.all(8.0),
@@ -70,7 +70,7 @@ class _CheckLNDConnectionPageState extends State<CheckLNDConnectionPage> {
                 children: <Widget>[
                   Container(height: 64),
                   TranslatedText(
-                    "onboarding.check_connection_error",
+                    'onboarding.check_connection_error',
                     style: theme.textTheme.display1,
                     textAlign: TextAlign.center,
                   ),
@@ -87,7 +87,7 @@ class _CheckLNDConnectionPageState extends State<CheckLNDConnectionPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       RaisedButton(
-                        child: Text("onboarding.retry_connection_test"),
+                        child: Text('onboarding.retry_connection_test'),
                         onPressed: () {
                           Navigator.pop(
                             context,
@@ -104,7 +104,7 @@ class _CheckLNDConnectionPageState extends State<CheckLNDConnectionPage> {
               ),
             );
           } else {
-            return Center(child: Text("Unknown State $state"));
+            return Center(child: Text('Unknown State $state'));
           }
         },
       ),
@@ -122,7 +122,7 @@ class _CheckLNDConnectionPageState extends State<CheckLNDConnectionPage> {
         children: <Widget>[
           Container(height: 64),
           TranslatedText(
-            "onboarding.check_connection_success",
+            'onboarding.check_connection_success',
             style: theme.textTheme.display1,
             textAlign: TextAlign.center,
           ),
@@ -130,7 +130,7 @@ class _CheckLNDConnectionPageState extends State<CheckLNDConnectionPage> {
             padding: const EdgeInsets.only(bottom: 8.0),
             child: LocalNodeInfoWidget(
               state.info,
-              tr(context, "onboarding.check_info"),
+              tr(context, 'onboarding.check_info'),
               showShareButton: false,
             ),
           ),
@@ -138,7 +138,7 @@ class _CheckLNDConnectionPageState extends State<CheckLNDConnectionPage> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               FlatButton(
-                child: TranslatedText("onboarding.cancel_add_node"),
+                child: TranslatedText('onboarding.cancel_add_node'),
                 onPressed: () {
                   Navigator.pop(
                     context,
@@ -150,7 +150,7 @@ class _CheckLNDConnectionPageState extends State<CheckLNDConnectionPage> {
                 },
               ),
               RaisedButton(
-                child: TranslatedText("onboarding.add_node"),
+                child: TranslatedText('onboarding.add_node'),
                 onPressed: () {
                   Navigator.pop(
                     context,
@@ -169,8 +169,8 @@ class _CheckLNDConnectionPageState extends State<CheckLNDConnectionPage> {
   }
 
   String _getErrorMessage(String msg) {
-    if (msg.contains("timed out")) {
-      return tr(context, "onboarding.error_node_unreachable");
+    if (msg.contains('timed out')) {
+      return tr(context, 'onboarding.error_node_unreachable');
     }
     return msg;
   }

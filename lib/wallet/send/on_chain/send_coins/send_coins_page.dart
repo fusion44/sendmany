@@ -47,7 +47,7 @@ class _SendCoinsPageState extends State<SendCoinsPage> {
             icon: new Icon(Icons.arrow_back),
             onPressed: () => Navigator.of(context).pop(_transactionSent),
           ),
-          title: TranslatedText("wallet.transactions.send_coins_page_title"),
+          title: TranslatedText('wallet.transactions.send_coins_page_title'),
         ),
         body: _buildInnerUI(infoBloc),
       ),
@@ -93,7 +93,7 @@ class _SendCoinsPageState extends State<SendCoinsPage> {
                       : null,
                 );
               } else {
-                return Center(child: Text("Unknown state $sendCoinsState"));
+                return Center(child: Text('Unknown state $sendCoinsState'));
               }
             },
           ),
@@ -104,7 +104,7 @@ class _SendCoinsPageState extends State<SendCoinsPage> {
 
   Widget _buildTransactionSubmittedUI(String txid, Function onPressed) {
     return SendManyCard(
-      tr(context, "wallet.transactions.submitted_to_mempool"),
+      tr(context, 'wallet.transactions.submitted_to_mempool'),
       [
         Row(
           children: <Widget>[
@@ -112,7 +112,7 @@ class _SendCoinsPageState extends State<SendCoinsPage> {
               child: DataItem(
                 label: tr(
                   context,
-                  "wallet.transactions.transaction_id",
+                  'wallet.transactions.transaction_id',
                 ),
                 text: txid,
               ),
@@ -143,7 +143,7 @@ class _SendCoinsPageState extends State<SendCoinsPage> {
     return RaisedButton(
       color: sendManyDarkGreen,
       child: TranslatedText(
-        "wallet.transactions.view_on_blockstream_info",
+        'wallet.transactions.view_on_blockstream_info',
       ),
       onPressed: onPressed,
     );
@@ -152,7 +152,7 @@ class _SendCoinsPageState extends State<SendCoinsPage> {
   Widget _buildNextTxButton() {
     return RaisedButton.icon(
       icon: Icon(Icons.camera_alt),
-      label: TranslatedText("wallet.transactions.next_transaction_button"),
+      label: TranslatedText('wallet.transactions.next_transaction_button'),
       color: sendManyConfirmedBalance,
       onPressed: () {
         Navigator.popUntil(
@@ -165,11 +165,11 @@ class _SendCoinsPageState extends State<SendCoinsPage> {
 
   _buildBackToHomeButton() {
     return RaisedButton(
-      child: TranslatedText("wallet.transactions.tx_sent_go_back_to_home"),
+      child: TranslatedText('wallet.transactions.tx_sent_go_back_to_home'),
       onPressed: () {
         Navigator.popUntil(
           context,
-          ModalRoute.withName("/home"),
+          ModalRoute.withName('/home'),
         );
       },
     );
@@ -185,11 +185,11 @@ class _SendCoinsPageState extends State<SendCoinsPage> {
   }
 
   void _shareTxid(String txid) {
-    Share.text("", txid, "text/plain");
+    Share.text('', txid, 'text/plain');
   }
 
   _launchURL(String network, String txid) async {
-    String url = "https://blockstream.info/$network/tx/$txid";
+    String url = 'https://blockstream.info/$network/tx/$txid';
     if (await canLaunch(url)) {
       await launch(url);
     } else {
@@ -203,7 +203,7 @@ class _SendCoinsPageState extends State<SendCoinsPage> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: TranslatedText("wallet.transactions.transaction_id"),
+          title: TranslatedText('wallet.transactions.transaction_id'),
           content: SingleChildScrollView(
             child: Container(
               width: 256,
@@ -216,7 +216,7 @@ class _SendCoinsPageState extends State<SendCoinsPage> {
           ),
           actions: <Widget>[
             FlatButton(
-              child: TranslatedText("wallet.transactions.close_txid_qr_dlg"),
+              child: TranslatedText('wallet.transactions.close_txid_qr_dlg'),
               onPressed: () {
                 Navigator.of(context).pop();
               },

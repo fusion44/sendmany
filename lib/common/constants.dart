@@ -2,16 +2,16 @@ library sendmany.constants;
 
 import 'package:flutter/material.dart';
 
-const String heroTagSendManyLogo = "hero_sendmany_logo";
+const String heroTagSendManyLogo = 'hero_sendmany_logo';
 
 // Preferences keys
-const String prefLanguageCode = "language_preference";
-const String prefTheme = "theme_preference";
-const String prefOnboardingFinished = "onboarding_finished";
-const String prefNumNodes = "num_nodes";
-const String prefPinActive = "pin_active";
-const String prefConnectionData = "sec_connection_data_json";
-const String prefActiveConnection = "active_node";
+const String prefLanguageCode = 'language_preference';
+const String prefTheme = 'theme_preference';
+const String prefOnboardingFinished = 'onboarding_finished';
+const String prefNumNodes = 'num_nodes';
+const String prefPinActive = 'pin_active';
+const String prefConnectionData = 'sec_connection_data_json';
+const String prefActiveConnection = 'active_node';
 
 // Themeing
 const sendManyBackground = const Color(0xff32333d);
@@ -40,8 +40,8 @@ const sendManyChannelBalance = sendManyPrimaryGreen300;
 const sendManyLocalBalance = Colors.green;
 const sendManyRemoteBalance = Colors.amberAccent;
 
-const themeSendMany = "sendmany";
-const themeDark = "dark";
-const themeLight = "light";
+const themeSendMany = 'sendmany';
+const themeDark = 'dark';
+const themeLight = 'light';
 
 const double defaultHorizontalWhiteSpace = 4.0;

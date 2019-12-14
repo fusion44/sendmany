@@ -18,10 +18,7 @@ class AddInvoiceBloc extends Bloc<AddInvoiceEvent, AddInvoiceState> {
     if (event is AddInvoiceEvent) {
       var client = LnConnectionDataProvider().lightningClient;
       var macaroon = LnConnectionDataProvider().macaroon;
-
-      var opts = CallOptions(metadata: {
-        "macaroon": macaroon,
-      });
+      var opts = CallOptions(metadata: {'macaroon': macaroon});
 
       grpc.Invoice grpcInvoice = grpc.Invoice();
       grpcInvoice.value = event.value;

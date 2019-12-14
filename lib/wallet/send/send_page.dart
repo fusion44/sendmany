@@ -11,7 +11,7 @@ import 'on_chain/send_coins/send_coins_page.dart';
 final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
 class SendPage extends StatefulWidget {
-  static const String route_name = "/send_page_root";
+  static const String route_name = '/send_page_root';
 
   @override
   _SendPageState createState() => _SendPageState();
@@ -47,7 +47,7 @@ class _SendPageState extends State<SendPage> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: TranslatedText("wallet.send"),
+          title: TranslatedText('wallet.send'),
         ),
         body: (_showPasteView
             ? _buildPasteFormWidget()
@@ -71,7 +71,7 @@ class _SendPageState extends State<SendPage> {
               _navigateToSendCoins(qrinfo);
               break;
             default:
-              print("unknown");
+              print('unknown');
           }
         }
       },
@@ -85,7 +85,7 @@ class _SendPageState extends State<SendPage> {
           _showPasteView = !_showPasteView;
         });
       },
-      tooltip: tr(context, "qr.open_qr_scanner"),
+      tooltip: tr(context, 'qr.open_qr_scanner'),
       child: _showPasteView ? Icon(Icons.camera) : Icon(Icons.edit),
     );
   }
@@ -111,17 +111,17 @@ class _SendPageState extends State<SendPage> {
               autofocus: false,
               controller: _invoiceController,
               decoration: InputDecoration(
-                labelText: tr(context, "wallet.invoices.paste_invoice_here"),
+                labelText: tr(context, 'wallet.invoices.paste_invoice_here'),
               ),
               validator: (text) {
-                print("v...");
+                print('v...');
                 _qrinfo = checkQrCode(text);
                 switch (_qrinfo.layer) {
                   case PaymentLayer.lightning:
                   case PaymentLayer.onchain:
                     return null;
                   default:
-                    return tr(context, "wallet.invoices.invoice_invalid");
+                    return tr(context, 'wallet.invoices.invoice_invalid');
                 }
               },
             ),
@@ -129,7 +129,7 @@ class _SendPageState extends State<SendPage> {
         ),
         _qrTestPassed
             ? RaisedButton(
-                child: TranslatedText("wallet.send_page.next_step"),
+                child: TranslatedText('wallet.send_page.next_step'),
                 onPressed: () {
                   if (_qrinfo.layer == PaymentLayer.lightning) {
                     _navigateToLnPayment(_qrinfo);
@@ -139,7 +139,7 @@ class _SendPageState extends State<SendPage> {
                 },
               )
             : RaisedButton(
-                child: TranslatedText("wallet.send_page.paste_from_clipboard"),
+                child: TranslatedText('wallet.send_page.paste_from_clipboard'),
                 onPressed: () {
                   _copyFromClipboard();
                 },
@@ -155,7 +155,7 @@ class _SendPageState extends State<SendPage> {
       MaterialPageRoute(
         builder: (context) {
           return BlocProvider<LnInfoBloc>(
-            builder: (context) => infoBloc,
+            create: (context) => infoBloc,
             child: SendPaymentPage(qrinfo: qrinfo),
           );
         },
@@ -179,7 +179,7 @@ class _SendPageState extends State<SendPage> {
       MaterialPageRoute(
         builder: (context) {
           return BlocProvider<LnInfoBloc>(
-            builder: (context) => infoBloc,
+            create: (context) => infoBloc,
             child: SendCoinsPage(qrinfo: qrinfo),
           );
         },
@@ -193,7 +193,7 @@ class _SendPageState extends State<SendPage> {
   }
 
   Future _copyFromClipboard() async {
-    ClipboardData data = await Clipboard.getData("text/plain");
+    ClipboardData data = await Clipboard.getData('text/plain');
     _invoiceController.text = data.text;
   }
 }

@@ -33,11 +33,11 @@ class _LocalNodeInfoWidgetState extends State<LocalNodeInfoWidget> {
   }
 
   _buildRowAliasAndChain(GetInfoResponse state) {
-    String chain = "Mutiple";
+    String chain = 'Multiple';
     if (state.chains.length == 0) {
-      chain = "Error: None??";
+      chain = 'Error: None??';
     } else if (state.chains.length == 1) {
-      chain = "${state.chains[0].chain} - ${state.chains[0].network}";
+      chain = '${state.chains[0].chain} - ${state.chains[0].network}';
     }
 
     return Padding(
@@ -47,12 +47,12 @@ class _LocalNodeInfoWidgetState extends State<LocalNodeInfoWidget> {
           Expanded(
             child: DataItem(
               text: state.alias,
-              label: tr(context, "node.alias"),
+              label: tr(context, 'node.alias'),
             ),
           ),
           Expanded(
             child: DataItem(
-              label: tr(context, "node.chain"),
+              label: tr(context, 'node.chain'),
               text: chain,
             ),
           ),
@@ -67,7 +67,7 @@ class _LocalNodeInfoWidgetState extends State<LocalNodeInfoWidget> {
         Expanded(
           child: DataItem(
             text: state.identityPubkey,
-            label: tr(context, "node.identity_pubkey"),
+            label: tr(context, 'node.identity_pubkey'),
           ),
         ),
         widget.showShareButton
@@ -75,7 +75,7 @@ class _LocalNodeInfoWidgetState extends State<LocalNodeInfoWidget> {
                 icon: Icon(Icons.share),
                 onPressed: () {
                   // TODO: implement me
-                  print("share");
+                  print('share');
                 },
               )
             : Container(),
@@ -86,7 +86,7 @@ class _LocalNodeInfoWidgetState extends State<LocalNodeInfoWidget> {
   _buildRowVersion(GetInfoResponse state) {
     return DataItem(
       text: state.version,
-      label: "Version",
+      label: 'Version',
     );
   }
 
@@ -97,15 +97,15 @@ class _LocalNodeInfoWidgetState extends State<LocalNodeInfoWidget> {
         Expanded(
           child: DataItem(
             text: state.blockHeight.toString(),
-            label: tr(context, "node.block_height"),
+            label: tr(context, 'node.block_height'),
           ),
         ),
         Expanded(
           child: DataItem(
             text: synced
-                ? tr(context, "node.synced_to_chain_yes")
-                : tr(context, "node.synced_to_chain_no"),
-            label: tr(context, "node.synced_to_chain"),
+                ? tr(context, 'node.synced_to_chain_yes')
+                : tr(context, 'node.synced_to_chain_no'),
+            label: tr(context, 'node.synced_to_chain'),
             color: synced ? Colors.green : Colors.red,
           ),
         ),
@@ -123,16 +123,16 @@ class _LocalNodeInfoWidgetState extends State<LocalNodeInfoWidget> {
         Expanded(
           child: DataItem(
             text: info.numPeers.toString(),
-            label: tr(context, "node.peers"),
+            label: tr(context, 'node.peers'),
           ),
         ),
         Expanded(
           child: Tooltip(
             child: DataItem(
-              label: tr(context, "node.channels"),
-              text: "$a / $i / $p",
+              label: tr(context, 'node.channels'),
+              text: '$a / $i / $p',
             ),
-            message: "Active / Inactive / Pending",
+            message: 'Active / Inactive / Pending',
           ),
         ),
       ],

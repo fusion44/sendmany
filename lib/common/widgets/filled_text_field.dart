@@ -20,7 +20,7 @@ class FilledTextField extends StatefulWidget {
 
   FilledTextField({
     Key key,
-    this.text = "",
+    this.text = '',
     this.textHint,
     this.validator,
     this.textChanged,

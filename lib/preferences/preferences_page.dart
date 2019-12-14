@@ -24,7 +24,7 @@ class _PreferencesPageState extends State<PreferencesPage> {
               child: Column(
                 children: <Widget>[
                   ListTile(
-                    title: TranslatedText("prefs.language_label"),
+                    title: TranslatedText('prefs.language_label'),
                     trailing: DropdownButton(
                       value: state.language,
                       onChanged: (value) {
@@ -37,7 +37,7 @@ class _PreferencesPageState extends State<PreferencesPage> {
                   ),
                   Divider(),
                   ListTile(
-                    title: TranslatedText("prefs.theme_label"),
+                    title: TranslatedText('prefs.theme_label'),
                     trailing: DropdownButton(
                       value: state.theme,
                       onChanged: (value) {
@@ -50,7 +50,7 @@ class _PreferencesPageState extends State<PreferencesPage> {
                   ),
                   Divider(),
                   ListTile(
-                    title: TranslatedText("prefs.node_dropdown"),
+                    title: TranslatedText('prefs.node_dropdown'),
                     trailing: DropdownButton<String>(
                       value: state.activeConnection.name,
                       onChanged: (value) {
@@ -70,7 +70,7 @@ class _PreferencesPageState extends State<PreferencesPage> {
 
   _getLanguageItems() {
     List<DropdownMenuItem<String>> l =
-        <String>["en", "de", "nb"].map<DropdownMenuItem<String>>(
+        <String>['en', 'de', 'nb'].map<DropdownMenuItem<String>>(
       (String value) {
         LanguageDisplayData data = getLanguageCodeDisplayData(value);
         return DropdownMenuItem<String>(
@@ -92,9 +92,9 @@ class _PreferencesPageState extends State<PreferencesPage> {
 
   _getThemeItems() {
     return [
-      "SendMany",
-      "Dark",
-      "Light",
+      'SendMany',
+      'Dark',
+      'Light',
     ].map<DropdownMenuItem<String>>(
       (String value) {
         return DropdownMenuItem<String>(
@@ -119,9 +119,9 @@ class _PreferencesPageState extends State<PreferencesPage> {
     ).toList();
     l.add(
       DropdownMenuItem<String>(
-        value: "add_node",
+        value: 'add_node',
         child: RaisedButton(
-          child: TranslatedText("prefs.add_node_btn"),
+          child: TranslatedText('prefs.add_node_btn'),
           onPressed: () {
             _navigateToAddRemoteNode();
           },

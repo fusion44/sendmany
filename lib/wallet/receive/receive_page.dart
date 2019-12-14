@@ -71,7 +71,7 @@ class _ReceivePageState extends State<ReceivePage> {
                 if (amount == null) {
                   enoughCap = true;
                 } else {
-                  enoughCap = _hasEngoughChanCapacity(amount);
+                  enoughCap = _calcChanCapacity(amount);
                 }
 
                 if (!enoughCap && _onchainAddress == '') {
@@ -135,7 +135,7 @@ class _ReceivePageState extends State<ReceivePage> {
               value: BlocProvider.of<LnInfoBloc>(context),
             ),
             BlocProvider<SubscribeTransactionsBloc>(
-              builder: (context) => SubscribeTransactionsBloc(),
+              create: (context) => SubscribeTransactionsBloc(),
             ),
           ],
           child: ShowOnchainInvoice(
@@ -214,7 +214,7 @@ class _ReceivePageState extends State<ReceivePage> {
     );
   }
 
-  bool _hasEngoughChanCapacity(Int64 amount) {
+  bool _calcChanCapacity(Int64 amount) {
     if (amount > _maxIncomingChanCapacity) return false;
     return true;
   }

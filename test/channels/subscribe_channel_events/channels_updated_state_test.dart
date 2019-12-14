@@ -22,12 +22,12 @@ List<Channel> _buildInitialChannels() {
       capacity: Int64.parseInt('300'),
       channelPoint: ChannelPoint(fundingTxid: 'est123', outputIndex: 0),
       localBalance: Int64.ZERO,
-      remoteBalance: Int64.parseInt("100000"),
+      remoteBalance: Int64.parseInt('100000'),
     ),
     EstablishedChannel(
       capacity: Int64.parseInt('400'),
       channelPoint: ChannelPoint(fundingTxid: 'est234', outputIndex: 1),
-      localBalance: Int64.parseInt("100000"),
+      localBalance: Int64.parseInt('100000'),
       remoteBalance: Int64.ZERO,
     ),
   ];
@@ -95,8 +95,8 @@ void main() {
         EstablishedChannel(
           capacity: Int64.parseInt('400'),
           channelPoint: ChannelPoint(fundingTxid: 'est234', outputIndex: 1),
-          localBalance: Int64.parseInt("50000"),
-          remoteBalance: Int64.parseInt("50000"),
+          localBalance: Int64.parseInt('50000'),
+          remoteBalance: Int64.parseInt('50000'),
         ),
       );
 
@@ -107,8 +107,8 @@ void main() {
       expect(state.channels[4] is EstablishedChannel, true);
 
       EstablishedChannel c = state.channels[4];
-      expect(c.localBalance, Int64.parseInt("50000"));
-      expect(c.remoteBalance, Int64.parseInt("50000"));
+      expect(c.localBalance, Int64.parseInt('50000'));
+      expect(c.remoteBalance, Int64.parseInt('50000'));
     },
   );
 }

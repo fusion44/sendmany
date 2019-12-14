@@ -15,10 +15,10 @@ class LnHopHint {
   int cltvExpiryDelta;
 
   LnHopHint(hopHint) {
-    nodeId = hopHint["nodeId"];
-    chanId = hopHint["chanId"];
-    feeBaseMsat = hopHint["feeBaseMsat"];
-    feeProportionalMillionths = hopHint["feeProportionalMillionths"];
-    cltvExpiryDelta = hopHint["cltvExpiryDelta"];
+    nodeId = hopHint['nodeId'];
+    chanId = hopHint['chanId'];
+    feeBaseMsat = hopHint['feeBaseMsat'];
+    feeProportionalMillionths = hopHint['feeProportionalMillionths'];
+    cltvExpiryDelta = hopHint['cltvExpiryDelta'];
   }
 }

@@ -23,7 +23,7 @@ class _TransactionsWidgetState extends State<TransactionsWidget> {
       },
       builder: (context, state) {
         if (state is InitialListTxState || state is LoadingTxState) {
-          return Center(child: TranslatedText("network.loading"));
+          return Center(child: TranslatedText('network.loading'));
         } else if (state is LoadingTxFinishedState) {
           List widgets = state.transactions
               .take(numPayments)
@@ -34,11 +34,11 @@ class _TransactionsWidgetState extends State<TransactionsWidget> {
             widgets.insert(i, Divider());
           }
           return SendManyCard(
-            tr(context, "wallet.transactions.transactions"),
+            tr(context, 'wallet.transactions.transactions'),
             widgets,
           );
         } else {
-          return Center(child: Text("Unknown state: $state"));
+          return Center(child: Text('Unknown state: $state'));
         }
       },
     );
@@ -81,7 +81,7 @@ class _TransactionsWidgetState extends State<TransactionsWidget> {
         );
       }
       memo =
-          "${tr(context, "wallet.transactions.confirmations")}: ${tx.tx.numConfirmations}";
+          '${tr(context, 'wallet.transactions.confirmations')}: ${tx.tx.numConfirmations}';
     }
 
     return Row(

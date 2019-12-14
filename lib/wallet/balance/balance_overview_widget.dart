@@ -25,7 +25,7 @@ class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
       bloc: BlocProvider.of<LnInfoBloc>(context),
       builder: (BuildContext context, LnInfoState state) {
         if (state is LnInfoStateLoading) {
-          return TranslatedText("network.loading");
+          return TranslatedText('network.loading');
         } else if (state is LnInfoStateLoadingFinished) {
           Int64 total = state.channelBalance.balance +
               state.walletBalance.confirmedBalance +
@@ -45,12 +45,12 @@ class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: TranslatedText("wallet.balance",
+                child: TranslatedText('wallet.balance',
                     style: theme.textTheme.title),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: TranslatedText("wallet.total"),
+                child: TranslatedText('wallet.total'),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -76,8 +76,8 @@ class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
                       width: 4.0,
                       color: sendManyConfirmedBalance,
                     ),
-                    title: TranslatedText("wallet.onchain"),
-                    subtitle: TranslatedText("wallet.confirmed"),
+                    title: TranslatedText('wallet.onchain'),
+                    subtitle: TranslatedText('wallet.confirmed'),
                     trailing: MoneyValueView(
                       amount: state.walletBalance.confirmedBalance,
                       textAlign: TextAlign.end,
@@ -89,8 +89,8 @@ class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
                       width: 4.0,
                       color: sendManyUnconfirmedBalance,
                     ),
-                    title: TranslatedText("wallet.onchain"),
-                    subtitle: TranslatedText("wallet.unconfirmed"),
+                    title: TranslatedText('wallet.onchain'),
+                    subtitle: TranslatedText('wallet.unconfirmed'),
                     trailing: MoneyValueView(
                       amount: state.walletBalance.unconfirmedBalance,
                       textAlign: TextAlign.end,
@@ -102,8 +102,8 @@ class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
                       width: 4.0,
                       color: sendManyChannelBalance,
                     ),
-                    title: TranslatedText("wallet.channel"),
-                    subtitle: Text("Total"),
+                    title: TranslatedText('wallet.channel'),
+                    subtitle: Text('Total'),
                     trailing: MoneyValueView(
                       amount: state.channelBalance.balance,
                       textAlign: TextAlign.end,
@@ -117,7 +117,7 @@ class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
             ],
           );
         }
-        return Text("Unknown State? $state");
+        return Text('Unknown State? $state');
       },
     );
   }
@@ -131,7 +131,7 @@ class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
           child: RaisedButton.icon(
             onPressed: _navigateToReceivePage,
             icon: Icon(Icons.call_received),
-            label: TranslatedText("wallet.receive"),
+            label: TranslatedText('wallet.receive'),
             color: sendManyDarkGreen,
           ),
         ),
@@ -153,7 +153,7 @@ class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
               );
             },
             icon: Icon(Icons.send),
-            label: TranslatedText("wallet.send"),
+            label: TranslatedText('wallet.send'),
             color: sendManyBlue700,
           ),
         )

@@ -14,23 +14,23 @@ String tr(BuildContext context, String key,
 /// Returns the full language name of the provided language code
 LanguageDisplayData getLanguageCodeDisplayData(String code) {
   switch (code) {
-    case "de":
+    case 'de':
       return LanguageDisplayData(
-        "German",
-        Image.asset("assets/flags/de.png"),
+        'German',
+        Image.asset('assets/flags/de.png'),
       );
-    case "en":
+    case 'en':
       return LanguageDisplayData(
-        "English",
-        Image.asset("assets/flags/gb.png"),
+        'English',
+        Image.asset('assets/flags/gb.png'),
       );
-    case "nb":
+    case 'nb':
       return LanguageDisplayData(
-        "Norwegian Bokmål",
-        Image.asset("assets/flags/no.png"),
+        'Norwegian Bokmål',
+        Image.asset('assets/flags/no.png'),
       );
     default:
-      return LanguageDisplayData("Unknown", null);
+      return LanguageDisplayData('Unknown', null);
   }
 }
 
@@ -43,10 +43,10 @@ class LanguageDisplayData {
 
 /// Updates the time ago library with the current language
 void updateTimeAgoLib(String lang) {
-  if (lang == "de") {
+  if (lang == 'de') {
     timeago.setLocaleMessages(lang, timeago.DeMessages());
-  } else if (lang == "nb") {
-    timeago.setLocaleMessages("nb", timeago.NbNoMessages());
+  } else if (lang == 'nb') {
+    timeago.setLocaleMessages('nb', timeago.NbNoMessages());
   } else {
     timeago.setLocaleMessages(lang, timeago.EnMessages());
   }
@@ -83,7 +83,7 @@ class QrInfo {
   String address;
   // the amount of the invoice or onchain payment request
   String amount;
-  // onchina or lightning
+  // onchain or lightning
   PaymentLayer layer;
   // mainnet, testnet, regtest
   Network network;
@@ -94,45 +94,45 @@ class QrInfo {
 /// Checks a String if it is a valid lightning invoice or
 /// an onchain address.
 QrInfo checkQrCode(String code) {
-  if (code.contains(":")) {
-    code = code.split(":")[1].toLowerCase();
+  if (code.contains(':')) {
+    code = code.split(':')[1].toLowerCase();
   }
 
   QrInfo info = QrInfo();
   info.layer = PaymentLayer.unknown;
   info.address = code;
 
-  if (code.startsWith("lnbc")) {
+  if (code.startsWith('lnbc')) {
     info.network = Network.mainnet;
     info.layer = PaymentLayer.lightning;
     return info;
-  } else if (code.startsWith("lntb")) {
+  } else if (code.startsWith('lntb')) {
     info.network = Network.testnet;
     info.layer = PaymentLayer.lightning;
-  } else if (code.startsWith("lncrt")) {
+  } else if (code.startsWith('lncrt')) {
     info.network = Network.regtest;
     info.layer = PaymentLayer.lightning;
-  } else if (code.startsWith("1")) {
+  } else if (code.startsWith('1')) {
     info.network = Network.mainnet;
     info.layer = PaymentLayer.onchain;
     info.btcAddressType = BitcoindAddressType.p2pkh;
-  } else if (code.startsWith("3")) {
+  } else if (code.startsWith('3')) {
     info.network = Network.mainnet;
     info.layer = PaymentLayer.onchain;
     info.btcAddressType = BitcoindAddressType.p2sh;
-  } else if (code.startsWith("bc1")) {
+  } else if (code.startsWith('bc1')) {
     info.network = Network.mainnet;
     info.layer = PaymentLayer.onchain;
     info.btcAddressType = BitcoindAddressType.bech32;
-  } else if (code.startsWith("m")) {
+  } else if (code.startsWith('m')) {
     info.network = Network.testnet;
     info.layer = PaymentLayer.onchain;
     info.btcAddressType = BitcoindAddressType.p2pkh;
-  } else if (code.startsWith("2")) {
+  } else if (code.startsWith('2')) {
     info.network = Network.testnet;
     info.layer = PaymentLayer.onchain;
     info.btcAddressType = BitcoindAddressType.p2sh;
-  } else if (code.startsWith("tb1")) {
+  } else if (code.startsWith('tb1')) {
     info.network = Network.testnet;
     info.layer = PaymentLayer.onchain;
     info.btcAddressType = BitcoindAddressType.bech32;
@@ -148,23 +148,23 @@ showSnackbar(BuildContext context, String message) {
   );
 }
 
-String fillString(text, {int powerOf = 4, String fillerChar = "="}) {
+String fillString(text, {int powerOf = 4, String fillerChar = '='}) {
   int remainder = text.length % 4;
   if (remainder == 0) return text;
-  String fillText = "";
+  String fillText = '';
   for (int i = 0; i < (powerOf - remainder); i++) fillText += fillerChar;
-  return "$text$fillText";
+  return '$text$fillText';
 }
 
-String getMemoFromPaymentRequst(String req) {
-  if (req.isEmpty) return "";
+String getMemoFromPaymentRequest(String req) {
+  if (req.isEmpty) return '';
   Bolt11PaymentRequest r = Bolt11PaymentRequest(req);
-  if (r.tags.length > 1 && r.tags[1].type == "description") {
+  if (r.tags.length > 1 && r.tags[1].type == 'description') {
     return r.tags[1].data;
   } else {
     r.tags.forEach((tag) {
-      if (tag.type == "description") return tag.data;
+      if (tag.type == 'description') return tag.data;
     });
   }
-  return "";
+  return '';
 }

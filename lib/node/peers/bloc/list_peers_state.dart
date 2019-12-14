@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:sendmany/common/models/peer.dart';
+
+import 'models.dart';
 
 abstract class ListPeersState extends Equatable {
   const ListPeersState();
@@ -16,7 +17,7 @@ class PeersLoadingState extends ListPeersState {
 }
 
 class PeersLoadedState extends ListPeersState {
-  final List<Peer> peers;
+  final List<LoadedPeer> peers;
 
   PeersLoadedState(this.peers);
 

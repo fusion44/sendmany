@@ -23,7 +23,7 @@ class _WalletPageState extends State<WalletPage> {
       },
       builder: (context, state) {
         if (state is InitialListTxState || state is LoadingTxState) {
-          return Center(child: TranslatedText("network.loading"));
+          return Center(child: TranslatedText('network.loading'));
         } else if (state is LoadingTxFinishedState) {
           var infoBloc = BlocProvider.of<LnInfoBloc>(context);
           return Column(
@@ -45,7 +45,7 @@ class _WalletPageState extends State<WalletPage> {
             ],
           );
         } else {
-          return Center(child: Text("Unknown state: $state"));
+          return Center(child: Text('Unknown state: $state'));
         }
       },
     );
@@ -88,7 +88,7 @@ class _WalletPageState extends State<WalletPage> {
         );
       }
       memo =
-          "${tr(context, "wallet.transactions.confirmations")}: ${tx.tx.numConfirmations}";
+          '${tr(context, 'wallet.transactions.confirmations')}: ${tx.tx.numConfirmations}';
     }
 
     return ListTile(

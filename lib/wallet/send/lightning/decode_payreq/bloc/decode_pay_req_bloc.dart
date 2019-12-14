@@ -17,8 +17,8 @@ class DecodePayReqBloc extends Bloc<DecodePayReqBlocEvent, DecodePayReqState> {
       yield InitialDecodePayReqBlocState();
     } else if (event is DecodePayReqEvent) {
       yield DecodingPayReqState(event.payReq);
-      String reqString = event.payReq.contains(":")
-          ? event.payReq.split(":")[1]
+      String reqString = event.payReq.contains(':')
+          ? event.payReq.split(':')[1]
           : event.payReq;
 
       var client = LnConnectionDataProvider().lightningClient;
@@ -31,9 +31,7 @@ class DecodePayReqBloc extends Bloc<DecodePayReqBlocEvent, DecodePayReqState> {
         yield DecodingPayReqErrorState(event.payReq, e.toString());
       }
 
-      var opts = CallOptions(metadata: {
-        "macaroon": macaroon,
-      });
+      var opts = CallOptions(metadata: {'macaroon': macaroon});
 
       PayReq decoded;
       try {

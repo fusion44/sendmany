@@ -35,7 +35,7 @@ class DataItem extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 softWrap: false,
               ),
-              label != ""
+              label != ''
                   ? Text(
                       label,
                       style: theme.textTheme.caption,
