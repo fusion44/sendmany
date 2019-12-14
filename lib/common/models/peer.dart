@@ -42,8 +42,6 @@ class Peer {
   /// The type of sync we are currently performing with this peer.
   final PeerSyncType syncType;
 
-  final NodeInfo nodeInfo;
-
   Peer({
     this.pubKey,
     this.address,
@@ -54,7 +52,6 @@ class Peer {
     this.inbound,
     this.pingTime,
     this.syncType,
-    this.nodeInfo,
   });
 
   static Peer fromGRPC(grpc.Peer p, [NodeInfo nodeInfo]) {
@@ -68,7 +65,6 @@ class Peer {
       inbound: p.inbound,
       pingTime: p.pingTime,
       syncType: _getSyncType(p.syncType),
-      nodeInfo: nodeInfo,
     );
   }
 

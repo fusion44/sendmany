@@ -16,7 +16,7 @@ class PeerListWidget extends StatelessWidget {
           List<Widget> peers = [];
 
           for (int i = 0; i < state.peers.length; i++) {
-            peers.add(PeerListTile(peer: state.peers[i]));
+            peers.add(PeerListTile(p: state.peers[i]));
             if (i != state.peers.length - 1) peers.add(Divider());
           }
 
