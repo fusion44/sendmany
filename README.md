@@ -24,6 +24,9 @@ SendMany is build using the [Flutter-Framework](https://flutter.dev/) and is cur
 * Fork/clone this repository: `git clone https://github.com/fusion44/sendmany`
 * execute `flutter run` in the root sendmany folder (make sure you have a phone connected or an emulator running)
 
+Note: To work with the whatsat branch you need to apply the keysend pull request to your LND instances:
+https://github.com/lightningnetwork/lnd/pull/3795
+
 ### Contribute
 If you find any issues please report it through the [Github issue tracker](https://github.com/fusion44/sendmany/issues).
 If you are interested in helping push the software forward you are very welcome to submit ideas to the issue tracker and help by opening pull requests.

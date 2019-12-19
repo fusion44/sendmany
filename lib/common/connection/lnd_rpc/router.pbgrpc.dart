@@ -60,11 +60,6 @@ class RouterClient extends $grpc.Client {
           ($1.BuildRouteRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $1.BuildRouteResponse.fromBuffer(value));
-  static final _$receiveChatMessages =
-      $grpc.ClientMethod<$1.ReceiveChatMessagesRequest, $1.ChatMessage>(
-          '/routerrpc.Router/ReceiveChatMessages',
-          ($1.ReceiveChatMessagesRequest value) => value.writeToBuffer(),
-          ($core.List<$core.int> value) => $1.ChatMessage.fromBuffer(value));
 
   RouterClient($grpc.ClientChannel channel, {$grpc.CallOptions options})
       : super(channel, options: options);
@@ -140,15 +135,6 @@ class RouterClient extends $grpc.Client {
         options: options);
     return $grpc.ResponseFuture(call);
   }
-
-  $grpc.ResponseStream<$1.ChatMessage> receiveChatMessages(
-      $1.ReceiveChatMessagesRequest request,
-      {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$receiveChatMessages, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseStream(call);
-  }
 }
 
 abstract class RouterServiceBase extends $grpc.Service {
@@ -221,15 +207,6 @@ abstract class RouterServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $1.BuildRouteRequest.fromBuffer(value),
         ($1.BuildRouteResponse value) => value.writeToBuffer()));
-    $addMethod(
-        $grpc.ServiceMethod<$1.ReceiveChatMessagesRequest, $1.ChatMessage>(
-            'ReceiveChatMessages',
-            receiveChatMessages_Pre,
-            false,
-            true,
-            ($core.List<$core.int> value) =>
-                $1.ReceiveChatMessagesRequest.fromBuffer(value),
-            ($1.ChatMessage value) => value.writeToBuffer()));
   }
 
   $async.Stream<$1.PaymentStatus> sendPayment_Pre($grpc.ServiceCall call,
@@ -275,11 +252,6 @@ abstract class RouterServiceBase extends $grpc.Service {
     return buildRoute(call, await request);
   }
 
-  $async.Stream<$1.ChatMessage> receiveChatMessages_Pre($grpc.ServiceCall call,
-      $async.Future<$1.ReceiveChatMessagesRequest> request) async* {
-    yield* receiveChatMessages(call, await request);
-  }
-
   $async.Stream<$1.PaymentStatus> sendPayment(
       $grpc.ServiceCall call, $1.SendPaymentRequest request);
   $async.Stream<$1.PaymentStatus> trackPayment(
@@ -296,6 +268,4 @@ abstract class RouterServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $1.QueryProbabilityRequest request);
   $async.Future<$1.BuildRouteResponse> buildRoute(
       $grpc.ServiceCall call, $1.BuildRouteRequest request);
-  $async.Stream<$1.ChatMessage> receiveChatMessages(
-      $grpc.ServiceCall call, $1.ReceiveChatMessagesRequest request);
 }

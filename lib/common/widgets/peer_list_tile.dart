@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sendmany/chat/chat_page.dart';
 import 'package:sendmany/common/utils.dart';
 import 'package:sendmany/node/peers/bloc/bloc.dart';
+import 'package:sendmany/wallet/balance/bloc/bloc.dart';
 
 class PeerListTile extends StatelessWidget {
   final LoadedPeer p;
@@ -25,14 +27,15 @@ class PeerListTile extends StatelessWidget {
         trailing: IconButton(
           icon: Icon(Icons.chat),
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) {
-                  return ChatPage(p.peer.pubKey);
-                },
-              ),
-            );
+            LnInfoBloc bloc = BlocProvider.of<LnInfoBloc>(context);
+            Navigator.push(context, MaterialPageRoute(
+              builder: (context) {
+                return BlocProvider.value(
+                  value: bloc,
+                  child: ChatPage(p.peer.pubKey),
+                );
+              },
+            ));
           },
         ),
       );

@@ -1,3 +1,7 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
+import 'package:buffer/buffer.dart';
 import 'package:convert/convert.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:flutter/material.dart';
@@ -5,16 +9,30 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:grpc/grpc.dart';
 import 'package:nanoid/nanoid.dart';
+import 'package:sendmany/chat/item_not_found_exception.dart';
+import 'package:sendmany/chat/models/ln_preimage.dart';
 import 'package:sendmany/common/blocs/get_remote_node_info/bloc.dart';
 import 'package:sendmany/common/connection/connection_manager/bloc.dart';
+import 'package:sendmany/common/connection/lnd_rpc/lnd_rpc.dart' as lnrpc;
 import 'package:sendmany/common/connection/lnd_rpc/router.pbgrpc.dart'
     as router;
+import 'package:sendmany/common/connection/lnd_rpc/signer.pbgrpc.dart'
+    as signer;
 import 'package:sendmany/common/constants.dart';
 import 'package:sendmany/common/models/models.dart';
+import 'package:sendmany/wallet/balance/bloc/bloc.dart';
+import 'package:sendmany/wallet/balance/bloc/ln_info_bloc.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-import 'item_not_found_exception.dart';
 import 'models/message_item.dart';
+
+class TlvRecords {
+  static final Int64 msgRecord = Int64.parseInt('34349334');
+  static final Int64 sigRecord = Int64.parseInt('34349337');
+  static final Int64 senderRecord = Int64.parseInt('34349339');
+  static final Int64 timeRecord = Int64.parseInt('34349343');
+  static final Int64 keySendRecord = Int64.parseInt("5482373484");
+}
 
 class ChatPage extends StatefulWidget {
   final String peer;
@@ -30,11 +48,16 @@ class _ChatPageState extends State<ChatPage> {
   final GlobalKey<AnimatedListState> _listKey = GlobalKey();
   List<MessageItem> _messages = [];
   CallOptions _opts;
+  lnrpc.LightningClient _mainClient;
   router.RouterClient _routerClient;
-  Map<String, ResponseStream<router.PaymentStatus>> _sendStreams = {};
-  ResponseStream<router.ChatMessage> _receiveStream;
+  signer.SignerClient _signerClient;
+  ResponseStream<lnrpc.Invoice> _invoiceStream;
   TextEditingController _controller = TextEditingController();
   NodeInfo _nodeInfo;
+
+  String _selfPubkey = '';
+
+  Map<String, ResponseStream<router.PaymentStatus>> _sendStreams = {};
 
   @override
   Widget build(BuildContext context) {
@@ -80,10 +103,10 @@ class _ChatPageState extends State<ChatPage> {
           );
         } else if (state is RemoteNodeInfoErrorState) {
           body = Center(
-            child: Text("Error: ${state.error}, PubKey: ${state.pubKey}"),
+            child: Text('Error: ${state.error}, PubKey: ${state.pubKey}'),
           );
         } else {
-          body = Center(child: Text("Error: unknown state: $state"));
+          body = Center(child: Text('Error: unknown state: $state'));
         }
 
         return Scaffold(
@@ -100,7 +123,7 @@ class _ChatPageState extends State<ChatPage> {
   @override
   void dispose() {
     _getRemoteNodeInfoBloc.close();
-    _receiveStream.cancel();
+    _invoiceStream.cancel();
     _controller.dispose();
     super.dispose();
   }
@@ -108,29 +131,42 @@ class _ChatPageState extends State<ChatPage> {
   @override
   void initState() {
     _getRemoteNodeInfoBloc.add(GetRemoteNodeInfoEvent(widget.peer));
-    // _getRemoteNodeInfoBloc.listen((GetRemoteNodeInfoState state) {
-    //   if (state is RemoteNodeInfoLoadedState &&
-    //       state.nodeInfo.node.pubKey == widget.peer) {
-    //     print("in iniState closure");
 
-    //     setState(() {
-    //       _nodeInfo = state.nodeInfo;
-    //     });
-    //   }
-    // });
-
+    _mainClient = LnConnectionDataProvider().lightningClient;
     _routerClient = router.RouterClient(LnConnectionDataProvider().channel);
-    router.ReceiveChatMessagesRequest request =
-        router.ReceiveChatMessagesRequest();
+    _signerClient = signer.SignerClient(LnConnectionDataProvider().channel);
+
     _opts = CallOptions(
       metadata: {"macaroon": LnConnectionDataProvider().macaroon},
     );
 
-    _receiveStream = _routerClient.receiveChatMessages(request, options: _opts);
-    _receiveStream.listen((router.ChatMessage m) {
-      setState(() {
-        _addMessage(_nodeInfo.node.alias, m.text);
-      });
+    if (BlocProvider.of<LnInfoBloc>(context).state
+        is LnInfoStateLoadingFinished) {
+      LnInfoStateLoadingFinished s = BlocProvider.of<LnInfoBloc>(context).state;
+      _selfPubkey = s.infoResponse.identityPubkey;
+    }
+
+    lnrpc.InvoiceSubscription subRequest = lnrpc.InvoiceSubscription();
+    _invoiceStream = _mainClient.subscribeInvoices(subRequest);
+    _invoiceStream.listen((lnrpc.Invoice invoice) {
+      if (invoice.state != lnrpc.Invoice_InvoiceState.SETTLED) return;
+
+      lnrpc.InvoiceHTLC htlc = invoice.htlcs.firstWhere(
+        (lnrpc.InvoiceHTLC htlc) =>
+            htlc.state == lnrpc.InvoiceHTLCState.SETTLED,
+      );
+
+      if (htlc == null ||
+          htlc.customRecords == null ||
+          htlc.customRecords.isEmpty ||
+          !htlc.customRecords.containsKey(TlvRecords.msgRecord) ||
+          htlc.customRecords[TlvRecords.msgRecord] == null ||
+          htlc.customRecords[TlvRecords.msgRecord].isEmpty) {
+        print('No chat message found');
+        return;
+      }
+
+      _handleIncomingChatHtlcs(htlc);
     });
 
     _controller.addListener(() => setState(() {}));
@@ -138,10 +174,10 @@ class _ChatPageState extends State<ChatPage> {
     super.initState();
   }
 
-  void _addMessage(String newFrom, String text) {
+  void _addMessage(String senderPubkey, String text, {DateTime timestamp}) {
     bool sameSender = false;
     if (_messages.isNotEmpty) {
-      sameSender = _messages[0].from == newFrom;
+      sameSender = _messages[0].from == senderPubkey;
       if (_messages[0].belowIsSame != sameSender) {
         _messages[0] = _messages[0].copyWith(belowIsSame: sameSender);
       }
@@ -149,8 +185,8 @@ class _ChatPageState extends State<ChatPage> {
 
     MessageItem m = MessageItem(
       nanoid(),
-      DateTime.now(),
-      newFrom,
+      timestamp == null ? DateTime.now() : timestamp,
+      senderPubkey,
       text,
       aboveIsSame: sameSender,
       belowIsSame: false,
@@ -159,7 +195,7 @@ class _ChatPageState extends State<ChatPage> {
     _messages.insert(0, m);
     _listKey.currentState.insertItem(0, duration: Duration(milliseconds: 350));
 
-    if (newFrom == 'me') _sendPayment(m);
+    if (senderPubkey == _selfPubkey) _sendPayment(m);
   }
 
   Container _buildChatInputBox() {
@@ -180,7 +216,7 @@ class _ChatPageState extends State<ChatPage> {
                   ? () {
                       setState(
                         () {
-                          _addMessage('me', _controller.text);
+                          _addMessage(_selfPubkey, _controller.text);
                           _controller.text = '';
                         },
                       );
@@ -205,20 +241,45 @@ class _ChatPageState extends State<ChatPage> {
       padding: _getPadding(m),
       child: Container(
         decoration: _getBoxDeco(m),
-        child: m.from == 'me' ? _buildMeTile(m) : _buildPeerTile(m),
+        child: m.from == _selfPubkey ? _buildMeTile(m) : _buildPeerTile(m),
       ),
     );
   }
 
-  _sendPayment(MessageItem m) {
+  _sendPayment(MessageItem m) async {
+    ByteData bd = ByteData(8);
+    bd.setInt64(0, DateTime.now().microsecondsSinceEpoch * 1000);
+    signer.SignMessageReq signReq = signer.SignMessageReq();
+    signReq.msg = _getSignData(
+      hex.decode(_selfPubkey),
+      hex.decode(_nodeInfo.node.pubKey),
+      bd.buffer.asUint8List(),
+      utf8.encode(m.text),
+    );
+    signReq.keyLoc = signer.KeyLocator()
+      ..keyFamily = 6
+      ..keyIndex = 0;
+
+    signer.SignMessageResp resp = await _signerClient.signMessage(
+      signReq,
+      options: _opts,
+    );
+
+    Preimage preimage = Preimage();
+
     router.SendPaymentRequest req = router.SendPaymentRequest();
-    req.chatMessage = m.text;
-    req.chatFree = false;
+    req.paymentHash = preimage.sha256Hash.bytes;
     req.amtMsat = Int64.parseInt('1000');
     req.finalCltvDelta = 40;
     req.dest = hex.decode(_nodeInfo.node.pubKey);
     req.feeLimitMsat = Int64.parseInt('10000');
     req.timeoutSeconds = 30;
+    req.destCustomRecords.clear();
+    req.destCustomRecords[TlvRecords.msgRecord] = utf8.encode(m.text);
+    req.destCustomRecords[TlvRecords.senderRecord] = hex.decode(_selfPubkey);
+    req.destCustomRecords[TlvRecords.timeRecord] = bd.buffer.asUint8List();
+    req.destCustomRecords[TlvRecords.sigRecord] = resp.signature;
+    req.destCustomRecords[TlvRecords.keySendRecord] = preimage.bytes;
 
     try {
       _sendStreams[m.id] = _routerClient.sendPayment(req, options: _opts);
@@ -275,7 +336,8 @@ class _ChatPageState extends State<ChatPage> {
     }
 
     return BoxDecoration(
-      color: m.from == 'me' ? Colors.blueGrey[900] : Colors.blueGrey[700],
+      color:
+          m.from == _selfPubkey ? Colors.blueGrey[900] : Colors.blueGrey[700],
       borderRadius: geo,
     );
   }
@@ -292,7 +354,7 @@ class _ChatPageState extends State<ChatPage> {
             children: [
               Text(timeago.format(m.date)),
               SizedBox(width: defaultHorizontalWhiteSpace),
-              Text('by ${m.from}'),
+              Text('by me'),
               SizedBox(width: 8.0),
               Icon(
                 Icons.check,
@@ -312,7 +374,7 @@ class _ChatPageState extends State<ChatPage> {
           children: [
             Text(timeago.format(m.date)),
             SizedBox(width: defaultHorizontalWhiteSpace),
-            Text('by ${m.from}'),
+            Text('by me'),
             SizedBox(width: 8.0),
             Icon(
               Icons.check,
@@ -338,7 +400,7 @@ class _ChatPageState extends State<ChatPage> {
             children: [
               Text(timeago.format(m.date)),
               SizedBox(width: defaultHorizontalWhiteSpace),
-              Text('by ${m.from}'),
+              Text('by ${_nodeInfo.node.alias}'),
             ],
           ),
         ),
@@ -353,10 +415,71 @@ class _ChatPageState extends State<ChatPage> {
           children: [
             Text(timeago.format(m.date)),
             SizedBox(width: defaultHorizontalWhiteSpace),
-            Text('by ${m.from}'),
+            Text('by ${_nodeInfo.node.alias}'),
           ],
         ),
       );
+    }
+  }
+
+  Uint8List _getSignData(
+    List<int> senderPubkey,
+    List<int> recipientPubkey,
+    List<int> timestamp,
+    List<int> msg,
+  ) {
+    int dataLength = senderPubkey.length +
+        senderPubkey.length +
+        timestamp.length +
+        msg.length;
+    ByteDataWriter w = ByteDataWriter(bufferLength: dataLength);
+    w.write(senderPubkey);
+    w.write(recipientPubkey);
+    w.write(timestamp);
+    w.write(msg);
+    return w.toBytes();
+  }
+
+  Future _handleIncomingChatHtlcs(lnrpc.InvoiceHTLC htlc) async {
+    List<int> messageBytes = htlc.customRecords[TlvRecords.msgRecord];
+    List<int> signatureBytes = htlc.customRecords[TlvRecords.sigRecord];
+    List<int> timestampBytes = htlc.customRecords[TlvRecords.timeRecord];
+    List<int> senderBytes = htlc.customRecords[TlvRecords.senderRecord];
+    List<int> data = _getSignData(
+      senderBytes,
+      hex.decode(_selfPubkey),
+      timestampBytes,
+      messageBytes,
+    );
+
+    signer.VerifyMessageReq req = signer.VerifyMessageReq();
+    req.msg = data;
+    req.signature = signatureBytes;
+    req.pubkey = senderBytes;
+
+    // Roundtrip
+    try {
+      signer.VerifyMessageResp resp = await _signerClient.verifyMessage(
+        req,
+        options: _opts,
+      );
+
+      if (!resp.valid) {
+        print('Received invalid message');
+      } else {
+        String msg = utf8.decode(htlc.customRecords[TlvRecords.msgRecord]);
+        ByteDataReader reader = ByteDataReader(endian: Endian.big)
+          ..add(timestampBytes);
+        int timestampInt = reader.readInt64(Endian.big) ~/ 1000;
+        DateTime time = DateTime.fromMicrosecondsSinceEpoch(timestampInt);
+        String sender = hex.encode(htlc.customRecords[TlvRecords.senderRecord]);
+
+        _addMessage(sender, msg, timestamp: time);
+      }
+    } catch (e) {
+      if (e is GrpcError) {
+        print('Failed verify message signature $e');
+      }
     }
   }
 }

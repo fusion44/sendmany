@@ -489,7 +489,7 @@ class SendRequest extends $pb.GeneratedMessage {
     ..a<FeeLimit>(8, 'feeLimit', $pb.PbFieldType.OM, defaultOrMaker: FeeLimit.getDefault, subBuilder: FeeLimit.create)
     ..a<Int64>(9, 'outgoingChanId', $pb.PbFieldType.OU6, defaultOrMaker: Int64.ZERO)
     ..a<$core.int>(10, 'cltvLimit', $pb.PbFieldType.OU3)
-    ..m<Int64, $core.List<$core.int>>(11, 'destTlv', entryClassName: 'SendRequest.DestTlvEntry', keyFieldType: $pb.PbFieldType.OU6, valueFieldType: $pb.PbFieldType.OY, packageName: const $pb.PackageName('lnrpc'))
+    ..m<Int64, $core.List<$core.int>>(11, 'destCustomRecords', entryClassName: 'SendRequest.DestCustomRecordsEntry', keyFieldType: $pb.PbFieldType.OU6, valueFieldType: $pb.PbFieldType.OY, packageName: const $pb.PackageName('lnrpc'))
     ..aInt64(12, 'amtMsat')
     ..a<$core.List<$core.int>>(13, 'lastHopPubkey', $pb.PbFieldType.OY)
     ..aOB(14, 'allowSelfPayment')
@@ -568,7 +568,7 @@ class SendRequest extends $pb.GeneratedMessage {
   $core.bool hasCltvLimit() => $_has(9);
   void clearCltvLimit() => clearField(10);
 
-  $core.Map<Int64, $core.List<$core.int>> get destTlv => $_getMap(10);
+  $core.Map<Int64, $core.List<$core.int>> get destCustomRecords => $_getMap(10);
 
   Int64 get amtMsat => $_getI64(11);
   set amtMsat(Int64 v) { $_setInt64(11, v); }
@@ -1886,6 +1886,7 @@ class Peer extends $pb.GeneratedMessage {
     ..aOB(8, 'inbound')
     ..aInt64(9, 'ping_time')
     ..e<Peer_SyncType>(10, 'sync_type', $pb.PbFieldType.OE, defaultOrMaker: Peer_SyncType.UNKNOWN_SYNC, valueOf: Peer_SyncType.valueOf, enumValues: Peer_SyncType.values)
+    ..m<$core.int, Feature>(11, 'features', entryClassName: 'Peer.FeaturesEntry', keyFieldType: $pb.PbFieldType.OU3, valueFieldType: $pb.PbFieldType.OM, valueCreator: Feature.create, packageName: const $pb.PackageName('lnrpc'))
     ..hasRequiredFields = false
   ;
 
@@ -1947,6 +1948,8 @@ class Peer extends $pb.GeneratedMessage {
   set syncType(Peer_SyncType v) { setField(10, v); }
   $core.bool hasSyncType() => $_has(8);
   void clearSyncType() => clearField(10);
+
+  $core.Map<$core.int, Feature> get features => $_getMap(9);
 }
 
 class ListPeersRequest extends $pb.GeneratedMessage {
@@ -2260,6 +2263,7 @@ class CloseChannelRequest extends $pb.GeneratedMessage {
     ..aOB(2, 'force')
     ..a<$core.int>(3, 'targetConf', $pb.PbFieldType.O3)
     ..aInt64(4, 'satPerByte')
+    ..aOS(5, 'delivery_address')
     ..hasRequiredFields = false
   ;
 
@@ -2296,6 +2300,11 @@ class CloseChannelRequest extends $pb.GeneratedMessage {
   set satPerByte(Int64 v) { $_setInt64(3, v); }
   $core.bool hasSatPerByte() => $_has(3);
   void clearSatPerByte() => clearField(4);
+
+  $core.String get deliveryAddress => $_getS(4, '');
+  set deliveryAddress($core.String v) { $_setString(4, v); }
+  $core.bool hasDeliveryAddress() => $_has(4);
+  void clearDeliveryAddress() => clearField(5);
 }
 
 enum CloseStatusUpdate_Update {
@@ -3075,6 +3084,7 @@ class QueryRoutesRequest extends $pb.GeneratedMessage {
     ..pc<NodePair>(10, 'ignoredPairs', $pb.PbFieldType.PM, subBuilder: NodePair.create)
     ..a<$core.int>(11, 'cltvLimit', $pb.PbFieldType.OU3)
     ..aInt64(12, 'amtMsat')
+    ..m<Int64, $core.List<$core.int>>(13, 'destCustomRecords', entryClassName: 'QueryRoutesRequest.DestCustomRecordsEntry', keyFieldType: $pb.PbFieldType.OU6, valueFieldType: $pb.PbFieldType.OY, packageName: const $pb.PackageName('lnrpc'))
     ..hasRequiredFields = false
   ;
 
@@ -3138,6 +3148,8 @@ class QueryRoutesRequest extends $pb.GeneratedMessage {
   set amtMsat(Int64 v) { $_setInt64(10, v); }
   $core.bool hasAmtMsat() => $_has(10);
   void clearAmtMsat() => clearField(12);
+
+  $core.Map<Int64, $core.List<$core.int>> get destCustomRecords => $_getMap(11);
 }
 
 class NodePair extends $pb.GeneratedMessage {
@@ -3245,6 +3257,7 @@ class Hop extends $pb.GeneratedMessage {
     ..aOS(8, 'pub_key')
     ..aOB(9, 'tlv_payload')
     ..a<MPPRecord>(10, 'mpp_record', $pb.PbFieldType.OM, defaultOrMaker: MPPRecord.getDefault, subBuilder: MPPRecord.create)
+    ..m<Int64, $core.List<$core.int>>(11, 'custom_records', entryClassName: 'Hop.CustomRecordsEntry', keyFieldType: $pb.PbFieldType.OU6, valueFieldType: $pb.PbFieldType.OY, packageName: const $pb.PackageName('lnrpc'))
     ..hasRequiredFields = false
   ;
 
@@ -3319,6 +3332,8 @@ class Hop extends $pb.GeneratedMessage {
   set mppRecord(MPPRecord v) { setField(10, v); }
   $core.bool hasMppRecord() => $_has(9);
   void clearMppRecord() => clearField(10);
+
+  $core.Map<Int64, $core.List<$core.int>> get customRecords => $_getMap(10);
 }
 
 class MPPRecord extends $pb.GeneratedMessage {
@@ -3494,6 +3509,7 @@ class LightningNode extends $pb.GeneratedMessage {
     ..aOS(3, 'alias')
     ..pc<NodeAddress>(4, 'addresses', $pb.PbFieldType.PM, subBuilder: NodeAddress.create)
     ..aOS(5, 'color')
+    ..m<$core.int, Feature>(6, 'features', entryClassName: 'LightningNode.FeaturesEntry', keyFieldType: $pb.PbFieldType.OU3, valueFieldType: $pb.PbFieldType.OM, valueCreator: Feature.create, packageName: const $pb.PackageName('lnrpc'))
     ..hasRequiredFields = false
   ;
 
@@ -3532,6 +3548,8 @@ class LightningNode extends $pb.GeneratedMessage {
   set color($core.String v) { $_setString(4, v); }
   $core.bool hasColor() => $_has(4);
   void clearColor() => clearField(5);
+
+  $core.Map<$core.int, Feature> get features => $_getMap(5);
 }
 
 class NodeAddress extends $pb.GeneratedMessage {
@@ -4217,6 +4235,8 @@ class Invoice extends $pb.GeneratedMessage {
     ..e<Invoice_InvoiceState>(21, 'state', $pb.PbFieldType.OE, defaultOrMaker: Invoice_InvoiceState.OPEN, valueOf: Invoice_InvoiceState.valueOf, enumValues: Invoice_InvoiceState.values)
     ..pc<InvoiceHTLC>(22, 'htlcs', $pb.PbFieldType.PM, subBuilder: InvoiceHTLC.create)
     ..aInt64(23, 'value_msat')
+    ..m<$core.int, Feature>(24, 'features', entryClassName: 'Invoice.FeaturesEntry', keyFieldType: $pb.PbFieldType.OU3, valueFieldType: $pb.PbFieldType.OM, valueCreator: Feature.create, packageName: const $pb.PackageName('lnrpc'))
+    ..aOB(25, 'is_key_send')
     ..hasRequiredFields = false
   ;
 
@@ -4345,6 +4365,13 @@ class Invoice extends $pb.GeneratedMessage {
   set valueMsat(Int64 v) { $_setInt64(21, v); }
   $core.bool hasValueMsat() => $_has(21);
   void clearValueMsat() => clearField(23);
+
+  $core.Map<$core.int, Feature> get features => $_getMap(22);
+
+  $core.bool get isKeySend => $_get(23, false);
+  set isKeySend($core.bool v) { $_setBool(23, v); }
+  $core.bool hasIsKeySend() => $_has(23);
+  void clearIsKeySend() => clearField(25);
 }
 
 class InvoiceHTLC extends $pb.GeneratedMessage {
@@ -4357,6 +4384,8 @@ class InvoiceHTLC extends $pb.GeneratedMessage {
     ..aInt64(6, 'resolve_time')
     ..a<$core.int>(7, 'expiry_height', $pb.PbFieldType.O3)
     ..e<InvoiceHTLCState>(8, 'state', $pb.PbFieldType.OE, defaultOrMaker: InvoiceHTLCState.ACCEPTED, valueOf: InvoiceHTLCState.valueOf, enumValues: InvoiceHTLCState.values)
+    ..m<Int64, $core.List<$core.int>>(9, 'custom_records', entryClassName: 'InvoiceHTLC.CustomRecordsEntry', keyFieldType: $pb.PbFieldType.OU6, valueFieldType: $pb.PbFieldType.OY, packageName: const $pb.PackageName('lnrpc'))
+    ..a<Int64>(10, 'mpp_total_amt_msat', $pb.PbFieldType.OU6, defaultOrMaker: Int64.ZERO)
     ..hasRequiredFields = false
   ;
 
@@ -4413,6 +4442,13 @@ class InvoiceHTLC extends $pb.GeneratedMessage {
   set state(InvoiceHTLCState v) { setField(8, v); }
   $core.bool hasState() => $_has(7);
   void clearState() => clearField(8);
+
+  $core.Map<Int64, $core.List<$core.int>> get customRecords => $_getMap(8);
+
+  Int64 get mppTotalAmtMsat => $_getI64(9);
+  set mppTotalAmtMsat(Int64 v) { $_setInt64(9, v); }
+  $core.bool hasMppTotalAmtMsat() => $_has(9);
+  void clearMppTotalAmtMsat() => clearField(10);
 }
 
 class AddInvoiceResponse extends $pb.GeneratedMessage {
@@ -4986,6 +5022,9 @@ class PayReq extends $pb.GeneratedMessage {
     ..aOS(8, 'fallback_addr')
     ..aInt64(9, 'cltv_expiry')
     ..pc<RouteHint>(10, 'route_hints', $pb.PbFieldType.PM, subBuilder: RouteHint.create)
+    ..a<$core.List<$core.int>>(11, 'payment_addr', $pb.PbFieldType.OY)
+    ..aInt64(12, 'num_msat')
+    ..m<$core.int, Feature>(13, 'features', entryClassName: 'PayReq.FeaturesEntry', keyFieldType: $pb.PbFieldType.OU3, valueFieldType: $pb.PbFieldType.OM, valueCreator: Feature.create, packageName: const $pb.PackageName('lnrpc'))
     ..hasRequiredFields = false
   ;
 
@@ -5049,6 +5088,56 @@ class PayReq extends $pb.GeneratedMessage {
   void clearCltvExpiry() => clearField(9);
 
   $core.List<RouteHint> get routeHints => $_getList(9);
+
+  $core.List<$core.int> get paymentAddr => $_getN(10);
+  set paymentAddr($core.List<$core.int> v) { $_setBytes(10, v); }
+  $core.bool hasPaymentAddr() => $_has(10);
+  void clearPaymentAddr() => clearField(11);
+
+  Int64 get numMsat => $_getI64(11);
+  set numMsat(Int64 v) { $_setInt64(11, v); }
+  $core.bool hasNumMsat() => $_has(11);
+  void clearNumMsat() => clearField(12);
+
+  $core.Map<$core.int, Feature> get features => $_getMap(12);
+}
+
+class Feature extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('Feature', package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..aOS(2, 'name')
+    ..aOB(3, 'is_required')
+    ..aOB(4, 'is_known')
+    ..hasRequiredFields = false
+  ;
+
+  Feature._() : super();
+  factory Feature() => create();
+  factory Feature.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Feature.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  Feature clone() => Feature()..mergeFromMessage(this);
+  Feature copyWith(void Function(Feature) updates) => super.copyWith((message) => updates(message as Feature));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static Feature create() => Feature._();
+  Feature createEmptyInstance() => create();
+  static $pb.PbList<Feature> createRepeated() => $pb.PbList<Feature>();
+  static Feature getDefault() => _defaultInstance ??= create()..freeze();
+  static Feature _defaultInstance;
+
+  $core.String get name => $_getS(0, '');
+  set name($core.String v) { $_setString(0, v); }
+  $core.bool hasName() => $_has(0);
+  void clearName() => clearField(2);
+
+  $core.bool get isRequired => $_get(1, false);
+  set isRequired($core.bool v) { $_setBool(1, v); }
+  $core.bool hasIsRequired() => $_has(1);
+  void clearIsRequired() => clearField(3);
+
+  $core.bool get isKnown => $_get(2, false);
+  set isKnown($core.bool v) { $_setBool(2, v); }
+  $core.bool hasIsKnown() => $_has(2);
+  void clearIsKnown() => clearField(4);
 }
 
 class FeeReportRequest extends $pb.GeneratedMessage {
@@ -5176,6 +5265,8 @@ class PolicyUpdateRequest extends $pb.GeneratedMessage {
     ..a<$core.double>(4, 'fee_rate', $pb.PbFieldType.OD)
     ..a<$core.int>(5, 'time_lock_delta', $pb.PbFieldType.OU3)
     ..a<Int64>(6, 'max_htlc_msat', $pb.PbFieldType.OU6, defaultOrMaker: Int64.ZERO)
+    ..a<Int64>(7, 'min_htlc_msat', $pb.PbFieldType.OU6, defaultOrMaker: Int64.ZERO)
+    ..aOB(8, 'set_min_htlc_msat', protoName: 'min_htlc_msat_specified')
     ..hasRequiredFields = false
   ;
 
@@ -5225,6 +5316,16 @@ class PolicyUpdateRequest extends $pb.GeneratedMessage {
   set maxHtlcMsat(Int64 v) { $_setInt64(5, v); }
   $core.bool hasMaxHtlcMsat() => $_has(5);
   void clearMaxHtlcMsat() => clearField(6);
+
+  Int64 get minHtlcMsat => $_getI64(6);
+  set minHtlcMsat(Int64 v) { $_setInt64(6, v); }
+  $core.bool hasMinHtlcMsat() => $_has(6);
+  void clearMinHtlcMsat() => clearField(7);
+
+  $core.bool get minHtlcMsatSpecified => $_get(7, false);
+  set minHtlcMsatSpecified($core.bool v) { $_setBool(7, v); }
+  $core.bool hasMinHtlcMsatSpecified() => $_has(7);
+  void clearMinHtlcMsatSpecified() => clearField(8);
 }
 
 class PolicyUpdateResponse extends $pb.GeneratedMessage {

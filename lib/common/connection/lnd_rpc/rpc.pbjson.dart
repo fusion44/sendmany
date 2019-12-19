@@ -166,14 +166,14 @@ const SendRequest$json = const {
     },
     const {'1': 'last_hop_pubkey', '3': 13, '4': 1, '5': 12, '10': 'lastHopPubkey'},
     const {'1': 'cltv_limit', '3': 10, '4': 1, '5': 13, '10': 'cltvLimit'},
-    const {'1': 'dest_tlv', '3': 11, '4': 3, '5': 11, '6': '.lnrpc.SendRequest.DestTlvEntry', '10': 'destTlv'},
+    const {'1': 'dest_custom_records', '3': 11, '4': 3, '5': 11, '6': '.lnrpc.SendRequest.DestCustomRecordsEntry', '10': 'destCustomRecords'},
     const {'1': 'allow_self_payment', '3': 14, '4': 1, '5': 8, '10': 'allowSelfPayment'},
   ],
-  '3': const [SendRequest_DestTlvEntry$json],
+  '3': const [SendRequest_DestCustomRecordsEntry$json],
 };
 
-const SendRequest_DestTlvEntry$json = const {
-  '1': 'DestTlvEntry',
+const SendRequest_DestCustomRecordsEntry$json = const {
+  '1': 'DestCustomRecordsEntry',
   '2': const [
     const {'1': 'key', '3': 1, '4': 1, '5': 4, '10': 'key'},
     const {'1': 'value', '3': 2, '4': 1, '5': 12, '10': 'value'},
@@ -549,8 +549,19 @@ const Peer$json = const {
     const {'1': 'inbound', '3': 8, '4': 1, '5': 8, '10': 'inbound'},
     const {'1': 'ping_time', '3': 9, '4': 1, '5': 3, '10': 'ping_time'},
     const {'1': 'sync_type', '3': 10, '4': 1, '5': 14, '6': '.lnrpc.Peer.SyncType', '10': 'sync_type'},
+    const {'1': 'features', '3': 11, '4': 3, '5': 11, '6': '.lnrpc.Peer.FeaturesEntry', '10': 'features'},
   ],
+  '3': const [Peer_FeaturesEntry$json],
   '4': const [Peer_SyncType$json],
+};
+
+const Peer_FeaturesEntry$json = const {
+  '1': 'FeaturesEntry',
+  '2': const [
+    const {'1': 'key', '3': 1, '4': 1, '5': 13, '10': 'key'},
+    const {'1': 'value', '3': 2, '4': 1, '5': 11, '6': '.lnrpc.Feature', '10': 'value'},
+  ],
+  '7': const {'7': true},
 };
 
 const Peer_SyncType$json = const {
@@ -648,6 +659,7 @@ const CloseChannelRequest$json = const {
     const {'1': 'force', '3': 2, '4': 1, '5': 8, '10': 'force'},
     const {'1': 'target_conf', '3': 3, '4': 1, '5': 5, '10': 'targetConf'},
     const {'1': 'sat_per_byte', '3': 4, '4': 1, '5': 3, '10': 'satPerByte'},
+    const {'1': 'delivery_address', '3': 5, '4': 1, '5': 9, '10': 'delivery_address'},
   ],
 };
 
@@ -862,10 +874,21 @@ const QueryRoutesRequest$json = const {
     const {'1': 'use_mission_control', '3': 9, '4': 1, '5': 8, '10': 'useMissionControl'},
     const {'1': 'ignored_pairs', '3': 10, '4': 3, '5': 11, '6': '.lnrpc.NodePair', '10': 'ignoredPairs'},
     const {'1': 'cltv_limit', '3': 11, '4': 1, '5': 13, '10': 'cltvLimit'},
+    const {'1': 'dest_custom_records', '3': 13, '4': 3, '5': 11, '6': '.lnrpc.QueryRoutesRequest.DestCustomRecordsEntry', '10': 'destCustomRecords'},
   ],
+  '3': const [QueryRoutesRequest_DestCustomRecordsEntry$json],
   '9': const [
     const {'1': 3, '2': 4},
   ],
+};
+
+const QueryRoutesRequest_DestCustomRecordsEntry$json = const {
+  '1': 'DestCustomRecordsEntry',
+  '2': const [
+    const {'1': 'key', '3': 1, '4': 1, '5': 4, '10': 'key'},
+    const {'1': 'value', '3': 2, '4': 1, '5': 12, '10': 'value'},
+  ],
+  '7': const {'7': true},
 };
 
 const NodePair$json = const {
@@ -933,7 +956,18 @@ const Hop$json = const {
     const {'1': 'pub_key', '3': 8, '4': 1, '5': 9, '10': 'pub_key'},
     const {'1': 'tlv_payload', '3': 9, '4': 1, '5': 8, '10': 'tlv_payload'},
     const {'1': 'mpp_record', '3': 10, '4': 1, '5': 11, '6': '.lnrpc.MPPRecord', '10': 'mpp_record'},
+    const {'1': 'custom_records', '3': 11, '4': 3, '5': 11, '6': '.lnrpc.Hop.CustomRecordsEntry', '10': 'custom_records'},
   ],
+  '3': const [Hop_CustomRecordsEntry$json],
+};
+
+const Hop_CustomRecordsEntry$json = const {
+  '1': 'CustomRecordsEntry',
+  '2': const [
+    const {'1': 'key', '3': 1, '4': 1, '5': 4, '10': 'key'},
+    const {'1': 'value', '3': 2, '4': 1, '5': 12, '10': 'value'},
+  ],
+  '7': const {'7': true},
 };
 
 const MPPRecord$json = const {
@@ -996,7 +1030,18 @@ const LightningNode$json = const {
     const {'1': 'alias', '3': 3, '4': 1, '5': 9, '10': 'alias'},
     const {'1': 'addresses', '3': 4, '4': 3, '5': 11, '6': '.lnrpc.NodeAddress', '10': 'addresses'},
     const {'1': 'color', '3': 5, '4': 1, '5': 9, '10': 'color'},
+    const {'1': 'features', '3': 6, '4': 3, '5': 11, '6': '.lnrpc.LightningNode.FeaturesEntry', '10': 'features'},
   ],
+  '3': const [LightningNode_FeaturesEntry$json],
+};
+
+const LightningNode_FeaturesEntry$json = const {
+  '1': 'FeaturesEntry',
+  '2': const [
+    const {'1': 'key', '3': 1, '4': 1, '5': 13, '10': 'key'},
+    const {'1': 'value', '3': 2, '4': 1, '5': 11, '6': '.lnrpc.Feature', '10': 'value'},
+  ],
+  '7': const {'7': true},
 };
 
 const NodeAddress$json = const {
@@ -1230,11 +1275,23 @@ const Invoice$json = const {
     const {'1': 'amt_paid_msat', '3': 20, '4': 1, '5': 3, '10': 'amt_paid_msat'},
     const {'1': 'state', '3': 21, '4': 1, '5': 14, '6': '.lnrpc.Invoice.InvoiceState', '10': 'state'},
     const {'1': 'htlcs', '3': 22, '4': 3, '5': 11, '6': '.lnrpc.InvoiceHTLC', '10': 'htlcs'},
+    const {'1': 'features', '3': 24, '4': 3, '5': 11, '6': '.lnrpc.Invoice.FeaturesEntry', '10': 'features'},
+    const {'1': 'is_key_send', '3': 25, '4': 1, '5': 8, '10': 'is_key_send'},
   ],
+  '3': const [Invoice_FeaturesEntry$json],
   '4': const [Invoice_InvoiceState$json],
   '9': const [
     const {'1': 2, '2': 3},
   ],
+};
+
+const Invoice_FeaturesEntry$json = const {
+  '1': 'FeaturesEntry',
+  '2': const [
+    const {'1': 'key', '3': 1, '4': 1, '5': 13, '10': 'key'},
+    const {'1': 'value', '3': 2, '4': 1, '5': 11, '6': '.lnrpc.Feature', '10': 'value'},
+  ],
+  '7': const {'7': true},
 };
 
 const Invoice_InvoiceState$json = const {
@@ -1265,7 +1322,19 @@ const InvoiceHTLC$json = const {
     const {'1': 'resolve_time', '3': 6, '4': 1, '5': 3, '10': 'resolve_time'},
     const {'1': 'expiry_height', '3': 7, '4': 1, '5': 5, '10': 'expiry_height'},
     const {'1': 'state', '3': 8, '4': 1, '5': 14, '6': '.lnrpc.InvoiceHTLCState', '10': 'state'},
+    const {'1': 'custom_records', '3': 9, '4': 3, '5': 11, '6': '.lnrpc.InvoiceHTLC.CustomRecordsEntry', '10': 'custom_records'},
+    const {'1': 'mpp_total_amt_msat', '3': 10, '4': 1, '5': 4, '10': 'mpp_total_amt_msat'},
   ],
+  '3': const [InvoiceHTLC_CustomRecordsEntry$json],
+};
+
+const InvoiceHTLC_CustomRecordsEntry$json = const {
+  '1': 'CustomRecordsEntry',
+  '2': const [
+    const {'1': 'key', '3': 1, '4': 1, '5': 4, '10': 'key'},
+    const {'1': 'value', '3': 2, '4': 1, '5': 12, '10': 'value'},
+  ],
+  '7': const {'7': true},
 };
 
 const AddInvoiceResponse$json = const {
@@ -1466,6 +1535,28 @@ const PayReq$json = const {
     const {'1': 'fallback_addr', '3': 8, '4': 1, '5': 9, '10': 'fallback_addr'},
     const {'1': 'cltv_expiry', '3': 9, '4': 1, '5': 3, '10': 'cltv_expiry'},
     const {'1': 'route_hints', '3': 10, '4': 3, '5': 11, '6': '.lnrpc.RouteHint', '10': 'route_hints'},
+    const {'1': 'payment_addr', '3': 11, '4': 1, '5': 12, '10': 'payment_addr'},
+    const {'1': 'num_msat', '3': 12, '4': 1, '5': 3, '10': 'num_msat'},
+    const {'1': 'features', '3': 13, '4': 3, '5': 11, '6': '.lnrpc.PayReq.FeaturesEntry', '10': 'features'},
+  ],
+  '3': const [PayReq_FeaturesEntry$json],
+};
+
+const PayReq_FeaturesEntry$json = const {
+  '1': 'FeaturesEntry',
+  '2': const [
+    const {'1': 'key', '3': 1, '4': 1, '5': 13, '10': 'key'},
+    const {'1': 'value', '3': 2, '4': 1, '5': 11, '6': '.lnrpc.Feature', '10': 'value'},
+  ],
+  '7': const {'7': true},
+};
+
+const Feature$json = const {
+  '1': 'Feature',
+  '2': const [
+    const {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
+    const {'1': 'is_required', '3': 3, '4': 1, '5': 8, '10': 'is_required'},
+    const {'1': 'is_known', '3': 4, '4': 1, '5': 8, '10': 'is_known'},
   ],
 };
 
@@ -1502,6 +1593,8 @@ const PolicyUpdateRequest$json = const {
     const {'1': 'fee_rate', '3': 4, '4': 1, '5': 1, '10': 'fee_rate'},
     const {'1': 'time_lock_delta', '3': 5, '4': 1, '5': 13, '10': 'time_lock_delta'},
     const {'1': 'max_htlc_msat', '3': 6, '4': 1, '5': 4, '10': 'max_htlc_msat'},
+    const {'1': 'min_htlc_msat', '3': 7, '4': 1, '5': 4, '10': 'min_htlc_msat'},
+    const {'1': 'min_htlc_msat_specified', '3': 8, '4': 1, '5': 8, '10': 'set_min_htlc_msat'},
   ],
   '8': const [
     const {'1': 'scope'},
