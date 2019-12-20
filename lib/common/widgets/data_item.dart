@@ -15,7 +15,7 @@ class DataItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
+    var theme = Theme.of(context);
 
     return Stack(
       children: <Widget>[

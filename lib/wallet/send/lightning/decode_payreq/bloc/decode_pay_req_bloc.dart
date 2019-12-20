@@ -17,13 +17,13 @@ class DecodePayReqBloc extends Bloc<DecodePayReqBlocEvent, DecodePayReqState> {
       yield InitialDecodePayReqBlocState();
     } else if (event is DecodePayReqEvent) {
       yield DecodingPayReqState(event.payReq);
-      String reqString = event.payReq.contains(':')
+      var reqString = event.payReq.contains(':')
           ? event.payReq.split(':')[1]
           : event.payReq;
 
       var client = LnConnectionDataProvider().lightningClient;
       var macaroon = LnConnectionDataProvider().macaroon;
-      PayReqString req = PayReqString();
+      var req = PayReqString();
 
       try {
         req.setField(1, reqString);

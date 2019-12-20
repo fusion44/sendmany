@@ -22,7 +22,8 @@ class SimpleBlocDelegate extends BlocDelegate {
 }
 
 void main() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
+  WidgetsFlutterBinding.ensureInitialized();
+  var prefs = await SharedPreferences.getInstance();
   BlocSupervisor.delegate = SimpleBlocDelegate();
   runApp(SendManyApp(sharedPreferences: prefs));
 }
@@ -73,7 +74,7 @@ class _SendManyAppState extends State<SendManyApp> {
             //  onboardingFinished true:
             //    pinActive false -> go to HomePage
             //    pinActive true -> go to LoginPage
-            bool connection = connState is ConnectionEstablishedState;
+            var connection = connState is ConnectionEstablishedState;
             if (prefsState is PreferencesLoadedState) {
               if (prefsState.onboardingFinished && connection) {
                 if (prefsState.pinActive) {
@@ -96,13 +97,13 @@ class _SendManyAppState extends State<SendManyApp> {
     );
   }
 
-  _navigateToNamedRoute(BuildContext context, String r) {
+  void _navigateToNamedRoute(BuildContext context, String r) async {
     if (_navigationScheduled) return;
     _navigationScheduled = true;
     WidgetsBinding.instance.addPostFrameCallback(
       (_) async {
         _navigationScheduled = false;
-        Navigator.pushNamedAndRemoveUntil(
+        await Navigator.pushNamedAndRemoveUntil(
           context,
           r,
           (Route<dynamic> route) => false,
@@ -139,7 +140,7 @@ class _SendManyAppState extends State<SendManyApp> {
     );
   }
 
-  _buildMaterialApp() {
+  Widget _buildMaterialApp() {
     var delegates = _buildLocalizationDelegates();
 
     return BlocBuilder(
@@ -166,8 +167,8 @@ class _SendManyAppState extends State<SendManyApp> {
   Locale _checkLocaleSetting(Locale deviceLocale) {
     // Preset the language preference with current device locale
     // to give the PreferencesBloc a warm start on new installs
-    SharedPreferences prefs = widget.sharedPreferences;
-    String langCode = prefs.getString(prefLanguageCode);
+    var prefs = widget.sharedPreferences;
+    var langCode = prefs.getString(prefLanguageCode);
     if (langCode == null) {
       _preferencesBloc.add(
         ChangeLanguageEvent(
@@ -180,7 +181,7 @@ class _SendManyAppState extends State<SendManyApp> {
     }
   }
 
-  _getTheme(String theme) {
+  ThemeData _getTheme(String theme) {
     switch (theme) {
       case themeSendMany:
         return _buildSendManyTheme();
@@ -193,8 +194,8 @@ class _SendManyAppState extends State<SendManyApp> {
     }
   }
 
-  _buildSendManyTheme() {
-    final ThemeData base = ThemeData.dark();
+  ThemeData _buildSendManyTheme() {
+    final base = ThemeData.dark();
     return base.copyWith(
         appBarTheme: base.appBarTheme.copyWith(
           color: sendManyBackground,
@@ -208,14 +209,14 @@ class _SendManyAppState extends State<SendManyApp> {
   }
 
   ThemeData _buildSendManyThemeDark() {
-    final ThemeData base = ThemeData.dark();
+    final base = ThemeData.dark();
     return base.copyWith(
       textTheme: _buildSendManyTextThemeRoboto(base.textTheme),
     );
   }
 
   ThemeData _buildSendManyThemeLight() {
-    final ThemeData base = ThemeData.light();
+    final base = ThemeData.light();
     return base.copyWith(
       textTheme: _buildSendManyTextThemeRoboto(base.textTheme),
     );
@@ -236,8 +237,8 @@ class _SendManyAppState extends State<SendManyApp> {
         .apply(fontFamily: 'RobotoCondensed');
   }
 
-  _buildLocalizationDelegates() {
-    var delegates = List<LocalizationsDelegate<dynamic>>();
+  List<LocalizationsDelegate<dynamic>> _buildLocalizationDelegates() {
+    var delegates = <LocalizationsDelegate<dynamic>>[];
     delegates.addAll([
       FlutterI18nDelegate(
           useCountryCode: false, fallbackFile: 'en', path: 'assets/i18n'),
@@ -247,7 +248,7 @@ class _SendManyAppState extends State<SendManyApp> {
     return delegates;
   }
 
-  _buildSendManyCardTheme(CardTheme cardTheme) {
+  CardTheme _buildSendManyCardTheme(CardTheme cardTheme) {
     return cardTheme.copyWith(
       color: sendManyBackgroundCard,
       shape: Border(),

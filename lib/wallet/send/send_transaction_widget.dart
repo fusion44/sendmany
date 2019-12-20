@@ -106,8 +106,8 @@ class _SendTransactionWidgetState extends State<SendTransactionWidget> {
     );
   }
 
-  _launchURL(String network, String txid) async {
-    String url = 'https://blockstream.info/$network/tx/$txid';
+  void _launchURL(String network, String txid) async {
+    var url = 'https://blockstream.info/$network/tx/$txid';
     if (await canLaunch(url)) {
       await launch(url);
     } else {
@@ -115,7 +115,7 @@ class _SendTransactionWidgetState extends State<SendTransactionWidget> {
     }
   }
 
-  _buildScanAndSendUI() {
+  Widget _buildScanAndSendUI() {
     return _showPasteView
         ? Column(
             children: <Widget>[
@@ -134,7 +134,7 @@ class _SendTransactionWidgetState extends State<SendTransactionWidget> {
                               'wallet.transactions.insert_address_here'),
                         ),
                         validator: (text) {
-                          String reqString = text;
+                          var reqString = text;
                           // TODO: Check validity of the address for current
                           // network (Mainnet, Testnet)
                           if (reqString != '' && reqString != null) {
@@ -156,8 +156,8 @@ class _SendTransactionWidgetState extends State<SendTransactionWidget> {
               RaisedButton(
                 child: TranslatedText('wallet.transactions.send'),
                 onPressed: () {
-                  String address = _addressController.value.text;
-                  String amount = _amountController.value.text;
+                  var address = _addressController.value.text;
+                  var amount = _amountController.value.text;
                   _sendCoinsBloc.add(
                     DoSendCoinsEvent(
                       address: address,

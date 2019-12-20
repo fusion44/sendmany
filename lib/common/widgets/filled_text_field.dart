@@ -45,24 +45,24 @@ class _FilledTextFieldState extends State<FilledTextField> {
   bool validated = false;
 
   @override
-  initState() {
+  void initState() {
     if (widget.validator != null) {
       controller.addListener(() {
-        this.widget.textChanged?.call(controller.text);
-        String res = widget.validator(controller.text);
+        widget.textChanged?.call(controller.text);
+        var res = widget.validator(controller.text);
         if (res == null) {
           setState(() {
-            this.validated = true;
+            validated = true;
           });
         } else {
           setState(() {
-            this.validated = false;
+            validated = false;
           });
         }
       });
     } else {
       controller.addListener(() {
-        this.widget.textChanged?.call(controller.text);
+        widget.textChanged?.call(controller.text);
       });
     }
     controller.text = widget.text;
@@ -87,8 +87,8 @@ class _FilledTextFieldState extends State<FilledTextField> {
   }
 
   Widget _buildTextFormField() {
-    bool showButton = false;
-    double height = 48.0;
+    var showButton = false;
+    var height = 48.0;
 
     if (widget.actionButtonClicked != null) {
       showButton = true;

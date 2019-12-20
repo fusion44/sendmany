@@ -38,14 +38,14 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 
-  _buildUi() {
+  Widget _buildUi() {
     return BlocBuilder<LoginBloc, LoginState>(
       bloc: _loginBloc,
       builder: (
         BuildContext context,
         LoginState loginState,
       ) {
-        bool working = loginState is LoginLoading;
+        var working = loginState is LoginLoading;
 
         return Padding(
           padding: const EdgeInsets.all(8.0),
@@ -66,8 +66,8 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 
-  _onLoginButtonPressed() {
-    FocusScope.of(context).requestFocus(new FocusNode());
+  void _onLoginButtonPressed() {
+    FocusScope.of(context).requestFocus(FocusNode());
     _loginBloc.add(
       LoginButtonPressed(pin: [1, 2, 3, 4]),
     );

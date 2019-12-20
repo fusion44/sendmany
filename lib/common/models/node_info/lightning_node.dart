@@ -19,14 +19,14 @@ class LightningNode {
   });
 
   static LightningNode fromGRPC(grpc.LightningNode n) {
-    List<NodeAddress> addresses = [];
+    var addresses = <NodeAddress>[];
     if (n.addresses != null) {
       n.addresses.forEach((a) {
         addresses.add(NodeAddress.fromGRPC(a));
       });
     }
 
-    String c = n.color.replaceAll('#', '0xff');
+    var c = n.color.replaceAll('#', '0xff');
 
     return LightningNode(
       lastUpdate: n.lastUpdate,

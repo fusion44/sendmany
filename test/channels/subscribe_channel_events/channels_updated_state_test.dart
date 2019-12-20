@@ -17,7 +17,7 @@ List<Channel> _buildInitialChannels() {
         channelPoint: ChannelPoint(fundingTxid: 'pending234', outputIndex: 1),
       ),
     ),
-    null, // devider indicator
+    null, // divider indicator
     EstablishedChannel(
       capacity: Int64.parseInt('300'),
       channelPoint: ChannelPoint(fundingTxid: 'est123', outputIndex: 0),
@@ -37,7 +37,7 @@ void main() {
   test(
     'should update state Established -> PendingClosing object correctly',
     () {
-      ChannelsUpdatedState state = ChannelsUpdatedState(
+      var state = ChannelsUpdatedState(
         channels: _buildInitialChannels(),
         numPending: 2,
       );
@@ -62,7 +62,7 @@ void main() {
   test(
     'should update state PendingOpen -> Established object correctly',
     () {
-      ChannelsUpdatedState state = ChannelsUpdatedState(
+      var state = ChannelsUpdatedState(
         channels: _buildInitialChannels(),
         numPending: 2,
       );
@@ -85,7 +85,7 @@ void main() {
   test(
     'should update state Established -> Established object correctly',
     () {
-      ChannelsUpdatedState state = ChannelsUpdatedState(
+      var state = ChannelsUpdatedState(
         channels: _buildInitialChannels(),
         numPending: 2,
       );

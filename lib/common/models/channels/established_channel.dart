@@ -111,7 +111,7 @@ class EstablishedChannel extends Channel {
   }) : super(channelPoint);
 
   static EstablishedChannel fromGRPC(grpc.Channel c) {
-    List<HTLC> pendingHtlcs = [];
+    var pendingHtlcs = <HTLC>[];
     if (c.pendingHtlcs != null) {
       c.pendingHtlcs.forEach((htlc) {
         pendingHtlcs.add(HTLC.fromGRPC(htlc));

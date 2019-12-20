@@ -24,12 +24,12 @@ class GetRemoteNodeInfoBloc
 
     yield (RemoteNodeInfoLoadingState(event.pubKey));
 
-    grpc.NodeInfoRequest req = grpc.NodeInfoRequest();
+    var req = grpc.NodeInfoRequest();
     req.pubKey = event.pubKey;
     req.includeChannels = event.includeChannels;
 
     try {
-      grpc.NodeInfo resp = await client.getNodeInfo(req);
+      var resp = await client.getNodeInfo(req);
       yield RemoteNodeInfoLoadedState(NodeInfo.fromGRPC(resp));
     } on GrpcError catch (e) {
       yield RemoteNodeInfoErrorState(e.toString(), pubKey: event.pubKey);

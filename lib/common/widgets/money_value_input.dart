@@ -37,14 +37,16 @@ class _MoneyValueInputState extends State<MoneyValueInput> {
       ),
       validator: (text) {
         Int64 amount;
-        bool validated = false;
+        var validated = false;
 
-        if (text.length < 1) validated = false;
+        if (text.isEmpty) validated = false;
 
         try {
           amount = Int64.parseInt(text);
           validated = true;
-        } catch (e) {}
+        } catch (e) {
+          print(e);
+        }
 
         if (!validated) {
           widget.amountChanged(null);

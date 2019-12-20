@@ -1,4 +1,3 @@
-import 'package:fixnum/fixnum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,18 +19,18 @@ class BalanceOverviewWidget extends StatefulWidget {
 class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
+    var theme = Theme.of(context);
     return BlocBuilder(
       bloc: BlocProvider.of<LnInfoBloc>(context),
       builder: (BuildContext context, LnInfoState state) {
         if (state is LnInfoStateLoading) {
           return TranslatedText('network.loading');
         } else if (state is LnInfoStateLoadingFinished) {
-          Int64 total = state.channelBalance.balance +
+          var total = state.channelBalance.balance +
               state.walletBalance.confirmedBalance +
               state.walletBalance.unconfirmedBalance;
 
-          List<ChartSectionInput> i = [
+          var i = <ChartSectionInput>[
             ChartSectionInput(state.walletBalance.confirmedBalance.toDouble(),
                 sendManyConfirmedBalance),
             ChartSectionInput(state.walletBalance.unconfirmedBalance.toDouble(),
@@ -122,7 +121,7 @@ class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
     );
   }
 
-  _buildSendReceiveButtons() {
+  Widget _buildSendReceiveButtons() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[

@@ -5,6 +5,7 @@ import 'package:sendmany/auth/login/login_event.dart';
 import 'package:sendmany/auth/login/login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
+  @override
   LoginState get initialState => LoginSuccess();
 
   @override

@@ -141,7 +141,7 @@ class _CreateChannelPageState extends State<CreateChannelPage> {
 
   QRScannerWidget _buildQrScannerWidget() {
     return QRScannerWidget(onStringFound: (String code) {
-      String key = code;
+      var key = code;
       String host;
       int port;
 
@@ -154,7 +154,7 @@ class _CreateChannelPageState extends State<CreateChannelPage> {
             var spl2 = spl[1].split(':');
             host = spl2[0];
             port = int.tryParse(spl2[1]);
-            if (port == null) port = 0;
+            port ??= 0;
           } else {
             host = spl[1];
           }
@@ -177,7 +177,7 @@ class _CreateChannelPageState extends State<CreateChannelPage> {
   }
 
   Widget _buildNodeInfoLoadingError() {
-    String errorText = 'Unknown error while loading partner node info';
+    var errorText = 'Unknown error while loading partner node info';
     if (_errorMessage.isNotEmpty) {
       errorText = 'Error while loading partner node info: $_errorMessage';
     }
@@ -199,10 +199,10 @@ class _CreateChannelPageState extends State<CreateChannelPage> {
     );
   }
 
-  _buildFAB() {
+  Widget _buildFAB() {
     if (_state == _CreateChannelPageStateState.manualInput ||
         _state == _CreateChannelPageStateState.scanQr) {
-      Icon icon = Icon(_state == _CreateChannelPageStateState.scanQr
+      var icon = Icon(_state == _CreateChannelPageStateState.scanQr
           ? Icons.edit
           : Icons.camera);
 
@@ -219,5 +219,6 @@ class _CreateChannelPageState extends State<CreateChannelPage> {
         },
       );
     }
+    return null;
   }
 }

@@ -46,13 +46,13 @@ class _ListChannelsPageState extends State<ListChannelsPage> {
         if (state is SubscribeChannelLoadingState) {
           return TranslatedText('network.loading');
         } else if (state is ChannelsUpdatedState) {
-          int length = state.channels.length;
-          List<Channel> channels = state.channels;
+          var length = state.channels.length;
+          var channels = state.channels;
 
           return ListView.builder(
             itemCount: length,
             itemBuilder: (context, i) {
-              Channel channel = channels[i];
+              var channel = channels[i];
 
               if (channel == null && i != 0) {
                 return Divider();
@@ -111,9 +111,9 @@ class _ListChannelsPageState extends State<ListChannelsPage> {
   }
 
   FlatLineChart _buildFlatLineChart(EstablishedChannel channel) {
-    double total =
+    var total =
         channel.localBalance.toDouble() + channel.remoteBalance.toDouble();
-    List<ChartSectionInput> sections = [
+    var sections = <ChartSectionInput>[
       ChartSectionInput(channel.localBalance.toDouble(), sendManyLocalBalance),
       ChartSectionInput(
         channel.remoteBalance.toDouble(),
@@ -136,7 +136,7 @@ class _ListChannelsPageState extends State<ListChannelsPage> {
   }
 
   ListTile _buildOpenPendingListTile(PendingOpenChannel channel) {
-    ThemeData theme = Theme.of(context);
+    var theme = Theme.of(context);
     return ListTile(
       leading: Icon(MdiIcons.plusNetwork, color: Colors.green),
       title: Column(
@@ -181,7 +181,7 @@ class _ListChannelsPageState extends State<ListChannelsPage> {
   }
 
   ListTile _buildPendingCloseListTile(PendingClosingChannel channel) {
-    ThemeData theme = Theme.of(context);
+    var theme = Theme.of(context);
 
     return ListTile(
       leading: Icon(MdiIcons.minusNetwork, color: Colors.red),
@@ -221,7 +221,7 @@ class _ListChannelsPageState extends State<ListChannelsPage> {
   }
 
   ListTile _buildPendingForceCloseListTile(PendingForceClosingChannel channel) {
-    ThemeData theme = Theme.of(context);
+    var theme = Theme.of(context);
 
     return ListTile(
       leading: Icon(MdiIcons.minusNetwork, color: Colors.red),
@@ -261,7 +261,7 @@ class _ListChannelsPageState extends State<ListChannelsPage> {
   }
 
   Column _buildTitleColumn(EstablishedChannel channel) {
-    ThemeData theme = Theme.of(context);
+    var theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
@@ -309,7 +309,7 @@ class _ListChannelsPageState extends State<ListChannelsPage> {
   }
 
   ListTile _buildWaitingCloseChannel(WaitingCloseChannel channel) {
-    ThemeData theme = Theme.of(context);
+    var theme = Theme.of(context);
 
     return ListTile(
       leading: Icon(MdiIcons.minusNetwork, color: Colors.red),

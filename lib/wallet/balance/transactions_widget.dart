@@ -30,7 +30,7 @@ class _TransactionsWidgetState extends State<TransactionsWidget> {
               .map((tx) => _buildTxListItem(tx))
               .toList();
 
-          for (int i = 1; i < widgets.length; i += 2) {
+          for (var i = 1; i < widgets.length; i += 2) {
             widgets.insert(i, Divider());
           }
           return SendManyCard(
@@ -45,10 +45,10 @@ class _TransactionsWidgetState extends State<TransactionsWidget> {
   }
 
   Widget _buildTxListItem(Tx tx) {
-    ThemeData theme = Theme.of(context);
+    var theme = Theme.of(context);
 
-    String memo = tx.memo;
-    bool settled = true;
+    var memo = tx.memo;
+    var settled = true;
     Icon icon;
 
     var textStyle = theme.textTheme.caption;

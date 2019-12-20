@@ -98,7 +98,7 @@ QrInfo checkQrCode(String code) {
     code = code.split(':')[1].toLowerCase();
   }
 
-  QrInfo info = QrInfo();
+  var info = QrInfo();
   info.layer = PaymentLayer.unknown;
   info.address = code;
 
@@ -140,7 +140,7 @@ QrInfo checkQrCode(String code) {
   return info;
 }
 
-showSnackbar(BuildContext context, String message) {
+void showSnackbar(BuildContext context, String message) {
   WidgetsBinding.instance.addPostFrameCallback(
     (_) async {
       Scaffold.of(context).showSnackBar(SnackBar(content: Text(message)));
@@ -151,14 +151,16 @@ showSnackbar(BuildContext context, String message) {
 String fillString(text, {int powerOf = 4, String fillerChar = '='}) {
   int remainder = text.length % 4;
   if (remainder == 0) return text;
-  String fillText = '';
-  for (int i = 0; i < (powerOf - remainder); i++) fillText += fillerChar;
+  var fillText = '';
+  for (var i = 0; i < (powerOf - remainder); i++) {
+    fillText += fillerChar;
+  }
   return '$text$fillText';
 }
 
 String getMemoFromPaymentRequest(String req) {
   if (req.isEmpty) return '';
-  Bolt11PaymentRequest r = Bolt11PaymentRequest(req);
+  var r = Bolt11PaymentRequest(req);
   if (r.tags.length > 1 && r.tags[1].type == 'description') {
     return r.tags[1].data;
   } else {

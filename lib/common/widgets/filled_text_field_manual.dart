@@ -53,8 +53,8 @@ class _FilledTextFieldManualState extends State<FilledTextFieldManual> {
   }
 
   Widget _buildTextFormField() {
-    bool showButton = false;
-    double height = 48.0;
+    var showButton = false;
+    var height = 48.0;
 
     if (widget.actionButtonClicked != null) {
       showButton = true;

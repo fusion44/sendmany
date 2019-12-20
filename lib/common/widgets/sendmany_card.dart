@@ -13,7 +13,7 @@ class SendManyCard extends Card {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
+    var theme = Theme.of(context);
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -22,7 +22,7 @@ class SendManyCard extends Card {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.only(bottom: 8.0),
-              child: Text(this.header, style: theme.textTheme.title),
+              child: Text(header, style: theme.textTheme.title),
             ),
             ...cardChildren,
           ],

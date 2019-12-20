@@ -16,8 +16,8 @@ class ListChannelsBloc extends Bloc<ListChannelsEvent, ListChannelsState> {
     if (event is LoadChannelList) {
       var client = LnConnectionDataProvider().lightningClient;
       yield ChannelsLoadingState();
-      ListChannelsRequest req = ListChannelsRequest();
-      ListChannelsResponse resp = await client.listChannels(req);
+      var req = ListChannelsRequest();
+      var resp = await client.listChannels(req);
       yield ChannelsLoadedState(resp);
     }
   }

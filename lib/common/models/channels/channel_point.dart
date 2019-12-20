@@ -13,7 +13,7 @@ class ChannelPoint extends Equatable {
   ChannelPoint({this.fundingTxid, this.outputIndex});
 
   static ChannelPoint fromGRPC(grpc.ChannelPoint cp) {
-    String txid = cp.fundingTxidStr;
+    var txid = cp.fundingTxidStr;
     if (txid == null || txid.isEmpty) {
       // LND sends the byte values in reversed order
       txid = hex.encode(cp.fundingTxidBytes.reversed.toList(growable: false));
@@ -26,7 +26,7 @@ class ChannelPoint extends Equatable {
   }
 
   static ChannelPoint fromString(String cp) {
-    List<String> data = cp.split(':');
+    var data = cp.split(':');
     return ChannelPoint(
       fundingTxid: data[0],
       outputIndex: int.parse(data[1]),

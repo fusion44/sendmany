@@ -68,11 +68,10 @@ class _PreferencesPageState extends State<PreferencesPage> {
         });
   }
 
-  _getLanguageItems() {
-    List<DropdownMenuItem<String>> l =
-        <String>['en', 'de', 'nb'].map<DropdownMenuItem<String>>(
+  List<DropdownMenuItem<String>> _getLanguageItems() {
+    var l = <String>['en', 'de', 'nb'].map<DropdownMenuItem<String>>(
       (String value) {
-        LanguageDisplayData data = getLanguageCodeDisplayData(value);
+        var data = getLanguageCodeDisplayData(value);
         return DropdownMenuItem<String>(
           value: value,
           child: Row(children: [
@@ -90,7 +89,7 @@ class _PreferencesPageState extends State<PreferencesPage> {
     return l;
   }
 
-  _getThemeItems() {
+  List<DropdownMenuItem<String>> _getThemeItems() {
     return [
       'SendMany',
       'Dark',
@@ -108,8 +107,7 @@ class _PreferencesPageState extends State<PreferencesPage> {
   List<DropdownMenuItem<String>> _buildNodeItems(
     List<LndConnectionData> connections,
   ) {
-    List<DropdownMenuItem<String>> l =
-        connections.map<DropdownMenuItem<String>>(
+    var l = connections.map<DropdownMenuItem<String>>(
       (LndConnectionData data) {
         return DropdownMenuItem<String>(
           value: data.name,
@@ -132,7 +130,7 @@ class _PreferencesPageState extends State<PreferencesPage> {
   }
 
   void _navigateToAddRemoteNode() async {
-    Navigator.push(
+    await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) {
         return BlocProvider.value(

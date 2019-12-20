@@ -30,8 +30,9 @@ class CheckLndConnectionBloc
     }
   }
 
-  _establishConnection(DoCheckLNDConnectionEvent event) async {
-    ChannelCredentials creds = ChannelCredentials.secure(
+  Future<CheckLNDConnectionState> _establishConnection(
+      DoCheckLNDConnectionEvent event) async {
+    final creds = ChannelCredentials.secure(
       certificates: event.data.certificate,
       onBadCertificate: (X509Certificate certificate, String host) {
         // Trust the certificate
@@ -39,7 +40,7 @@ class CheckLndConnectionBloc
       },
     );
 
-    CallOptions opts = CallOptions(
+    final opts = CallOptions(
       metadata: {'macaroon': event.data.macaroon},
     );
 

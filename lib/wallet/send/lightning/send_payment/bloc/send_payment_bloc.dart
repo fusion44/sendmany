@@ -15,7 +15,8 @@ class _SendResponseReceivedEvent extends SendPaymentEvent {
 }
 
 class SendPaymentBloc extends Bloc<SendPaymentEvent, SendPaymentState> {
-  StreamController _sendPaymentController = StreamController<SendRequest>();
+  final StreamController _sendPaymentController =
+      StreamController<SendRequest>();
   ResponseStream<SendResponse> _responseStream;
 
   @override
@@ -50,7 +51,7 @@ class SendPaymentBloc extends Bloc<SendPaymentEvent, SendPaymentState> {
     SendPaymentEvent event,
   ) async* {
     if (event is SendPaymentViaInvoiceEvent) {
-      SendRequest req = SendRequest();
+      var req = SendRequest();
       req.paymentRequest = event.invoice;
       _sendPaymentController.add(req);
     } else if (event is _SendResponseReceivedEvent) {

@@ -46,8 +46,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
     }
   }
 
-  _buildBody() {
-    ThemeData theme = Theme.of(context);
+  List<Widget> _buildBody() {
+    var theme = Theme.of(context);
 
     if (_currentStep == 0) {
       // Connect to remote node

@@ -31,7 +31,7 @@ class _OpenChannelSettingsWidgetState extends State<OpenChannelSettingsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
+    var theme = Theme.of(context);
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -94,7 +94,7 @@ class _OpenChannelSettingsWidgetState extends State<OpenChannelSettingsWidget> {
                   child: TranslatedText('channels.open.open_channel'),
                   onPressed: _localAmountValid && _feeValid
                       ? () {
-                          Int64 f = _feeType == OnchainFeeType.blockTarget
+                          var f = _feeType == OnchainFeeType.blockTarget
                               ? _targetBlocks
                               : _fee;
                           widget.openChannelClicked(_feeType, f, _localAmount);

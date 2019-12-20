@@ -15,9 +15,9 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     Future.delayed(Duration.zero, () async {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String code = prefs.getString(prefLanguageCode);
-      await FlutterI18n.refresh(context, Locale(code == null ? 'en' : code));
+      var prefs = await SharedPreferences.getInstance();
+      var code = prefs.getString(prefLanguageCode);
+      await FlutterI18n.refresh(context, Locale(code == null ?? 'en'));
     });
     super.initState();
   }

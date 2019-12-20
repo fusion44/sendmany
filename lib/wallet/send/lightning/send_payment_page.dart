@@ -24,7 +24,7 @@ class _SendPaymentPageState extends State<SendPaymentPage> {
   lnrpc.PayReq _inflightPayment;
 
   @override
-  initState() {
+  void initState() {
     _decodePayReqBloc.add(DecodePayReqEvent(widget.qrinfo.address));
     super.initState();
   }
@@ -43,8 +43,8 @@ class _SendPaymentPageState extends State<SendPaymentPage> {
       onWillPop: () async => false,
       child: Scaffold(
         appBar: AppBar(
-          leading: new IconButton(
-            icon: new Icon(Icons.arrow_back),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
             onPressed: () => Navigator.of(context).pop(_paymentSent),
           ),
         ),
@@ -53,8 +53,8 @@ class _SendPaymentPageState extends State<SendPaymentPage> {
     );
   }
 
-  _buildScanAndSendUI() {
-    ThemeData theme = Theme.of(context);
+  Widget _buildScanAndSendUI() {
+    var theme = Theme.of(context);
     return BlocBuilder(
       bloc: _decodePayReqBloc,
       builder: (BuildContext context, DecodePayReqState state) {
@@ -78,17 +78,18 @@ class _SendPaymentPageState extends State<SendPaymentPage> {
     );
   }
 
-  _buildShowDecodedPayRequestUI(DecodedPayReqState state, ThemeData theme) {
-    DateTime reqDate = DateTime.fromMillisecondsSinceEpoch(
+  Widget _buildShowDecodedPayRequestUI(
+      DecodedPayReqState state, ThemeData theme) {
+    var reqDate = DateTime.fromMillisecondsSinceEpoch(
       state.req.timestamp.toInt() * 1000,
     );
-    DateTime expDate = reqDate.add(
+    var expDate = reqDate.add(
       Duration(seconds: state.req.expiry.toInt()),
     );
 
-    int diff = (DateTime.now().millisecondsSinceEpoch) -
+    var diff = (DateTime.now().millisecondsSinceEpoch) -
         reqDate.millisecondsSinceEpoch;
-    bool expired = diff > (state.req.expiry.toInt() * 1000);
+    var expired = diff > (state.req.expiry.toInt() * 1000);
 
     return SingleChildScrollView(
       child: SendManyCard(
@@ -159,7 +160,7 @@ class _SendPaymentPageState extends State<SendPaymentPage> {
     );
   }
 
-  _buildAwaitResponseUI() {
+  Widget _buildAwaitResponseUI() {
     return BlocBuilder(
       bloc: _sendPaymentBloc,
       builder: (BuildContext context, SendPaymentState state) {

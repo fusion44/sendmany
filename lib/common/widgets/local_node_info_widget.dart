@@ -32,9 +32,9 @@ class _LocalNodeInfoWidgetState extends State<LocalNodeInfoWidget> {
     );
   }
 
-  _buildRowAliasAndChain(GetInfoResponse state) {
-    String chain = 'Multiple';
-    if (state.chains.length == 0) {
+  Widget _buildRowAliasAndChain(GetInfoResponse state) {
+    var chain = 'Multiple';
+    if (state.chains.isEmpty) {
       chain = 'Error: None??';
     } else if (state.chains.length == 1) {
       chain = '${state.chains[0].chain} - ${state.chains[0].network}';
@@ -61,7 +61,7 @@ class _LocalNodeInfoWidgetState extends State<LocalNodeInfoWidget> {
     );
   }
 
-  _buildRowPubkey(GetInfoResponse state) {
+  Widget _buildRowPubkey(GetInfoResponse state) {
     return Row(
       children: <Widget>[
         Expanded(
@@ -83,15 +83,15 @@ class _LocalNodeInfoWidgetState extends State<LocalNodeInfoWidget> {
     );
   }
 
-  _buildRowVersion(GetInfoResponse state) {
+  Widget _buildRowVersion(GetInfoResponse state) {
     return DataItem(
       text: state.version,
       label: 'Version',
     );
   }
 
-  _buildRowChainSyncBlockHeight(GetInfoResponse state) {
-    bool synced = state.syncedToChain;
+  Widget _buildRowChainSyncBlockHeight(GetInfoResponse state) {
+    var synced = state.syncedToChain;
     return Row(
       children: <Widget>[
         Expanded(
@@ -113,10 +113,10 @@ class _LocalNodeInfoWidgetState extends State<LocalNodeInfoWidget> {
     );
   }
 
-  _buildRowPeersChannel(GetInfoResponse info) {
-    int a = info.numActiveChannels;
-    int i = info.numInactiveChannels;
-    int p = info.numPendingChannels;
+  Widget _buildRowPeersChannel(GetInfoResponse info) {
+    var a = info.numActiveChannels;
+    var i = info.numInactiveChannels;
+    var p = info.numPendingChannels;
 
     return Row(
       children: <Widget>[

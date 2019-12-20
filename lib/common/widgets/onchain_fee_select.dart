@@ -22,7 +22,7 @@ class _OnchainFeeSelectWidgetState extends State<OnchainFeeSelectWidget> {
 
   static const String _initialBlockTarget = '6';
   String _blockTarget = _initialBlockTarget;
-  TextEditingController _blockTargetController = TextEditingController(
+  final _blockTargetController = TextEditingController(
     text: _initialBlockTarget,
   );
   bool _blockTargetValid = true;
@@ -34,12 +34,12 @@ class _OnchainFeeSelectWidgetState extends State<OnchainFeeSelectWidget> {
     _blockTargetController.addListener(() {
       if (_feeType == OnchainFeeType.manual) return;
 
-      String txt = _blockTargetController.text;
+      var txt = _blockTargetController.text;
       _blockTargetValid = true;
 
       if (txt.isEmpty) _blockTargetValid = false;
 
-      int intVal = int.tryParse(txt);
+      var intVal = int.tryParse(txt);
       if (intVal == null || intVal < 1) _blockTargetValid = false;
 
       widget.amountChanged(
@@ -56,8 +56,9 @@ class _OnchainFeeSelectWidgetState extends State<OnchainFeeSelectWidget> {
     super.initState();
   }
 
+  @override
   Widget build(BuildContext context) {
-    Map<OnchainFeeType, String> feeTypes = {
+    var feeTypes = {
       OnchainFeeType.blockTarget: tr(context, 'channels.open.fee_target_block'),
       OnchainFeeType.manual: tr(
         context,

@@ -20,7 +20,7 @@ class NewAddressBloc extends Bloc<NewAddressEvent, NewAddressState> {
     var macaroon = LnConnectionDataProvider().macaroon;
     var opts = CallOptions(metadata: {'macaroon': macaroon});
 
-    rpc.NewAddressRequest req = rpc.NewAddressRequest();
+    var req = rpc.NewAddressRequest();
     if (event.addressType == AddressType.witnessPubkeyHash) {
       req.type = rpc.AddressType.WITNESS_PUBKEY_HASH;
     } else {
@@ -28,7 +28,7 @@ class NewAddressBloc extends Bloc<NewAddressEvent, NewAddressState> {
     }
 
     try {
-      rpc.NewAddressResponse resp = await client.newAddress(req, options: opts);
+      var resp = await client.newAddress(req, options: opts);
       yield ReceivedNewAddressState(resp.address);
     } catch (e) {
       yield NewAddressErrorState(e.toString());

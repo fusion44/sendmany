@@ -27,7 +27,6 @@ class SendCoinsPage extends StatefulWidget {
 
 class _SendCoinsPageState extends State<SendCoinsPage> {
   final SendCoinsBloc _sendCoinsBloc = SendCoinsBloc();
-  bool _transactionSent = false;
 
   @override
   void dispose() {
@@ -38,14 +37,14 @@ class _SendCoinsPageState extends State<SendCoinsPage> {
   @override
   Widget build(BuildContext context) {
     //  TODO: implement setting fee ui
-    LnInfoBloc infoBloc = BlocProvider.of<LnInfoBloc>(context);
+    final infoBloc = BlocProvider.of<LnInfoBloc>(context);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
         appBar: AppBar(
-          leading: new IconButton(
-            icon: new Icon(Icons.arrow_back),
-            onPressed: () => Navigator.of(context).pop(_transactionSent),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () => Navigator.of(context).pop(),
           ),
           title: TranslatedText('wallet.transactions.send_coins_page_title'),
         ),
@@ -163,7 +162,7 @@ class _SendCoinsPageState extends State<SendCoinsPage> {
     );
   }
 
-  _buildBackToHomeButton() {
+  Widget _buildBackToHomeButton() {
     return RaisedButton(
       child: TranslatedText('wallet.transactions.tx_sent_go_back_to_home'),
       onPressed: () {
@@ -175,7 +174,7 @@ class _SendCoinsPageState extends State<SendCoinsPage> {
     );
   }
 
-  _submitTransaction(Int64 amount) {
+  void _submitTransaction(Int64 amount) {
     _sendCoinsBloc.add(
       DoSendCoinsEvent(
         address: widget.qrinfo.address,
@@ -188,8 +187,8 @@ class _SendCoinsPageState extends State<SendCoinsPage> {
     Share.text('', txid, 'text/plain');
   }
 
-  _launchURL(String network, String txid) async {
-    String url = 'https://blockstream.info/$network/tx/$txid';
+  void _launchURL(String network, String txid) async {
+    var url = 'https://blockstream.info/$network/tx/$txid';
     if (await canLaunch(url)) {
       await launch(url);
     } else {

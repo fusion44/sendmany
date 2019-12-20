@@ -18,12 +18,12 @@ class SendCoinsBloc extends Bloc<SendCoinsEvent, SendCoinsState> {
       var client = LnConnectionDataProvider().lightningClient;
       var macaroon = LnConnectionDataProvider().macaroon;
       var opts = CallOptions(metadata: {'macaroon': macaroon});
-      SendCoinsRequest req = SendCoinsRequest();
+      var req = SendCoinsRequest();
       req.addr = event.address;
       req.amount = event.amount;
 
       try {
-        SendCoinsResponse resp = await client.sendCoins(req, options: opts);
+        final resp = await client.sendCoins(req, options: opts);
         yield TransactionSubmittedState(resp.txid);
       } catch (e) {
         var state = SendCoinsErrorState(

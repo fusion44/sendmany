@@ -3,7 +3,6 @@ import 'dart:ui' as ui;
 import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -31,8 +30,8 @@ class ShowLightningInvoice extends StatefulWidget {
 
 class _ShowLightningInvoiceState extends State<ShowLightningInvoice> {
   Int64 _addIndex = Int64.ZERO;
-  WatchInvoicesBloc _watchInvoicesBloc = WatchInvoicesBloc();
-  AddInvoiceBloc _addInvoicesBloc = AddInvoiceBloc();
+  final WatchInvoicesBloc _watchInvoicesBloc = WatchInvoicesBloc();
+  final AddInvoiceBloc _addInvoicesBloc = AddInvoiceBloc();
 
   @override
   void initState() {
@@ -56,7 +55,7 @@ class _ShowLightningInvoiceState extends State<ShowLightningInvoice> {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
+    var theme = Theme.of(context);
     return BlocBuilder<AddInvoiceBloc, AddInvoiceState>(
       bloc: _addInvoicesBloc,
       builder: (context, state) {
@@ -121,8 +120,8 @@ class _ShowLightningInvoiceState extends State<ShowLightningInvoice> {
     );
   }
 
-  _buildUnicornDial(String paymentRequest) {
-    var childButtons = List<UnicornButton>();
+  Widget _buildUnicornDial(String paymentRequest) {
+    var childButtons = <UnicornButton>[];
 
     childButtons.add(
       UnicornButton(
@@ -133,13 +132,13 @@ class _ShowLightningInvoiceState extends State<ShowLightningInvoice> {
           mini: true,
           child: Icon(MdiIcons.qrcode),
           onPressed: () async {
-            QrPainter painter = QrPainter(
+            var painter = QrPainter(
               data: paymentRequest,
               version: QrVersions.auto,
               emptyColor: Colors.white,
             );
-            final ui.Image image = await painter.toImage(512);
-            final ByteData data = await image.toByteData(
+            final image = await painter.toImage(512);
+            final data = await image.toByteData(
               format: ui.ImageByteFormat.png,
             );
             await Share.file(

@@ -25,19 +25,19 @@ class SubscribeTransactionsBloc
     }
   }
 
-  _subscribeTransactions() {
+  void _subscribeTransactions() {
     var client = LnConnectionDataProvider().lightningClient;
     var macaroon = LnConnectionDataProvider().macaroon;
     var opts = CallOptions(metadata: {'macaroon': macaroon});
 
-    grpc.GetTransactionsRequest req = grpc.GetTransactionsRequest();
+    var req = grpc.GetTransactionsRequest();
     ResponseStream stream = client.subscribeTransactions(
       req,
       options: opts,
     );
 
     stream.listen((onData) {
-      OnchainTransaction m = OnchainTransaction.fromLND(onData);
+      var m = OnchainTransaction.fromLND(onData);
       add(TransactionChangedEvent(m));
     });
   }

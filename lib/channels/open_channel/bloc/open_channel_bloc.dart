@@ -17,7 +17,7 @@ class OpenChannelBloc extends Bloc<OpenChannelEvent, OpenChannelState> {
     yield InitiateOpenChannelState();
     var client = LnConnectionDataProvider().lightningClient;
 
-    grpc.ConnectPeerRequest connectReq = grpc.ConnectPeerRequest();
+    var connectReq = grpc.ConnectPeerRequest();
     connectReq.addr = e.address.toGRPC();
     connectReq.perm = false;
 
@@ -31,7 +31,7 @@ class OpenChannelBloc extends Bloc<OpenChannelEvent, OpenChannelState> {
       }
     }
 
-    grpc.OpenChannelRequest req = grpc.OpenChannelRequest();
+    var req = grpc.OpenChannelRequest();
     req.nodePubkeyString = e.address.pubkey;
     req.localFundingAmount = e.localFundingAmount;
     if (e.pushSat != null) req.pushSat = e.pushSat;
@@ -44,7 +44,7 @@ class OpenChannelBloc extends Bloc<OpenChannelEvent, OpenChannelState> {
     if (e.spendUnconfirmed != null) req.spendUnconfirmed = e.spendUnconfirmed;
 
     try {
-      grpc.ChannelPoint cp = await client.openChannelSync(req);
+      var cp = await client.openChannelSync(req);
       yield OpenChannelInitiatedState(ChannelPoint.fromGRPC(cp));
     } on GrpcError catch (e) {
       print(e);

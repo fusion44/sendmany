@@ -20,14 +20,14 @@ class FlatLineChartPainter extends CustomPainter {
     List<ChartSectionInput> values, {
     this.strokeWidth = 4.0,
   }) {
-    double unit = 1 / total;
-    double lastEnd = 0;
+    var unit = 1.0 / total;
+    var lastEnd = 0.0;
     values.forEach((v) {
-      Paint p = Paint()
+      var p = Paint()
         ..color = v.color
         ..style = PaintingStyle.stroke
         ..strokeWidth = strokeWidth;
-      double length = v.amount * unit;
+      var length = v.amount * unit;
       sections.add(_LineChartSection(lastEnd, lastEnd + length, p));
       lastEnd += length;
     });
@@ -35,7 +35,7 @@ class FlatLineChartPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    double y = strokeWidth / 2;
+    var y = strokeWidth / 2;
     sections.forEach((s) {
       canvas.drawLine(
         Offset(s.start * size.width, y),

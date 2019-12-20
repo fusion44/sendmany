@@ -17,7 +17,7 @@ class Invoice {
   final Int64 expiry;
   final String fallbackAddr;
   final Int64 cltvExpiry;
-  final List<LnHopHint> routeHints = List();
+  final List<LnHopHint> routeHints = [];
   final bool private;
   final Int64 addIndex;
   final Int64 settleIndex;

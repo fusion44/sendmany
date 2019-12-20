@@ -21,7 +21,7 @@ class _ReceivePageState extends State<ReceivePage> {
   String _memo = '';
   bool _includeOnchainFallback = false;
 
-  NewAddressBloc _newAddressBloc = NewAddressBloc();
+  final NewAddressBloc _newAddressBloc = NewAddressBloc();
   bool _hasEnoughChanCapacity = true;
   bool _isOnChain = false;
   String _onchainAddress = '';
@@ -169,9 +169,9 @@ class _ReceivePageState extends State<ReceivePage> {
   }
 
   Widget _buildOnchainFallbackSwitch() {
-    Duration duration = Duration(milliseconds: 500);
-    double height = 60.0;
-    double opacity = 1.0;
+    var duration = Duration(milliseconds: 500);
+    var height = 60.0;
+    var opacity = 1.0;
     if (_isOnChain || !_hasEnoughChanCapacity && _amount != null) {
       height = 0.0;
       opacity = 0.0;
@@ -200,7 +200,7 @@ class _ReceivePageState extends State<ReceivePage> {
     );
   }
 
-  _buildNewAddressBlocListener(Widget child) {
+  BlocListener _buildNewAddressBlocListener(Widget child) {
     return BlocListener<NewAddressBloc, NewAddressState>(
       bloc: _newAddressBloc,
       listener: (context, state) {

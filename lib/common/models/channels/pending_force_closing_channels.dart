@@ -46,7 +46,7 @@ class PendingForceClosingChannel extends Channel {
   ) {
     List<PendingHtlc> pendingHtlcs;
     if (fcc.pendingHtlcs.isNotEmpty) {
-      pendingHtlcs = List<PendingHtlc>();
+      pendingHtlcs = [];
       fcc.pendingHtlcs.forEach(
         (htlc) {
           pendingHtlcs.add(PendingHtlc.fromGRPC(htlc));

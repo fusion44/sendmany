@@ -35,7 +35,7 @@ class _SendManyTabBarState extends State<SendManyTabBar>
   @override
   Widget build(BuildContext context) {
     List<Widget> tabs = widget.tabs.map((data) {
-      bool selected = widget.tabs.indexOf(data) == selectedIndex;
+      var selected = widget.tabs.indexOf(data) == selectedIndex;
       return SendManyTab(
         index: widget.tabs.indexOf(data),
         onTap: _onChangeTab,

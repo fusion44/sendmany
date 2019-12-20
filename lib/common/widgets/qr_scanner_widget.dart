@@ -132,11 +132,11 @@ class _QRScannerWidgetState extends State<QRScannerWidget> {
     );
   }
 
-  _isFlashOn(String current) {
+  bool _isFlashOn(String current) {
     return flash_on == current;
   }
 
-  _isBackCamera(String current) {
+  bool _isBackCamera(String current) {
     return back_camera == current;
   }
 

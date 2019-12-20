@@ -20,10 +20,10 @@ class AddInvoiceBloc extends Bloc<AddInvoiceEvent, AddInvoiceState> {
       var macaroon = LnConnectionDataProvider().macaroon;
       var opts = CallOptions(metadata: {'macaroon': macaroon});
 
-      grpc.Invoice grpcInvoice = grpc.Invoice();
+      var grpcInvoice = grpc.Invoice();
       grpcInvoice.value = event.value;
       grpcInvoice.memo = event.memo;
-      grpc.AddInvoiceResponse resp = await client.addInvoice(
+      var resp = await client.addInvoice(
         grpcInvoice,
         options: opts,
       );
