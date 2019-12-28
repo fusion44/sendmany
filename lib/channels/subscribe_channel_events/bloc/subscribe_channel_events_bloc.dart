@@ -94,9 +94,23 @@ class SubscribeChannelEventsBloc
     var client = LnConnectionDataProvider().lightningClient;
     var req = grpc.ListChannelsRequest();
     var resp = await client.listChannels(req);
-    return resp.channels.map((grpc.Channel c) {
-      return EstablishedChannel.fromGRPC(c);
-    }).toList();
+
+    var channels = <Channel>[];
+    for (var c in resp.channels) {
+      var req = grpc.NodeInfoRequest();
+      req.pubKey = c.remotePubkey;
+      req.includeChannels = false;
+
+      try {
+        var nodeInfoResp = await client.getNodeInfo(req);
+        var ni = NodeInfo.fromGRPC(nodeInfoResp);
+        channels.add(EstablishedChannel.fromGRPC(c, ni));
+      } on GrpcError catch (e) {
+        print(e.toString());
+      }
+    }
+
+    return channels;
   }
 
   Future<List<Channel>> _loadPendingChannels() async {

@@ -10,6 +10,7 @@ import 'package:sendmany/common/widgets/charts/charts.dart';
 import 'package:sendmany/common/widgets/widgets.dart';
 import 'package:sendmany/wallet/balance/bloc/bloc.dart';
 
+import 'display_channel_info_page.dart';
 import 'subscribe_channel_events/bloc/bloc.dart';
 
 class ListChannelsPage extends StatefulWidget {
@@ -270,15 +271,17 @@ class _ListChannelsPageState extends State<ListChannelsPage> {
             Padding(
               padding: const EdgeInsets.only(top: 1.0),
               child: TranslatedText(
-                'channels.id',
+                'node.alias',
                 style: theme.textTheme.caption,
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(
-                left: 16.0,
+                left: 32.0,
               ),
-              child: Text(channel.chanId.toString()),
+              child: channel.remoteNodeInfo == null
+                  ? Text('Node info not found')
+                  : Text(channel.remoteNodeInfo.node.alias),
             )
           ],
         ),

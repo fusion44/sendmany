@@ -2,6 +2,7 @@ import 'package:fixnum/fixnum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sendmany/channels/list_channels/bloc/bloc.dart';
+import 'package:sendmany/common/models/models.dart';
 import 'package:sendmany/common/utils.dart';
 import 'package:sendmany/common/widgets/widgets.dart';
 import 'package:sendmany/wallet/balance/bloc/bloc.dart';
@@ -224,8 +225,9 @@ class _ReceivePageState extends State<ReceivePage> {
       bloc: BlocProvider.of<ListChannelsBloc>(context),
       listener: (context, state) {
         if (state is ChannelsLoadedState) {
-          state.channels.channels.forEach((channel) {
-            if (channel.remoteBalance > _maxIncomingChanCapacity) {
+          state.channels.forEach((channel) {
+            if (channel is EstablishedChannel &&
+                channel.remoteBalance > _maxIncomingChanCapacity) {
               _maxIncomingChanCapacity = channel.remoteBalance;
             }
           });

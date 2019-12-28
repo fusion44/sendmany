@@ -1,6 +1,7 @@
 import 'package:fixnum/fixnum.dart';
 import 'package:sendmany/common/connection/lnd_rpc/rpc.pb.dart' as grpc;
 
+import '../node_info/node_info.dart';
 import 'channel.dart';
 import 'pending_channel_data.dart';
 import 'pending_htlcs.dart';
@@ -39,11 +40,13 @@ class PendingForceClosingChannel extends Channel {
     this.blocksTilMaturity,
     this.recoveredBalance,
     this.pendingHtlcs,
-  }) : super(channel.channelPoint);
+    NodeInfo remoteNodeInfo,
+  }) : super(channel.channelPoint, remoteNodeInfo);
 
   static PendingForceClosingChannel fromGRPC(
-    grpc.PendingChannelsResponse_ForceClosedChannel fcc,
-  ) {
+    grpc.PendingChannelsResponse_ForceClosedChannel fcc, [
+    NodeInfo remoteNodeInfo,
+  ]) {
     List<PendingHtlc> pendingHtlcs;
     if (fcc.pendingHtlcs.isNotEmpty) {
       pendingHtlcs = [];
@@ -65,6 +68,7 @@ class PendingForceClosingChannel extends Channel {
       blocksTilMaturity: fcc.blocksTilMaturity,
       recoveredBalance: fcc.recoveredBalance,
       pendingHtlcs: pendingHtlcs,
+      remoteNodeInfo: remoteNodeInfo,
     );
   }
 }
