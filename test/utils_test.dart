@@ -27,4 +27,38 @@ void main() {
     result = fillString(len2, powerOf: 6, fillerChar: '!');
     expect(result, 'aa!!!!');
   });
+
+  test('convertMilliSatTo should convert correctly', () {
+    var oneBTCinSat = 100000000.0;
+    var oneBTCinMSat = oneBTCinSat * 1000.0;
+
+    var result = convertMilliSatTo(BitcoinDenom.MilliSat, oneBTCinMSat);
+    expect(result, oneBTCinMSat);
+
+    result = convertMilliSatTo(BitcoinDenom.Satoshi, oneBTCinMSat);
+    expect(result, oneBTCinSat);
+
+    result = convertMilliSatTo(BitcoinDenom.Millibit, oneBTCinMSat);
+    expect(result, 1000000.0);
+
+    result = convertMilliSatTo(BitcoinDenom.Bitcoin, oneBTCinMSat);
+    expect(result, 1.0);
+  });
+
+  test('convertSatTo should convert correctly', () {
+    var oneBTCinSat = 100000000.0;
+    var oneBTCinMSat = oneBTCinSat * 1000.0;
+
+    var result = convertSatTo(BitcoinDenom.MilliSat, oneBTCinSat);
+    expect(result, oneBTCinMSat);
+
+    result = convertSatTo(BitcoinDenom.Satoshi, oneBTCinSat);
+    expect(result, oneBTCinSat);
+
+    result = convertSatTo(BitcoinDenom.Millibit, oneBTCinSat);
+    expect(result, 1000.0);
+
+    result = convertSatTo(BitcoinDenom.Bitcoin, oneBTCinSat);
+    expect(result, 1.0);
+  });
 }

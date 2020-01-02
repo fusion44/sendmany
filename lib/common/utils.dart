@@ -1,6 +1,7 @@
 library sendmany.utils;
 
 import 'package:bolt11_decoder/bolt11_decoder.dart';
+import 'package:fixnum/fixnum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -169,4 +170,76 @@ String getMemoFromPaymentRequest(String req) {
     });
   }
   return '';
+}
+
+/// MilliSat  mシ   Millisat      0.00000000001 BTC
+/// Satoshi	  シ	  Satoshi	      0.00000001 BTC
+/// Millibit	mBTC	Millibitcoin	0.001 BTC
+/// Bitcoin	  BTC	  Bitcoin	      1 BTC
+enum BitcoinDenom { MilliSat, Satoshi, Millibit, Bitcoin }
+
+/// Gets the correct abbreviation for the Bitcoin denomination
+String getAbbreviationForDenomination(BitcoinDenom denomination) {
+  switch (denomination) {
+    case BitcoinDenom.MilliSat:
+      return 'mシ';
+    case BitcoinDenom.Satoshi:
+      return 'シ';
+    case BitcoinDenom.Millibit:
+      return 'mBTC';
+    case BitcoinDenom.Bitcoin:
+      return 'BTC';
+    default:
+      throw ArgumentError('Unknown denomination $denomination');
+  }
+}
+
+/// Converts from Millisatoshis to the requested denomination
+double convertMilliSatTo(BitcoinDenom denomination, dynamic mSat) {
+  double sats;
+  if (mSat is Int64 || mSat is int) {
+    sats = mSat.toDouble();
+  } else if (mSat is double) {
+    sats = mSat;
+  } else {
+    throw ArgumentError('mSat must be either double, int or Int64');
+  }
+
+  switch (denomination) {
+    case BitcoinDenom.MilliSat:
+      return sats;
+    case BitcoinDenom.Satoshi:
+      return sats / 1000;
+    case BitcoinDenom.Millibit:
+      return sats / 100000;
+    case BitcoinDenom.Bitcoin:
+      return sats / 100000000000;
+    default:
+      throw ArgumentError('Unknown denomination $denomination');
+  }
+}
+
+/// Converts from Satoshis to the requested denomination
+double convertSatTo(BitcoinDenom denomination, dynamic sat) {
+  double sats;
+  if (sat is Int64 || sat is int) {
+    sats = sat.toDouble();
+  } else if (sat is double) {
+    sats = sat;
+  } else {
+    throw ArgumentError('sat must be either double, int or Int64');
+  }
+
+  switch (denomination) {
+    case BitcoinDenom.MilliSat:
+      return sats * 1000;
+    case BitcoinDenom.Satoshi:
+      return sats;
+    case BitcoinDenom.Millibit:
+      return sats / 100000;
+    case BitcoinDenom.Bitcoin:
+      return sats / 100000000;
+    default:
+      throw ArgumentError('Unknown denomination $denomination');
+  }
 }
