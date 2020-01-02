@@ -349,7 +349,12 @@ class _ListChannelsPageState extends State<ListChannelsPage> {
     );
   }
 
-  void _openChannelPopup(EstablishedChannel channel) {
-    print(channel.chanId);
+  void _openChannelPopup(Channel channel) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) {
+        return DisplayChannelInfoPage(channel);
+      }),
+    );
   }
 }

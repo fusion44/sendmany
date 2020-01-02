@@ -6,6 +6,7 @@
   },
   "channels": {
     "capacity": "Capacity",
+    "channel": "Channel",
     "close": {
       "closing": "Lukking",
       "force_closing": "Tvinge lukking",
@@ -13,9 +14,15 @@
       "receive_amt": "Motta",
       "waiting_close": "Venter i nærheten"
     },
+    "disabled": "Disabled",
+    "fee_base": "Fee Base",
+    "fee_rate": "Fee Rate",
     "id": "ID",
     "info": "Channels",
     "local": "Lokal",
+    "max_htlc": "Max HTLC",
+    "me": "Meg",
+    "min_htlc": "Min HTLC",
     "open": {
       "advanced_settings": "Advanced",
       "channel_settings": "Channel Settings",
@@ -36,7 +43,8 @@
     "partner_num_channels": "Channels",
     "partner_pubkey": "Public Node Key",
     "partner_total_capacity": "Total Capacity",
-    "remote": "Fjern"
+    "remote": "Fjern",
+    "time_lock_delta": "TimeLockDelta"
   },
   "network": {
     "loading": "lasting",

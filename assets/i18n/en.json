@@ -6,6 +6,7 @@
   },
   "channels": {
     "capacity": "Capacity",
+    "channel": "Channel",
     "close": {
       "closing": "Closing",
       "force_closing": "Force Closing",
@@ -13,9 +14,15 @@
       "receive_amt": "Receiving",
       "waiting_close": "Waiting Close"
     },
+    "disabled": "Disabled",
+    "fee_base": "Fee Base",
+    "fee_rate": "Fee Rate",
     "id": "ID",
     "info": "Channels",
     "local": "Local",
+    "max_htlc": "Max HTLC",
+    "me": "Me",
+    "min_htlc": "Min HTLC",
     "open": {
       "advanced_settings": "Advanced",
       "channel_settings": "Channel Settings",
@@ -36,7 +43,8 @@
     "partner_num_channels": "Channels",
     "partner_pubkey": "Public Node Key",
     "partner_total_capacity": "Total Capacity",
-    "remote": "Remote"
+    "remote": "Remote",
+    "time_lock_delta": "TimeLockDelta"
   },
   "network": {
     "loading": "loading",

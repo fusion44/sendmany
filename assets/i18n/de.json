@@ -6,6 +6,7 @@
   },
   "channels": {
     "capacity": "Kapazität",
+    "channel": "Kanal",
     "close": {
       "closing": "Schliesse",
       "force_closing": "Erzwinge schliessen",
@@ -13,9 +14,15 @@
       "receive_amt": "Empfange",
       "waiting_close": "Erwarte Schliessung"
     },
+    "disabled": "Deaktiviert",
+    "fee_base": "Gebührenbasis",
+    "fee_rate": "Gebührensatz",
     "id": "ID",
     "info": "Kanäle",
     "local": "Lokal",
+    "max_htlc": "Max HTLC",
+    "me": "Ich",
+    "min_htlc": "Min HTLC",
     "open": {
       "advanced_settings": "Erweitert",
       "channel_settings": "Kanal Einstellungen",
@@ -36,7 +43,8 @@
     "partner_num_channels": "Kanäle",
     "partner_pubkey": "Public Node Schlüssel",
     "partner_total_capacity": "Gesamtkapazität",
-    "remote": "Fern"
+    "remote": "Fern",
+    "time_lock_delta": "TimeLockDelta"
   },
   "network": {
     "loading": "Lade",
