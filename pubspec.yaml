@@ -19,9 +19,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_i18n: ^0.8.2
-  equatable: ^1.0.1
-  flutter_bloc: ^2.1.1
+  flutter_i18n: ^0.8.3
+  equatable: ^1.0.2
+  flutter_bloc: ^3.1.0
   meta: ^1.1.8
   flutter_spinkit: ^4.1.1
   shared_preferences: ^0.5.6
@@ -29,9 +29,9 @@ dependencies:
   protobuf: ^1.0.1
   fixnum: ^0.10.11
   qr_code_scanner: ^0.0.12
-  timeago: ^2.0.22
+  timeago: ^2.0.24
   url_launcher: ^5.4.1
-  qr_flutter: ^3.1.0
+  qr_flutter: ^3.2.0
   material_design_icons_flutter: ^3.4.4795
   esys_flutter_share: ^1.0.2
   flutter_secure_storage: ^3.3.1+1

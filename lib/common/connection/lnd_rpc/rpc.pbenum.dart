@@ -51,6 +51,65 @@ class InvoiceHTLCState extends $pb.ProtobufEnum {
   const InvoiceHTLCState._($core.int v, $core.String n) : super(v, n);
 }
 
+class FeatureBit extends $pb.ProtobufEnum {
+  static const FeatureBit DATALOSS_PROTECT_REQ =
+      FeatureBit._(0, 'DATALOSS_PROTECT_REQ');
+  static const FeatureBit DATALOSS_PROTECT_OPT =
+      FeatureBit._(1, 'DATALOSS_PROTECT_OPT');
+  static const FeatureBit INITIAL_ROUING_SYNC =
+      FeatureBit._(3, 'INITIAL_ROUING_SYNC');
+  static const FeatureBit UPFRONT_SHUTDOWN_SCRIPT_REQ =
+      FeatureBit._(4, 'UPFRONT_SHUTDOWN_SCRIPT_REQ');
+  static const FeatureBit UPFRONT_SHUTDOWN_SCRIPT_OPT =
+      FeatureBit._(5, 'UPFRONT_SHUTDOWN_SCRIPT_OPT');
+  static const FeatureBit GOSSIP_QUERIES_REQ =
+      FeatureBit._(6, 'GOSSIP_QUERIES_REQ');
+  static const FeatureBit GOSSIP_QUERIES_OPT =
+      FeatureBit._(7, 'GOSSIP_QUERIES_OPT');
+  static const FeatureBit TLV_ONION_REQ = FeatureBit._(8, 'TLV_ONION_REQ');
+  static const FeatureBit TLV_ONION_OPT = FeatureBit._(9, 'TLV_ONION_OPT');
+  static const FeatureBit EXT_GOSSIP_QUERIES_REQ =
+      FeatureBit._(10, 'EXT_GOSSIP_QUERIES_REQ');
+  static const FeatureBit EXT_GOSSIP_QUERIES_OPT =
+      FeatureBit._(11, 'EXT_GOSSIP_QUERIES_OPT');
+  static const FeatureBit STATIC_REMOTE_KEY_REQ =
+      FeatureBit._(12, 'STATIC_REMOTE_KEY_REQ');
+  static const FeatureBit STATIC_REMOTE_KEY_OPT =
+      FeatureBit._(13, 'STATIC_REMOTE_KEY_OPT');
+  static const FeatureBit PAYMENT_ADDR_REQ =
+      FeatureBit._(14, 'PAYMENT_ADDR_REQ');
+  static const FeatureBit PAYMENT_ADDR_OPT =
+      FeatureBit._(15, 'PAYMENT_ADDR_OPT');
+  static const FeatureBit MPP_REQ = FeatureBit._(16, 'MPP_REQ');
+  static const FeatureBit MPP_OPT = FeatureBit._(17, 'MPP_OPT');
+
+  static const $core.List<FeatureBit> values = <FeatureBit>[
+    DATALOSS_PROTECT_REQ,
+    DATALOSS_PROTECT_OPT,
+    INITIAL_ROUING_SYNC,
+    UPFRONT_SHUTDOWN_SCRIPT_REQ,
+    UPFRONT_SHUTDOWN_SCRIPT_OPT,
+    GOSSIP_QUERIES_REQ,
+    GOSSIP_QUERIES_OPT,
+    TLV_ONION_REQ,
+    TLV_ONION_OPT,
+    EXT_GOSSIP_QUERIES_REQ,
+    EXT_GOSSIP_QUERIES_OPT,
+    STATIC_REMOTE_KEY_REQ,
+    STATIC_REMOTE_KEY_OPT,
+    PAYMENT_ADDR_REQ,
+    PAYMENT_ADDR_OPT,
+    MPP_REQ,
+    MPP_OPT,
+  ];
+
+  static final $core.Map<$core.int, FeatureBit> _byValue =
+      $pb.ProtobufEnum.initByValue(values);
+  static FeatureBit valueOf($core.int value) => _byValue[value];
+
+  const FeatureBit._($core.int v, $core.String n) : super(v, n);
+}
+
 class ChannelCloseSummary_ClosureType extends $pb.ProtobufEnum {
   static const ChannelCloseSummary_ClosureType COOPERATIVE_CLOSE =
       ChannelCloseSummary_ClosureType._(0, 'COOPERATIVE_CLOSE');
@@ -100,6 +159,24 @@ class Peer_SyncType extends $pb.ProtobufEnum {
   static Peer_SyncType valueOf($core.int value) => _byValue[value];
 
   const Peer_SyncType._($core.int v, $core.String n) : super(v, n);
+}
+
+class PeerEvent_EventType extends $pb.ProtobufEnum {
+  static const PeerEvent_EventType PEER_ONLINE =
+      PeerEvent_EventType._(0, 'PEER_ONLINE');
+  static const PeerEvent_EventType PEER_OFFLINE =
+      PeerEvent_EventType._(1, 'PEER_OFFLINE');
+
+  static const $core.List<PeerEvent_EventType> values = <PeerEvent_EventType>[
+    PEER_ONLINE,
+    PEER_OFFLINE,
+  ];
+
+  static final $core.Map<$core.int, PeerEvent_EventType> _byValue =
+      $pb.ProtobufEnum.initByValue(values);
+  static PeerEvent_EventType valueOf($core.int value) => _byValue[value];
+
+  const PeerEvent_EventType._($core.int v, $core.String n) : super(v, n);
 }
 
 class ChannelEventUpdate_UpdateType extends $pb.ProtobufEnum {
@@ -175,4 +252,26 @@ class Payment_PaymentStatus extends $pb.ProtobufEnum {
   static Payment_PaymentStatus valueOf($core.int value) => _byValue[value];
 
   const Payment_PaymentStatus._($core.int v, $core.String n) : super(v, n);
+}
+
+class HTLCAttempt_HTLCStatus extends $pb.ProtobufEnum {
+  static const HTLCAttempt_HTLCStatus IN_FLIGHT =
+      HTLCAttempt_HTLCStatus._(0, 'IN_FLIGHT');
+  static const HTLCAttempt_HTLCStatus SUCCEEDED =
+      HTLCAttempt_HTLCStatus._(1, 'SUCCEEDED');
+  static const HTLCAttempt_HTLCStatus FAILED =
+      HTLCAttempt_HTLCStatus._(2, 'FAILED');
+
+  static const $core.List<HTLCAttempt_HTLCStatus> values =
+      <HTLCAttempt_HTLCStatus>[
+    IN_FLIGHT,
+    SUCCEEDED,
+    FAILED,
+  ];
+
+  static final $core.Map<$core.int, HTLCAttempt_HTLCStatus> _byValue =
+      $pb.ProtobufEnum.initByValue(values);
+  static HTLCAttempt_HTLCStatus valueOf($core.int value) => _byValue[value];
+
+  const HTLCAttempt_HTLCStatus._($core.int v, $core.String n) : super(v, n);
 }

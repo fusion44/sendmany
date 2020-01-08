@@ -596,19 +596,21 @@ class TransactionDetails extends $pb.GeneratedMessage {
   $core.List<Transaction> get transactions => $_getList(0);
 }
 
-enum FeeLimit_Limit { fixed, percent, notSet }
+enum FeeLimit_Limit { fixed, percent, fixedMsat, notSet }
 
 class FeeLimit extends $pb.GeneratedMessage {
   static const $core.Map<$core.int, FeeLimit_Limit> _FeeLimit_LimitByTag = {
     1: FeeLimit_Limit.fixed,
     2: FeeLimit_Limit.percent,
+    3: FeeLimit_Limit.fixedMsat,
     0: FeeLimit_Limit.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('FeeLimit',
       package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
-    ..oo(0, [1, 2])
+    ..oo(0, [1, 2, 3])
     ..aInt64(1, 'fixed')
     ..aInt64(2, 'percent')
+    ..aInt64(3, 'fixedMsat')
     ..hasRequiredFields = false;
 
   FeeLimit._() : super();
@@ -648,6 +650,14 @@ class FeeLimit extends $pb.GeneratedMessage {
 
   $core.bool hasPercent() => $_has(1);
   void clearPercent() => clearField(2);
+
+  Int64 get fixedMsat => $_getI64(2);
+  set fixedMsat(Int64 v) {
+    $_setInt64(2, v);
+  }
+
+  $core.bool hasFixedMsat() => $_has(2);
+  void clearFixedMsat() => clearField(3);
 }
 
 class SendRequest extends $pb.GeneratedMessage {
@@ -665,11 +675,16 @@ class SendRequest extends $pb.GeneratedMessage {
     ..a<Int64>(9, 'outgoingChanId', $pb.PbFieldType.OU6,
         defaultOrMaker: Int64.ZERO)
     ..a<$core.int>(10, 'cltvLimit', $pb.PbFieldType.OU3)
-    ..m<Int64, $core.List<$core.int>>(11, 'destTlv',
-        entryClassName: 'SendRequest.DestTlvEntry',
+    ..m<Int64, $core.List<$core.int>>(11, 'destCustomRecords',
+        entryClassName: 'SendRequest.DestCustomRecordsEntry',
         keyFieldType: $pb.PbFieldType.OU6,
         valueFieldType: $pb.PbFieldType.OY,
         packageName: const $pb.PackageName('lnrpc'))
+    ..aInt64(12, 'amtMsat')
+    ..a<$core.List<$core.int>>(13, 'lastHopPubkey', $pb.PbFieldType.OY)
+    ..aOB(14, 'allowSelfPayment')
+    ..pc<FeatureBit>(15, 'destFeatures', $pb.PbFieldType.PE,
+        valueOf: FeatureBit.valueOf, enumValues: FeatureBit.values)
     ..hasRequiredFields = false;
 
   SendRequest._() : super();
@@ -699,12 +714,16 @@ class SendRequest extends $pb.GeneratedMessage {
   $core.bool hasDest() => $_has(0);
   void clearDest() => clearField(1);
 
+  @$core.Deprecated('This field is deprecated.')
   $core.String get destString => $_getS(1, '');
+  @$core.Deprecated('This field is deprecated.')
   set destString($core.String v) {
     $_setString(1, v);
   }
 
+  @$core.Deprecated('This field is deprecated.')
   $core.bool hasDestString() => $_has(1);
+  @$core.Deprecated('This field is deprecated.')
   void clearDestString() => clearField(2);
 
   Int64 get amt => $_getI64(2);
@@ -723,12 +742,16 @@ class SendRequest extends $pb.GeneratedMessage {
   $core.bool hasPaymentHash() => $_has(3);
   void clearPaymentHash() => clearField(4);
 
+  @$core.Deprecated('This field is deprecated.')
   $core.String get paymentHashString => $_getS(4, '');
+  @$core.Deprecated('This field is deprecated.')
   set paymentHashString($core.String v) {
     $_setString(4, v);
   }
 
+  @$core.Deprecated('This field is deprecated.')
   $core.bool hasPaymentHashString() => $_has(4);
+  @$core.Deprecated('This field is deprecated.')
   void clearPaymentHashString() => clearField(5);
 
   $core.String get paymentRequest => $_getS(5, '');
@@ -771,7 +794,33 @@ class SendRequest extends $pb.GeneratedMessage {
   $core.bool hasCltvLimit() => $_has(9);
   void clearCltvLimit() => clearField(10);
 
-  $core.Map<Int64, $core.List<$core.int>> get destTlv => $_getMap(10);
+  $core.Map<Int64, $core.List<$core.int>> get destCustomRecords => $_getMap(10);
+
+  Int64 get amtMsat => $_getI64(11);
+  set amtMsat(Int64 v) {
+    $_setInt64(11, v);
+  }
+
+  $core.bool hasAmtMsat() => $_has(11);
+  void clearAmtMsat() => clearField(12);
+
+  $core.List<$core.int> get lastHopPubkey => $_getN(12);
+  set lastHopPubkey($core.List<$core.int> v) {
+    $_setBytes(12, v);
+  }
+
+  $core.bool hasLastHopPubkey() => $_has(12);
+  void clearLastHopPubkey() => clearField(13);
+
+  $core.bool get allowSelfPayment => $_get(13, false);
+  set allowSelfPayment($core.bool v) {
+    $_setBool(13, v);
+  }
+
+  $core.bool hasAllowSelfPayment() => $_has(13);
+  void clearAllowSelfPayment() => clearField(14);
+
+  $core.List<FeatureBit> get destFeatures => $_getList(14);
 }
 
 class SendResponse extends $pb.GeneratedMessage {
@@ -875,12 +924,16 @@ class SendToRouteRequest extends $pb.GeneratedMessage {
   $core.bool hasPaymentHash() => $_has(0);
   void clearPaymentHash() => clearField(1);
 
+  @$core.Deprecated('This field is deprecated.')
   $core.String get paymentHashString => $_getS(1, '');
+  @$core.Deprecated('This field is deprecated.')
   set paymentHashString($core.String v) {
     $_setString(1, v);
   }
 
+  @$core.Deprecated('This field is deprecated.')
   $core.bool hasPaymentHashString() => $_has(1);
+  @$core.Deprecated('This field is deprecated.')
   void clearPaymentHashString() => clearField(2);
 
   Route get route => $_getN(2);
@@ -2078,6 +2131,9 @@ class Channel extends $pb.GeneratedMessage {
     ..aInt64(20, 'local_chan_reserve_sat')
     ..aInt64(21, 'remote_chan_reserve_sat')
     ..aOB(22, 'static_remote_key')
+    ..aInt64(23, 'lifetime')
+    ..aInt64(24, 'uptime')
+    ..aOS(25, 'close_address')
     ..hasRequiredFields = false;
 
   Channel._() : super();
@@ -2268,6 +2324,30 @@ class Channel extends $pb.GeneratedMessage {
 
   $core.bool hasStaticRemoteKey() => $_has(21);
   void clearStaticRemoteKey() => clearField(22);
+
+  Int64 get lifetime => $_getI64(22);
+  set lifetime(Int64 v) {
+    $_setInt64(22, v);
+  }
+
+  $core.bool hasLifetime() => $_has(22);
+  void clearLifetime() => clearField(23);
+
+  Int64 get uptime => $_getI64(23);
+  set uptime(Int64 v) {
+    $_setInt64(23, v);
+  }
+
+  $core.bool hasUptime() => $_has(23);
+  void clearUptime() => clearField(24);
+
+  $core.String get closeAddress => $_getS(24, '');
+  set closeAddress($core.String v) {
+    $_setString(24, v);
+  }
+
+  $core.bool hasCloseAddress() => $_has(24);
+  void clearCloseAddress() => clearField(25);
 }
 
 class ListChannelsRequest extends $pb.GeneratedMessage {
@@ -2616,6 +2696,12 @@ class Peer extends $pb.GeneratedMessage {
         defaultOrMaker: Peer_SyncType.UNKNOWN_SYNC,
         valueOf: Peer_SyncType.valueOf,
         enumValues: Peer_SyncType.values)
+    ..m<$core.int, Feature>(11, 'features',
+        entryClassName: 'Peer.FeaturesEntry',
+        keyFieldType: $pb.PbFieldType.OU3,
+        valueFieldType: $pb.PbFieldType.OM,
+        valueCreator: Feature.create,
+        packageName: const $pb.PackageName('lnrpc'))
     ..hasRequiredFields = false;
 
   Peer._() : super();
@@ -2708,6 +2794,8 @@ class Peer extends $pb.GeneratedMessage {
 
   $core.bool hasSyncType() => $_has(8);
   void clearSyncType() => clearField(10);
+
+  $core.Map<$core.int, Feature> get features => $_getMap(9);
 }
 
 class ListPeersRequest extends $pb.GeneratedMessage {
@@ -2767,6 +2855,81 @@ class ListPeersResponse extends $pb.GeneratedMessage {
   $core.List<Peer> get peers => $_getList(0);
 }
 
+class PeerEventSubscription extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('PeerEventSubscription',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..hasRequiredFields = false;
+
+  PeerEventSubscription._() : super();
+  factory PeerEventSubscription() => create();
+  factory PeerEventSubscription.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory PeerEventSubscription.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  PeerEventSubscription clone() =>
+      PeerEventSubscription()..mergeFromMessage(this);
+  PeerEventSubscription copyWith(
+          void Function(PeerEventSubscription) updates) =>
+      super.copyWith((message) => updates(message as PeerEventSubscription));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static PeerEventSubscription create() => PeerEventSubscription._();
+  PeerEventSubscription createEmptyInstance() => create();
+  static $pb.PbList<PeerEventSubscription> createRepeated() =>
+      $pb.PbList<PeerEventSubscription>();
+  static PeerEventSubscription getDefault() =>
+      _defaultInstance ??= create()..freeze();
+  static PeerEventSubscription _defaultInstance;
+}
+
+class PeerEvent extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('PeerEvent',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..aOS(1, 'pub_key')
+    ..e<PeerEvent_EventType>(2, 'type', $pb.PbFieldType.OE,
+        defaultOrMaker: PeerEvent_EventType.PEER_ONLINE,
+        valueOf: PeerEvent_EventType.valueOf,
+        enumValues: PeerEvent_EventType.values)
+    ..hasRequiredFields = false;
+
+  PeerEvent._() : super();
+  factory PeerEvent() => create();
+  factory PeerEvent.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory PeerEvent.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  PeerEvent clone() => PeerEvent()..mergeFromMessage(this);
+  PeerEvent copyWith(void Function(PeerEvent) updates) =>
+      super.copyWith((message) => updates(message as PeerEvent));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static PeerEvent create() => PeerEvent._();
+  PeerEvent createEmptyInstance() => create();
+  static $pb.PbList<PeerEvent> createRepeated() => $pb.PbList<PeerEvent>();
+  static PeerEvent getDefault() => _defaultInstance ??= create()..freeze();
+  static PeerEvent _defaultInstance;
+
+  $core.String get pubKey => $_getS(0, '');
+  set pubKey($core.String v) {
+    $_setString(0, v);
+  }
+
+  $core.bool hasPubKey() => $_has(0);
+  void clearPubKey() => clearField(1);
+
+  PeerEvent_EventType get type => $_getN(1);
+  set type(PeerEvent_EventType v) {
+    setField(2, v);
+  }
+
+  $core.bool hasType() => $_has(1);
+  void clearType() => clearField(2);
+}
+
 class GetInfoRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('GetInfoRequest',
       package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
@@ -2812,6 +2975,12 @@ class GetInfoResponse extends $pb.GeneratedMessage {
     ..pc<Chain>(16, 'chains', $pb.PbFieldType.PM, subBuilder: Chain.create)
     ..aOS(17, 'color')
     ..aOB(18, 'synced_to_graph')
+    ..m<$core.int, Feature>(19, 'features',
+        entryClassName: 'GetInfoResponse.FeaturesEntry',
+        keyFieldType: $pb.PbFieldType.OU3,
+        valueFieldType: $pb.PbFieldType.OM,
+        valueCreator: Feature.create,
+        packageName: const $pb.PackageName('lnrpc'))
     ..hasRequiredFields = false;
 
   GetInfoResponse._() : super();
@@ -2954,6 +3123,8 @@ class GetInfoResponse extends $pb.GeneratedMessage {
 
   $core.bool hasSyncedToGraph() => $_has(15);
   void clearSyncedToGraph() => clearField(18);
+
+  $core.Map<$core.int, Feature> get features => $_getMap(16);
 }
 
 class Chain extends $pb.GeneratedMessage {
@@ -3145,6 +3316,7 @@ class CloseChannelRequest extends $pb.GeneratedMessage {
     ..aOB(2, 'force')
     ..a<$core.int>(3, 'targetConf', $pb.PbFieldType.O3)
     ..aInt64(4, 'satPerByte')
+    ..aOS(5, 'delivery_address')
     ..hasRequiredFields = false;
 
   CloseChannelRequest._() : super();
@@ -3199,6 +3371,14 @@ class CloseChannelRequest extends $pb.GeneratedMessage {
 
   $core.bool hasSatPerByte() => $_has(3);
   void clearSatPerByte() => clearField(4);
+
+  $core.String get deliveryAddress => $_getS(4, '');
+  set deliveryAddress($core.String v) {
+    $_setString(4, v);
+  }
+
+  $core.bool hasDeliveryAddress() => $_has(4);
+  void clearDeliveryAddress() => clearField(5);
 }
 
 enum CloseStatusUpdate_Update { closePending, chanClose, notSet }
@@ -3321,6 +3501,9 @@ class OpenChannelRequest extends $pb.GeneratedMessage {
     ..a<$core.int>(10, 'remote_csv_delay', $pb.PbFieldType.OU3)
     ..a<$core.int>(11, 'min_confs', $pb.PbFieldType.O3)
     ..aOB(12, 'spend_unconfirmed')
+    ..aOS(13, 'close_address')
+    ..a<FundingShim>(14, 'funding_shim', $pb.PbFieldType.OM,
+        defaultOrMaker: FundingShim.getDefault, subBuilder: FundingShim.create)
     ..hasRequiredFields = false;
 
   OpenChannelRequest._() : super();
@@ -3352,12 +3535,16 @@ class OpenChannelRequest extends $pb.GeneratedMessage {
   $core.bool hasNodePubkey() => $_has(0);
   void clearNodePubkey() => clearField(2);
 
+  @$core.Deprecated('This field is deprecated.')
   $core.String get nodePubkeyString => $_getS(1, '');
+  @$core.Deprecated('This field is deprecated.')
   set nodePubkeyString($core.String v) {
     $_setString(1, v);
   }
 
+  @$core.Deprecated('This field is deprecated.')
   $core.bool hasNodePubkeyString() => $_has(1);
+  @$core.Deprecated('This field is deprecated.')
   void clearNodePubkeyString() => clearField(3);
 
   Int64 get localFundingAmount => $_getI64(2);
@@ -3431,6 +3618,22 @@ class OpenChannelRequest extends $pb.GeneratedMessage {
 
   $core.bool hasSpendUnconfirmed() => $_has(10);
   void clearSpendUnconfirmed() => clearField(12);
+
+  $core.String get closeAddress => $_getS(11, '');
+  set closeAddress($core.String v) {
+    $_setString(11, v);
+  }
+
+  $core.bool hasCloseAddress() => $_has(11);
+  void clearCloseAddress() => clearField(13);
+
+  FundingShim get fundingShim => $_getN(12);
+  set fundingShim(FundingShim v) {
+    setField(14, v);
+  }
+
+  $core.bool hasFundingShim() => $_has(12);
+  void clearFundingShim() => clearField(14);
 }
 
 enum OpenStatusUpdate_Update { chanPending, chanOpen, notSet }
@@ -3451,6 +3654,7 @@ class OpenStatusUpdate extends $pb.GeneratedMessage {
     ..a<ChannelOpenUpdate>(3, 'chan_open', $pb.PbFieldType.OM,
         defaultOrMaker: ChannelOpenUpdate.getDefault,
         subBuilder: ChannelOpenUpdate.create)
+    ..a<$core.List<$core.int>>(4, 'pending_chan_id', $pb.PbFieldType.OY)
     ..hasRequiredFields = false;
 
   OpenStatusUpdate._() : super();
@@ -3493,6 +3697,349 @@ class OpenStatusUpdate extends $pb.GeneratedMessage {
 
   $core.bool hasChanOpen() => $_has(1);
   void clearChanOpen() => clearField(3);
+
+  $core.List<$core.int> get pendingChanId => $_getN(2);
+  set pendingChanId($core.List<$core.int> v) {
+    $_setBytes(2, v);
+  }
+
+  $core.bool hasPendingChanId() => $_has(2);
+  void clearPendingChanId() => clearField(4);
+}
+
+class KeyLocator extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('KeyLocator',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..a<$core.int>(1, 'keyFamily', $pb.PbFieldType.O3)
+    ..a<$core.int>(2, 'keyIndex', $pb.PbFieldType.O3)
+    ..hasRequiredFields = false;
+
+  KeyLocator._() : super();
+  factory KeyLocator() => create();
+  factory KeyLocator.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory KeyLocator.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  KeyLocator clone() => KeyLocator()..mergeFromMessage(this);
+  KeyLocator copyWith(void Function(KeyLocator) updates) =>
+      super.copyWith((message) => updates(message as KeyLocator));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static KeyLocator create() => KeyLocator._();
+  KeyLocator createEmptyInstance() => create();
+  static $pb.PbList<KeyLocator> createRepeated() => $pb.PbList<KeyLocator>();
+  static KeyLocator getDefault() => _defaultInstance ??= create()..freeze();
+  static KeyLocator _defaultInstance;
+
+  $core.int get keyFamily => $_get(0, 0);
+  set keyFamily($core.int v) {
+    $_setSignedInt32(0, v);
+  }
+
+  $core.bool hasKeyFamily() => $_has(0);
+  void clearKeyFamily() => clearField(1);
+
+  $core.int get keyIndex => $_get(1, 0);
+  set keyIndex($core.int v) {
+    $_setSignedInt32(1, v);
+  }
+
+  $core.bool hasKeyIndex() => $_has(1);
+  void clearKeyIndex() => clearField(2);
+}
+
+class KeyDescriptor extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('KeyDescriptor',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..a<$core.List<$core.int>>(1, 'rawKeyBytes', $pb.PbFieldType.OY)
+    ..a<KeyLocator>(2, 'keyLoc', $pb.PbFieldType.OM,
+        defaultOrMaker: KeyLocator.getDefault, subBuilder: KeyLocator.create)
+    ..hasRequiredFields = false;
+
+  KeyDescriptor._() : super();
+  factory KeyDescriptor() => create();
+  factory KeyDescriptor.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory KeyDescriptor.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  KeyDescriptor clone() => KeyDescriptor()..mergeFromMessage(this);
+  KeyDescriptor copyWith(void Function(KeyDescriptor) updates) =>
+      super.copyWith((message) => updates(message as KeyDescriptor));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static KeyDescriptor create() => KeyDescriptor._();
+  KeyDescriptor createEmptyInstance() => create();
+  static $pb.PbList<KeyDescriptor> createRepeated() =>
+      $pb.PbList<KeyDescriptor>();
+  static KeyDescriptor getDefault() => _defaultInstance ??= create()..freeze();
+  static KeyDescriptor _defaultInstance;
+
+  $core.List<$core.int> get rawKeyBytes => $_getN(0);
+  set rawKeyBytes($core.List<$core.int> v) {
+    $_setBytes(0, v);
+  }
+
+  $core.bool hasRawKeyBytes() => $_has(0);
+  void clearRawKeyBytes() => clearField(1);
+
+  KeyLocator get keyLoc => $_getN(1);
+  set keyLoc(KeyLocator v) {
+    setField(2, v);
+  }
+
+  $core.bool hasKeyLoc() => $_has(1);
+  void clearKeyLoc() => clearField(2);
+}
+
+class ChanPointShim extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('ChanPointShim',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..aInt64(1, 'amt')
+    ..a<ChannelPoint>(2, 'chanPoint', $pb.PbFieldType.OM,
+        defaultOrMaker: ChannelPoint.getDefault,
+        subBuilder: ChannelPoint.create)
+    ..a<KeyDescriptor>(3, 'localKey', $pb.PbFieldType.OM,
+        defaultOrMaker: KeyDescriptor.getDefault,
+        subBuilder: KeyDescriptor.create)
+    ..a<$core.List<$core.int>>(4, 'remoteKey', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(5, 'pendingChanId', $pb.PbFieldType.OY)
+    ..hasRequiredFields = false;
+
+  ChanPointShim._() : super();
+  factory ChanPointShim() => create();
+  factory ChanPointShim.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory ChanPointShim.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  ChanPointShim clone() => ChanPointShim()..mergeFromMessage(this);
+  ChanPointShim copyWith(void Function(ChanPointShim) updates) =>
+      super.copyWith((message) => updates(message as ChanPointShim));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static ChanPointShim create() => ChanPointShim._();
+  ChanPointShim createEmptyInstance() => create();
+  static $pb.PbList<ChanPointShim> createRepeated() =>
+      $pb.PbList<ChanPointShim>();
+  static ChanPointShim getDefault() => _defaultInstance ??= create()..freeze();
+  static ChanPointShim _defaultInstance;
+
+  Int64 get amt => $_getI64(0);
+  set amt(Int64 v) {
+    $_setInt64(0, v);
+  }
+
+  $core.bool hasAmt() => $_has(0);
+  void clearAmt() => clearField(1);
+
+  ChannelPoint get chanPoint => $_getN(1);
+  set chanPoint(ChannelPoint v) {
+    setField(2, v);
+  }
+
+  $core.bool hasChanPoint() => $_has(1);
+  void clearChanPoint() => clearField(2);
+
+  KeyDescriptor get localKey => $_getN(2);
+  set localKey(KeyDescriptor v) {
+    setField(3, v);
+  }
+
+  $core.bool hasLocalKey() => $_has(2);
+  void clearLocalKey() => clearField(3);
+
+  $core.List<$core.int> get remoteKey => $_getN(3);
+  set remoteKey($core.List<$core.int> v) {
+    $_setBytes(3, v);
+  }
+
+  $core.bool hasRemoteKey() => $_has(3);
+  void clearRemoteKey() => clearField(4);
+
+  $core.List<$core.int> get pendingChanId => $_getN(4);
+  set pendingChanId($core.List<$core.int> v) {
+    $_setBytes(4, v);
+  }
+
+  $core.bool hasPendingChanId() => $_has(4);
+  void clearPendingChanId() => clearField(5);
+}
+
+enum FundingShim_Shim { chanPointShim, notSet }
+
+class FundingShim extends $pb.GeneratedMessage {
+  static const $core.Map<$core.int, FundingShim_Shim> _FundingShim_ShimByTag = {
+    1: FundingShim_Shim.chanPointShim,
+    0: FundingShim_Shim.notSet
+  };
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('FundingShim',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..oo(0, [1])
+    ..a<ChanPointShim>(1, 'chanPointShim', $pb.PbFieldType.OM,
+        defaultOrMaker: ChanPointShim.getDefault,
+        subBuilder: ChanPointShim.create)
+    ..hasRequiredFields = false;
+
+  FundingShim._() : super();
+  factory FundingShim() => create();
+  factory FundingShim.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory FundingShim.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  FundingShim clone() => FundingShim()..mergeFromMessage(this);
+  FundingShim copyWith(void Function(FundingShim) updates) =>
+      super.copyWith((message) => updates(message as FundingShim));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static FundingShim create() => FundingShim._();
+  FundingShim createEmptyInstance() => create();
+  static $pb.PbList<FundingShim> createRepeated() => $pb.PbList<FundingShim>();
+  static FundingShim getDefault() => _defaultInstance ??= create()..freeze();
+  static FundingShim _defaultInstance;
+
+  FundingShim_Shim whichShim() => _FundingShim_ShimByTag[$_whichOneof(0)];
+  void clearShim() => clearField($_whichOneof(0));
+
+  ChanPointShim get chanPointShim => $_getN(0);
+  set chanPointShim(ChanPointShim v) {
+    setField(1, v);
+  }
+
+  $core.bool hasChanPointShim() => $_has(0);
+  void clearChanPointShim() => clearField(1);
+}
+
+class FundingShimCancel extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('FundingShimCancel',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..a<$core.List<$core.int>>(1, 'pendingChanId', $pb.PbFieldType.OY)
+    ..hasRequiredFields = false;
+
+  FundingShimCancel._() : super();
+  factory FundingShimCancel() => create();
+  factory FundingShimCancel.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory FundingShimCancel.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  FundingShimCancel clone() => FundingShimCancel()..mergeFromMessage(this);
+  FundingShimCancel copyWith(void Function(FundingShimCancel) updates) =>
+      super.copyWith((message) => updates(message as FundingShimCancel));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static FundingShimCancel create() => FundingShimCancel._();
+  FundingShimCancel createEmptyInstance() => create();
+  static $pb.PbList<FundingShimCancel> createRepeated() =>
+      $pb.PbList<FundingShimCancel>();
+  static FundingShimCancel getDefault() =>
+      _defaultInstance ??= create()..freeze();
+  static FundingShimCancel _defaultInstance;
+
+  $core.List<$core.int> get pendingChanId => $_getN(0);
+  set pendingChanId($core.List<$core.int> v) {
+    $_setBytes(0, v);
+  }
+
+  $core.bool hasPendingChanId() => $_has(0);
+  void clearPendingChanId() => clearField(1);
+}
+
+enum FundingTransitionMsg_Trigger { shimRegister, shimCancel, notSet }
+
+class FundingTransitionMsg extends $pb.GeneratedMessage {
+  static const $core.Map<$core.int, FundingTransitionMsg_Trigger>
+      _FundingTransitionMsg_TriggerByTag = {
+    1: FundingTransitionMsg_Trigger.shimRegister,
+    2: FundingTransitionMsg_Trigger.shimCancel,
+    0: FundingTransitionMsg_Trigger.notSet
+  };
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('FundingTransitionMsg',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..oo(0, [1, 2])
+    ..a<FundingShim>(1, 'shimRegister', $pb.PbFieldType.OM,
+        defaultOrMaker: FundingShim.getDefault, subBuilder: FundingShim.create)
+    ..a<FundingShimCancel>(2, 'shimCancel', $pb.PbFieldType.OM,
+        defaultOrMaker: FundingShimCancel.getDefault,
+        subBuilder: FundingShimCancel.create)
+    ..hasRequiredFields = false;
+
+  FundingTransitionMsg._() : super();
+  factory FundingTransitionMsg() => create();
+  factory FundingTransitionMsg.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory FundingTransitionMsg.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  FundingTransitionMsg clone() =>
+      FundingTransitionMsg()..mergeFromMessage(this);
+  FundingTransitionMsg copyWith(void Function(FundingTransitionMsg) updates) =>
+      super.copyWith((message) => updates(message as FundingTransitionMsg));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static FundingTransitionMsg create() => FundingTransitionMsg._();
+  FundingTransitionMsg createEmptyInstance() => create();
+  static $pb.PbList<FundingTransitionMsg> createRepeated() =>
+      $pb.PbList<FundingTransitionMsg>();
+  static FundingTransitionMsg getDefault() =>
+      _defaultInstance ??= create()..freeze();
+  static FundingTransitionMsg _defaultInstance;
+
+  FundingTransitionMsg_Trigger whichTrigger() =>
+      _FundingTransitionMsg_TriggerByTag[$_whichOneof(0)];
+  void clearTrigger() => clearField($_whichOneof(0));
+
+  FundingShim get shimRegister => $_getN(0);
+  set shimRegister(FundingShim v) {
+    setField(1, v);
+  }
+
+  $core.bool hasShimRegister() => $_has(0);
+  void clearShimRegister() => clearField(1);
+
+  FundingShimCancel get shimCancel => $_getN(1);
+  set shimCancel(FundingShimCancel v) {
+    setField(2, v);
+  }
+
+  $core.bool hasShimCancel() => $_has(1);
+  void clearShimCancel() => clearField(2);
+}
+
+class FundingStateStepResp extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('FundingStateStepResp',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..hasRequiredFields = false;
+
+  FundingStateStepResp._() : super();
+  factory FundingStateStepResp() => create();
+  factory FundingStateStepResp.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory FundingStateStepResp.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  FundingStateStepResp clone() =>
+      FundingStateStepResp()..mergeFromMessage(this);
+  FundingStateStepResp copyWith(void Function(FundingStateStepResp) updates) =>
+      super.copyWith((message) => updates(message as FundingStateStepResp));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static FundingStateStepResp create() => FundingStateStepResp._();
+  FundingStateStepResp createEmptyInstance() => create();
+  static $pb.PbList<FundingStateStepResp> createRepeated() =>
+      $pb.PbList<FundingStateStepResp>();
+  static FundingStateStepResp getDefault() =>
+      _defaultInstance ??= create()..freeze();
+  static FundingStateStepResp _defaultInstance;
 }
 
 class PendingHTLC extends $pb.GeneratedMessage {
@@ -4360,6 +4907,12 @@ class QueryRoutesRequest extends $pb.GeneratedMessage {
     ..pc<NodePair>(10, 'ignoredPairs', $pb.PbFieldType.PM,
         subBuilder: NodePair.create)
     ..a<$core.int>(11, 'cltvLimit', $pb.PbFieldType.OU3)
+    ..aInt64(12, 'amtMsat')
+    ..m<Int64, $core.List<$core.int>>(13, 'destCustomRecords',
+        entryClassName: 'QueryRoutesRequest.DestCustomRecordsEntry',
+        keyFieldType: $pb.PbFieldType.OU6,
+        valueFieldType: $pb.PbFieldType.OY,
+        packageName: const $pb.PackageName('lnrpc'))
     ..hasRequiredFields = false;
 
   QueryRoutesRequest._() : super();
@@ -4445,6 +4998,16 @@ class QueryRoutesRequest extends $pb.GeneratedMessage {
 
   $core.bool hasCltvLimit() => $_has(9);
   void clearCltvLimit() => clearField(11);
+
+  Int64 get amtMsat => $_getI64(10);
+  set amtMsat(Int64 v) {
+    $_setInt64(10, v);
+  }
+
+  $core.bool hasAmtMsat() => $_has(10);
+  void clearAmtMsat() => clearField(12);
+
+  $core.Map<Int64, $core.List<$core.int>> get destCustomRecords => $_getMap(11);
 }
 
 class NodePair extends $pb.GeneratedMessage {
@@ -4584,6 +5147,13 @@ class Hop extends $pb.GeneratedMessage {
     ..aInt64(7, 'fee_msat')
     ..aOS(8, 'pub_key')
     ..aOB(9, 'tlv_payload')
+    ..a<MPPRecord>(10, 'mpp_record', $pb.PbFieldType.OM,
+        defaultOrMaker: MPPRecord.getDefault, subBuilder: MPPRecord.create)
+    ..m<Int64, $core.List<$core.int>>(11, 'custom_records',
+        entryClassName: 'Hop.CustomRecordsEntry',
+        keyFieldType: $pb.PbFieldType.OU6,
+        valueFieldType: $pb.PbFieldType.OY,
+        packageName: const $pb.PackageName('lnrpc'))
     ..hasRequiredFields = false;
 
   Hop._() : super();
@@ -4684,6 +5254,59 @@ class Hop extends $pb.GeneratedMessage {
 
   $core.bool hasTlvPayload() => $_has(8);
   void clearTlvPayload() => clearField(9);
+
+  MPPRecord get mppRecord => $_getN(9);
+  set mppRecord(MPPRecord v) {
+    setField(10, v);
+  }
+
+  $core.bool hasMppRecord() => $_has(9);
+  void clearMppRecord() => clearField(10);
+
+  $core.Map<Int64, $core.List<$core.int>> get customRecords => $_getMap(10);
+}
+
+class MPPRecord extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('MPPRecord',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..aInt64(10, 'total_amt_msat')
+    ..a<$core.List<$core.int>>(11, 'payment_addr', $pb.PbFieldType.OY)
+    ..hasRequiredFields = false;
+
+  MPPRecord._() : super();
+  factory MPPRecord() => create();
+  factory MPPRecord.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory MPPRecord.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  MPPRecord clone() => MPPRecord()..mergeFromMessage(this);
+  MPPRecord copyWith(void Function(MPPRecord) updates) =>
+      super.copyWith((message) => updates(message as MPPRecord));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static MPPRecord create() => MPPRecord._();
+  MPPRecord createEmptyInstance() => create();
+  static $pb.PbList<MPPRecord> createRepeated() => $pb.PbList<MPPRecord>();
+  static MPPRecord getDefault() => _defaultInstance ??= create()..freeze();
+  static MPPRecord _defaultInstance;
+
+  Int64 get totalAmtMsat => $_getI64(0);
+  set totalAmtMsat(Int64 v) {
+    $_setInt64(0, v);
+  }
+
+  $core.bool hasTotalAmtMsat() => $_has(0);
+  void clearTotalAmtMsat() => clearField(10);
+
+  $core.List<$core.int> get paymentAddr => $_getN(1);
+  set paymentAddr($core.List<$core.int> v) {
+    $_setBytes(1, v);
+  }
+
+  $core.bool hasPaymentAddr() => $_has(1);
+  void clearPaymentAddr() => clearField(11);
 }
 
 class Route extends $pb.GeneratedMessage {
@@ -4879,6 +5502,12 @@ class LightningNode extends $pb.GeneratedMessage {
     ..pc<NodeAddress>(4, 'addresses', $pb.PbFieldType.PM,
         subBuilder: NodeAddress.create)
     ..aOS(5, 'color')
+    ..m<$core.int, Feature>(6, 'features',
+        entryClassName: 'LightningNode.FeaturesEntry',
+        keyFieldType: $pb.PbFieldType.OU3,
+        valueFieldType: $pb.PbFieldType.OM,
+        valueCreator: Feature.create,
+        packageName: const $pb.PackageName('lnrpc'))
     ..hasRequiredFields = false;
 
   LightningNode._() : super();
@@ -4934,6 +5563,8 @@ class LightningNode extends $pb.GeneratedMessage {
 
   $core.bool hasColor() => $_has(4);
   void clearColor() => clearField(5);
+
+  $core.Map<$core.int, Feature> get features => $_getMap(5);
 }
 
 class NodeAddress extends $pb.GeneratedMessage {
@@ -5869,7 +6500,6 @@ class Invoice extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('Invoice',
       package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
     ..aOS(1, 'memo')
-    ..a<$core.List<$core.int>>(2, 'receipt', $pb.PbFieldType.OY)
     ..a<$core.List<$core.int>>(3, 'r_preimage', $pb.PbFieldType.OY)
     ..a<$core.List<$core.int>>(4, 'r_hash', $pb.PbFieldType.OY)
     ..aInt64(5, 'value')
@@ -5897,6 +6527,14 @@ class Invoice extends $pb.GeneratedMessage {
         enumValues: Invoice_InvoiceState.values)
     ..pc<InvoiceHTLC>(22, 'htlcs', $pb.PbFieldType.PM,
         subBuilder: InvoiceHTLC.create)
+    ..aInt64(23, 'value_msat')
+    ..m<$core.int, Feature>(24, 'features',
+        entryClassName: 'Invoice.FeaturesEntry',
+        keyFieldType: $pb.PbFieldType.OU3,
+        valueFieldType: $pb.PbFieldType.OM,
+        valueCreator: Feature.create,
+        packageName: const $pb.PackageName('lnrpc'))
+    ..aOB(25, 'is_key_send')
     ..hasRequiredFields = false;
 
   Invoice._() : super();
@@ -5926,173 +6564,179 @@ class Invoice extends $pb.GeneratedMessage {
   $core.bool hasMemo() => $_has(0);
   void clearMemo() => clearField(1);
 
-  @$core.Deprecated('This field is deprecated.')
-  $core.List<$core.int> get receipt => $_getN(1);
-  @$core.Deprecated('This field is deprecated.')
-  set receipt($core.List<$core.int> v) {
+  $core.List<$core.int> get rPreimage => $_getN(1);
+  set rPreimage($core.List<$core.int> v) {
     $_setBytes(1, v);
   }
 
-  @$core.Deprecated('This field is deprecated.')
-  $core.bool hasReceipt() => $_has(1);
-  @$core.Deprecated('This field is deprecated.')
-  void clearReceipt() => clearField(2);
+  $core.bool hasRPreimage() => $_has(1);
+  void clearRPreimage() => clearField(3);
 
-  $core.List<$core.int> get rPreimage => $_getN(2);
-  set rPreimage($core.List<$core.int> v) {
+  $core.List<$core.int> get rHash => $_getN(2);
+  set rHash($core.List<$core.int> v) {
     $_setBytes(2, v);
   }
 
-  $core.bool hasRPreimage() => $_has(2);
-  void clearRPreimage() => clearField(3);
-
-  $core.List<$core.int> get rHash => $_getN(3);
-  set rHash($core.List<$core.int> v) {
-    $_setBytes(3, v);
-  }
-
-  $core.bool hasRHash() => $_has(3);
+  $core.bool hasRHash() => $_has(2);
   void clearRHash() => clearField(4);
 
-  Int64 get value => $_getI64(4);
+  Int64 get value => $_getI64(3);
   set value(Int64 v) {
-    $_setInt64(4, v);
+    $_setInt64(3, v);
   }
 
-  $core.bool hasValue() => $_has(4);
+  $core.bool hasValue() => $_has(3);
   void clearValue() => clearField(5);
 
   @$core.Deprecated('This field is deprecated.')
-  $core.bool get settled => $_get(5, false);
+  $core.bool get settled => $_get(4, false);
   @$core.Deprecated('This field is deprecated.')
   set settled($core.bool v) {
-    $_setBool(5, v);
+    $_setBool(4, v);
   }
 
   @$core.Deprecated('This field is deprecated.')
-  $core.bool hasSettled() => $_has(5);
+  $core.bool hasSettled() => $_has(4);
   @$core.Deprecated('This field is deprecated.')
   void clearSettled() => clearField(6);
 
-  Int64 get creationDate => $_getI64(6);
+  Int64 get creationDate => $_getI64(5);
   set creationDate(Int64 v) {
+    $_setInt64(5, v);
+  }
+
+  $core.bool hasCreationDate() => $_has(5);
+  void clearCreationDate() => clearField(7);
+
+  Int64 get settleDate => $_getI64(6);
+  set settleDate(Int64 v) {
     $_setInt64(6, v);
   }
 
-  $core.bool hasCreationDate() => $_has(6);
-  void clearCreationDate() => clearField(7);
-
-  Int64 get settleDate => $_getI64(7);
-  set settleDate(Int64 v) {
-    $_setInt64(7, v);
-  }
-
-  $core.bool hasSettleDate() => $_has(7);
+  $core.bool hasSettleDate() => $_has(6);
   void clearSettleDate() => clearField(8);
 
-  $core.String get paymentRequest => $_getS(8, '');
+  $core.String get paymentRequest => $_getS(7, '');
   set paymentRequest($core.String v) {
-    $_setString(8, v);
+    $_setString(7, v);
   }
 
-  $core.bool hasPaymentRequest() => $_has(8);
+  $core.bool hasPaymentRequest() => $_has(7);
   void clearPaymentRequest() => clearField(9);
 
-  $core.List<$core.int> get descriptionHash => $_getN(9);
+  $core.List<$core.int> get descriptionHash => $_getN(8);
   set descriptionHash($core.List<$core.int> v) {
-    $_setBytes(9, v);
+    $_setBytes(8, v);
   }
 
-  $core.bool hasDescriptionHash() => $_has(9);
+  $core.bool hasDescriptionHash() => $_has(8);
   void clearDescriptionHash() => clearField(10);
 
-  Int64 get expiry => $_getI64(10);
+  Int64 get expiry => $_getI64(9);
   set expiry(Int64 v) {
-    $_setInt64(10, v);
+    $_setInt64(9, v);
   }
 
-  $core.bool hasExpiry() => $_has(10);
+  $core.bool hasExpiry() => $_has(9);
   void clearExpiry() => clearField(11);
 
-  $core.String get fallbackAddr => $_getS(11, '');
+  $core.String get fallbackAddr => $_getS(10, '');
   set fallbackAddr($core.String v) {
-    $_setString(11, v);
+    $_setString(10, v);
   }
 
-  $core.bool hasFallbackAddr() => $_has(11);
+  $core.bool hasFallbackAddr() => $_has(10);
   void clearFallbackAddr() => clearField(12);
 
-  Int64 get cltvExpiry => $_getI64(12);
+  Int64 get cltvExpiry => $_getI64(11);
   set cltvExpiry(Int64 v) {
-    $_setInt64(12, v);
+    $_setInt64(11, v);
   }
 
-  $core.bool hasCltvExpiry() => $_has(12);
+  $core.bool hasCltvExpiry() => $_has(11);
   void clearCltvExpiry() => clearField(13);
 
-  $core.List<RouteHint> get routeHints => $_getList(13);
+  $core.List<RouteHint> get routeHints => $_getList(12);
 
-  $core.bool get private => $_get(14, false);
+  $core.bool get private => $_get(13, false);
   set private($core.bool v) {
-    $_setBool(14, v);
+    $_setBool(13, v);
   }
 
-  $core.bool hasPrivate() => $_has(14);
+  $core.bool hasPrivate() => $_has(13);
   void clearPrivate() => clearField(15);
 
-  Int64 get addIndex => $_getI64(15);
+  Int64 get addIndex => $_getI64(14);
   set addIndex(Int64 v) {
+    $_setInt64(14, v);
+  }
+
+  $core.bool hasAddIndex() => $_has(14);
+  void clearAddIndex() => clearField(16);
+
+  Int64 get settleIndex => $_getI64(15);
+  set settleIndex(Int64 v) {
     $_setInt64(15, v);
   }
 
-  $core.bool hasAddIndex() => $_has(15);
-  void clearAddIndex() => clearField(16);
-
-  Int64 get settleIndex => $_getI64(16);
-  set settleIndex(Int64 v) {
-    $_setInt64(16, v);
-  }
-
-  $core.bool hasSettleIndex() => $_has(16);
+  $core.bool hasSettleIndex() => $_has(15);
   void clearSettleIndex() => clearField(17);
 
   @$core.Deprecated('This field is deprecated.')
-  Int64 get amtPaid => $_getI64(17);
+  Int64 get amtPaid => $_getI64(16);
   @$core.Deprecated('This field is deprecated.')
   set amtPaid(Int64 v) {
-    $_setInt64(17, v);
+    $_setInt64(16, v);
   }
 
   @$core.Deprecated('This field is deprecated.')
-  $core.bool hasAmtPaid() => $_has(17);
+  $core.bool hasAmtPaid() => $_has(16);
   @$core.Deprecated('This field is deprecated.')
   void clearAmtPaid() => clearField(18);
 
-  Int64 get amtPaidSat => $_getI64(18);
+  Int64 get amtPaidSat => $_getI64(17);
   set amtPaidSat(Int64 v) {
+    $_setInt64(17, v);
+  }
+
+  $core.bool hasAmtPaidSat() => $_has(17);
+  void clearAmtPaidSat() => clearField(19);
+
+  Int64 get amtPaidMsat => $_getI64(18);
+  set amtPaidMsat(Int64 v) {
     $_setInt64(18, v);
   }
 
-  $core.bool hasAmtPaidSat() => $_has(18);
-  void clearAmtPaidSat() => clearField(19);
-
-  Int64 get amtPaidMsat => $_getI64(19);
-  set amtPaidMsat(Int64 v) {
-    $_setInt64(19, v);
-  }
-
-  $core.bool hasAmtPaidMsat() => $_has(19);
+  $core.bool hasAmtPaidMsat() => $_has(18);
   void clearAmtPaidMsat() => clearField(20);
 
-  Invoice_InvoiceState get state => $_getN(20);
+  Invoice_InvoiceState get state => $_getN(19);
   set state(Invoice_InvoiceState v) {
     setField(21, v);
   }
 
-  $core.bool hasState() => $_has(20);
+  $core.bool hasState() => $_has(19);
   void clearState() => clearField(21);
 
-  $core.List<InvoiceHTLC> get htlcs => $_getList(21);
+  $core.List<InvoiceHTLC> get htlcs => $_getList(20);
+
+  Int64 get valueMsat => $_getI64(21);
+  set valueMsat(Int64 v) {
+    $_setInt64(21, v);
+  }
+
+  $core.bool hasValueMsat() => $_has(21);
+  void clearValueMsat() => clearField(23);
+
+  $core.Map<$core.int, Feature> get features => $_getMap(22);
+
+  $core.bool get isKeySend => $_get(23, false);
+  set isKeySend($core.bool v) {
+    $_setBool(23, v);
+  }
+
+  $core.bool hasIsKeySend() => $_has(23);
+  void clearIsKeySend() => clearField(25);
 }
 
 class InvoiceHTLC extends $pb.GeneratedMessage {
@@ -6109,6 +6753,13 @@ class InvoiceHTLC extends $pb.GeneratedMessage {
         defaultOrMaker: InvoiceHTLCState.ACCEPTED,
         valueOf: InvoiceHTLCState.valueOf,
         enumValues: InvoiceHTLCState.values)
+    ..m<Int64, $core.List<$core.int>>(9, 'custom_records',
+        entryClassName: 'InvoiceHTLC.CustomRecordsEntry',
+        keyFieldType: $pb.PbFieldType.OU6,
+        valueFieldType: $pb.PbFieldType.OY,
+        packageName: const $pb.PackageName('lnrpc'))
+    ..a<Int64>(10, 'mpp_total_amt_msat', $pb.PbFieldType.OU6,
+        defaultOrMaker: Int64.ZERO)
     ..hasRequiredFields = false;
 
   InvoiceHTLC._() : super();
@@ -6193,6 +6844,16 @@ class InvoiceHTLC extends $pb.GeneratedMessage {
 
   $core.bool hasState() => $_has(7);
   void clearState() => clearField(8);
+
+  $core.Map<Int64, $core.List<$core.int>> get customRecords => $_getMap(8);
+
+  Int64 get mppTotalAmtMsat => $_getI64(9);
+  set mppTotalAmtMsat(Int64 v) {
+    $_setInt64(9, v);
+  }
+
+  $core.bool hasMppTotalAmtMsat() => $_has(9);
+  void clearMppTotalAmtMsat() => clearField(10);
 }
 
 class AddInvoiceResponse extends $pb.GeneratedMessage {
@@ -6275,12 +6936,16 @@ class PaymentHash extends $pb.GeneratedMessage {
   static PaymentHash getDefault() => _defaultInstance ??= create()..freeze();
   static PaymentHash _defaultInstance;
 
+  @$core.Deprecated('This field is deprecated.')
   $core.String get rHashStr => $_getS(0, '');
+  @$core.Deprecated('This field is deprecated.')
   set rHashStr($core.String v) {
     $_setString(0, v);
   }
 
+  @$core.Deprecated('This field is deprecated.')
   $core.bool hasRHashStr() => $_has(0);
+  @$core.Deprecated('This field is deprecated.')
   void clearRHashStr() => clearField(1);
 
   $core.List<$core.int> get rHash => $_getN(1);
@@ -6471,6 +7136,9 @@ class Payment extends $pb.GeneratedMessage {
         enumValues: Payment_PaymentStatus.values)
     ..aInt64(11, 'fee_sat')
     ..aInt64(12, 'fee_msat')
+    ..aInt64(13, 'creation_time_ns')
+    ..pc<HTLCAttempt>(14, 'htlcs', $pb.PbFieldType.PM,
+        subBuilder: HTLCAttempt.create)
     ..hasRequiredFields = false;
 
   Payment._() : super();
@@ -6512,14 +7180,19 @@ class Payment extends $pb.GeneratedMessage {
   @$core.Deprecated('This field is deprecated.')
   void clearValue() => clearField(2);
 
+  @$core.Deprecated('This field is deprecated.')
   Int64 get creationDate => $_getI64(2);
+  @$core.Deprecated('This field is deprecated.')
   set creationDate(Int64 v) {
     $_setInt64(2, v);
   }
 
+  @$core.Deprecated('This field is deprecated.')
   $core.bool hasCreationDate() => $_has(2);
+  @$core.Deprecated('This field is deprecated.')
   void clearCreationDate() => clearField(3);
 
+  @$core.Deprecated('This field is deprecated.')
   $core.List<$core.String> get path => $_getList(3);
 
   @$core.Deprecated('This field is deprecated.')
@@ -6589,6 +7262,81 @@ class Payment extends $pb.GeneratedMessage {
 
   $core.bool hasFeeMsat() => $_has(11);
   void clearFeeMsat() => clearField(12);
+
+  Int64 get creationTimeNs => $_getI64(12);
+  set creationTimeNs(Int64 v) {
+    $_setInt64(12, v);
+  }
+
+  $core.bool hasCreationTimeNs() => $_has(12);
+  void clearCreationTimeNs() => clearField(13);
+
+  $core.List<HTLCAttempt> get htlcs => $_getList(13);
+}
+
+class HTLCAttempt extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('HTLCAttempt',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..e<HTLCAttempt_HTLCStatus>(1, 'status', $pb.PbFieldType.OE,
+        defaultOrMaker: HTLCAttempt_HTLCStatus.IN_FLIGHT,
+        valueOf: HTLCAttempt_HTLCStatus.valueOf,
+        enumValues: HTLCAttempt_HTLCStatus.values)
+    ..a<Route>(2, 'route', $pb.PbFieldType.OM,
+        defaultOrMaker: Route.getDefault, subBuilder: Route.create)
+    ..aInt64(3, 'attempt_time_ns')
+    ..aInt64(4, 'resolve_time_ns')
+    ..hasRequiredFields = false;
+
+  HTLCAttempt._() : super();
+  factory HTLCAttempt() => create();
+  factory HTLCAttempt.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory HTLCAttempt.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  HTLCAttempt clone() => HTLCAttempt()..mergeFromMessage(this);
+  HTLCAttempt copyWith(void Function(HTLCAttempt) updates) =>
+      super.copyWith((message) => updates(message as HTLCAttempt));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static HTLCAttempt create() => HTLCAttempt._();
+  HTLCAttempt createEmptyInstance() => create();
+  static $pb.PbList<HTLCAttempt> createRepeated() => $pb.PbList<HTLCAttempt>();
+  static HTLCAttempt getDefault() => _defaultInstance ??= create()..freeze();
+  static HTLCAttempt _defaultInstance;
+
+  HTLCAttempt_HTLCStatus get status => $_getN(0);
+  set status(HTLCAttempt_HTLCStatus v) {
+    setField(1, v);
+  }
+
+  $core.bool hasStatus() => $_has(0);
+  void clearStatus() => clearField(1);
+
+  Route get route => $_getN(1);
+  set route(Route v) {
+    setField(2, v);
+  }
+
+  $core.bool hasRoute() => $_has(1);
+  void clearRoute() => clearField(2);
+
+  Int64 get attemptTimeNs => $_getI64(2);
+  set attemptTimeNs(Int64 v) {
+    $_setInt64(2, v);
+  }
+
+  $core.bool hasAttemptTimeNs() => $_has(2);
+  void clearAttemptTimeNs() => clearField(3);
+
+  Int64 get resolveTimeNs => $_getI64(3);
+  set resolveTimeNs(Int64 v) {
+    $_setInt64(3, v);
+  }
+
+  $core.bool hasResolveTimeNs() => $_has(3);
+  void clearResolveTimeNs() => clearField(4);
 }
 
 class ListPaymentsRequest extends $pb.GeneratedMessage {
@@ -6916,6 +7664,14 @@ class PayReq extends $pb.GeneratedMessage {
     ..aInt64(9, 'cltv_expiry')
     ..pc<RouteHint>(10, 'route_hints', $pb.PbFieldType.PM,
         subBuilder: RouteHint.create)
+    ..a<$core.List<$core.int>>(11, 'payment_addr', $pb.PbFieldType.OY)
+    ..aInt64(12, 'num_msat')
+    ..m<$core.int, Feature>(13, 'features',
+        entryClassName: 'PayReq.FeaturesEntry',
+        keyFieldType: $pb.PbFieldType.OU3,
+        valueFieldType: $pb.PbFieldType.OM,
+        valueCreator: Feature.create,
+        packageName: const $pb.PackageName('lnrpc'))
     ..hasRequiredFields = false;
 
   PayReq._() : super();
@@ -7010,6 +7766,76 @@ class PayReq extends $pb.GeneratedMessage {
   void clearCltvExpiry() => clearField(9);
 
   $core.List<RouteHint> get routeHints => $_getList(9);
+
+  $core.List<$core.int> get paymentAddr => $_getN(10);
+  set paymentAddr($core.List<$core.int> v) {
+    $_setBytes(10, v);
+  }
+
+  $core.bool hasPaymentAddr() => $_has(10);
+  void clearPaymentAddr() => clearField(11);
+
+  Int64 get numMsat => $_getI64(11);
+  set numMsat(Int64 v) {
+    $_setInt64(11, v);
+  }
+
+  $core.bool hasNumMsat() => $_has(11);
+  void clearNumMsat() => clearField(12);
+
+  $core.Map<$core.int, Feature> get features => $_getMap(12);
+}
+
+class Feature extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('Feature',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..aOS(2, 'name')
+    ..aOB(3, 'is_required')
+    ..aOB(4, 'is_known')
+    ..hasRequiredFields = false;
+
+  Feature._() : super();
+  factory Feature() => create();
+  factory Feature.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory Feature.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  Feature clone() => Feature()..mergeFromMessage(this);
+  Feature copyWith(void Function(Feature) updates) =>
+      super.copyWith((message) => updates(message as Feature));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static Feature create() => Feature._();
+  Feature createEmptyInstance() => create();
+  static $pb.PbList<Feature> createRepeated() => $pb.PbList<Feature>();
+  static Feature getDefault() => _defaultInstance ??= create()..freeze();
+  static Feature _defaultInstance;
+
+  $core.String get name => $_getS(0, '');
+  set name($core.String v) {
+    $_setString(0, v);
+  }
+
+  $core.bool hasName() => $_has(0);
+  void clearName() => clearField(2);
+
+  $core.bool get isRequired => $_get(1, false);
+  set isRequired($core.bool v) {
+    $_setBool(1, v);
+  }
+
+  $core.bool hasIsRequired() => $_has(1);
+  void clearIsRequired() => clearField(3);
+
+  $core.bool get isKnown => $_get(2, false);
+  set isKnown($core.bool v) {
+    $_setBool(2, v);
+  }
+
+  $core.bool hasIsKnown() => $_has(2);
+  void clearIsKnown() => clearField(4);
 }
 
 class FeeReportRequest extends $pb.GeneratedMessage {
@@ -7184,6 +8010,9 @@ class PolicyUpdateRequest extends $pb.GeneratedMessage {
     ..a<$core.int>(5, 'time_lock_delta', $pb.PbFieldType.OU3)
     ..a<Int64>(6, 'max_htlc_msat', $pb.PbFieldType.OU6,
         defaultOrMaker: Int64.ZERO)
+    ..a<Int64>(7, 'min_htlc_msat', $pb.PbFieldType.OU6,
+        defaultOrMaker: Int64.ZERO)
+    ..aOB(8, 'set_min_htlc_msat', protoName: 'min_htlc_msat_specified')
     ..hasRequiredFields = false;
 
   PolicyUpdateRequest._() : super();
@@ -7258,6 +8087,22 @@ class PolicyUpdateRequest extends $pb.GeneratedMessage {
 
   $core.bool hasMaxHtlcMsat() => $_has(5);
   void clearMaxHtlcMsat() => clearField(6);
+
+  Int64 get minHtlcMsat => $_getI64(6);
+  set minHtlcMsat(Int64 v) {
+    $_setInt64(6, v);
+  }
+
+  $core.bool hasMinHtlcMsat() => $_has(6);
+  void clearMinHtlcMsat() => clearField(7);
+
+  $core.bool get minHtlcMsatSpecified => $_get(7, false);
+  set minHtlcMsatSpecified($core.bool v) {
+    $_setBool(7, v);
+  }
+
+  $core.bool hasMinHtlcMsatSpecified() => $_has(7);
+  void clearMinHtlcMsatSpecified() => clearField(8);
 }
 
 class PolicyUpdateResponse extends $pb.GeneratedMessage {
@@ -7364,6 +8209,10 @@ class ForwardingEvent extends $pb.GeneratedMessage {
     ..a<Int64>(6, 'amt_out', $pb.PbFieldType.OU6, defaultOrMaker: Int64.ZERO)
     ..a<Int64>(7, 'fee', $pb.PbFieldType.OU6, defaultOrMaker: Int64.ZERO)
     ..a<Int64>(8, 'fee_msat', $pb.PbFieldType.OU6, defaultOrMaker: Int64.ZERO)
+    ..a<Int64>(9, 'amt_in_msat', $pb.PbFieldType.OU6,
+        defaultOrMaker: Int64.ZERO)
+    ..a<Int64>(10, 'amt_out_msat', $pb.PbFieldType.OU6,
+        defaultOrMaker: Int64.ZERO)
     ..hasRequiredFields = false;
 
   ForwardingEvent._() : super();
@@ -7442,6 +8291,22 @@ class ForwardingEvent extends $pb.GeneratedMessage {
 
   $core.bool hasFeeMsat() => $_has(6);
   void clearFeeMsat() => clearField(8);
+
+  Int64 get amtInMsat => $_getI64(7);
+  set amtInMsat(Int64 v) {
+    $_setInt64(7, v);
+  }
+
+  $core.bool hasAmtInMsat() => $_has(7);
+  void clearAmtInMsat() => clearField(9);
+
+  Int64 get amtOutMsat => $_getI64(8);
+  set amtOutMsat(Int64 v) {
+    $_setInt64(8, v);
+  }
+
+  $core.bool hasAmtOutMsat() => $_has(8);
+  void clearAmtOutMsat() => clearField(10);
 }
 
 class ForwardingHistoryResponse extends $pb.GeneratedMessage {
@@ -7872,4 +8737,117 @@ class VerifyChanBackupResponse extends $pb.GeneratedMessage {
   static VerifyChanBackupResponse getDefault() =>
       _defaultInstance ??= create()..freeze();
   static VerifyChanBackupResponse _defaultInstance;
+}
+
+class MacaroonPermission extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('MacaroonPermission',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..aOS(1, 'entity')
+    ..aOS(2, 'action')
+    ..hasRequiredFields = false;
+
+  MacaroonPermission._() : super();
+  factory MacaroonPermission() => create();
+  factory MacaroonPermission.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory MacaroonPermission.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  MacaroonPermission clone() => MacaroonPermission()..mergeFromMessage(this);
+  MacaroonPermission copyWith(void Function(MacaroonPermission) updates) =>
+      super.copyWith((message) => updates(message as MacaroonPermission));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static MacaroonPermission create() => MacaroonPermission._();
+  MacaroonPermission createEmptyInstance() => create();
+  static $pb.PbList<MacaroonPermission> createRepeated() =>
+      $pb.PbList<MacaroonPermission>();
+  static MacaroonPermission getDefault() =>
+      _defaultInstance ??= create()..freeze();
+  static MacaroonPermission _defaultInstance;
+
+  $core.String get entity => $_getS(0, '');
+  set entity($core.String v) {
+    $_setString(0, v);
+  }
+
+  $core.bool hasEntity() => $_has(0);
+  void clearEntity() => clearField(1);
+
+  $core.String get action => $_getS(1, '');
+  set action($core.String v) {
+    $_setString(1, v);
+  }
+
+  $core.bool hasAction() => $_has(1);
+  void clearAction() => clearField(2);
+}
+
+class BakeMacaroonRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('BakeMacaroonRequest',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..pc<MacaroonPermission>(1, 'permissions', $pb.PbFieldType.PM,
+        subBuilder: MacaroonPermission.create)
+    ..hasRequiredFields = false;
+
+  BakeMacaroonRequest._() : super();
+  factory BakeMacaroonRequest() => create();
+  factory BakeMacaroonRequest.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory BakeMacaroonRequest.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  BakeMacaroonRequest clone() => BakeMacaroonRequest()..mergeFromMessage(this);
+  BakeMacaroonRequest copyWith(void Function(BakeMacaroonRequest) updates) =>
+      super.copyWith((message) => updates(message as BakeMacaroonRequest));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static BakeMacaroonRequest create() => BakeMacaroonRequest._();
+  BakeMacaroonRequest createEmptyInstance() => create();
+  static $pb.PbList<BakeMacaroonRequest> createRepeated() =>
+      $pb.PbList<BakeMacaroonRequest>();
+  static BakeMacaroonRequest getDefault() =>
+      _defaultInstance ??= create()..freeze();
+  static BakeMacaroonRequest _defaultInstance;
+
+  $core.List<MacaroonPermission> get permissions => $_getList(0);
+}
+
+class BakeMacaroonResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('BakeMacaroonResponse',
+      package: const $pb.PackageName('lnrpc'), createEmptyInstance: create)
+    ..aOS(1, 'macaroon')
+    ..hasRequiredFields = false;
+
+  BakeMacaroonResponse._() : super();
+  factory BakeMacaroonResponse() => create();
+  factory BakeMacaroonResponse.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory BakeMacaroonResponse.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  BakeMacaroonResponse clone() =>
+      BakeMacaroonResponse()..mergeFromMessage(this);
+  BakeMacaroonResponse copyWith(void Function(BakeMacaroonResponse) updates) =>
+      super.copyWith((message) => updates(message as BakeMacaroonResponse));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static BakeMacaroonResponse create() => BakeMacaroonResponse._();
+  BakeMacaroonResponse createEmptyInstance() => create();
+  static $pb.PbList<BakeMacaroonResponse> createRepeated() =>
+      $pb.PbList<BakeMacaroonResponse>();
+  static BakeMacaroonResponse getDefault() =>
+      _defaultInstance ??= create()..freeze();
+  static BakeMacaroonResponse _defaultInstance;
+
+  $core.String get macaroon => $_getS(0, '');
+  set macaroon($core.String v) {
+    $_setString(0, v);
+  }
+
+  $core.bool hasMacaroon() => $_has(0);
+  void clearMacaroon() => clearField(1);
 }

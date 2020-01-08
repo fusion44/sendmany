@@ -3,7 +3,7 @@
 //  source: rpc.proto
 //
 // @dart = 2.3
-// ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,annotate_overrides
+// ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,annotate_overrides,unnecessary_const
 
 import 'dart:async' as $async;
 
@@ -231,6 +231,11 @@ class LightningClient extends $grpc.Client {
           ($0.ListPeersRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $0.ListPeersResponse.fromBuffer(value));
+  static final _$subscribePeerEvents =
+      $grpc.ClientMethod<$0.PeerEventSubscription, $0.PeerEvent>(
+          '/lnrpc.Lightning/SubscribePeerEvents',
+          ($0.PeerEventSubscription value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $0.PeerEvent.fromBuffer(value));
   static final _$getInfo =
       $grpc.ClientMethod<$0.GetInfoRequest, $0.GetInfoResponse>(
           '/lnrpc.Lightning/GetInfo',
@@ -272,6 +277,12 @@ class LightningClient extends $grpc.Client {
           ($0.OpenChannelRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $0.OpenStatusUpdate.fromBuffer(value));
+  static final _$fundingStateStep =
+      $grpc.ClientMethod<$0.FundingTransitionMsg, $0.FundingStateStepResp>(
+          '/lnrpc.Lightning/FundingStateStep',
+          ($0.FundingTransitionMsg value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $0.FundingStateStepResp.fromBuffer(value));
   static final _$channelAcceptor =
       $grpc.ClientMethod<$0.ChannelAcceptResponse, $0.ChannelAcceptRequest>(
           '/lnrpc.Lightning/ChannelAcceptor',
@@ -437,6 +448,12 @@ class LightningClient extends $grpc.Client {
           ($0.ChannelBackupSubscription value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $0.ChanBackupSnapshot.fromBuffer(value));
+  static final _$bakeMacaroon =
+      $grpc.ClientMethod<$0.BakeMacaroonRequest, $0.BakeMacaroonResponse>(
+          '/lnrpc.Lightning/BakeMacaroon',
+          ($0.BakeMacaroonRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $0.BakeMacaroonResponse.fromBuffer(value));
 
   LightningClient($grpc.ClientChannel channel, {$grpc.CallOptions options})
       : super(channel, options: options);
@@ -563,6 +580,15 @@ class LightningClient extends $grpc.Client {
     return $grpc.ResponseFuture(call);
   }
 
+  $grpc.ResponseStream<$0.PeerEvent> subscribePeerEvents(
+      $0.PeerEventSubscription request,
+      {$grpc.CallOptions options}) {
+    final call = $createCall(
+        _$subscribePeerEvents, $async.Stream.fromIterable([request]),
+        options: options);
+    return $grpc.ResponseStream(call);
+  }
+
   $grpc.ResponseFuture<$0.GetInfoResponse> getInfo($0.GetInfoRequest request,
       {$grpc.CallOptions options}) {
     final call = $createCall(_$getInfo, $async.Stream.fromIterable([request]),
@@ -622,6 +648,15 @@ class LightningClient extends $grpc.Client {
         _$openChannel, $async.Stream.fromIterable([request]),
         options: options);
     return $grpc.ResponseStream(call);
+  }
+
+  $grpc.ResponseFuture<$0.FundingStateStepResp> fundingStateStep(
+      $0.FundingTransitionMsg request,
+      {$grpc.CallOptions options}) {
+    final call = $createCall(
+        _$fundingStateStep, $async.Stream.fromIterable([request]),
+        options: options);
+    return $grpc.ResponseFuture(call);
   }
 
   $grpc.ResponseStream<$0.ChannelAcceptRequest> channelAcceptor(
@@ -879,6 +914,15 @@ class LightningClient extends $grpc.Client {
         options: options);
     return $grpc.ResponseStream(call);
   }
+
+  $grpc.ResponseFuture<$0.BakeMacaroonResponse> bakeMacaroon(
+      $0.BakeMacaroonRequest request,
+      {$grpc.CallOptions options}) {
+    final call = $createCall(
+        _$bakeMacaroon, $async.Stream.fromIterable([request]),
+        options: options);
+    return $grpc.ResponseFuture(call);
+  }
 }
 
 abstract class LightningServiceBase extends $grpc.Service {
@@ -1002,6 +1046,14 @@ abstract class LightningServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.ListPeersRequest.fromBuffer(value),
         ($0.ListPeersResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.PeerEventSubscription, $0.PeerEvent>(
+        'SubscribePeerEvents',
+        subscribePeerEvents_Pre,
+        false,
+        true,
+        ($core.List<$core.int> value) =>
+            $0.PeerEventSubscription.fromBuffer(value),
+        ($0.PeerEvent value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.GetInfoRequest, $0.GetInfoResponse>(
         'GetInfo',
         getInfo_Pre,
@@ -1061,6 +1113,15 @@ abstract class LightningServiceBase extends $grpc.Service {
         ($core.List<$core.int> value) =>
             $0.OpenChannelRequest.fromBuffer(value),
         ($0.OpenStatusUpdate value) => value.writeToBuffer()));
+    $addMethod(
+        $grpc.ServiceMethod<$0.FundingTransitionMsg, $0.FundingStateStepResp>(
+            'FundingStateStep',
+            fundingStateStep_Pre,
+            false,
+            false,
+            ($core.List<$core.int> value) =>
+                $0.FundingTransitionMsg.fromBuffer(value),
+            ($0.FundingStateStepResp value) => value.writeToBuffer()));
     $addMethod(
         $grpc.ServiceMethod<$0.ChannelAcceptResponse, $0.ChannelAcceptRequest>(
             'ChannelAcceptor',
@@ -1306,6 +1367,15 @@ abstract class LightningServiceBase extends $grpc.Service {
         ($core.List<$core.int> value) =>
             $0.ChannelBackupSubscription.fromBuffer(value),
         ($0.ChanBackupSnapshot value) => value.writeToBuffer()));
+    $addMethod(
+        $grpc.ServiceMethod<$0.BakeMacaroonRequest, $0.BakeMacaroonResponse>(
+            'BakeMacaroon',
+            bakeMacaroon_Pre,
+            false,
+            false,
+            ($core.List<$core.int> value) =>
+                $0.BakeMacaroonRequest.fromBuffer(value),
+            ($0.BakeMacaroonResponse value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.WalletBalanceResponse> walletBalance_Pre(
@@ -1384,6 +1454,11 @@ abstract class LightningServiceBase extends $grpc.Service {
     return listPeers(call, await request);
   }
 
+  $async.Stream<$0.PeerEvent> subscribePeerEvents_Pre($grpc.ServiceCall call,
+      $async.Future<$0.PeerEventSubscription> request) async* {
+    yield* subscribePeerEvents(call, await request);
+  }
+
   $async.Future<$0.GetInfoResponse> getInfo_Pre(
       $grpc.ServiceCall call, $async.Future<$0.GetInfoRequest> request) async {
     return getInfo(call, await request);
@@ -1421,6 +1496,12 @@ abstract class LightningServiceBase extends $grpc.Service {
   $async.Stream<$0.OpenStatusUpdate> openChannel_Pre($grpc.ServiceCall call,
       $async.Future<$0.OpenChannelRequest> request) async* {
     yield* openChannel(call, await request);
+  }
+
+  $async.Future<$0.FundingStateStepResp> fundingStateStep_Pre(
+      $grpc.ServiceCall call,
+      $async.Future<$0.FundingTransitionMsg> request) async {
+    return fundingStateStep(call, await request);
   }
 
   $async.Stream<$0.CloseStatusUpdate> closeChannel_Pre($grpc.ServiceCall call,
@@ -1569,6 +1650,12 @@ abstract class LightningServiceBase extends $grpc.Service {
     yield* subscribeChannelBackups(call, await request);
   }
 
+  $async.Future<$0.BakeMacaroonResponse> bakeMacaroon_Pre(
+      $grpc.ServiceCall call,
+      $async.Future<$0.BakeMacaroonRequest> request) async {
+    return bakeMacaroon(call, await request);
+  }
+
   $async.Future<$0.WalletBalanceResponse> walletBalance(
       $grpc.ServiceCall call, $0.WalletBalanceRequest request);
   $async.Future<$0.ChannelBalanceResponse> channelBalance(
@@ -1597,6 +1684,8 @@ abstract class LightningServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.DisconnectPeerRequest request);
   $async.Future<$0.ListPeersResponse> listPeers(
       $grpc.ServiceCall call, $0.ListPeersRequest request);
+  $async.Stream<$0.PeerEvent> subscribePeerEvents(
+      $grpc.ServiceCall call, $0.PeerEventSubscription request);
   $async.Future<$0.GetInfoResponse> getInfo(
       $grpc.ServiceCall call, $0.GetInfoRequest request);
   $async.Future<$0.PendingChannelsResponse> pendingChannels(
@@ -1611,6 +1700,8 @@ abstract class LightningServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.OpenChannelRequest request);
   $async.Stream<$0.OpenStatusUpdate> openChannel(
       $grpc.ServiceCall call, $0.OpenChannelRequest request);
+  $async.Future<$0.FundingStateStepResp> fundingStateStep(
+      $grpc.ServiceCall call, $0.FundingTransitionMsg request);
   $async.Stream<$0.ChannelAcceptRequest> channelAcceptor(
       $grpc.ServiceCall call, $async.Stream<$0.ChannelAcceptResponse> request);
   $async.Stream<$0.CloseStatusUpdate> closeChannel(
@@ -1671,4 +1762,6 @@ abstract class LightningServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.RestoreChanBackupRequest request);
   $async.Stream<$0.ChanBackupSnapshot> subscribeChannelBackups(
       $grpc.ServiceCall call, $0.ChannelBackupSubscription request);
+  $async.Future<$0.BakeMacaroonResponse> bakeMacaroon(
+      $grpc.ServiceCall call, $0.BakeMacaroonRequest request);
 }
