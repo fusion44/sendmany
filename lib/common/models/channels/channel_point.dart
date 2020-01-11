@@ -12,6 +12,13 @@ class ChannelPoint extends Equatable {
 
   ChannelPoint({this.fundingTxid, this.outputIndex});
 
+  grpc.ChannelPoint toGRPC() {
+    var p = grpc.ChannelPoint();
+    p.fundingTxidStr = fundingTxid;
+    p.outputIndex = outputIndex;
+    return p;
+  }
+
   static ChannelPoint fromGRPC(grpc.ChannelPoint cp) {
     var txid = cp.fundingTxidStr;
     if (txid == null || txid.isEmpty) {

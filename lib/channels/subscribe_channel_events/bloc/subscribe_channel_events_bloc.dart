@@ -65,6 +65,31 @@ class SubscribeChannelEventsBloc
     } else if (event is _ChannelClosedEvent && state is ChannelsUpdatedState) {
       ChannelsUpdatedState currentState = state;
       yield currentState.copyWithout(event.closeSummary.channelPoint);
+    } else if (event is ClosingChannelEvent && state is ChannelsUpdatedState) {
+      ChannelsUpdatedState currentState = state;
+      var closingChannel = currentState.channels.firstWhere((Channel c) {
+        return c != null && c.channelPoint == event.channelPoint;
+      });
+
+      if (closingChannel is EstablishedChannel) {
+        var pc = WaitingCloseChannel(
+          channel: PendingChannelData(
+            capacity: closingChannel.capacity,
+            channelPoint: closingChannel.channelPoint,
+            localBalance: closingChannel.localChanReserveSat,
+            remoteBalance: closingChannel.remoteBalance,
+            localChanReserveSat: closingChannel.localChanReserveSat,
+            remoteChanReserveSat: closingChannel.remoteChanReserveSat,
+            remoteNodeInfo: closingChannel.remoteNodeInfo,
+            remoteNodePub: closingChannel.remotePubkey,
+          ),
+          limboBalance:
+              closingChannel.localBalance + closingChannel.localChanReserveSat,
+          remoteNodeInfo: closingChannel.remoteNodeInfo,
+        );
+
+        yield currentState.copyWith(pc);
+      }
     } else {
       var responseList = await Future.wait([
         _loadPendingChannels(),
