@@ -339,6 +339,7 @@ $cert
   String _prepareMacaroon(String macaroon) {
     var m = macaroon.replaceAll(r'-', '+');
     m = m.replaceAll(r'_', '/');
+    m = fillString(macaroon);
     m = hex.encode(base64.decode(m));
     return m;
   }

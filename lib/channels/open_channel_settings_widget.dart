@@ -61,19 +61,23 @@ class _OpenChannelSettingsWidgetState extends State<OpenChannelSettingsWidget> {
             ) {
               if (feeType == OnchainFeeType.blockTarget) {
                 WidgetsBinding.instance.addPostFrameCallback((_) async {
-                  setState(() {
-                    _feeType = feeType;
-                    _targetBlocks = amount;
-                    _feeValid = valid;
-                  });
+                  if (mounted) {
+                    setState(() {
+                      _feeType = feeType;
+                      _targetBlocks = amount;
+                      _feeValid = valid;
+                    });
+                  }
                 });
               } else {
                 WidgetsBinding.instance.addPostFrameCallback((_) async {
-                  setState(() {
-                    _feeType = feeType;
-                    _fee = amount;
-                    _feeValid = valid;
-                  });
+                  if (mounted) {
+                    setState(() {
+                      _feeType = feeType;
+                      _fee = amount;
+                      _feeValid = valid;
+                    });
+                  }
                 });
               }
             }),

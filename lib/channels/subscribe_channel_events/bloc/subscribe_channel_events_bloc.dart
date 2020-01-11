@@ -28,7 +28,7 @@ class SubscribeChannelEventsBloc
       ChannelsUpdatedState currentState = state;
       try {
         var channel = currentState.channels.firstWhere(
-          (Channel c) => c.channelPoint == event.channelPoint,
+          (Channel c) => c?.channelPoint == event?.channelPoint,
         );
         if (channel is EstablishedChannel) {
           yield currentState.copyWith(channel.copyWith(active: true));
@@ -39,6 +39,8 @@ class SubscribeChannelEventsBloc
       } catch (e) {
         if (e is StateError) {
           print('Channelpoint ${event.channelPoint} not found');
+        } else {
+          print(e);
         }
       }
     } else if (event is _ChannelInactiveEvent &&
@@ -46,7 +48,7 @@ class SubscribeChannelEventsBloc
       ChannelsUpdatedState currentState = state;
       try {
         var channel = currentState.channels.firstWhere(
-          (Channel c) => c.channelPoint == event.channelPoint,
+          (Channel c) => c?.channelPoint == event?.channelPoint,
         );
         if (channel is EstablishedChannel) {
           yield currentState.copyWith(channel.copyWith(active: false));
@@ -57,6 +59,8 @@ class SubscribeChannelEventsBloc
       } catch (e) {
         if (e is StateError) {
           print('Channelpoint ${event.channelPoint} not found');
+        } else {
+          print(e);
         }
       }
     } else if (event is _ChannelOpenedEvent && state is ChannelsUpdatedState) {

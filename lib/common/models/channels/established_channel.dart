@@ -172,6 +172,7 @@ class EstablishedChannel extends Channel {
     localChanReserveSat,
     remoteChanReserveSat,
     staticRemoteKey,
+    remoteNodeInfo,
   }) {
     return EstablishedChannel(
       active: active ?? this.active,
@@ -197,6 +198,7 @@ class EstablishedChannel extends Channel {
       localChanReserveSat: localChanReserveSat ?? this.localChanReserveSat,
       remoteChanReserveSat: remoteChanReserveSat ?? this.remoteChanReserveSat,
       staticRemoteKey: staticRemoteKey ?? this.staticRemoteKey,
+      remoteNodeInfo: remoteNodeInfo ?? this.remoteNodeInfo,
     );
   }
 }
