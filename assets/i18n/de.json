@@ -1,4 +1,9 @@
 {
+  "alert_dialog": {
+    "cancel": "Abbrechen",
+    "confirm": "Bestätigen",
+    "confirm_action_title": "Aktion Bestätigen"
+  },
   "amount": "Betrag",
   "auth": {
     "check": "Prüfen",
@@ -7,22 +12,32 @@
   "channels": {
     "capacity": "Kapazität",
     "channel": "Kanal",
+    "channel_point": "Kanalpunkt",
     "close": {
+      "alert_query_really_close_channel": "Soll der Kanal geschlossen werden?",
+      "close": "Kanal Schliessen",
       "closing": "Schliesse",
       "force_closing": "Erzwinge schliessen",
       "limbo_balance": "Limbo",
+      "partner_offline_error": "Partner offline, versuche das Schließen zu erzwingen oder warte, bis der Peer wieder online ist.",
+      "partner_receives": "Partner erhält",
       "receive_amt": "Empfange",
-      "waiting_close": "Erwarte Schliessung"
+      "waiting_close": "Erwarte Schliessung",
+      "you_receive": "Du erhälst"
     },
     "disabled": "Deaktiviert",
     "fee_base": "Gebührenbasis",
     "fee_rate": "Gebührensatz",
+    "force_close": "Schließen Erzwingen",
+    "force_close_necessary_peer_not_online": "Partner nicht online. Eventuell ist ein erzwingen notwendig.",
+    "force_close_not_necessary_peer_online": "Partner ist online, ein erzwingen ist nicht nötig.",
     "id": "ID",
     "info": "Kanäle",
     "local": "Lokal",
     "max_htlc": "Max HTLC",
     "me": "Ich",
     "min_htlc": "Min HTLC",
+    "onchain_fee_types": "Gebührentyp",
     "open": {
       "advanced_settings": "Erweitert",
       "channel_settings": "Kanal Einstellungen",
@@ -38,6 +53,7 @@
       "retry_connection_test": "Nochmal",
       "title": "Öffne Kanal"
     },
+    "optional_delivery_address": "Optionale Auslieferadresse",
     "partner": "Partner",
     "partner_alias": "Alias",
     "partner_num_channels": "Kanäle",
