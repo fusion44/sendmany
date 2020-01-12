@@ -1,4 +1,9 @@
 {
+  "alert_dialog": {
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "confirm_action_title": "Confirm Action"
+  },
   "amount": "amount",
   "auth": {
     "check": "Check",
@@ -6,16 +11,33 @@
   },
   "channels": {
     "capacity": "Capacity",
+    "channel": "Channel",
+    "channel_point": "Channel Point",
     "close": {
+      "alert_query_really_close_channel": "Should the channel be closed?",
+      "close": "Close Channel",
       "closing": "Closing",
       "force_closing": "Force Closing",
       "limbo_balance": "Limbo",
+      "partner_offline_error": "Partner offline, try force closing or wait until the peer comes online again.",
+      "partner_receives": "Partner receives",
       "receive_amt": "Receiving",
-      "waiting_close": "Waiting Close"
+      "waiting_close": "Waiting Close",
+      "you_receive": "You receive"
     },
+    "disabled": "Disabled",
+    "fee_base": "Fee Base",
+    "fee_rate": "Fee Rate",
+    "force_close": "Force Close",
+    "force_close_necessary_peer_not_online": "Peer not online. Force-Close might be necessary",
+    "force_close_not_necessary_peer_online": "Force close not necessary, channel is active",
     "id": "ID",
     "info": "Channels",
     "local": "Local",
+    "max_htlc": "Max HTLC",
+    "me": "Me",
+    "min_htlc": "Min HTLC",
+    "onchain_fee_types": "Fee type",
     "open": {
       "advanced_settings": "Advanced",
       "channel_settings": "Channel Settings",
@@ -31,12 +53,14 @@
       "retry_connection_test": "Retry",
       "title": "Create Channel"
     },
+    "optional_delivery_address": "Optional delivery address",
     "partner": "Partner",
     "partner_alias": "Alias",
     "partner_num_channels": "Channels",
     "partner_pubkey": "Public Node Key",
     "partner_total_capacity": "Total Capacity",
-    "remote": "Remote"
+    "remote": "Remote",
+    "time_lock_delta": "TimeLockDelta"
   },
   "network": {
     "loading": "loading",

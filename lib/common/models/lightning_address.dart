@@ -11,9 +11,9 @@ class LightningAddress {
 
   /// Convert to a LND gRPC Object
   grpc.LightningAddress toGRPC() {
-    grpc.LightningAddress addr = grpc.LightningAddress();
-    addr.host = this.host;
-    addr.pubkey = this.pubkey;
+    var addr = grpc.LightningAddress();
+    addr.host = host;
+    addr.pubkey = pubkey;
     return addr;
   }
 

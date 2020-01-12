@@ -93,8 +93,8 @@ class TransactionHashDataItem extends StatelessWidget {
     );
   }
 
-  _launchURL(String network) async {
-    String url = 'https://blockstream.info/tx/$txhash';
+  void _launchURL(String network) async {
+    var url = 'https://blockstream.info/tx/$txhash';
     if (network == 'testnet') {
       url = 'https://blockstream.info/$network/tx/$txhash';
     }

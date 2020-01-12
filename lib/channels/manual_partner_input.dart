@@ -44,7 +44,7 @@ class _ManualPartnerInputWidgetState extends State<ManualPartnerInputWidget> {
   @override
   void initState() {
     _pubKeyController.addListener(() {
-      String pubKey = _pubKeyController.text;
+      var pubKey = _pubKeyController.text;
       _pubKeyValid = _v.lnPubKey(pubKey);
       if (_pubKeyValid) _pubKey = pubKey;
       _checkDataValid();
@@ -52,8 +52,8 @@ class _ManualPartnerInputWidgetState extends State<ManualPartnerInputWidget> {
     });
 
     _hostController.addListener(() {
-      String host = _hostController.text;
-      String ret;
+      var host = _hostController.text;
+      var ret;
       if (_v.onionAddress(host)) {
         _hostValid = true;
       } else if (_v.ip(host)) {
@@ -68,7 +68,7 @@ class _ManualPartnerInputWidgetState extends State<ManualPartnerInputWidget> {
     });
 
     _portController.addListener(() {
-      String port = _portController.text;
+      var port = _portController.text;
       _portValid = _v.positiveInt(port) && port.length < 6;
       if (_portValid) _port = int.parse(port);
       _checkDataValid();
@@ -108,7 +108,7 @@ class _ManualPartnerInputWidgetState extends State<ManualPartnerInputWidget> {
                         data.text.isNotEmpty &&
                         data.text.contains('@') &&
                         data.text.contains(':')) {
-                      List<String> connectionData = data.text.split('@');
+                      var connectionData = data.text.split('@');
                       connectionData = [
                         connectionData[0],
                         ...connectionData[1].split(':')
@@ -150,9 +150,9 @@ class _ManualPartnerInputWidgetState extends State<ManualPartnerInputWidget> {
   }
 
   Stack _buildHostWidget({double padding = 16.0}) {
-    double gap = 8.0;
-    double portWidth = 120.0;
-    double size = MediaQuery.of(context).size.width - portWidth - gap - padding;
+    var gap = 8.0;
+    var portWidth = 120.0;
+    var size = MediaQuery.of(context).size.width - portWidth - gap - padding;
     return Stack(
       children: <Widget>[
         Align(

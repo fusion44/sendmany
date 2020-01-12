@@ -62,14 +62,14 @@ class ConnectionManagerBloc
     }
   }
 
-  _establishConnection(LndConnectionData data) async {
+  void _establishConnection(LndConnectionData data) async {
     _currentActiveConnection = data;
-    ChannelCredentials creds = ChannelCredentials.secure(
+    var creds = ChannelCredentials.secure(
       certificates: _currentActiveConnection.certificate,
       onBadCertificate: (X509Certificate certificate, String host) => true,
     );
 
-    ChannelOptions opts = ChannelOptions(credentials: creds);
+    var opts = ChannelOptions(credentials: creds);
     _clientChannel = ClientChannel(
       _currentActiveConnection.host,
       port: _currentActiveConnection.port,
@@ -88,7 +88,7 @@ class ConnectionManagerBloc
     LnConnectionDataProvider().lightningClient = _lightningClient;
   }
 
-  _releaseConnection() async {
+  void _releaseConnection() async {
     if (_connected) {
       _currentActiveConnection = null;
       await _clientChannel.shutdown();

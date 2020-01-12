@@ -2,6 +2,7 @@ import 'package:fixnum/fixnum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sendmany/channels/list_channels/bloc/bloc.dart';
+import 'package:sendmany/common/models/models.dart';
 import 'package:sendmany/common/utils.dart';
 import 'package:sendmany/common/widgets/widgets.dart';
 import 'package:sendmany/wallet/balance/bloc/bloc.dart';
@@ -21,7 +22,7 @@ class _ReceivePageState extends State<ReceivePage> {
   String _memo = '';
   bool _includeOnchainFallback = false;
 
-  NewAddressBloc _newAddressBloc = NewAddressBloc();
+  final NewAddressBloc _newAddressBloc = NewAddressBloc();
   bool _hasEnoughChanCapacity = true;
   bool _isOnChain = false;
   String _onchainAddress = '';
@@ -169,9 +170,9 @@ class _ReceivePageState extends State<ReceivePage> {
   }
 
   Widget _buildOnchainFallbackSwitch() {
-    Duration duration = Duration(milliseconds: 500);
-    double height = 60.0;
-    double opacity = 1.0;
+    var duration = Duration(milliseconds: 500);
+    var height = 60.0;
+    var opacity = 1.0;
     if (_isOnChain || !_hasEnoughChanCapacity && _amount != null) {
       height = 0.0;
       opacity = 0.0;
@@ -200,7 +201,7 @@ class _ReceivePageState extends State<ReceivePage> {
     );
   }
 
-  _buildNewAddressBlocListener(Widget child) {
+  BlocListener _buildNewAddressBlocListener(Widget child) {
     return BlocListener<NewAddressBloc, NewAddressState>(
       bloc: _newAddressBloc,
       listener: (context, state) {
@@ -224,8 +225,9 @@ class _ReceivePageState extends State<ReceivePage> {
       bloc: BlocProvider.of<ListChannelsBloc>(context),
       listener: (context, state) {
         if (state is ChannelsLoadedState) {
-          state.channels.channels.forEach((channel) {
-            if (channel.remoteBalance > _maxIncomingChanCapacity) {
+          state.channels.forEach((channel) {
+            if (channel is EstablishedChannel &&
+                channel.remoteBalance > _maxIncomingChanCapacity) {
               _maxIncomingChanCapacity = channel.remoteBalance;
             }
           });

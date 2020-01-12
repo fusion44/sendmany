@@ -6,11 +6,18 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:sendmany/channels/create_channel_page.dart';
 import 'package:sendmany/common/constants.dart';
 import 'package:sendmany/common/models/models.dart';
+import 'package:sendmany/common/utils.dart';
 import 'package:sendmany/common/widgets/charts/charts.dart';
 import 'package:sendmany/common/widgets/widgets.dart';
 import 'package:sendmany/wallet/balance/bloc/bloc.dart';
 
+import '../common/constants.dart';
+import '../common/models/models.dart';
+import '../common/widgets/widgets.dart';
+import 'close_channel_page.dart';
+import 'display_channel_info_page.dart';
 import 'subscribe_channel_events/bloc/bloc.dart';
+import 'close_channel/bloc.dart';
 
 class ListChannelsPage extends StatefulWidget {
   @override
@@ -37,54 +44,74 @@ class ListChannelsPage extends StatefulWidget {
 class _ListChannelsPageState extends State<ListChannelsPage> {
   int _blockHeight = 0;
   StreamSubscription _sub;
+  CloseChannelBloc _closeChannelBloc;
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder(
-      bloc: BlocProvider.of<SubscribeChannelEventsBloc>(context),
-      builder: (BuildContext context, SubscribeChannelEventsState state) {
-        if (state is SubscribeChannelLoadingState) {
-          return TranslatedText('network.loading');
-        } else if (state is ChannelsUpdatedState) {
-          int length = state.channels.length;
-          List<Channel> channels = state.channels;
-
-          return ListView.builder(
-            itemCount: length,
-            itemBuilder: (context, i) {
-              Channel channel = channels[i];
-
-              if (channel == null && i != 0) {
-                return Divider();
-              }
-
-              if (channel is EstablishedChannel) {
-                return ListTile(
-                  onTap: () => _openChannelPopup(channel),
-                  leading: _buildIcon(channel),
-                  title: _buildTitleColumn(channel),
-                  dense: true,
-                );
-              } else if (channel is PendingOpenChannel) {
-                return _buildOpenPendingListTile(channel);
-              } else if (channel is PendingClosingChannel) {
-                return _buildPendingCloseListTile(channel);
-              } else if (channel is PendingForceClosingChannel) {
-                return _buildPendingForceCloseListTile(channel);
-              } else if (channel is WaitingCloseChannel) {
-                return _buildWaitingCloseChannel(channel);
-              } else if (channel == null && i > 0) {
-                return Divider();
-              } else if (channel == null && i == 0) {
-                return Container();
-              } else {
-                return Text('Unknown Channel Type: $channel');
-              }
-            },
+    return BlocListener<CloseChannelBloc, CloseChannelBlocState>(
+      bloc: _closeChannelBloc,
+      listener: (context, state) {
+        if (state is CloseChannelErrorState &&
+            state.reason == CloseErrorReason.peerOffline) {
+          Scaffold.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                tr(
+                  context,
+                  'channels.close.partner_offline_error',
+                ),
+              ),
+            ),
           );
         }
-        return Text('Unknown State? $state');
       },
+      child: BlocBuilder(
+        bloc: BlocProvider.of<SubscribeChannelEventsBloc>(context),
+        builder: (BuildContext context, SubscribeChannelEventsState state) {
+          if (state is SubscribeChannelLoadingState) {
+            return TranslatedText('network.loading');
+          } else if (state is ChannelsUpdatedState) {
+            var length = state.channels.length;
+            var channels = state.channels;
+
+            return ListView.builder(
+              itemCount: length,
+              itemBuilder: (context, i) {
+                var channel = channels[i];
+
+                if (channel == null && i != 0) {
+                  return Divider();
+                }
+
+                if (channel is EstablishedChannel) {
+                  return ListTile(
+                    onTap: () => _openChannelPopup(channel),
+                    onLongPress: () => _closeChannelBottomSheet(channel),
+                    leading: _buildIcon(channel),
+                    title: _buildTitleColumn(channel),
+                    dense: true,
+                  );
+                } else if (channel is PendingOpenChannel) {
+                  return _buildOpenPendingListTile(channel);
+                } else if (channel is PendingClosingChannel) {
+                  return _buildPendingCloseListTile(channel);
+                } else if (channel is PendingForceClosingChannel) {
+                  return _buildPendingForceCloseListTile(channel);
+                } else if (channel is WaitingCloseChannel) {
+                  return _buildWaitingCloseChannel(channel);
+                } else if (channel == null && i > 0) {
+                  return Divider();
+                } else if (channel == null && i == 0) {
+                  return Container();
+                } else {
+                  return Text('Unknown Channel Type: $channel');
+                }
+              },
+            );
+          }
+          return Text('Unknown State? $state');
+        },
+      ),
     );
   }
 
@@ -94,6 +121,7 @@ class _ListChannelsPageState extends State<ListChannelsPage> {
       _sub.cancel();
       _sub = null;
     }
+    _closeChannelBloc?.close();
     super.dispose();
   }
 
@@ -108,12 +136,15 @@ class _ListChannelsPageState extends State<ListChannelsPage> {
         });
       }
     });
+
+    var subChanBloc = BlocProvider.of<SubscribeChannelEventsBloc>(context);
+    _closeChannelBloc = CloseChannelBloc(subChanBloc);
   }
 
   FlatLineChart _buildFlatLineChart(EstablishedChannel channel) {
-    double total =
+    var total =
         channel.localBalance.toDouble() + channel.remoteBalance.toDouble();
-    List<ChartSectionInput> sections = [
+    var sections = <ChartSectionInput>[
       ChartSectionInput(channel.localBalance.toDouble(), sendManyLocalBalance),
       ChartSectionInput(
         channel.remoteBalance.toDouble(),
@@ -136,7 +167,7 @@ class _ListChannelsPageState extends State<ListChannelsPage> {
   }
 
   ListTile _buildOpenPendingListTile(PendingOpenChannel channel) {
-    ThemeData theme = Theme.of(context);
+    var theme = Theme.of(context);
     return ListTile(
       leading: Icon(MdiIcons.plusNetwork, color: Colors.green),
       title: Column(
@@ -181,7 +212,7 @@ class _ListChannelsPageState extends State<ListChannelsPage> {
   }
 
   ListTile _buildPendingCloseListTile(PendingClosingChannel channel) {
-    ThemeData theme = Theme.of(context);
+    var theme = Theme.of(context);
 
     return ListTile(
       leading: Icon(MdiIcons.minusNetwork, color: Colors.red),
@@ -221,7 +252,7 @@ class _ListChannelsPageState extends State<ListChannelsPage> {
   }
 
   ListTile _buildPendingForceCloseListTile(PendingForceClosingChannel channel) {
-    ThemeData theme = Theme.of(context);
+    var theme = Theme.of(context);
 
     return ListTile(
       leading: Icon(MdiIcons.minusNetwork, color: Colors.red),
@@ -261,7 +292,7 @@ class _ListChannelsPageState extends State<ListChannelsPage> {
   }
 
   Column _buildTitleColumn(EstablishedChannel channel) {
-    ThemeData theme = Theme.of(context);
+    var theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
@@ -270,15 +301,17 @@ class _ListChannelsPageState extends State<ListChannelsPage> {
             Padding(
               padding: const EdgeInsets.only(top: 1.0),
               child: TranslatedText(
-                'channels.id',
+                'node.alias',
                 style: theme.textTheme.caption,
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(
-                left: 16.0,
+                left: 32.0,
               ),
-              child: Text(channel.chanId.toString()),
+              child: channel.remoteNodeInfo == null
+                  ? Text('Node info not found')
+                  : Text(channel.remoteNodeInfo.node.alias),
             )
           ],
         ),
@@ -309,7 +342,7 @@ class _ListChannelsPageState extends State<ListChannelsPage> {
   }
 
   ListTile _buildWaitingCloseChannel(WaitingCloseChannel channel) {
-    ThemeData theme = Theme.of(context);
+    var theme = Theme.of(context);
 
     return ListTile(
       leading: Icon(MdiIcons.minusNetwork, color: Colors.red),
@@ -346,7 +379,59 @@ class _ListChannelsPageState extends State<ListChannelsPage> {
     );
   }
 
-  void _openChannelPopup(EstablishedChannel channel) {
-    print(channel.chanId);
+  void _openChannelPopup(Channel channel) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) {
+        return DisplayChannelInfoPage(channel);
+      }),
+    );
+  }
+
+  void _closeChannelBottomSheet(Channel channel) {
+    showModalBottomSheet<void>(
+      context: context,
+      builder: (BuildContext context) => Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          RaisedButton.icon(
+            color: sendManyOrange300,
+            label: TranslatedText('channels.close.close'),
+            icon: Icon(Icons.delete_forever),
+            onPressed: () {
+              _pushCloseChannelPage(channel);
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _pushCloseChannelPage(EstablishedChannel channel) async {
+    var result = await Navigator.push<CloseChannelPageResult>(
+      context,
+      MaterialPageRoute(builder: (context) {
+        return CloseChannelPage(channel);
+      }),
+    );
+
+    if (Navigator.canPop(context)) {
+      // hide the bottom sheet
+      Navigator.pop(context);
+    }
+
+    if (result != null) {
+      _closeChannelBloc.add(
+        CloseChannelEvent(
+          channel.channelPoint,
+          force: result.force,
+          blockTarget: result.blockTarget,
+          satPerByte: result.satPerByte,
+          deliveryAddress: '',
+        ),
+      );
+    }
   }
 }

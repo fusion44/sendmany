@@ -57,7 +57,7 @@ class ListTxBloc extends Bloc<ListTxEvent, ListTxState> {
     var macaroon = LnConnectionDataProvider().macaroon;
     var opts = CallOptions(metadata: {'macaroon': macaroon});
 
-    lngrpc.GetTransactionsRequest req = lngrpc.GetTransactionsRequest();
+    var req = lngrpc.GetTransactionsRequest();
     _responseStream = client.subscribeTransactions(
       req,
       options: opts,
@@ -68,7 +68,7 @@ class ListTxBloc extends Bloc<ListTxEvent, ListTxState> {
     });
   }
 
-  _setupTimer() {
+  void _setupTimer() {
     if (_timer != null && _timer.isActive) {
       _timer.cancel();
     }
@@ -92,8 +92,8 @@ class ListTxBloc extends Bloc<ListTxEvent, ListTxState> {
     var macaroon = LnConnectionDataProvider().macaroon;
     var opts = CallOptions(metadata: {'macaroon': macaroon});
 
-    lngrpc.GetInfoRequest req = lngrpc.GetInfoRequest();
-    lngrpc.GetInfoResponse info = await client.getInfo(
+    var req = lngrpc.GetInfoRequest();
+    var info = await client.getInfo(
       req,
       options: opts,
     );
@@ -145,8 +145,8 @@ class ListTxBloc extends Bloc<ListTxEvent, ListTxState> {
       }
     } else if (event is _SubscribeTransactionEvent) {
       // check if it is an existing transaction
-      bool found = false;
-      OnchainTransaction newTx = OnchainTransaction.fromLND(event.tx);
+      var found = false;
+      var newTx = OnchainTransaction.fromLND(event.tx);
       List<Tx> l = onchains.map((tx) {
         if (tx.tx.hash == newTx.hash) {
           // found the transaction, replace with new tx state
@@ -169,10 +169,10 @@ class ListTxBloc extends Bloc<ListTxEvent, ListTxState> {
   Future _loadTransactions() async {
     var client = LnConnectionDataProvider().lightningClient;
 
-    lngrpc.ListInvoiceRequest invoicesRequest = lngrpc.ListInvoiceRequest();
+    var invoicesRequest = lngrpc.ListInvoiceRequest();
     invoicesRequest.reversed = true;
-    lngrpc.ListPaymentsRequest paymentsRequest = lngrpc.ListPaymentsRequest();
-    lngrpc.GetTransactionsRequest txRequest = lngrpc.GetTransactionsRequest();
+    var paymentsRequest = lngrpc.ListPaymentsRequest();
+    var txRequest = lngrpc.GetTransactionsRequest();
 
     var responseList = await Future.wait([
       client.listInvoices(invoicesRequest),
@@ -186,27 +186,27 @@ class ListTxBloc extends Bloc<ListTxEvent, ListTxState> {
 
     invoices = [];
     invoiceResponse.invoices.forEach((lngrpc.Invoice grpcInvoice) {
-      Invoice invoice = Invoice.fromGRPC(grpcInvoice);
+      var invoice = Invoice.fromGRPC(grpcInvoice);
       invoices.add(TxLightningInvoice(invoice));
     });
 
     payments = [];
     paymentsResponse.payments.forEach((lngrpc.Payment grpcPayment) {
-      Payment payment = Payment.fromGRPC(grpcPayment);
+      var payment = Payment.fromGRPC(grpcPayment);
       payments.add(TxLightningPayment(payment));
     });
 
     onchains = [];
     txResponse.transactions.forEach((lngrpc.Transaction onChainTx) {
       if (onChainTx.amount != 0) {
-        OnchainTransaction txm = OnchainTransaction.fromLND(onChainTx);
+        var txm = OnchainTransaction.fromLND(onChainTx);
         onchains.add(TxOnchain(txm));
       }
     });
   }
 
   LoadingTxFinishedState _buildTxList() {
-    List<Tx> tx = [];
+    var tx = <Tx>[];
 
     if (includeLightningInvoices) {
       invoices.forEach((TxLightningInvoice invoice) {

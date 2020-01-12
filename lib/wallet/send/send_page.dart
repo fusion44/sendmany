@@ -8,7 +8,7 @@ import 'package:sendmany/wallet/send/lightning/send_payment_page.dart';
 
 import 'on_chain/send_coins/send_coins_page.dart';
 
-final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
+final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
 class SendPage extends StatefulWidget {
   static const String route_name = '/send_page_root';
@@ -21,17 +21,12 @@ class _SendPageState extends State<SendPage> {
   bool _showPasteView = false;
   bool _pushedRoute = false;
 
-  TextEditingController _invoiceController = TextEditingController();
+  final TextEditingController _invoiceController = TextEditingController();
   QrInfo _qrinfo;
   bool _qrTestPassed = false;
 
   @override
-  initState() {
-    super.initState();
-  }
-
-  @override
-  dispose() {
+  void dispose() {
     _invoiceController.dispose();
     super.dispose();
   }
@@ -62,7 +57,7 @@ class _SendPageState extends State<SendPage> {
       onStringFound: (String code) {
         if (!_pushedRoute) {
           _pushedRoute = true;
-          QrInfo qrinfo = checkQrCode(code);
+          var qrinfo = checkQrCode(code);
           switch (qrinfo.layer) {
             case PaymentLayer.lightning:
               _navigateToLnPayment(qrinfo);
@@ -78,7 +73,7 @@ class _SendPageState extends State<SendPage> {
     );
   }
 
-  _buildFAB() {
+  Widget _buildFAB() {
     return FloatingActionButton(
       onPressed: () {
         setState(() {
@@ -90,7 +85,7 @@ class _SendPageState extends State<SendPage> {
     );
   }
 
-  _buildPasteFormWidget() {
+  Widget _buildPasteFormWidget() {
     return Column(
       children: <Widget>[
         Padding(
@@ -98,7 +93,7 @@ class _SendPageState extends State<SendPage> {
           child: Form(
             key: _formKey,
             onChanged: () {
-              bool passed = false;
+              var passed = false;
               if (_formKey.currentState.validate()) passed = true;
               WidgetsBinding.instance.addPostFrameCallback((_) async {
                 setState(() {
@@ -114,7 +109,6 @@ class _SendPageState extends State<SendPage> {
                 labelText: tr(context, 'wallet.invoices.paste_invoice_here'),
               ),
               validator: (text) {
-                print('v...');
                 _qrinfo = checkQrCode(text);
                 switch (_qrinfo.layer) {
                   case PaymentLayer.lightning:
@@ -193,7 +187,7 @@ class _SendPageState extends State<SendPage> {
   }
 
   Future _copyFromClipboard() async {
-    ClipboardData data = await Clipboard.getData('text/plain');
+    var data = await Clipboard.getData('text/plain');
     _invoiceController.text = data.text;
   }
 }

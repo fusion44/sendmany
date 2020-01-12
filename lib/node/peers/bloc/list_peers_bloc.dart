@@ -21,12 +21,11 @@ class ListPeersBloc extends Bloc<ListPeersEvent, ListPeersState> {
 
       var client = LnConnectionDataProvider().lightningClient;
 
-      grpc.ListPeersRequest listPeersReq = grpc.ListPeersRequest();
+      var listPeersReq = grpc.ListPeersRequest();
 
       try {
-        grpc.ListPeersResponse resp = await client.listPeers(listPeersReq);
-
-        List<Future<LoadedPeer>> nodeInfoRequests = [];
+        var resp = await client.listPeers(listPeersReq);
+        var nodeInfoRequests = <Future<LoadedPeer>>[];
         resp.peers.forEach((grpc.Peer p) {
           nodeInfoRequests.add(_getNodeInfo(Peer.fromGRPC(p)));
         });
@@ -38,8 +37,8 @@ class ListPeersBloc extends Bloc<ListPeersEvent, ListPeersState> {
         });
 
         // Make sure that the peers with errors always appear last
-        List<LoadedPeer> errorPeers = [];
-        List<LoadedPeer> peers = responseList.toList();
+        var errorPeers = <LoadedPeer>[];
+        var peers = responseList.toList();
         peers.removeWhere((LoadedPeer p) {
           if (p.error != null) {
             errorPeers.add(p);
@@ -69,11 +68,11 @@ class ListPeersBloc extends Bloc<ListPeersEvent, ListPeersState> {
     // unfortunately LND doesn't supply the alias, color etc with the peer
     // so we have to make an extra roundtrip and load the NodeInfo object
     var client = LnConnectionDataProvider().lightningClient;
-    grpc.NodeInfoRequest nodeInfoReq = grpc.NodeInfoRequest();
+    var nodeInfoReq = grpc.NodeInfoRequest();
     nodeInfoReq.pubKey = peer.pubKey;
     nodeInfoReq.includeChannels = false;
     try {
-      grpc.NodeInfo info = await client.getNodeInfo(nodeInfoReq);
+      var info = await client.getNodeInfo(nodeInfoReq);
       return LoadedPeer(peer, nodeInfo: NodeInfo.fromGRPC(info));
     } on GrpcError catch (e) {
       // We must catch errors here. For example mainnet nodes can connect to testnet

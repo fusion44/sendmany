@@ -1,4 +1,9 @@
 {
+  "alert_dialog": {
+    "cancel": "Avbryt",
+    "confirm": "Bekrefte",
+    "confirm_action_title": "Bekreft handling"
+  },
   "amount": "beløp",
   "auth": {
     "check": "Sjekke",
@@ -6,16 +11,33 @@
   },
   "channels": {
     "capacity": "Capacity",
+    "channel": "Channel",
+    "channel_point": "Channel Point",
     "close": {
+      "alert_query_really_close_channel": "Bør kanalen stenges?",
+      "close": "Lukk kanal",
       "closing": "Lukking",
       "force_closing": "Tvinge lukking",
       "limbo_balance": "Limbo",
+      "partner_offline_error": "Partner offline, prøv å stenge eller vent til jevnaldrende kommer på nettet igjen.",
+      "partner_receives": "Partner receives",
       "receive_amt": "Motta",
-      "waiting_close": "Venter i nærheten"
+      "waiting_close": "Venter i nærheten",
+      "you_receive": "You receive"
     },
+    "disabled": "Disabled",
+    "fee_base": "Fee Base",
+    "fee_rate": "Fee Rate",
+    "force_close": "Tvinge nær",
+    "force_close_necessary_peer_not_online": "Peer ikke på nettet. Force-Close kan være nødvendig",
+    "force_close_not_necessary_peer_online": "Kraftstenging er ikke nødvendig, kanalen er aktiv",
     "id": "ID",
     "info": "Channels",
     "local": "Lokal",
+    "max_htlc": "Max HTLC",
+    "me": "Meg",
+    "min_htlc": "Min HTLC",
+    "onchain_fee_types": "Avgiftstype",
     "open": {
       "advanced_settings": "Advanced",
       "channel_settings": "Channel Settings",
@@ -31,12 +53,14 @@
       "retry_connection_test": "Retry",
       "title": "Create Channel"
     },
+    "optional_delivery_address": "Valgfri leveringsadresse",
     "partner": "Partner",
     "partner_alias": "Alias",
     "partner_num_channels": "Channels",
     "partner_pubkey": "Public Node Key",
     "partner_total_capacity": "Total Capacity",
-    "remote": "Fjern"
+    "remote": "Fjern",
+    "time_lock_delta": "TimeLockDelta"
   },
   "network": {
     "loading": "lasting",

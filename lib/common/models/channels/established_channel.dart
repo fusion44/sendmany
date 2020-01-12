@@ -108,10 +108,14 @@ class EstablishedChannel extends Channel {
     this.localChanReserveSat,
     this.remoteChanReserveSat,
     this.staticRemoteKey,
-  }) : super(channelPoint);
+    NodeInfo remoteNodeInfo,
+  }) : super(channelPoint, remoteNodeInfo);
 
-  static EstablishedChannel fromGRPC(grpc.Channel c) {
-    List<HTLC> pendingHtlcs = [];
+  static EstablishedChannel fromGRPC(
+    grpc.Channel c, [
+    NodeInfo remoteNodeInfo,
+  ]) {
+    var pendingHtlcs = <HTLC>[];
     if (c.pendingHtlcs != null) {
       c.pendingHtlcs.forEach((htlc) {
         pendingHtlcs.add(HTLC.fromGRPC(htlc));
@@ -141,6 +145,7 @@ class EstablishedChannel extends Channel {
       localChanReserveSat: c.localChanReserveSat,
       remoteChanReserveSat: c.remoteChanReserveSat,
       staticRemoteKey: c.staticRemoteKey,
+      remoteNodeInfo: remoteNodeInfo,
     );
   }
 
@@ -167,6 +172,7 @@ class EstablishedChannel extends Channel {
     localChanReserveSat,
     remoteChanReserveSat,
     staticRemoteKey,
+    remoteNodeInfo,
   }) {
     return EstablishedChannel(
       active: active ?? this.active,
@@ -192,6 +198,7 @@ class EstablishedChannel extends Channel {
       localChanReserveSat: localChanReserveSat ?? this.localChanReserveSat,
       remoteChanReserveSat: remoteChanReserveSat ?? this.remoteChanReserveSat,
       staticRemoteKey: staticRemoteKey ?? this.staticRemoteKey,
+      remoteNodeInfo: remoteNodeInfo ?? this.remoteNodeInfo,
     );
   }
 }

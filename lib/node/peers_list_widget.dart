@@ -20,9 +20,9 @@ class PeerListWidget extends StatelessWidget {
       bloc: BlocProvider.of<ListPeersBloc>(context),
       builder: (BuildContext context, ListPeersState state) {
         if (state is PeersLoadedState) {
-          List<Widget> peers = [];
+          var peers = <Widget>[];
 
-          for (int i = 0; i < state.peers.length; i++) {
+          for (var i = 0; i < state.peers.length; i++) {
             peers.add(PeerListTile(p: state.peers[i]));
             if (i != state.peers.length - 1) peers.add(Divider());
           }

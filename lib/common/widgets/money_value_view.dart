@@ -20,8 +20,8 @@ class MoneyValueView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
-    TextTheme textTheme = _buildSendManyTextThemeEczar(theme.textTheme);
+    var theme = Theme.of(context);
+    var textTheme = _buildSendManyTextThemeEczar(theme.textTheme);
     return BlocBuilder(
       bloc: BlocProvider.of<PreferencesBloc>(context),
       builder: (BuildContext context, PreferencesState state) {
@@ -31,7 +31,7 @@ class MoneyValueView extends StatelessWidget {
           decimalDigits: 0,
         );
 
-        TextStyle style = hero ? textTheme.headline : textTheme.body1;
+        var style = hero ? textTheme.headline : textTheme.body1;
         if (!settled) style = style.copyWith(color: Colors.grey);
 
         return Text(

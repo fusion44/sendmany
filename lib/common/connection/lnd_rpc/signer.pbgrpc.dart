@@ -36,6 +36,12 @@ class SignerClient extends $grpc.Client {
           ($0.VerifyMessageReq value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $0.VerifyMessageResp.fromBuffer(value));
+  static final _$deriveSharedKey =
+      $grpc.ClientMethod<$0.SharedKeyRequest, $0.SharedKeyResponse>(
+          '/signrpc.Signer/DeriveSharedKey',
+          ($0.SharedKeyRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $0.SharedKeyResponse.fromBuffer(value));
 
   SignerClient($grpc.ClientChannel channel, {$grpc.CallOptions options})
       : super(channel, options: options);
@@ -74,6 +80,15 @@ class SignerClient extends $grpc.Client {
         options: options);
     return $grpc.ResponseFuture(call);
   }
+
+  $grpc.ResponseFuture<$0.SharedKeyResponse> deriveSharedKey(
+      $0.SharedKeyRequest request,
+      {$grpc.CallOptions options}) {
+    final call = $createCall(
+        _$deriveSharedKey, $async.Stream.fromIterable([request]),
+        options: options);
+    return $grpc.ResponseFuture(call);
+  }
 }
 
 abstract class SignerServiceBase extends $grpc.Service {
@@ -108,6 +123,13 @@ abstract class SignerServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.VerifyMessageReq.fromBuffer(value),
         ($0.VerifyMessageResp value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.SharedKeyRequest, $0.SharedKeyResponse>(
+        'DeriveSharedKey',
+        deriveSharedKey_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.SharedKeyRequest.fromBuffer(value),
+        ($0.SharedKeyResponse value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.SignResp> signOutputRaw_Pre(
@@ -130,6 +152,12 @@ abstract class SignerServiceBase extends $grpc.Service {
     return verifyMessage(call, await request);
   }
 
+  $async.Future<$0.SharedKeyResponse> deriveSharedKey_Pre(
+      $grpc.ServiceCall call,
+      $async.Future<$0.SharedKeyRequest> request) async {
+    return deriveSharedKey(call, await request);
+  }
+
   $async.Future<$0.SignResp> signOutputRaw(
       $grpc.ServiceCall call, $0.SignReq request);
   $async.Future<$0.InputScriptResp> computeInputScript(
@@ -138,4 +166,6 @@ abstract class SignerServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.SignMessageReq request);
   $async.Future<$0.VerifyMessageResp> verifyMessage(
       $grpc.ServiceCall call, $0.VerifyMessageReq request);
+  $async.Future<$0.SharedKeyResponse> deriveSharedKey(
+      $grpc.ServiceCall call, $0.SharedKeyRequest request);
 }

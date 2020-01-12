@@ -35,21 +35,21 @@ class PendingChannels {
     if (other == null) throw ArgumentError.notNull('other');
 
     return PendingChannels(
-      totalLimboBalance: this.totalLimboBalance + other.totalLimboBalance,
+      totalLimboBalance: totalLimboBalance + other.totalLimboBalance,
       pendingOpenChannels: [
-        ...this.pendingOpenChannels,
+        ...pendingOpenChannels,
         ...other.pendingOpenChannels,
       ],
       pendingClosingChannels: [
-        ...this.pendingClosingChannels,
+        ...pendingClosingChannels,
         ...other.pendingClosingChannels,
       ],
       pendingForceClosingChannels: [
-        ...this.pendingForceClosingChannels,
+        ...pendingForceClosingChannels,
         ...other.pendingForceClosingChannels,
       ],
       waitingCloseChannels: [
-        ...this.waitingCloseChannels,
+        ...waitingCloseChannels,
         ...other.waitingCloseChannels,
       ],
     );
@@ -69,10 +69,10 @@ class PendingChannels {
       waitingCloseChannels.length;
 
   static PendingChannels fromGRPC(grpc.PendingChannelsResponse resp) {
-    List<PendingOpenChannel> pendingOpenChannels = [];
-    List<PendingClosingChannel> pendingClosingChannels = [];
-    List<PendingForceClosingChannel> pendingForceClosingChannels = [];
-    List<WaitingCloseChannel> waitingCloseChannels = [];
+    var pendingOpenChannels = <PendingOpenChannel>[];
+    var pendingClosingChannels = <PendingClosingChannel>[];
+    var pendingForceClosingChannels = <PendingForceClosingChannel>[];
+    var waitingCloseChannels = <WaitingCloseChannel>[];
 
     if (resp.pendingOpenChannels.isNotEmpty) {
       resp.pendingOpenChannels.forEach((v) {

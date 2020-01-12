@@ -22,7 +22,7 @@ class OnchainTransaction {
   final Int64 timeStamp;
 
   // Timestamp of this transaction as a DateTime
-  final DateTime timsStampDateTime;
+  final DateTime timeStampDateTime;
 
   // Fees paid for this transaction
   final Int64 totalFees;
@@ -40,15 +40,14 @@ class OnchainTransaction {
     this.blockHash,
     this.blockHeight,
     this.timeStamp,
-    this.timsStampDateTime,
+    this.timeStampDateTime,
     this.totalFees,
     this.destAddresses,
     this.rawTxHex,
   );
 
   static OnchainTransaction fromLND(rpc.Transaction tx) {
-    DateTime date =
-        DateTime.fromMillisecondsSinceEpoch(tx.timeStamp.toInt() * 1000);
+    var date = DateTime.fromMillisecondsSinceEpoch(tx.timeStamp.toInt() * 1000);
     return OnchainTransaction(
       tx.txHash,
       tx.amount,

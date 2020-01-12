@@ -27,7 +27,7 @@ class _ShowOnchainInvoiceState extends State<ShowOnchainInvoice> {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
+    var theme = Theme.of(context);
     return BlocListener<SubscribeTransactionsBloc, SubscribeTransactionsState>(
       listener: (context, state) {
         if (state is TransactionChangedState) {

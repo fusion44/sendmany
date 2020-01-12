@@ -13,7 +13,7 @@ class NodeInfo {
   NodeInfo({this.node, this.numChannels, this.totalCapacity, this.channels});
 
   static NodeInfo fromGRPC(grpc.NodeInfo i) {
-    List<ChannelEdge> channels = [];
+    var channels = <ChannelEdge>[];
     if (i.channels != null && i.channels.isNotEmpty) {
       i.channels.forEach((c) {
         channels.add(ChannelEdge.fromGRPC(c));

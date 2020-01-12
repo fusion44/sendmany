@@ -6,5 +6,8 @@ abstract class Channel {
   /// for Alice's version of the commitment transaction.
   final ChannelPoint channelPoint;
 
-  Channel(this.channelPoint);
+  /// Node info of the remote node.
+  final NodeInfo remoteNodeInfo;
+
+  Channel(this.channelPoint, [this.remoteNodeInfo]);
 }

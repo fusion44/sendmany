@@ -1,3 +1,4 @@
+export 'channel_edge.dart';
 export 'channel_point.dart';
 export 'channel.dart';
 export 'closed_channel_summary.dart';
@@ -9,4 +10,5 @@ export 'pending_closing_channels.dart';
 export 'pending_force_closing_channels.dart';
 export 'pending_htlcs.dart';
 export 'pending_open_channels.dart';
+export 'routing_policy.dart';
 export 'waiting_close_channels.dart';

@@ -38,7 +38,7 @@ class CheckLNDConnectionPage extends StatefulWidget {
 }
 
 class _CheckLNDConnectionPageState extends State<CheckLNDConnectionPage> {
-  CheckLndConnectionBloc _bloc = CheckLndConnectionBloc();
+  final _bloc = CheckLndConnectionBloc();
   @override
   void initState() {
     _bloc.add(DoCheckLNDConnectionEvent(data: widget.data));
@@ -47,7 +47,7 @@ class _CheckLNDConnectionPageState extends State<CheckLNDConnectionPage> {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
+    var theme = Theme.of(context);
     return Scaffold(
       body: BlocBuilder(
         bloc: _bloc,
@@ -62,7 +62,7 @@ class _CheckLNDConnectionPageState extends State<CheckLNDConnectionPage> {
               child: _buildSuccessStateScreen(context, state),
             );
           } else if (state is CheckLNDConnectionErrorState) {
-            final double h = 16.0;
+            final h = 16.0;
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
@@ -115,7 +115,7 @@ class _CheckLNDConnectionPageState extends State<CheckLNDConnectionPage> {
     BuildContext context,
     CheckLNDConnectionSuccessState state,
   ) {
-    ThemeData theme = Theme.of(context);
+    var theme = Theme.of(context);
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

@@ -65,7 +65,7 @@ class _RetrieveConnectionInfoPageState
       onStringFound: (String code) {
         if (_doScan && code.startsWith('lndconnect')) {
           _doScan = false;
-          Uri uri = Uri.parse(code);
+          var uri = Uri.parse(code);
 
           setState(() {
             _cert = uri.queryParameters['cert'];
@@ -151,9 +151,9 @@ class _RetrieveConnectionInfoPageState
   }
 
   Stack _buildHostWidget({double padding = 16.0}) {
-    double gap = 8.0;
-    double portWidth = 120.0;
-    double size = MediaQuery.of(context).size.width - portWidth - gap - padding;
+    var gap = 8.0;
+    var portWidth = 120.0;
+    var size = MediaQuery.of(context).size.width - portWidth - gap - padding;
     return Stack(
       children: <Widget>[
         Align(
@@ -165,7 +165,7 @@ class _RetrieveConnectionInfoPageState
               textHint: tr(context, 'onboarding.host'),
               keyboardType: TextInputType.number,
               validator: (String host) {
-                Validator v = Validator();
+                var v = Validator();
                 String ret;
 
                 if (v.onionAddress(host)) {
@@ -247,7 +247,7 @@ class _RetrieveConnectionInfoPageState
   }
 
   void _checkActionButtonEnabled() {
-    bool updateUI = false;
+    var updateUI = false;
     if (_nameValid &&
         _certValid &&
         _macaroonValid &&
@@ -274,14 +274,14 @@ class _RetrieveConnectionInfoPageState
   }
 
   void _navigateToCheckConnectionPage() async {
-    LndConnectionData cdata = LndConnectionData(
+    var cdata = LndConnectionData(
       name: _name,
       certificate: _prepareCertificate(_cert),
       macaroon: _prepareMacaroon(_macaroon),
       host: _host,
       port: _port,
     );
-    CheckConnectionResult result = await Navigator.push(
+    var result = await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) {
@@ -320,7 +320,7 @@ class _RetrieveConnectionInfoPageState
   }
 
   List<int> _prepareCertificate(String certificate) {
-    String cert = certificate.replaceAll(r'-', '+');
+    var cert = certificate.replaceAll(r'-', '+');
     cert = cert.replaceAll(r'_', '/');
 
     // The certificate must be power of 4 in length
@@ -337,8 +337,9 @@ $cert
   }
 
   String _prepareMacaroon(String macaroon) {
-    String m = macaroon.replaceAll(r'-', '+');
+    var m = macaroon.replaceAll(r'-', '+');
     m = m.replaceAll(r'_', '/');
+    m = fillString(macaroon);
     m = hex.encode(base64.decode(m));
     return m;
   }

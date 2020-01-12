@@ -51,12 +51,12 @@ class _WalletPageState extends State<WalletPage> {
     );
   }
 
-  _buildListTile(Tx tx) {
-    ThemeData theme = Theme.of(context);
+  Widget _buildListTile(Tx tx) {
+    var theme = Theme.of(context);
 
-    String memo = tx.memo;
-    bool settled = true;
-    Icon icon;
+    var memo = tx.memo;
+    var settled = true;
+    var icon;
 
     var textStyle = theme.textTheme.caption;
     if (tx is TxLightningInvoice) {

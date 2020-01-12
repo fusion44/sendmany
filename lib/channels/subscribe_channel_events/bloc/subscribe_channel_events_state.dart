@@ -23,8 +23,7 @@ class ChannelsUpdatedState extends SubscribeChannelEventsState {
 
   /// Replaces a channel object with an updated object.
   ChannelsUpdatedState copyWith(Channel value) {
-    List<Channel> newList;
-    int newNumPending = numPending;
+    var newNumPending = numPending;
 
     // remove the old channel object
     channels.removeWhere(
@@ -32,7 +31,7 @@ class ChannelsUpdatedState extends SubscribeChannelEventsState {
         // remove the null marker
         if (c == null) return true;
 
-        bool match = c.channelPoint == value.channelPoint;
+        var match = c.channelPoint == value.channelPoint;
 
         // if it is a pending channel that is being removed, update numPending
         if (match && !(c is EstablishedChannel)) newNumPending--;
@@ -55,22 +54,20 @@ class ChannelsUpdatedState extends SubscribeChannelEventsState {
       channels.insert(newNumPending, null);
     }
 
-    newList = [...channels];
-
     return ChannelsUpdatedState(
-      channels: newList,
+      channels: [...channels],
       numPending: newNumPending,
     );
   }
 
   /// Returns a copy of itself with the Channel cp removed
   ChannelsUpdatedState copyWithout(ChannelPoint cp) {
-    int newNumPending = numPending;
+    var newNumPending = numPending;
     channels.removeWhere((Channel c) {
       // remove the null marker
       if (c == null) return true;
 
-      bool match = c.channelPoint == cp;
+      var match = c.channelPoint == cp;
       if (!(c is EstablishedChannel)) newNumPending--;
       return match;
     });
@@ -81,7 +78,7 @@ class ChannelsUpdatedState extends SubscribeChannelEventsState {
         numPending: newNumPending,
       );
     } else {
-      List<Channel> newList = [...channels];
+      var newList = [...channels];
       newList.insert(numPending, null);
       return ChannelsUpdatedState(
         channels: newList,

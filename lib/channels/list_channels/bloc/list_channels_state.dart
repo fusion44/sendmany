@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:sendmany/common/connection/lnd_rpc/lnd_rpc.dart';
+import 'package:sendmany/common/models/models.dart';
 
 @immutable
 abstract class ListChannelsState extends Equatable {}
@@ -16,7 +16,7 @@ class ChannelsLoadingState extends ListChannelsState {
 }
 
 class ChannelsLoadedState extends ListChannelsState {
-  final ListChannelsResponse channels;
+  final List<Channel> channels;
 
   ChannelsLoadedState(this.channels);
 

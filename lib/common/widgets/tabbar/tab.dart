@@ -24,21 +24,21 @@ class SendManyTab extends StatefulWidget {
 class _SendManyTabState extends State<SendManyTab> {
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double selectedFactor = 0.5 / 400 * screenWidth;
+    var screenWidth = MediaQuery.of(context).size.width;
+    var selectedFactor = 0.5 / 400 * screenWidth;
     if (selectedFactor > 0.5) selectedFactor = 0.5;
 
-    double padding = 0;
-    if (screenWidth <= 320) {
-      padding = 16;
+    var padding = 0.0;
+    if (screenWidth <= 320.0) {
+      padding = 16.0;
     }
 
     // Absolute width of the selected tab, including the icon
-    double selectedWidth = screenWidth * selectedFactor;
+    var selectedWidth = screenWidth * selectedFactor;
     // The width of the base (unselected) icon
-    double baseWidth = (screenWidth - selectedWidth) / 4;
+    var baseWidth = (screenWidth - selectedWidth) / 4;
     // The extra with of the extended (selected) tab
-    double extensionWidth = selectedWidth - baseWidth;
+    var extensionWidth = selectedWidth - baseWidth;
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
@@ -46,15 +46,15 @@ class _SendManyTabState extends State<SendManyTab> {
       child: AnimatedBuilder(
         animation: widget.controller.animation,
         builder: (context, child) {
-          double animState = widget.controller.animation.value;
-          int prevIndex = widget.controller.previousIndex;
+          var animState = widget.controller.animation.value;
+          var prevIndex = widget.controller.previousIndex;
           int nextIndex;
           double normalizedState;
 
           if (widget.controller.indexIsChanging) {
             // User clicked on a tab in the tab bar
             nextIndex = widget.controller.index;
-            int diff = nextIndex - prevIndex;
+            var diff = nextIndex - prevIndex;
             if (diff < 0) {
               // User clicks on tab on the LEFT to the current selected tab
               normalizedState = 1 - (1 / diff.abs() * (animState - nextIndex));

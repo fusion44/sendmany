@@ -22,13 +22,13 @@ class SubscribeChannelEventsBloc
   Stream<SubscribeChannelEventsState> mapEventToState(
     SubscribeChannelEventsEvent event,
   ) async* {
-    // Goal here is to minimize the roundtrips necessary to the LND daemon
+    // Goal here is to minimize the round trips necessary to the LND daemon
     // We reuse as much information as we can from the subscription
     if (event is _ChannelActiveEvent && state is ChannelsUpdatedState) {
       ChannelsUpdatedState currentState = state;
       try {
-        Channel channel = currentState.channels.firstWhere(
-          (Channel c) => c.channelPoint == event.channelPoint,
+        var channel = currentState.channels.firstWhere(
+          (Channel c) => c?.channelPoint == event?.channelPoint,
         );
         if (channel is EstablishedChannel) {
           yield currentState.copyWith(channel.copyWith(active: true));
@@ -39,14 +39,16 @@ class SubscribeChannelEventsBloc
       } catch (e) {
         if (e is StateError) {
           print('Channelpoint ${event.channelPoint} not found');
+        } else {
+          print(e);
         }
       }
     } else if (event is _ChannelInactiveEvent &&
         state is ChannelsUpdatedState) {
       ChannelsUpdatedState currentState = state;
       try {
-        Channel channel = currentState.channels.firstWhere(
-          (Channel c) => c.channelPoint == event.channelPoint,
+        var channel = currentState.channels.firstWhere(
+          (Channel c) => c?.channelPoint == event?.channelPoint,
         );
         if (channel is EstablishedChannel) {
           yield currentState.copyWith(channel.copyWith(active: false));
@@ -57,6 +59,8 @@ class SubscribeChannelEventsBloc
       } catch (e) {
         if (e is StateError) {
           print('Channelpoint ${event.channelPoint} not found');
+        } else {
+          print(e);
         }
       }
     } else if (event is _ChannelOpenedEvent && state is ChannelsUpdatedState) {
@@ -65,19 +69,44 @@ class SubscribeChannelEventsBloc
     } else if (event is _ChannelClosedEvent && state is ChannelsUpdatedState) {
       ChannelsUpdatedState currentState = state;
       yield currentState.copyWithout(event.closeSummary.channelPoint);
+    } else if (event is ClosingChannelEvent && state is ChannelsUpdatedState) {
+      ChannelsUpdatedState currentState = state;
+      var closingChannel = currentState.channels.firstWhere((Channel c) {
+        return c != null && c.channelPoint == event.channelPoint;
+      });
+
+      if (closingChannel is EstablishedChannel) {
+        var pc = WaitingCloseChannel(
+          channel: PendingChannelData(
+            capacity: closingChannel.capacity,
+            channelPoint: closingChannel.channelPoint,
+            localBalance: closingChannel.localChanReserveSat,
+            remoteBalance: closingChannel.remoteBalance,
+            localChanReserveSat: closingChannel.localChanReserveSat,
+            remoteChanReserveSat: closingChannel.remoteChanReserveSat,
+            remoteNodeInfo: closingChannel.remoteNodeInfo,
+            remoteNodePub: closingChannel.remotePubkey,
+          ),
+          limboBalance:
+              closingChannel.localBalance + closingChannel.localChanReserveSat,
+          remoteNodeInfo: closingChannel.remoteNodeInfo,
+        );
+
+        yield currentState.copyWith(pc);
+      }
     } else {
-      List<dynamic> responseList = await Future.wait([
+      var responseList = await Future.wait([
         _loadPendingChannels(),
         _loadChannels(),
       ]).catchError((error) {
         print(error);
       });
 
-      List<Channel> pendingChannels = responseList[0];
-      List<Channel> establishedChannels = responseList[1];
-      List<Channel> combined = [];
+      var pendingChannels = responseList[0];
+      var establishedChannels = responseList[1];
+      var combined = <Channel>[];
 
-      if (pendingChannels.length > 0) {
+      if (pendingChannels.isNotEmpty) {
         combined.addAll(pendingChannels);
         combined.add(null);
       }
@@ -92,18 +121,32 @@ class SubscribeChannelEventsBloc
 
   Future<List<Channel>> _loadChannels() async {
     var client = LnConnectionDataProvider().lightningClient;
-    grpc.ListChannelsRequest req = grpc.ListChannelsRequest();
-    grpc.ListChannelsResponse resp = await client.listChannels(req);
-    return resp.channels.map((grpc.Channel c) {
-      return EstablishedChannel.fromGRPC(c);
-    }).toList();
+    var req = grpc.ListChannelsRequest();
+    var resp = await client.listChannels(req);
+
+    var channels = <Channel>[];
+    for (var c in resp.channels) {
+      var req = grpc.NodeInfoRequest();
+      req.pubKey = c.remotePubkey;
+      req.includeChannels = false;
+
+      try {
+        var nodeInfoResp = await client.getNodeInfo(req);
+        var ni = NodeInfo.fromGRPC(nodeInfoResp);
+        channels.add(EstablishedChannel.fromGRPC(c, ni));
+      } on GrpcError catch (e) {
+        print(e.toString());
+      }
+    }
+
+    return channels;
   }
 
   Future<List<Channel>> _loadPendingChannels() async {
     var client = LnConnectionDataProvider().lightningClient;
-    grpc.PendingChannelsRequest req = grpc.PendingChannelsRequest();
-    grpc.PendingChannelsResponse resp = await client.pendingChannels(req);
-    PendingChannels p = PendingChannels.fromGRPC(resp);
+    var req = grpc.PendingChannelsRequest();
+    var resp = await client.pendingChannels(req);
+    var p = PendingChannels.fromGRPC(resp);
     return [
       ...p.pendingClosingChannels,
       ...p.pendingForceClosingChannels,
@@ -112,10 +155,10 @@ class SubscribeChannelEventsBloc
     ];
   }
 
-  _subscribeTransactions() {
+  void _subscribeTransactions() {
     var client = LnConnectionDataProvider().lightningClient;
 
-    grpc.ChannelEventSubscription sub = grpc.ChannelEventSubscription();
+    var sub = grpc.ChannelEventSubscription();
     ResponseStream stream = client.subscribeChannelEvents(
       sub,
     );
@@ -132,7 +175,7 @@ class SubscribeChannelEventsBloc
             );
             break;
           case grpc.ChannelEventUpdate_UpdateType.CLOSED_CHANNEL:
-            // called whan a channel finished closing
+            // called when a channel finished closing
             add(
               _ChannelClosedEvent(
                 ClosedChannelSummary.fromGRPC(update.closedChannel),

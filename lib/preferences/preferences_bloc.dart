@@ -5,6 +5,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:sendmany/common/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sendmany/common/models/models.dart';
+import '../pedantic.dart';
 import './bloc.dart';
 
 class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
@@ -15,46 +16,45 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
   Stream<PreferencesState> mapEventToState(
     PreferencesEvent event,
   ) async* {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var prefs = await SharedPreferences.getInstance();
     if (event is LoadPreferencesEvent) {
-      // Dont't set a default language here as it's happening in main.dart
-      String lang = prefs.getString(prefLanguageCode);
+      // Don't set a default language here as it's happening in main.dart
+      var lang = prefs.getString(prefLanguageCode);
 
-      String theme = prefs.getString(prefTheme);
+      var theme = prefs.getString(prefTheme);
       if (theme == null) {
         theme = themeSendMany;
-        prefs.setString(prefTheme, theme);
+        unawaited(prefs.setString(prefTheme, theme));
       }
 
-      bool onboarding = prefs.getBool(prefOnboardingFinished);
+      var onboarding = prefs.getBool(prefOnboardingFinished);
       if (onboarding == null) {
         onboarding = false;
-        prefs.setBool(prefOnboardingFinished, false);
+        unawaited(prefs.setBool(prefOnboardingFinished, false));
       }
 
-      int numNodes = prefs.getInt(prefNumNodes);
+      var numNodes = prefs.getInt(prefNumNodes);
       if (onboarding == null) {
         numNodes = 0;
-        prefs.setInt(prefNumNodes, 0);
+        unawaited(prefs.setInt(prefNumNodes, 0));
       }
 
-      bool pinActive = prefs.getBool(prefPinActive);
+      var pinActive = prefs.getBool(prefPinActive);
       if (pinActive == null) {
         pinActive = false;
-        prefs.setBool(prefPinActive, false);
+        unawaited(prefs.setBool(prefPinActive, false));
       }
 
       final storage = FlutterSecureStorage();
-      String connectionJSON = await storage.read(key: prefConnectionData);
-      String activeConnectionName =
-          await storage.read(key: prefActiveConnection);
+      var connectionJSON = await storage.read(key: prefConnectionData);
+      var activeConnectionName = await storage.read(key: prefActiveConnection);
       List items;
 
       LndConnectionData activeConnection;
       if (connectionJSON != null) {
         items = json.decode(connectionJSON, reviver: (a, b) {
           if (b is String) {
-            LndConnectionData c = LndConnectionData.fromJSON(b);
+            var c = LndConnectionData.fromJSON(b);
             if (c.name == activeConnectionName) activeConnection = c;
             return c;
           } else {
@@ -139,7 +139,7 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
     } else if (event is AddConnectionEvent) {
       final storage = FlutterSecureStorage();
       try {
-        List<LndConnectionData> connectionData = List<LndConnectionData>.from(
+        var connectionData = List<LndConnectionData>.from(
           state.connections,
         );
         connectionData.add(event.connection);
@@ -180,7 +180,7 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
   }
 
   LndConnectionData _getConnectionByName(String name) {
-    for (LndConnectionData connection in state.connections) {
+    for (var connection in state.connections) {
       if (connection.name == name) return connection;
     }
     return null;

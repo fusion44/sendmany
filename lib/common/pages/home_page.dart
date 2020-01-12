@@ -39,7 +39,7 @@ class _HomePageState extends State<HomePage>
 
   @override
   void initState() {
-    _controller = new TabController(length: 4, vsync: this);
+    _controller = TabController(length: 4, vsync: this);
     _lnInfoBloc = LnInfoBloc();
     _lnInfoBloc.add(LoadLnInfo());
     _subscribeChannelEventsBloc = SubscribeChannelEventsBloc();
@@ -131,8 +131,8 @@ class _HomePageState extends State<HomePage>
     );
   }
 
-  _getTabBar() {
-    List<TabData> tabs = [];
+  Widget _getTabBar() {
+    var tabs = <TabData>[];
     tabs.add(
         TabData(tr(context, 'wallet.wallet'), Icons.account_balance_wallet));
     tabs.add(TabData(tr(context, 'channels.info'), Icons.scatter_plot));
@@ -143,7 +143,7 @@ class _HomePageState extends State<HomePage>
   }
 
   Widget _buildFAB() {
-    Widget channelPageFAB = ListChannelsPage.buildFAB(
+    var channelPageFAB = ListChannelsPage.buildFAB(
       context,
       _subscribeChannelEventsBloc,
     );
@@ -151,7 +151,7 @@ class _HomePageState extends State<HomePage>
     return AnimatedBuilder(
       animation: _controller.animation,
       builder: (context, child) {
-        double animState = _controller.animation.value;
+        var animState = _controller.animation.value;
         if (animState > 0 && animState < 1) {
           return Transform.scale(
             scale: animState,
@@ -163,7 +163,7 @@ class _HomePageState extends State<HomePage>
         } else if (animState == 1) {
           return channelPageFAB;
         } else if (animState > 1 && animState < 2) {
-          double state = 1 - (animState - 1);
+          var state = 1 - (animState - 1);
           return Transform.scale(
             scale: state,
             child: Opacity(

@@ -24,7 +24,7 @@ class TimeAgoTextWidget extends StatelessWidget {
     return BlocBuilder(
       bloc: BlocProvider.of<PreferencesBloc>(context),
       builder: (BuildContext context, PreferencesState state) {
-        String formatted = format(
+        var formatted = format(
           date,
           allowFromNow: allowFromNow,
           locale: state.language,

@@ -21,7 +21,7 @@ class FilledTextFieldManual extends StatefulWidget {
     Key key,
     @required this.controller,
     this.textHint,
-    this.valid = false,
+    this.valid,
     this.obscureText = false,
     this.textAlign = TextAlign.start,
     this.keyboardType = TextInputType.text,
@@ -53,8 +53,8 @@ class _FilledTextFieldManualState extends State<FilledTextFieldManual> {
   }
 
   Widget _buildTextFormField() {
-    bool showButton = false;
-    double height = 48.0;
+    var showButton = false;
+    var height = 48.0;
 
     if (widget.actionButtonClicked != null) {
       showButton = true;
@@ -67,7 +67,7 @@ class _FilledTextFieldManualState extends State<FilledTextFieldManual> {
             border: InputBorder.none,
             focusedBorder: InputBorder.none,
             hintText: widget.textHint,
-            suffixIcon: _buildIcon(showButton),
+            suffixIcon: widget.valid == null ? null : _buildIcon(showButton),
           ),
           controller: widget.controller,
           obscureText: widget.obscureText,
