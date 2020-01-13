@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:sendmany/common/connection/lnd_rpc/lnd_rpc.dart';
+import 'package:sendmany/common/models/models.dart';
 
 @immutable
 abstract class LnInfoState extends Equatable {}
@@ -16,7 +17,7 @@ class LnInfoStateLoading extends LnInfoState {
 }
 
 class LnInfoStateReloading extends LnInfoState {
-  final GetInfoResponse infoResponse;
+  final LocalNodeInfo infoResponse;
   final WalletBalanceResponse walletBalance;
   final ChannelBalanceResponse channelBalance;
 
@@ -31,7 +32,7 @@ class LnInfoStateReloading extends LnInfoState {
 }
 
 class LnInfoStateLoadingFinished extends LnInfoState {
-  final GetInfoResponse infoResponse;
+  final LocalNodeInfo infoResponse;
   final WalletBalanceResponse walletBalance;
   final ChannelBalanceResponse channelBalance;
 

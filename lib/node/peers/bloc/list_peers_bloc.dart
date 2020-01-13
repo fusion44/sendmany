@@ -73,7 +73,7 @@ class ListPeersBloc extends Bloc<ListPeersEvent, ListPeersState> {
     nodeInfoReq.includeChannels = false;
     try {
       var info = await client.getNodeInfo(nodeInfoReq);
-      return LoadedPeer(peer, nodeInfo: NodeInfo.fromGRPC(info));
+      return LoadedPeer(peer, nodeInfo: RemoteNodeInfo.fromGRPC(info));
     } on GrpcError catch (e) {
       // We must catch errors here. For example mainnet nodes can connect to testnet
       // nodes and vice versa. Of course, a NodeInfoRequest() will not be able find

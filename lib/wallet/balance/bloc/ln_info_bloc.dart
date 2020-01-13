@@ -3,6 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:grpc/service_api.dart';
 import 'package:sendmany/common/connection/connection_manager/bloc.dart';
 import 'package:sendmany/common/connection/lnd_rpc/lnd_rpc.dart';
+import 'package:sendmany/common/models/models.dart';
 import 'ln_info_event.dart';
 import 'ln_info_state.dart';
 
@@ -41,7 +42,7 @@ class LnInfoBloc extends Bloc<LnInfoEvent, LnInfoState> {
       });
 
       yield LnInfoStateLoadingFinished(
-        responseList[0],
+        LocalNodeInfo.fromGrpc(responseList[0]),
         responseList[1],
         responseList[2],
       );

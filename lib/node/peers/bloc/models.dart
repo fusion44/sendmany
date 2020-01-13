@@ -7,8 +7,8 @@ class LoadedPeer {
   /// The loaded [Peer]
   final Peer peer;
 
-  /// The loaded [NodeInfo]
-  final NodeInfo nodeInfo;
+  /// The loaded [RemoteNodeInfo]
+  final RemoteNodeInfo nodeInfo;
 
   /// A [PeerLoadError] if loading was not successful
   final PeerLoadError error;

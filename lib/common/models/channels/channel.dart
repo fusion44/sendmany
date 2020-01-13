@@ -7,7 +7,7 @@ abstract class Channel {
   final ChannelPoint channelPoint;
 
   /// Node info of the remote node.
-  final NodeInfo remoteNodeInfo;
+  final RemoteNodeInfo remoteNodeInfo;
 
   Channel(this.channelPoint, [this.remoteNodeInfo]);
 }

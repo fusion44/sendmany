@@ -54,7 +54,7 @@ class Peer {
     this.syncType,
   });
 
-  static Peer fromGRPC(grpc.Peer p, [NodeInfo nodeInfo]) {
+  static Peer fromGRPC(grpc.Peer p, [RemoteNodeInfo nodeInfo]) {
     return Peer(
       pubKey: p.pubKey,
       address: p.address,

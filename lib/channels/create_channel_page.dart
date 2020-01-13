@@ -27,7 +27,7 @@ enum _CreateChannelPageStateState {
 class _CreateChannelPageState extends State<CreateChannelPage> {
   final GetRemoteNodeInfoBloc _getNodeInfoBloc = GetRemoteNodeInfoBloc();
   OpenChannelBloc _openChannelBloc;
-  NodeInfo _nodeInfo;
+  RemoteNodeInfo _nodeInfo;
   _CreateChannelPageStateState _state = _CreateChannelPageStateState.scanQr;
   String _pubKey = '';
   String _host = '';

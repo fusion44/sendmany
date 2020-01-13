@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:sendmany/common/connection/lnd_rpc/rpc.pb.dart';
+import 'package:sendmany/common/models/models.dart';
 import 'package:sendmany/common/utils.dart';
 import 'package:sendmany/common/widgets/widgets.dart';
 
 class LocalNodeInfoWidget extends StatefulWidget {
-  final GetInfoResponse info;
+  final LocalNodeInfo info;
   final bool showShareButton;
   final String header;
   LocalNodeInfoWidget(this.info, this.header, {this.showShareButton = true});
@@ -32,7 +32,7 @@ class _LocalNodeInfoWidgetState extends State<LocalNodeInfoWidget> {
     );
   }
 
-  Widget _buildRowAliasAndChain(GetInfoResponse state) {
+  Widget _buildRowAliasAndChain(LocalNodeInfo state) {
     var chain = 'Multiple';
     if (state.chains.isEmpty) {
       chain = 'Error: None??';
@@ -61,7 +61,7 @@ class _LocalNodeInfoWidgetState extends State<LocalNodeInfoWidget> {
     );
   }
 
-  Widget _buildRowPubkey(GetInfoResponse state) {
+  Widget _buildRowPubkey(LocalNodeInfo state) {
     return Row(
       children: <Widget>[
         Expanded(
@@ -83,14 +83,14 @@ class _LocalNodeInfoWidgetState extends State<LocalNodeInfoWidget> {
     );
   }
 
-  Widget _buildRowVersion(GetInfoResponse state) {
+  Widget _buildRowVersion(LocalNodeInfo state) {
     return DataItem(
       text: state.version,
       label: 'Version',
     );
   }
 
-  Widget _buildRowChainSyncBlockHeight(GetInfoResponse state) {
+  Widget _buildRowChainSyncBlockHeight(LocalNodeInfo state) {
     var synced = state.syncedToChain;
     return Row(
       children: <Widget>[
@@ -113,7 +113,7 @@ class _LocalNodeInfoWidgetState extends State<LocalNodeInfoWidget> {
     );
   }
 
-  Widget _buildRowPeersChannel(GetInfoResponse info) {
+  Widget _buildRowPeersChannel(LocalNodeInfo info) {
     var a = info.numActiveChannels;
     var i = info.numInactiveChannels;
     var p = info.numPendingChannels;

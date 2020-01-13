@@ -6,7 +6,7 @@ import 'package:sendmany/common/utils.dart';
 import 'package:sendmany/common/widgets/widgets.dart';
 
 class OpenChannelSettingsWidget extends StatefulWidget {
-  final NodeInfo nodeInfo;
+  final RemoteNodeInfo nodeInfo;
   final Function(OnchainFeeType feeType, Int64 fee, Int64 localAmount)
       openChannelClicked;
 

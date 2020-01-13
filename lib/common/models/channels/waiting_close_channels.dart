@@ -1,7 +1,7 @@
 import 'package:fixnum/fixnum.dart';
 import 'package:sendmany/common/connection/lnd_rpc/lnd_rpc.dart' as grpc;
 
-import '../node_info/node_info.dart';
+import '../node_info/node_infos.dart';
 import 'channel.dart';
 import 'pending_channel_data.dart';
 
@@ -16,12 +16,12 @@ class WaitingCloseChannel extends Channel {
   WaitingCloseChannel({
     this.channel,
     this.limboBalance,
-    NodeInfo remoteNodeInfo,
+    RemoteNodeInfo remoteNodeInfo,
   }) : super(channel.channelPoint, remoteNodeInfo);
 
   static WaitingCloseChannel fromGRPC(
     grpc.PendingChannelsResponse_WaitingCloseChannel v, [
-    NodeInfo remoteNodeInfo,
+    RemoteNodeInfo remoteNodeInfo,
   ]) {
     PendingChannelData channel;
     if (v.channel != null) channel = PendingChannelData.fromGRPC(v.channel);

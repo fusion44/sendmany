@@ -129,7 +129,7 @@ class _CheckLNDConnectionPageState extends State<CheckLNDConnectionPage> {
           Padding(
             padding: const EdgeInsets.only(bottom: 8.0),
             child: LocalNodeInfoWidget(
-              state.info,
+              LocalNodeInfo.fromGrpc(state.info),
               tr(context, 'onboarding.check_info'),
               showShareButton: false,
             ),

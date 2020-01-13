@@ -30,7 +30,7 @@ class GetRemoteNodeInfoBloc
 
     try {
       var resp = await client.getNodeInfo(req);
-      yield RemoteNodeInfoLoadedState(NodeInfo.fromGRPC(resp));
+      yield RemoteNodeInfoLoadedState(RemoteNodeInfo.fromGRPC(resp));
     } on GrpcError catch (e) {
       yield RemoteNodeInfoErrorState(e.toString(), pubKey: event.pubKey);
     }

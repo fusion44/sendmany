@@ -4,7 +4,7 @@ import 'package:sendmany/common/utils.dart';
 import 'package:sendmany/common/widgets/widgets.dart';
 
 class RemoteNodeInfoWidget extends StatelessWidget {
-  final NodeInfo nodeInfo;
+  final RemoteNodeInfo nodeInfo;
 
   const RemoteNodeInfoWidget({
     Key key,
