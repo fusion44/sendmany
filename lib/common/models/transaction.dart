@@ -23,7 +23,7 @@ class TxLightningInvoice extends Tx {
       : super(
           invoice.memo,
           invoice.state == InvoiceState.settled
-              ? invoice.amtPaidSat
+              ? invoice.amtPaidmSat * 1000
               : invoice.value,
           invoice.state == InvoiceState.settled
               ? invoice.settleDate

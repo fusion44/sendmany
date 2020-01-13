@@ -1,7 +1,7 @@
 import 'package:fixnum/fixnum.dart';
-import 'package:sendmany/common/connection/lnd_rpc/lnd_rpc.dart' as grpc;
 
-import 'channel_edge.dart';
+import '../../connection/lnd_rpc/lnd_rpc.dart' as grpc;
+import '../channels/channel_edge.dart';
 import 'lightning_node.dart';
 
 class NodeInfo {
@@ -16,7 +16,7 @@ class NodeInfo {
     var channels = <ChannelEdge>[];
     if (i.channels != null && i.channels.isNotEmpty) {
       i.channels.forEach((c) {
-        channels.add(ChannelEdge.fromGRPC(c));
+        channels.add(ChannelEdge.fromGrpc(c));
       });
     }
     return NodeInfo(

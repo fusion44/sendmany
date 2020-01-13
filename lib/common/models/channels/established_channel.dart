@@ -85,6 +85,23 @@ class EstablishedChannel extends Channel {
   /// the funds go directly to that key.
   final bool staticRemoteKey;
 
+  /// The number of seconds that the channel has been monitored by the channel
+  /// scoring system. Scores are currently not persisted, so this value may
+  /// be less than the lifetime of the channel [EXPERIMENTAL].
+  final Int64 lifetime;
+
+  /// The number of seconds that the remote peer has been observed as being
+  /// online by the channel scoring system over the lifetime of the channel
+  /// (EXPERIMENTAL).
+  final Int64 uptime;
+
+  /// Close address is the address that we will enforce payout to on cooperative
+  /// close if the channel was opened utilizing option upfront shutdown. This
+  /// value can be set on channel open by setting close_address in an open channel
+  /// request. If this value is not set, you can still choose a payout address by
+  /// cooperatively closing with the delivery_address field set.
+  final String closeAddress;
+
   EstablishedChannel({
     this.active,
     this.remotePubkey,
@@ -108,6 +125,9 @@ class EstablishedChannel extends Channel {
     this.localChanReserveSat,
     this.remoteChanReserveSat,
     this.staticRemoteKey,
+    this.lifetime,
+    this.uptime,
+    this.closeAddress,
     NodeInfo remoteNodeInfo,
   }) : super(channelPoint, remoteNodeInfo);
 
@@ -145,6 +165,9 @@ class EstablishedChannel extends Channel {
       localChanReserveSat: c.localChanReserveSat,
       remoteChanReserveSat: c.remoteChanReserveSat,
       staticRemoteKey: c.staticRemoteKey,
+      lifetime: c.lifetime,
+      uptime: c.uptime,
+      closeAddress: c.closeAddress,
       remoteNodeInfo: remoteNodeInfo,
     );
   }
@@ -172,6 +195,9 @@ class EstablishedChannel extends Channel {
     localChanReserveSat,
     remoteChanReserveSat,
     staticRemoteKey,
+    lifetime,
+    uptime,
+    closeAddress,
     remoteNodeInfo,
   }) {
     return EstablishedChannel(
@@ -198,6 +224,9 @@ class EstablishedChannel extends Channel {
       localChanReserveSat: localChanReserveSat ?? this.localChanReserveSat,
       remoteChanReserveSat: remoteChanReserveSat ?? this.remoteChanReserveSat,
       staticRemoteKey: staticRemoteKey ?? this.staticRemoteKey,
+      lifetime: lifetime ?? this.lifetime,
+      uptime: uptime ?? this.uptime,
+      closeAddress: closeAddress ?? this.closeAddress,
       remoteNodeInfo: remoteNodeInfo ?? this.remoteNodeInfo,
     );
   }
