@@ -132,7 +132,7 @@ class SubscribeChannelEventsBloc
 
       try {
         var nodeInfoResp = await client.getNodeInfo(req);
-        var ni = NodeInfo.fromGRPC(nodeInfoResp);
+        var ni = RemoteNodeInfo.fromGRPC(nodeInfoResp);
         channels.add(EstablishedChannel.fromGRPC(c, ni));
       } on GrpcError catch (e) {
         print(e.toString());

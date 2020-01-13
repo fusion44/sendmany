@@ -19,12 +19,12 @@ class PendingChannelData {
     this.remoteBalance,
     this.localChanReserveSat,
     this.remoteChanReserveSat,
-    NodeInfo remoteNodeInfo,
+    RemoteNodeInfo remoteNodeInfo,
   });
 
   static PendingChannelData fromGRPC(
     grpc.PendingChannelsResponse_PendingChannel channel, [
-    NodeInfo remoteNodeInfo,
+    RemoteNodeInfo remoteNodeInfo,
   ]) {
     return PendingChannelData(
       remoteNodePub: channel.remoteNodePub,

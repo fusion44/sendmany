@@ -1,7 +1,7 @@
 import 'package:fixnum/fixnum.dart';
 import 'package:sendmany/common/connection/lnd_rpc/lnd_rpc.dart' as grpc;
 
-import '../node_info/node_info.dart';
+import '../node_info/node_infos.dart';
 import 'channel.dart';
 import 'pending_channel_data.dart';
 
@@ -37,12 +37,12 @@ class PendingOpenChannel extends Channel {
     this.commitFee,
     this.commitWeight,
     this.feePerKw,
-    NodeInfo remoteNodeInfo,
+    RemoteNodeInfo remoteNodeInfo,
   }) : super(channel.channelPoint, remoteNodeInfo);
 
   static PendingOpenChannel fromGRPC(
     grpc.PendingChannelsResponse_PendingOpenChannel v, [
-    NodeInfo remoteNodeInfo,
+    RemoteNodeInfo remoteNodeInfo,
   ]) {
     PendingChannelData channel;
     if (v.channel != null) {

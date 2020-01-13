@@ -20,7 +20,7 @@ class RemoteNodeInfoLoadingState extends GetRemoteNodeInfoState {
 }
 
 class RemoteNodeInfoLoadedState extends GetRemoteNodeInfoState {
-  final NodeInfo nodeInfo;
+  final RemoteNodeInfo nodeInfo;
 
   RemoteNodeInfoLoadedState(this.nodeInfo);
 

@@ -128,12 +128,12 @@ class EstablishedChannel extends Channel {
     this.lifetime,
     this.uptime,
     this.closeAddress,
-    NodeInfo remoteNodeInfo,
+    RemoteNodeInfo remoteNodeInfo,
   }) : super(channelPoint, remoteNodeInfo);
 
   static EstablishedChannel fromGRPC(
     grpc.Channel c, [
-    NodeInfo remoteNodeInfo,
+    RemoteNodeInfo remoteNodeInfo,
   ]) {
     var pendingHtlcs = <HTLC>[];
     if (c.pendingHtlcs != null) {
