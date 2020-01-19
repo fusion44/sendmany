@@ -10,6 +10,8 @@ import 'package:grpc/grpc.dart';
 import 'package:nanoid/nanoid.dart';
 
 import './bloc.dart';
+import '../../common/connection/connection_manager/bloc.dart';
+import '../../common/connection/lnd_rpc/lnd_rpc.dart' as grpc;
 import '../../common/constants.dart';
 import '../../common/models/models.dart';
 import '../../common/models/transaction.dart';
@@ -22,15 +24,27 @@ class _MessagesLoadedEvent extends ListMessagesBaseEvent {
   List<Object> get props => [];
 }
 
+class _MessageAddedEvent extends ListMessagesBaseEvent {
+  final MessageItem message;
+
+  _MessageAddedEvent(this.message);
+
+  @override
+  List<Object> get props => [];
+}
+
 class ListMessagesBloc
     extends Bloc<ListMessagesBaseEvent, ListMessagesBaseState> {
   final ListTxBloc listTxBloc;
   final Map<String, List<MessageItem>> _messages = {};
   int _lastMessageListSize;
-  StreamSubscription<ListTxState> _sub;
+  StreamSubscription<ListTxState> _listTxSub;
+  ResponseStream<grpc.Invoice> _subscribeInvoices;
+
+  bool _fullLoadFinished = true;
 
   ListMessagesBloc(this.listTxBloc) {
-    _sub = listTxBloc.listen((state) {
+    _listTxSub = listTxBloc.listen((state) {
       if (state is LoadingTxFinishedState) {
         if (_lastMessageListSize == null ||
             _lastMessageListSize < state.transactions.length) {
@@ -40,11 +54,13 @@ class ListMessagesBloc
         }
       }
     });
+    _initInvoiceSubscription();
   }
 
   @override
   Future<void> close() async {
-    await _sub.cancel();
+    await _listTxSub.cancel();
+    await _subscribeInvoices.cancel();
     return super.close();
   }
 
@@ -59,11 +75,14 @@ class ListMessagesBloc
       if (_messages == null || _messages.isEmpty) {}
     } else if (event is _MessagesLoadedEvent) {
       yield MessageListLoadedState(_messages);
+    } else if (event is _MessageAddedEvent) {
+      yield NewMessageAddedState(event.message);
     }
   }
 
   Future<void> _initMessageList(List<Tx> transactions) async {
     // TODO: Run this code in an isolate and cache using https://pub.dev/packages/hive
+    _fullLoadFinished = false;
     try {
       transactions.forEach((tx) async {
         if (tx is TxLightningInvoice) {
@@ -100,7 +119,25 @@ class ListMessagesBloc
     } catch (e) {
       // catch other errors
       print('_initMessageList: $e');
+    } finally {
+      _fullLoadFinished = true;
     }
+  }
+
+  void _initInvoiceSubscription() {
+    var client = LnConnectionDataProvider().lightningClient;
+    var req = grpc.InvoiceSubscription();
+    _subscribeInvoices = client.subscribeInvoices(req);
+    _subscribeInvoices.listen((i) {
+      if (i.isKeySend && i.htlcs.isNotEmpty) {
+        if (i.state != grpc.Invoice_InvoiceState.SETTLED) return null;
+        for (var h in i.htlcs) {
+          if (h.state == grpc.InvoiceHTLCState.SETTLED) {
+            _handleIncomingChatHtlc(h.customRecords);
+          }
+        }
+      }
+    });
   }
 
   Map<Int64, List<int>> _findIncomingChatRecord(Invoice invoice) {
@@ -193,11 +230,23 @@ class ListMessagesBloc
       isMe: isMe,
       delivered: true,
     );
-    print('add message: $msg, $isMe');
+
     if (!_messages.containsKey(peer)) {
       _messages[peer] = <MessageItem>[];
     }
 
+    var list = _messages[peer];
+
+    if (list.isNotEmpty) {
+      list.last.belowIsSame = m.isMe == list.last.isMe;
+      m.aboveIsSame = m.isMe == list.last.isMe;
+      m.belowIsSame = false;
+    }
+
     _messages[peer].add(m);
+
+    if (_fullLoadFinished) {
+      add(_MessageAddedEvent(m));
+    }
   }
 }

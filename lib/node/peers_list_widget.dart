@@ -7,11 +7,13 @@ import 'package:sendmany/common/widgets/widgets.dart';
 import 'package:sendmany/node/peers/bloc/bloc.dart';
 
 class PeerListWidget extends StatelessWidget {
+  final bool chatActive;
   final Function onSearchPeerPressed;
 
   const PeerListWidget({
     Key key,
     @required this.onSearchPeerPressed,
+    this.chatActive = false,
   }) : super(key: key);
 
   @override
@@ -23,16 +25,20 @@ class PeerListWidget extends StatelessWidget {
           var peers = <Widget>[];
 
           for (var i = 0; i < state.peers.length; i++) {
-            peers.add(PeerListTile(p: state.peers[i]));
+            peers.add(PeerListTile(p: state.peers[i], chatActive: chatActive));
             if (i != state.peers.length - 1) peers.add(Divider());
           }
 
-          return SendManyCard(
-            tr(context, 'node.peers'),
-            peers,
-            actionButtonIcon: Icon(Icons.search),
-            onActionButtonPressed: onSearchPeerPressed,
-          );
+          if (chatActive) {
+            return SendManyCard(
+              tr(context, 'node.peers'),
+              peers,
+              actionButtonIcon: Icon(Icons.search),
+              onActionButtonPressed: onSearchPeerPressed,
+            );
+          } else {
+            return SendManyCard(tr(context, 'node.peers'), peers);
+          }
         } else {
           return SendManyCard(
             tr(context, 'node.peers'),
