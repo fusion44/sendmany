@@ -52,6 +52,7 @@ class Payment {
     this.status,
     this.feeSat,
     this.feemSat,
+    this.htlcs,
   );
 
   static Payment fromGRPC(lngrpc.Payment grpcPayment) {
@@ -86,6 +87,11 @@ class Payment {
       print(e);
     }
 
+    var htlcs = <HTLCAttempt>[];
+    grpcPayment.htlcs.forEach((grpcHTLC) {
+      htlcs.add(HTLCAttempt.fromGrpc(grpcHTLC));
+    });
+
     return Payment(
       getMemoFromPaymentRequest(grpcPayment.paymentRequest),
       grpcPayment.paymentHash,
@@ -97,6 +103,7 @@ class Payment {
       status,
       grpcPayment.feeSat,
       grpcPayment.feeMsat,
+      htlcs,
     );
   }
 }

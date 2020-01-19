@@ -24,7 +24,7 @@ class HTLCAttempt {
     this.resolveTime,
   });
 
-  HTLCAttempt fromGrpc(lngrpc.HTLCAttempt htlc) {
+  static HTLCAttempt fromGrpc(lngrpc.HTLCAttempt htlc) {
     HTLCAttemptStatus status;
     switch (htlc.status) {
       case lngrpc.HTLCAttempt_HTLCStatus.IN_FLIGHT:

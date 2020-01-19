@@ -1,12 +1,15 @@
-class MessageItem {
+class MessageItem implements Comparable<MessageItem> {
   /// The message ID
   final String id;
 
   /// The [DateTime] when the message arrived
   final DateTime date;
 
-  /// The sender alias
-  final String from;
+  /// The peer alias
+  final String peer;
+
+  /// Whether this message is from myself
+  final bool isMe;
 
   /// The message text contents
   final String text;
@@ -15,16 +18,17 @@ class MessageItem {
   final bool delivered;
 
   /// True if message above is the same user
-  final bool aboveIsSame;
+  bool aboveIsSame;
 
   /// True if message below is the same user
-  final bool belowIsSame;
+  bool belowIsSame;
 
   MessageItem(
     this.id,
     this.date,
-    this.from,
+    this.peer,
     this.text, {
+    this.isMe = false,
     this.delivered = false,
     this.aboveIsSame = false,
     this.belowIsSame = false,
@@ -39,13 +43,17 @@ class MessageItem {
     bool belowIsSame,
   }) {
     return MessageItem(
-      id != null ? id : this.id,
-      date != null ? date : this.date,
-      from != null ? from : this.from,
-      text != null ? text : this.text,
-      delivered: delivered != null ? delivered : this.delivered,
-      aboveIsSame: aboveIsSame != null ? aboveIsSame : this.aboveIsSame,
-      belowIsSame: belowIsSame != null ? belowIsSame : this.belowIsSame,
+      id ?? this.id,
+      date,
+      peer,
+      text ?? this.text,
+      isMe: isMe,
+      delivered: delivered ?? this.delivered,
+      aboveIsSame: aboveIsSame ?? this.aboveIsSame,
+      belowIsSame: belowIsSame ?? this.belowIsSame,
     );
   }
+
+  @override
+  int compareTo(MessageItem other) => date.compareTo(other.date);
 }

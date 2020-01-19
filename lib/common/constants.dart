@@ -1,5 +1,6 @@
 library sendmany.constants;
 
+import 'package:fixnum/fixnum.dart';
 import 'package:flutter/material.dart';
 
 const String heroTagSendManyLogo = 'hero_sendmany_logo';
@@ -45,3 +46,24 @@ const themeDark = 'dark';
 const themeLight = 'light';
 
 const double defaultHorizontalWhiteSpace = 4.0;
+
+/// TLV Records supported by SendMany
+class TlvRecords {
+  /// Record for sending and receiving tips
+  static final Int64 tipRecord = Int64(7629168);
+
+  /// Record for sending and receiving text messages
+  static final Int64 msgRecord = Int64(34349334);
+
+  /// Record for including a signature with each package
+  static final Int64 sigRecord = Int64(34349337);
+
+  /// Record for including the pubkey of the sender
+  static final Int64 senderRecord = Int64(34349339);
+
+  /// Record of the time when the TLV was created
+  static final Int64 timeRecord = Int64(34349343);
+
+  /// Record for the preimage
+  static final Int64 keySendRecord = Int64(5482373484);
+}

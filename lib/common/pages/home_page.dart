@@ -6,15 +6,14 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:sendmany/channels/list_channels/bloc/bloc.dart';
 import 'package:sendmany/channels/list_channels_page.dart';
 import 'package:sendmany/channels/subscribe_channel_events/bloc/bloc.dart';
-import 'package:sendmany/chat/chat_page.dart';
+import 'package:sendmany/chat/list_messages/bloc.dart';
 import 'package:sendmany/common/connection/connection_manager/bloc.dart';
 import 'package:sendmany/common/constants.dart';
 import 'package:sendmany/common/utils.dart';
 import 'package:sendmany/common/widgets/tabbar/tab_bar.dart';
 import 'package:sendmany/common/widgets/widgets.dart';
-import 'package:sendmany/node/node_overview_widget.dart';
+import 'package:sendmany/node/node_overview_page.dart';
 import 'package:sendmany/node/peers/bloc/bloc.dart';
-import 'package:sendmany/node/peers_list_widget.dart';
 import 'package:sendmany/preferences/bloc.dart';
 import 'package:sendmany/preferences/preferences_page.dart';
 import 'package:sendmany/wallet/balance/bloc/bloc.dart';
@@ -34,8 +33,7 @@ class _HomePageState extends State<HomePage>
   ListChannelsBloc _listChannelsBloc;
   ListPeersBloc _listPeersBloc;
   ListTxBloc _listTxBloc;
-
-  TextEditingController _searchPeerController = TextEditingController();
+  ListMessagesBloc _listMsgBloc;
 
   @override
   void initState() {
@@ -51,12 +49,14 @@ class _HomePageState extends State<HomePage>
     _listTxBloc = ListTxBloc(_lnInfoBloc);
     _listTxBloc.add(LoadTxEvent());
     _listTxBloc.add(ChangePollTxIntervalEvent(30));
+    _listMsgBloc = ListMessagesBloc(_listTxBloc);
     super.initState();
   }
 
   @override
   void dispose() {
     _controller.dispose();
+    _listMsgBloc.close();
     _listTxBloc.close(); // contains a reference to _lnInfoBloc, dispose first
     _lnInfoBloc.close();
     _listChannelsBloc.close();
@@ -76,6 +76,7 @@ class _HomePageState extends State<HomePage>
         ),
         BlocProvider<ListPeersBloc>.value(value: _listPeersBloc),
         BlocProvider<ListTxBloc>.value(value: _listTxBloc),
+        BlocProvider<ListMessagesBloc>.value(value: _listMsgBloc),
       ],
       child: BlocListener(
         bloc: BlocProvider.of<PreferencesBloc>(context),
@@ -116,14 +117,7 @@ class _HomePageState extends State<HomePage>
         children: <Widget>[
           WalletPage(),
           ListChannelsPage(),
-          SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                NodeOverviewWidget(),
-                PeerListWidget(onSearchPeerPressed: _buildSearchDialog),
-              ],
-            ),
-          ),
+          NodeOverviewPage(),
           PreferencesPage(),
         ],
       ),
@@ -174,38 +168,6 @@ class _HomePageState extends State<HomePage>
         } else {
           return Container();
         }
-      },
-    );
-  }
-
-  void _buildSearchDialog() async {
-    _searchPeerController.clear();
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Enter pubkey to chat'),
-          content: TextField(
-            controller: _searchPeerController,
-            decoration: InputDecoration(labelText: 'pubkey'),
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text("Go!"),
-              onPressed: () {
-                Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return ChatPage(_searchPeerController.text);
-                    },
-                  ),
-                );
-              },
-            ),
-          ],
-        );
       },
     );
   }
