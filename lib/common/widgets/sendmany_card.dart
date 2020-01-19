@@ -31,10 +31,10 @@ class SendManyCard extends Card {
     );
   }
 
-  _buildHeader(ThemeData theme) {
+  Widget _buildHeader(ThemeData theme) {
     Widget headerText = Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
-      child: Text(this.header, style: theme.textTheme.title),
+      child: Text(header, style: theme.textTheme.title),
     );
     if (actionButtonIcon == null && onActionButtonPressed == null) {
       return headerText;
@@ -43,8 +43,8 @@ class SendManyCard extends Card {
         children: <Widget>[
           Expanded(child: headerText),
           IconButton(
-            icon: this.actionButtonIcon,
-            onPressed: this.onActionButtonPressed,
+            icon: actionButtonIcon,
+            onPressed: onActionButtonPressed,
           )
         ],
       );

@@ -20,18 +20,20 @@ class Preimage {
   /// Throws [ArgumentError] if bytes list is not the right size
   Preimage({Uint8List bytes}) {
     if (bytes == null) {
-      final Random rand = Random.secure();
+      final rand = Random.secure();
       _bytes = Uint8List(size);
-      for (int i = 0; i < size; i++) _bytes[i] = rand.nextInt(256);
+      for (var i = 0; i < size; i++) {
+        _bytes[i] = rand.nextInt(256);
+      }
     } else if (bytes.length != size) {
-      throw new ArgumentError('Preimage size must be exactly $size bytes');
+      throw ArgumentError('Preimage size must be exactly $size bytes');
     } else {
       _bytes = [...bytes];
     }
   }
 
   /// Creates a Preimage object from an hex encoded String
-  static fromString(String str) => Preimage(bytes: hex.decode(str));
+  static Preimage fromString(String str) => Preimage(bytes: hex.decode(str));
 
   /// Encodes the Preimage to an hex encoded String
   String get hexString => hex.encode(_bytes);
