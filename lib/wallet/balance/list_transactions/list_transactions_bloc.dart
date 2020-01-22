@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
+import 'package:fixnum/fixnum.dart';
 import 'package:grpc/grpc.dart';
 import 'package:sendmany/common/connection/connection_manager/bloc.dart';
 import 'package:sendmany/common/models/models.dart';
@@ -171,6 +172,7 @@ class ListTxBloc extends Bloc<ListTxEvent, ListTxState> {
 
     var invoicesRequest = lngrpc.ListInvoiceRequest();
     invoicesRequest.reversed = true;
+    invoicesRequest.numMaxInvoices = Int64(99999);
     var paymentsRequest = lngrpc.ListPaymentsRequest();
     var txRequest = lngrpc.GetTransactionsRequest();
 

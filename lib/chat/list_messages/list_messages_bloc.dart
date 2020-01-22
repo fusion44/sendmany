@@ -72,11 +72,18 @@ class ListMessagesBloc
     ListMessagesBaseEvent event,
   ) async* {
     if (event is ListMessagesEvent) {
-      if (_messages == null || _messages.isEmpty) {}
-    } else if (event is _MessagesLoadedEvent) {
-      yield MessageListLoadedState(_messages);
+      if (_messages != null && _messages.isNotEmpty ||
+          event is _MessagesLoadedEvent) {
+        yield MessageListLoadedState(_messages);
+      }
     } else if (event is _MessageAddedEvent) {
       yield NewMessageAddedState(event.message);
+    } else if (event is AddMessageEvent) {
+      // _insertMessage() adds a new _MessageAddedEvent, yield not necessary
+      _insertMessage(event.message);
+    } else if (event is MessageUpdatedEvent) {
+      _replaceMessage(event.message);
+      yield MessageUpdatedState(event.message);
     }
   }
 
@@ -231,11 +238,15 @@ class ListMessagesBloc
       delivered: true,
     );
 
-    if (!_messages.containsKey(peer)) {
-      _messages[peer] = <MessageItem>[];
+    _insertMessage(m);
+  }
+
+  void _insertMessage(MessageItem m) {
+    if (!_messages.containsKey(m.peer)) {
+      _messages[m.peer] = <MessageItem>[];
     }
 
-    var list = _messages[peer];
+    var list = _messages[m.peer];
 
     if (list.isNotEmpty) {
       list.last.belowIsSame = m.isMe == list.last.isMe;
@@ -243,10 +254,35 @@ class ListMessagesBloc
       m.belowIsSame = false;
     }
 
-    _messages[peer].add(m);
+    _messages[m.peer].add(m);
 
     if (_fullLoadFinished) {
       add(_MessageAddedEvent(m));
+    }
+  }
+
+  void _replaceMessage(MessageItem m) {
+    var list = _messages[m.peer];
+    if (list.last.id == m.id) {
+      // Take a guess that this might be the last added message
+      // Usually we should only have to replace an item if its
+      // delivered state has changed and this should be the last item
+      m.aboveIsSame = list.last.aboveIsSame;
+      m.belowIsSame = list.last.belowIsSame;
+      list[list.length - 1] = m;
+    } else {
+      var found = false;
+      for (var i = list.length - 1; i > 0; i--) {
+        if (list[i].id == m.id) {
+          m.aboveIsSame = list.last.aboveIsSame;
+          m.belowIsSame = list.last.belowIsSame;
+          list[i] = m;
+          found = true;
+        }
+      }
+      if (!found) {
+        print('not found');
+      }
     }
   }
 }

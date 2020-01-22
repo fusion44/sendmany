@@ -27,3 +27,12 @@ class NewMessageAddedState extends ListMessagesBaseState {
   @override
   List<Object> get props => [message.id];
 }
+
+class MessageUpdatedState extends ListMessagesBaseState {
+  final MessageItem message;
+
+  MessageUpdatedState(this.message);
+
+  @override
+  List<Object> get props => [message.id];
+}

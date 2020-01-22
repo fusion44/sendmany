@@ -17,6 +17,12 @@ class MessageItem implements Comparable<MessageItem> {
   /// Whether the message was delivered successfully
   final bool delivered;
 
+  /// In case the message could not be delivered
+  final bool deliveryFailure;
+
+  /// Optional error message on delivery failure
+  final String errorMessage;
+
   /// True if message above is the same user
   bool aboveIsSame;
 
@@ -30,6 +36,8 @@ class MessageItem implements Comparable<MessageItem> {
     this.text, {
     this.isMe = false,
     this.delivered = false,
+    this.deliveryFailure = false,
+    this.errorMessage = '',
     this.aboveIsSame = false,
     this.belowIsSame = false,
   });
@@ -39,6 +47,8 @@ class MessageItem implements Comparable<MessageItem> {
     String from,
     String text,
     bool delivered,
+    bool deliveryFailure,
+    String errorMessage,
     bool aboveIsSame,
     bool belowIsSame,
   }) {
@@ -49,6 +59,8 @@ class MessageItem implements Comparable<MessageItem> {
       text ?? this.text,
       isMe: isMe,
       delivered: delivered ?? this.delivered,
+      deliveryFailure: deliveryFailure ?? this.deliveryFailure,
+      errorMessage: errorMessage ?? this.errorMessage,
       aboveIsSame: aboveIsSame ?? this.aboveIsSame,
       belowIsSame: belowIsSame ?? this.belowIsSame,
     );
