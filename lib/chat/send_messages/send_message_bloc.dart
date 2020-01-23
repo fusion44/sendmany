@@ -121,13 +121,12 @@ class SendMessageBloc extends Bloc<SendMessageBaseEvent, SendMessageBaseState> {
                 m.copyWith(
                   deliveryFailure: true,
                   errorMessage:
-                      'Possibly the peer doesn\'t have key-send activated?',
+                      'FAILED_INCORRECT_PAYMENT_DETAILS: Possibly the peer doesn\'t have key-send activated?',
                 ),
               ),
             );
 
-            print(
-                'Failed to send message ${m.text}, incorrect payment details');
+            print('FAILED_INCORRECT_PAYMENT_DETAILS');
             break;
           case router.PaymentState.FAILED_NO_ROUTE:
             _listMsgBloc.add(
@@ -135,25 +134,85 @@ class SendMessageBloc extends Bloc<SendMessageBaseEvent, SendMessageBaseState> {
                 m.copyWith(
                   deliveryFailure: true,
                   errorMessage:
-                      'Unable to find route to node. Has the peer keysend activated?',
+                      'PaymentState.FAILED_NO_ROUTE: Unable to find route to node. Has the peer keysend activated?',
                 ),
               ),
             );
-            print('Failed to send message ${m.text}, no route');
+            print('PaymentState.FAILED_NO_ROUTE');
+            break;
+          case router.PaymentState.FAILED_ERROR:
+            _listMsgBloc.add(
+              MessageUpdatedEvent(
+                m.copyWith(
+                  deliveryFailure: true,
+                  errorMessage:
+                      'PaymentState.FAILED_ERROR: An error unrecoverable error occurred while sending the message.',
+                ),
+              ),
+            );
+            print('PaymentState.FAILED_ERROR');
+            break;
+          case router.PaymentState.FAILED_INSUFFICIENT_BALANCE:
+            _listMsgBloc.add(
+              MessageUpdatedEvent(
+                m.copyWith(
+                  deliveryFailure: true,
+                  errorMessage:
+                      'PaymentState.FAILED_INSUFFICIENT_BALANCE: Not enough balance to send message.',
+                ),
+              ),
+            );
+            print('PaymentState.FAILED_INSUFFICIENT_BALANCE');
+            break;
+          case router.PaymentState.FAILED_TIMEOUT:
+            _listMsgBloc.add(
+              MessageUpdatedEvent(
+                m.copyWith(
+                  deliveryFailure: true,
+                  errorMessage:
+                      'PaymentState.FAILED_TIMEOUT: Not enough balance to send message.',
+                ),
+              ),
+            );
+            print('PaymentState.FAILED_TIMEOUT');
             break;
           case router.PaymentState.IN_FLIGHT:
             // do nothing
             break;
           default:
+            _listMsgBloc.add(
+              MessageUpdatedEvent(
+                m.copyWith(
+                  deliveryFailure: true,
+                  errorMessage: 'SendMessage failed with PaymentState: $status',
+                ),
+              ),
+            );
             print('SendMessage status: $status');
         }
       }, onDone: () {
         _sendStreams[m.id].cancel();
         _sendStreams.remove(m.id);
       }, onError: (error) {
+        _listMsgBloc.add(
+          MessageUpdatedEvent(
+            m.copyWith(
+              deliveryFailure: true,
+              errorMessage: 'Unknown error sending the message.',
+            ),
+          ),
+        );
         print('Error sending message: $error');
       });
     } on GrpcError catch (e) {
+      _listMsgBloc.add(
+        MessageUpdatedEvent(
+          m.copyWith(
+            deliveryFailure: true,
+            errorMessage: 'gRPC error sending the message: ${e.message}',
+          ),
+        ),
+      );
       print(e.message);
     }
   }
