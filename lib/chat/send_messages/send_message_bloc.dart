@@ -87,10 +87,23 @@ class SendMessageBloc extends Bloc<SendMessageBaseEvent, SendMessageBaseState> {
       ..keyFamily = 6
       ..keyIndex = 0;
 
-    var resp = await _signerClient.signMessage(
-      signReq,
-      options: _opts,
-    );
+    var resp;
+    try {
+      resp = await _signerClient.signMessage(
+        signReq,
+        options: _opts,
+      );
+    } catch (e) {
+      _listMsgBloc.add(
+        MessageUpdatedEvent(
+          m.copyWith(
+            deliveryFailure: true,
+            errorMessage: 'Failed to sign the message.',
+          ),
+        ),
+      );
+      return;
+    }
 
     var preimage = Preimage();
 
@@ -125,8 +138,6 @@ class SendMessageBloc extends Bloc<SendMessageBaseEvent, SendMessageBaseState> {
                 ),
               ),
             );
-
-            print('FAILED_INCORRECT_PAYMENT_DETAILS');
             break;
           case router.PaymentState.FAILED_NO_ROUTE:
             _listMsgBloc.add(
@@ -138,7 +149,6 @@ class SendMessageBloc extends Bloc<SendMessageBaseEvent, SendMessageBaseState> {
                 ),
               ),
             );
-            print('PaymentState.FAILED_NO_ROUTE');
             break;
           case router.PaymentState.FAILED_ERROR:
             _listMsgBloc.add(
@@ -150,7 +160,6 @@ class SendMessageBloc extends Bloc<SendMessageBaseEvent, SendMessageBaseState> {
                 ),
               ),
             );
-            print('PaymentState.FAILED_ERROR');
             break;
           case router.PaymentState.FAILED_INSUFFICIENT_BALANCE:
             _listMsgBloc.add(
@@ -162,7 +171,6 @@ class SendMessageBloc extends Bloc<SendMessageBaseEvent, SendMessageBaseState> {
                 ),
               ),
             );
-            print('PaymentState.FAILED_INSUFFICIENT_BALANCE');
             break;
           case router.PaymentState.FAILED_TIMEOUT:
             _listMsgBloc.add(
@@ -174,7 +182,6 @@ class SendMessageBloc extends Bloc<SendMessageBaseEvent, SendMessageBaseState> {
                 ),
               ),
             );
-            print('PaymentState.FAILED_TIMEOUT');
             break;
           case router.PaymentState.IN_FLIGHT:
             // do nothing
@@ -188,7 +195,6 @@ class SendMessageBloc extends Bloc<SendMessageBaseEvent, SendMessageBaseState> {
                 ),
               ),
             );
-            print('SendMessage status: $status');
         }
       }, onDone: () {
         _sendStreams[m.id].cancel();
@@ -202,7 +208,6 @@ class SendMessageBloc extends Bloc<SendMessageBaseEvent, SendMessageBaseState> {
             ),
           ),
         );
-        print('Error sending message: $error');
       });
     } on GrpcError catch (e) {
       _listMsgBloc.add(
@@ -213,7 +218,6 @@ class SendMessageBloc extends Bloc<SendMessageBaseEvent, SendMessageBaseState> {
           ),
         ),
       );
-      print(e.message);
     }
   }
 }

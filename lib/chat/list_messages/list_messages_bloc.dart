@@ -193,6 +193,10 @@ class ListMessagesBloc
     var timestampBytes = records[TlvRecords.timeRecord];
     var senderBytes = records[TlvRecords.senderRecord];
 
+    if (messageBytes == null || timestampBytes == null || senderBytes == null) {
+      return;
+    }
+
     var msg = utf8.decode(messageBytes);
     var reader = ByteDataReader(endian: Endian.big)..add(timestampBytes);
     var timestampInt = reader.readInt64(Endian.big) ~/ 1000;
