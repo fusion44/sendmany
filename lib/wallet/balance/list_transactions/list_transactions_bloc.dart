@@ -176,35 +176,46 @@ class ListTxBloc extends Bloc<ListTxEvent, ListTxState> {
     var paymentsRequest = lngrpc.ListPaymentsRequest();
     var txRequest = lngrpc.GetTransactionsRequest();
 
-    var responseList = await Future.wait([
-      client.listInvoices(invoicesRequest),
-      client.listPayments(paymentsRequest),
-      client.getTransactions(txRequest),
-    ]);
+    var responseList;
+    try {
+      responseList = await Future.wait([
+        client.listInvoices(invoicesRequest),
+        client.listPayments(paymentsRequest),
+        client.getTransactions(txRequest),
+      ]);
+    } on GrpcError catch (e) {
+      print('gRPC error: $e');
+      return;
+    }
 
     lngrpc.ListInvoiceResponse invoiceResponse = responseList[0];
     lngrpc.ListPaymentsResponse paymentsResponse = responseList[1];
     lngrpc.TransactionDetails txResponse = responseList[2];
 
-    invoices = [];
-    invoiceResponse.invoices.forEach((lngrpc.Invoice grpcInvoice) {
-      var invoice = Invoice.fromGRPC(grpcInvoice);
-      invoices.add(TxLightningInvoice(invoice));
-    });
+    try {
+      invoices = [];
+      invoiceResponse.invoices.forEach((lngrpc.Invoice grpcInvoice) {
+        var invoice = Invoice.fromGRPC(grpcInvoice);
+        invoices.add(TxLightningInvoice(invoice));
+      });
 
-    payments = [];
-    paymentsResponse.payments.forEach((lngrpc.Payment grpcPayment) {
-      var payment = Payment.fromGRPC(grpcPayment);
-      payments.add(TxLightningPayment(payment));
-    });
+      payments = [];
+      paymentsResponse.payments.forEach((lngrpc.Payment grpcPayment) {
+        var payment = Payment.fromGRPC(grpcPayment);
+        payments.add(TxLightningPayment(payment));
+      });
 
-    onchains = [];
-    txResponse.transactions.forEach((lngrpc.Transaction onChainTx) {
-      if (onChainTx.amount != 0) {
-        var txm = OnchainTransaction.fromLND(onChainTx);
-        onchains.add(TxOnchain(txm));
-      }
-    });
+      onchains = [];
+      txResponse.transactions.forEach((lngrpc.Transaction onChainTx) {
+        if (onChainTx.amount != 0) {
+          var txm = OnchainTransaction.fromLND(onChainTx);
+          onchains.add(TxOnchain(txm));
+        }
+      });
+    } catch (e) {
+      print(e);
+      print(e.stackTrace);
+    }
   }
 
   LoadingTxFinishedState _buildTxList() {
