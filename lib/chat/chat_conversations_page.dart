@@ -6,8 +6,10 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../common/constants.dart';
 import '../node/peers/bloc/bloc.dart';
+import '../wallet/balance/bloc/bloc.dart';
 import 'chat_page.dart';
 import 'chat_peer_tile.dart';
+import 'find_peer_page.dart';
 import 'list_messages/bloc.dart';
 import 'list_messages/list_messages_bloc.dart';
 import 'models/message_item.dart';
@@ -20,6 +22,33 @@ class _ChatPeersItem {
 }
 
 class ChatConversationsPage extends StatefulWidget {
+  static final Widget fabIcon = Icon(Icons.edit);
+  static final Function fabCallback = (
+    context,
+    LnInfoBloc lnInfoBloc,
+    ListMessagesBloc listMessagesBloc,
+  ) async {
+    var result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => FindPeerPage()),
+    );
+
+    if (result != null && result is String) {
+      var prov = MultiBlocProvider(
+        providers: [
+          BlocProvider<LnInfoBloc>.value(value: lnInfoBloc),
+          BlocProvider<ListMessagesBloc>.value(value: listMessagesBloc)
+        ],
+        child: ChatPage(result),
+      );
+
+      await Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => prov),
+      );
+    }
+  };
+
   @override
   _ChatConversationsPageState createState() => _ChatConversationsPageState();
 }

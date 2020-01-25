@@ -64,6 +64,9 @@
   },
   "chat": {
     "chat_with": "Chat med",
+    "chat_with_peer": "Go!",
+    "enter_peer_pubkey": "Pubkey",
+    "find_a_peer": "Finn en peer",
     "info": "Chat"
   },
   "network": {

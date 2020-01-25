@@ -64,6 +64,9 @@
   },
   "chat": {
     "chat_with": "Chat mit",
+    "chat_with_peer": "Los!",
+    "enter_peer_pubkey": "Pubkey",
+    "find_a_peer": "Node suchen",
     "info": "Chat"
   },
   "network": {

@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../chat/chat_page.dart';
+import '../../chat/list_messages/bloc.dart';
 import '../../node/peers/bloc/bloc.dart';
-import '../utils.dart';
+import '../../wallet/balance/bloc/bloc.dart';
 
 class PeerListTile extends StatelessWidget {
   final LoadedPeer p;
 
   const PeerListTile(this.p, {Key key}) : super(key: key);
-
-  void _onTap(BuildContext context) {
-    // TODO: implement me
-    showSnackbar(context, 'Tapped ${p.nodeInfo.node.alias}');
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,5 +28,23 @@ class PeerListTile extends StatelessWidget {
         subtitle: Text(p.peer.pubKey, overflow: TextOverflow.ellipsis),
       );
     }
+  }
+
+  void _onTap(BuildContext context) {
+    var prov = MultiBlocProvider(
+      providers: [
+        BlocProvider<LnInfoBloc>.value(
+          value: BlocProvider.of<LnInfoBloc>(context),
+        ),
+        BlocProvider<ListMessagesBloc>.value(
+          value: BlocProvider.of<ListMessagesBloc>(context),
+        ),
+      ],
+      child: ChatPage(p.peer.pubKey),
+    );
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => prov),
+    );
   }
 }

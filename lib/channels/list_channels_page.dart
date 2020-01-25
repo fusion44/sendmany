@@ -20,25 +20,19 @@ import 'subscribe_channel_events/bloc/bloc.dart';
 import 'close_channel/bloc.dart';
 
 class ListChannelsPage extends StatefulWidget {
+  static final fabIcon = Icon(Icons.add);
+  static final Function fabCallback =
+      (BuildContext c, SubscribeChannelEventsBloc bloc) async {
+    await Navigator.push(
+      c,
+      MaterialPageRoute(builder: (context) {
+        return BlocProvider.value(value: bloc, child: CreateChannelPage());
+      }),
+    );
+  };
+
   @override
   _ListChannelsPageState createState() => _ListChannelsPageState();
-
-  static Widget buildFAB(
-    BuildContext context,
-    SubscribeChannelEventsBloc bloc,
-  ) {
-    return FloatingActionButton(
-      child: Icon(Icons.add),
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) {
-            return BlocProvider.value(value: bloc, child: CreateChannelPage());
-          }),
-        );
-      },
-    );
-  }
 }
 
 class _ListChannelsPageState extends State<ListChannelsPage> {

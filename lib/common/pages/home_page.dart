@@ -21,6 +21,13 @@ import 'package:sendmany/wallet/balance/bloc/bloc.dart';
 import 'package:sendmany/wallet/balance/list_transactions/bloc.dart';
 import 'package:sendmany/wallet/wallet_page.dart';
 
+enum _FABState {
+  transitionIn,
+  transition,
+  transitionOut,
+  normal,
+}
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -140,39 +147,109 @@ class _HomePageState extends State<HomePage>
   }
 
   Widget _buildFAB() {
-    var channelPageFAB = ListChannelsPage.buildFAB(
-      context,
-      _subscribeChannelEventsBloc,
-    );
-
     return AnimatedBuilder(
       animation: _controller.animation,
       builder: (context, child) {
         var animState = _controller.animation.value;
-        if (animState > 1 && animState < 2) {
-          var state = (animState - 1);
-          return Transform.scale(
-            scale: state,
-            child: Opacity(
-              opacity: state,
-              child: channelPageFAB,
-            ),
+        if (animState > 0 && animState < 1) {
+          return _buildFab(
+            ChatConversationsPage.fabIcon,
+            state: _FABState.transitionIn,
+            animState: animState,
           );
+        } else if (animState == 1) {
+          return _buildFab(
+            ChatConversationsPage.fabIcon,
+            onPressed: () {
+              ChatConversationsPage.fabCallback(
+                context,
+                _lnInfoBloc,
+                _listMsgBloc,
+              );
+            },
+          );
+        } else if (animState > 1 && animState < 2) {
+          var state = (animState - 1);
+          if (_controller.animation.status == AnimationStatus.forward) {
+            return Stack(
+              children: <Widget>[
+                _buildFab(ListChannelsPage.fabIcon),
+                _buildFab(
+                  ChatConversationsPage.fabIcon,
+                  state: _FABState.transition,
+                  animState: 1 - state,
+                ),
+              ],
+            );
+          } else if (_controller.animation.status == AnimationStatus.reverse) {
+            return Stack(
+              children: <Widget>[
+                _buildFab(ChatConversationsPage.fabIcon),
+                _buildFab(
+                  ListChannelsPage.fabIcon,
+                  state: _FABState.transition,
+                  animState: state,
+                ),
+              ],
+            );
+          }
         } else if (animState == 2) {
-          return channelPageFAB;
+          return _buildFab(
+            ListChannelsPage.fabIcon,
+            onPressed: () {
+              ListChannelsPage.fabCallback(
+                context,
+                _subscribeChannelEventsBloc,
+              );
+            },
+          );
         } else if (animState > 2 && animState < 3) {
           var state = 2 - (animState - 1);
-          return Transform.scale(
-            scale: state,
-            child: Opacity(
-              opacity: state,
-              child: channelPageFAB,
-            ),
+          return _buildFab(
+            ListChannelsPage.fabIcon,
+            state: _FABState.transitionOut,
+            animState: state,
           );
-        } else {
-          return Container();
         }
+        return Container();
       },
     );
+  }
+
+  Widget _buildFab(
+    Widget icon, {
+    _FABState state = _FABState.normal,
+    double animState,
+    Function onPressed,
+  }) {
+    switch (state) {
+      case _FABState.transitionIn:
+      case _FABState.transitionOut:
+        return Transform.scale(
+          scale: animState,
+          child: Opacity(
+            opacity: animState,
+            child: FloatingActionButton(
+              child: icon,
+              onPressed: onPressed,
+            ),
+          ),
+        );
+      case _FABState.transition:
+        return Opacity(
+          opacity: animState,
+          child: FloatingActionButton(
+            onPressed: onPressed,
+            child: icon,
+          ),
+        );
+      case _FABState.normal:
+        return FloatingActionButton(
+          child: icon,
+          onPressed: onPressed,
+        );
+      default:
+        return Container();
+    }
   }
 }
