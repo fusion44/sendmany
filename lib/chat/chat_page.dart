@@ -3,10 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import '../common/models/models.dart';
 
 import '../common/blocs/get_remote_node_info/bloc.dart';
 import '../common/constants.dart';
+import '../common/models/models.dart';
+import '../common/utils.dart';
 import 'list_messages/bloc.dart';
 import 'message_list.dart';
 import 'send_messages/bloc.dart';
@@ -67,7 +68,7 @@ class _ChatPageState extends State<ChatPage> {
     return BlocBuilder(
       bloc: _getRemoteNodeInfoBloc,
       builder: (BuildContext context, GetRemoteNodeInfoState state) {
-        var title = 'Chat';
+        var title = tr(context, 'chat.chat');
         Widget body;
 
         if (state is InitialGetRemoteNodeInfoState ||
@@ -77,7 +78,8 @@ class _ChatPageState extends State<ChatPage> {
             child: SpinKitRipple(color: sendManyBlue200, size: 150),
           );
         } else if (state is RemoteNodeInfoLoadedState) {
-          title = 'Chat with ${state.nodeInfo.node.alias}';
+          title =
+              '${tr(context, 'chat.chat_with')} ${state.nodeInfo.node.alias}';
           body = Stack(
             children: <Widget>[
               MessageListWidget(state.nodeInfo),

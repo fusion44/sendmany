@@ -7,15 +7,6 @@ import 'package:sendmany/common/widgets/widgets.dart';
 import 'package:sendmany/node/peers/bloc/bloc.dart';
 
 class PeerListWidget extends StatelessWidget {
-  final bool chatActive;
-  final Function onSearchPeerPressed;
-
-  const PeerListWidget({
-    Key key,
-    @required this.onSearchPeerPressed,
-    this.chatActive = false,
-  }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder(
@@ -23,22 +14,21 @@ class PeerListWidget extends StatelessWidget {
       builder: (BuildContext context, ListPeersState state) {
         if (state is PeersLoadedState) {
           var peers = <Widget>[];
+          var errorPeers = <Widget>[];
 
-          for (var i = 0; i < state.peers.length; i++) {
-            peers.add(PeerListTile(p: state.peers[i], chatActive: chatActive));
-            if (i != state.peers.length - 1) peers.add(Divider());
-          }
+          state.peers.forEach((k, peer) {
+            if (peer.error == null) {
+              peers.add(PeerListTile(peer));
+            } else {
+              errorPeers.add(PeerListTile(peer));
+            }
+          });
 
-          if (chatActive) {
-            return SendManyCard(
-              tr(context, 'node.peers'),
-              peers,
-              actionButtonIcon: Icon(Icons.search),
-              onActionButtonPressed: onSearchPeerPressed,
-            );
-          } else {
-            return SendManyCard(tr(context, 'node.peers'), peers);
-          }
+          return SendManyCard(tr(context, 'node.peers'), [
+            ...peers,
+            Divider(),
+            ...errorPeers,
+          ]);
         } else {
           return SendManyCard(
             tr(context, 'node.peers'),

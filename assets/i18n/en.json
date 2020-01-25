@@ -62,6 +62,10 @@
     "remote": "Remote",
     "time_lock_delta": "TimeLockDelta"
   },
+  "chat": {
+    "chat_with": "Chat with",
+    "info": "Chat"
+  },
   "network": {
     "loading": "loading",
     "not_yet_established": "Connection not yet established"

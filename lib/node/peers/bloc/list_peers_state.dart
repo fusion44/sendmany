@@ -17,7 +17,7 @@ class PeersLoadingState extends ListPeersState {
 }
 
 class PeersLoadedState extends ListPeersState {
-  final List<LoadedPeer> peers;
+  final Map<String, LoadedPeer> peers;
 
   PeersLoadedState(this.peers);
 

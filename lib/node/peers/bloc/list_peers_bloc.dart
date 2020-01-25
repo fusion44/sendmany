@@ -36,22 +36,12 @@ class ListPeersBloc extends Bloc<ListPeersEvent, ListPeersState> {
           print(error);
         });
 
-        // Make sure that the peers with errors always appear last
-        var errorPeers = <LoadedPeer>[];
-        var peers = responseList.toList();
-        peers.removeWhere((LoadedPeer p) {
-          if (p.error != null) {
-            errorPeers.add(p);
-            return true;
-          }
-          return false;
+        var peerMap = <String, LoadedPeer>{};
+        responseList.toList()?.forEach((LoadedPeer p) {
+          peerMap[p.peer.pubKey] = p;
         });
 
-        peers.sort((LoadedPeer p1, LoadedPeer p2) {
-          return p1.nodeInfo.node.alias.compareTo(p2.nodeInfo.node.alias);
-        });
-
-        yield PeersLoadedState([...peers, ...errorPeers]);
+        yield PeersLoadedState(peerMap);
       } catch (e) {
         if (e is GrpcError) {
           print(e.message);

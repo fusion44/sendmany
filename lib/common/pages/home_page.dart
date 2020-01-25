@@ -6,6 +6,7 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:sendmany/channels/list_channels/bloc/bloc.dart';
 import 'package:sendmany/channels/list_channels_page.dart';
 import 'package:sendmany/channels/subscribe_channel_events/bloc/bloc.dart';
+import 'package:sendmany/chat/chat_conversations_page.dart';
 import 'package:sendmany/chat/list_messages/bloc.dart';
 import 'package:sendmany/common/connection/connection_manager/bloc.dart';
 import 'package:sendmany/common/constants.dart';
@@ -37,7 +38,7 @@ class _HomePageState extends State<HomePage>
 
   @override
   void initState() {
-    _controller = TabController(length: 4, vsync: this);
+    _controller = TabController(length: 5, vsync: this);
     _lnInfoBloc = LnInfoBloc();
     _lnInfoBloc.add(LoadLnInfo());
     _subscribeChannelEventsBloc = SubscribeChannelEventsBloc();
@@ -116,6 +117,7 @@ class _HomePageState extends State<HomePage>
         controller: _controller,
         children: <Widget>[
           WalletPage(),
+          ChatConversationsPage(),
           ListChannelsPage(),
           NodeOverviewPage(),
           PreferencesPage(),
@@ -129,6 +131,7 @@ class _HomePageState extends State<HomePage>
     var tabs = <TabData>[];
     tabs.add(
         TabData(tr(context, 'wallet.wallet'), Icons.account_balance_wallet));
+    tabs.add(TabData(tr(context, 'chat.info'), Icons.chat));
     tabs.add(TabData(tr(context, 'channels.info'), Icons.scatter_plot));
     tabs.add(TabData(tr(context, 'node.info'), Icons.star));
     tabs.add(TabData(tr(context, 'prefs.title'), Icons.settings));
@@ -146,18 +149,19 @@ class _HomePageState extends State<HomePage>
       animation: _controller.animation,
       builder: (context, child) {
         var animState = _controller.animation.value;
-        if (animState > 0 && animState < 1) {
+        if (animState > 1 && animState < 2) {
+          var state = (animState - 1);
           return Transform.scale(
-            scale: animState,
+            scale: state,
             child: Opacity(
-              opacity: animState,
+              opacity: state,
               child: channelPageFAB,
             ),
           );
-        } else if (animState == 1) {
+        } else if (animState == 2) {
           return channelPageFAB;
-        } else if (animState > 1 && animState < 2) {
-          var state = 1 - (animState - 1);
+        } else if (animState > 2 && animState < 3) {
+          var state = 2 - (animState - 1);
           return Transform.scale(
             scale: state,
             child: Opacity(
