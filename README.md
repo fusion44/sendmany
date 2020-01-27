@@ -5,7 +5,9 @@ SendMany is an app to remotely connect to your LND node and use it from your pho
 The app is currently still under heavy development and is not recommended for general use. Don't use with Mainnet yet; you might lose your funds.
 
 ## Features
-
+<img src="docs/screenshots/screenshot_1.png" width="200" /> <img src="docs/screenshots/screenshot_2.png" width="200" /> 
+<img src="docs/screenshots/sendmany_messages_anim.gif" width="237"/>
+<img src="docs/screenshots/screenshot_3.png" width="200" /> <img src="docs/screenshots/screenshot_4.png" width="200" /> <img src="docs/screenshots/screenshot_5.png" width="200" />
 * View onchain, channel balances and transactions
 * Send and receive funds via onchain and LN transactions
 * Open and close channels with peers
