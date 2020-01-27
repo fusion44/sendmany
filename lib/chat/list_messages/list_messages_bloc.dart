@@ -72,10 +72,11 @@ class ListMessagesBloc
     ListMessagesBaseEvent event,
   ) async* {
     if (event is ListMessagesEvent) {
-      if (_messages != null && _messages.isNotEmpty ||
-          event is _MessagesLoadedEvent) {
+      if (_messages != null && _messages.isNotEmpty) {
         yield MessageListLoadedState(_messages);
       }
+    } else if (event is _MessagesLoadedEvent) {
+      yield MessageListLoadedState(_messages);
     } else if (event is _MessageAddedEvent) {
       yield NewMessageAddedState(event.message);
     } else if (event is AddMessageEvent) {
