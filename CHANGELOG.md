@@ -4,11 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [0.6.0]
 ### added
 - Click on a channel item to view channel the details of the channel page
 - Long-press an item in the channels list to open the close channels page. 
-
+- Add a new lightning chat page
+  
 ### changed
 - Channel list items display peer alias instead of channel id
 - Better handling of error cases in ListPeersBloc and PeersListWidget
@@ -19,7 +20,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### known issues
 - Confirmation count not updated when opening a channel
 - When switching between nodes, the app must be restarted
-- 
+- The app currently doesn't automatically reconnect when connectivity changes occur
+- There are no notifications when a new chat message arrives
+
 ## [0.5.0] - 2019-12-12
 Initial release
  
