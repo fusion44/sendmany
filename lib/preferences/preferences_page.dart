@@ -61,6 +61,12 @@ class _PreferencesPageState extends State<PreferencesPage> {
                       items: _buildNodeItems(state.connections),
                     ),
                   ),
+                  Spacer(),
+                  Text(
+                    '0.6.0-beta-rc1',
+                    textAlign: TextAlign.end,
+                    style: Theme.of(context).textTheme.caption,
+                  ),
                 ],
               ),
             ),
