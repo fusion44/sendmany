@@ -6,9 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [0.6.0]
 ### added
-- Click on a channel item to view channel the details of the channel page
-- Long-press an item in the channels list to open the close channels page. 
 - Add a new lightning chat page
+- View channel details by clicking on a channel item
+- Long-press an item in the channels list to open the close channels page. 
+- A version indicator to the preferences page
   
 ### changed
 - Channel list items display peer alias instead of channel id
