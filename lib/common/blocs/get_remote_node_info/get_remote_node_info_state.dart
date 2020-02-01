@@ -11,29 +11,29 @@ class InitialGetRemoteNodeInfoState extends GetRemoteNodeInfoState {
 }
 
 class RemoteNodeInfoLoadingState extends GetRemoteNodeInfoState {
-  final String pubKey;
+  final List<String> pubKeys;
 
-  RemoteNodeInfoLoadingState(this.pubKey);
+  RemoteNodeInfoLoadingState(this.pubKeys);
 
   @override
-  List<Object> get props => [pubKey];
+  List<Object> get props => [pubKeys];
 }
 
 class RemoteNodeInfoLoadedState extends GetRemoteNodeInfoState {
-  final RemoteNodeInfo nodeInfo;
+  final Map<String, RemoteNodeInfo> nodeInfos;
+  final Map<String, String> errors;
 
-  RemoteNodeInfoLoadedState(this.nodeInfo);
+  RemoteNodeInfoLoadedState(this.nodeInfos, this.errors);
 
   @override
-  List<Object> get props => [nodeInfo];
+  List<Object> get props => [nodeInfos];
 }
 
 class RemoteNodeInfoErrorState extends GetRemoteNodeInfoState {
-  final String error;
-  final String pubKey;
+  final Map<String, String> errors;
 
-  RemoteNodeInfoErrorState(this.error, {this.pubKey = ''});
+  RemoteNodeInfoErrorState(this.errors);
 
   @override
-  List<Object> get props => [error, pubKey];
+  List<Object> get props => [errors];
 }

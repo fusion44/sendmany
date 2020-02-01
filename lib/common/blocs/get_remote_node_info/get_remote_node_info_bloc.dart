@@ -1,10 +1,9 @@
 import 'dart:async';
+
 import 'package:bloc/bloc.dart';
-import 'package:grpc/grpc.dart';
-import 'package:sendmany/common/connection/connection_manager/bloc.dart';
-import 'package:sendmany/common/connection/lnd_rpc/lnd_rpc.dart' as grpc;
-import 'package:sendmany/common/models/models.dart';
+
 import './bloc.dart';
+import 'get_remote_node_info_repo.dart';
 
 /// Fetches information about another node in the lightning network
 ///
@@ -13,6 +12,10 @@ import './bloc.dart';
 /// [RemoteNodeInfoErrorState]
 class GetRemoteNodeInfoBloc
     extends Bloc<GetRemoteNodeInfoEvent, GetRemoteNodeInfoState> {
+  final GetRemoteNodeInfoRepository _repository;
+
+  GetRemoteNodeInfoBloc(this._repository);
+
   @override
   GetRemoteNodeInfoState get initialState => InitialGetRemoteNodeInfoState();
 
@@ -20,19 +23,17 @@ class GetRemoteNodeInfoBloc
   Stream<GetRemoteNodeInfoState> mapEventToState(
     GetRemoteNodeInfoEvent event,
   ) async* {
-    var client = LnConnectionDataProvider().lightningClient;
+    yield (RemoteNodeInfoLoadingState(event.pubKeys));
 
-    yield (RemoteNodeInfoLoadingState(event.pubKey));
+    var res = await _repository.getNodeInfos(
+      event.pubKeys,
+      event.includeChannels,
+    );
 
-    var req = grpc.NodeInfoRequest();
-    req.pubKey = event.pubKey;
-    req.includeChannels = event.includeChannels;
-
-    try {
-      var resp = await client.getNodeInfo(req);
-      yield RemoteNodeInfoLoadedState(RemoteNodeInfo.fromGRPC(resp));
-    } on GrpcError catch (e) {
-      yield RemoteNodeInfoErrorState(e.toString(), pubKey: event.pubKey);
+    if (res != null && res.errors != null && res.errors.isEmpty) {
+      yield RemoteNodeInfoLoadedState(res.infos, res.errors);
+    } else {
+      yield RemoteNodeInfoErrorState(res.errors);
     }
   }
 }

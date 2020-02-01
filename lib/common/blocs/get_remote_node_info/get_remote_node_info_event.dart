@@ -1,15 +1,17 @@
 import 'package:equatable/equatable.dart';
 
+abstract class GetRemoteNodeInfoBaseEvent extends Equatable {}
+
 /// Starts fetching node information
-class GetRemoteNodeInfoEvent extends Equatable {
+class GetRemoteNodeInfoEvent extends GetRemoteNodeInfoBaseEvent {
   /// The 33-byte hex-encoded compressed public of the target node
-  final String pubKey;
+  final List<String> pubKeys;
 
   /// If true, will include all known channels associated with the node.
   final bool includeChannels;
 
-  const GetRemoteNodeInfoEvent(this.pubKey, [this.includeChannels = false]);
+  GetRemoteNodeInfoEvent(this.pubKeys, [this.includeChannels = false]);
 
   @override
-  List<Object> get props => [pubKey, includeChannels];
+  List<Object> get props => [pubKeys, includeChannels];
 }
