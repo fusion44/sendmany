@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:sendmany/channels/create_channel_page.dart';
+import 'package:sendmany/common/blocs/get_remote_node_info/bloc.dart';
 import 'package:sendmany/common/constants.dart';
 import 'package:sendmany/common/models/models.dart';
 import 'package:sendmany/common/utils.dart';
@@ -21,12 +22,21 @@ import 'close_channel/bloc.dart';
 
 class ListChannelsPage extends StatefulWidget {
   static final fabIcon = Icon(Icons.add);
-  static final Function fabCallback =
-      (BuildContext c, SubscribeChannelEventsBloc bloc) async {
+  static final Function fabCallback = (
+    BuildContext c,
+    SubscribeChannelEventsBloc bloc,
+    GetRemoteNodeInfoRepository repository,
+  ) async {
     await Navigator.push(
       c,
       MaterialPageRoute(builder: (context) {
-        return BlocProvider.value(value: bloc, child: CreateChannelPage());
+        return RepositoryProvider.value(
+          value: repository,
+          child: BlocProvider.value(
+            value: bloc,
+            child: CreateChannelPage(),
+          ),
+        );
       }),
     );
   };

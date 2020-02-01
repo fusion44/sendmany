@@ -8,6 +8,8 @@ import 'package:sendmany/channels/list_channels_page.dart';
 import 'package:sendmany/channels/subscribe_channel_events/bloc/bloc.dart';
 import 'package:sendmany/chat/chat_conversations_page.dart';
 import 'package:sendmany/chat/list_messages/bloc.dart';
+import 'package:sendmany/common/blocs/get_remote_node_info/bloc.dart';
+import 'package:sendmany/common/blocs/get_remote_node_info/get_remote_node_info_repo.dart';
 import 'package:sendmany/common/connection/connection_manager/bloc.dart';
 import 'package:sendmany/common/constants.dart';
 import 'package:sendmany/common/utils.dart';
@@ -42,6 +44,8 @@ class _HomePageState extends State<HomePage>
   ListPeersBloc _listPeersBloc;
   ListTxBloc _listTxBloc;
   ListMessagesBloc _listMsgBloc;
+  final _remoteNodeInfoRepo = GetRemoteNodeInfoRepository();
+  GetRemoteNodeInfoBloc _nodeInfoBloc;
 
   @override
   void initState() {
@@ -58,6 +62,7 @@ class _HomePageState extends State<HomePage>
     _listTxBloc.add(LoadTxEvent());
     _listTxBloc.add(ChangePollTxIntervalEvent(30));
     _listMsgBloc = ListMessagesBloc(_listTxBloc);
+    _nodeInfoBloc = GetRemoteNodeInfoBloc(_remoteNodeInfoRepo);
     super.initState();
   }
 
@@ -70,22 +75,15 @@ class _HomePageState extends State<HomePage>
     _listChannelsBloc.close();
     _listPeersBloc.close();
     _subscribeChannelEventsBloc.close();
+    _remoteNodeInfoRepo.dispose();
+    _nodeInfoBloc.close();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<LnInfoBloc>.value(value: _lnInfoBloc),
-        BlocProvider<ListChannelsBloc>.value(value: _listChannelsBloc),
-        BlocProvider<SubscribeChannelEventsBloc>.value(
-          value: _subscribeChannelEventsBloc,
-        ),
-        BlocProvider<ListPeersBloc>.value(value: _listPeersBloc),
-        BlocProvider<ListTxBloc>.value(value: _listTxBloc),
-        BlocProvider<ListMessagesBloc>.value(value: _listMsgBloc),
-      ],
+    var repoProvider = RepositoryProvider.value(
+      value: _remoteNodeInfoRepo,
       child: BlocListener(
         bloc: BlocProvider.of<PreferencesBloc>(context),
         listener: (BuildContext context, PreferencesState state) {
@@ -109,6 +107,20 @@ class _HomePageState extends State<HomePage>
           },
         ),
       ),
+    );
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<LnInfoBloc>.value(value: _lnInfoBloc),
+        BlocProvider<ListChannelsBloc>.value(value: _listChannelsBloc),
+        BlocProvider<SubscribeChannelEventsBloc>.value(
+          value: _subscribeChannelEventsBloc,
+        ),
+        BlocProvider<ListPeersBloc>.value(value: _listPeersBloc),
+        BlocProvider<ListTxBloc>.value(value: _listTxBloc),
+        BlocProvider<ListMessagesBloc>.value(value: _listMsgBloc),
+        BlocProvider<GetRemoteNodeInfoBloc>.value(value: _nodeInfoBloc),
+      ],
+      child: repoProvider,
     );
   }
 
@@ -165,6 +177,7 @@ class _HomePageState extends State<HomePage>
                 context,
                 _lnInfoBloc,
                 _listMsgBloc,
+                _remoteNodeInfoRepo,
               );
             },
           );
@@ -200,6 +213,7 @@ class _HomePageState extends State<HomePage>
               ListChannelsPage.fabCallback(
                 context,
                 _subscribeChannelEventsBloc,
+                _remoteNodeInfoRepo,
               );
             },
           );

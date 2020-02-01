@@ -24,7 +24,7 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
-  final GetRemoteNodeInfoBloc _getRemoteNodeInfoBloc = GetRemoteNodeInfoBloc();
+  GetRemoteNodeInfoBloc _getRemoteNodeInfoBloc;
   final TextEditingController _controller = TextEditingController();
   SendMessageBloc _sendMessageBloc;
   StreamSubscription<GetRemoteNodeInfoState> _remoteNodeInfoBlockSub;
@@ -33,6 +33,10 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   void initState() {
+    final provider =
+        RepositoryProvider.of<GetRemoteNodeInfoRepository>(context);
+    _getRemoteNodeInfoBloc = GetRemoteNodeInfoBloc(provider);
+
     var listMsgBloc = BlocProvider.of<ListMessagesBloc>(context);
 
     if (!(listMsgBloc.state is InitialListMessagesState) ||
@@ -49,7 +53,7 @@ class _ChatPageState extends State<ChatPage> {
 
     _controller.addListener(() => setState(() {}));
     _sendMessageBloc = SendMessageBloc(listMsgBloc);
-    _getRemoteNodeInfoBloc.add(GetRemoteNodeInfoEvent(widget.peer));
+    _getRemoteNodeInfoBloc.add(GetRemoteNodeInfoEvent([widget.peer]));
     super.initState();
   }
 
@@ -78,20 +82,27 @@ class _ChatPageState extends State<ChatPage> {
             child: SpinKitRipple(color: sendManyBlue200, size: 150),
           );
         } else if (state is RemoteNodeInfoLoadedState) {
-          title =
-              '${tr(context, 'chat.chat_with')} ${state.nodeInfo.node.alias}';
+          var info = state.nodeInfos[widget.peer];
+          title = '${tr(context, 'chat.chat_with')} ${info.node.alias}';
           body = Stack(
             children: <Widget>[
-              MessageListWidget(state.nodeInfo),
+              MessageListWidget(info),
               Align(
                 alignment: Alignment.bottomCenter,
-                child: _buildChatInputBox(state.nodeInfo),
+                child: _buildChatInputBox(info),
               ),
             ],
           );
         } else if (state is RemoteNodeInfoErrorState) {
           body = Center(
-            child: Text('Error: ${state.error}, PubKey: ${state.pubKey}'),
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  for (var e in state.errors.keys)
+                    Text('Error: ${state.errors[e]}, PubKey: $e')
+                ],
+              ),
+            ),
           );
         } else {
           body = Center(child: Text('Error: unknown state: $state'));

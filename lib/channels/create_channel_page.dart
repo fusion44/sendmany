@@ -25,7 +25,7 @@ enum _CreateChannelPageStateState {
 }
 
 class _CreateChannelPageState extends State<CreateChannelPage> {
-  final GetRemoteNodeInfoBloc _getNodeInfoBloc = GetRemoteNodeInfoBloc();
+  GetRemoteNodeInfoBloc _getNodeInfoBloc;
   OpenChannelBloc _openChannelBloc;
   RemoteNodeInfo _nodeInfo;
   _CreateChannelPageStateState _state = _CreateChannelPageStateState.scanQr;
@@ -37,6 +37,10 @@ class _CreateChannelPageState extends State<CreateChannelPage> {
   @override
   void initState() {
     super.initState();
+    final provider =
+        RepositoryProvider.of<GetRemoteNodeInfoRepository>(context);
+    _getNodeInfoBloc = GetRemoteNodeInfoBloc(provider);
+
     _getNodeInfoBloc.listen((state) {
       if (state is RemoteNodeInfoLoadingState) {
         setState(() {
@@ -45,13 +49,13 @@ class _CreateChannelPageState extends State<CreateChannelPage> {
       }
       if (state is RemoteNodeInfoLoadedState) {
         setState(() {
-          _nodeInfo = state.nodeInfo;
+          _nodeInfo = state.nodeInfos[_pubKey];
           _state = _CreateChannelPageStateState.loadedNodeInfo;
         });
-      } else if (state is RemoteNodeInfoErrorState && state.pubKey == _pubKey) {
+      } else if (state is RemoteNodeInfoErrorState) {
         setState(() {
           _state = _CreateChannelPageStateState.nodeInfoLoadError;
-          _errorMessage = state.error;
+          _errorMessage = state.errors[_pubKey];
         });
       }
     });
@@ -101,7 +105,7 @@ class _CreateChannelPageState extends State<CreateChannelPage> {
           host: _host,
           port: _port,
           checkConnection: (String pubKey, String host, int port) {
-            _getNodeInfoBloc.add(GetRemoteNodeInfoEvent(pubKey));
+            _getNodeInfoBloc.add(GetRemoteNodeInfoEvent([pubKey]));
             _pubKey = pubKey;
             _host = host;
             _port = port;
@@ -161,7 +165,7 @@ class _CreateChannelPageState extends State<CreateChannelPage> {
         }
       }
 
-      _getNodeInfoBloc.add(GetRemoteNodeInfoEvent(key));
+      _getNodeInfoBloc.add(GetRemoteNodeInfoEvent([key]));
 
       setState(() {
         _state = _CreateChannelPageStateState.manualInput;

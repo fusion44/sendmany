@@ -5,6 +5,7 @@ import '../../chat/chat_page.dart';
 import '../../chat/list_messages/bloc.dart';
 import '../../node/peers/bloc/bloc.dart';
 import '../../wallet/balance/bloc/bloc.dart';
+import '../blocs/get_remote_node_info/bloc.dart';
 
 class PeerListTile extends StatelessWidget {
   final LoadedPeer p;
@@ -31,6 +32,10 @@ class PeerListTile extends StatelessWidget {
   }
 
   void _onTap(BuildContext context) {
+    var repoProvider = RepositoryProvider.value(
+      value: RepositoryProvider.of<GetRemoteNodeInfoRepository>(context),
+      child: ChatPage(p.peer.pubKey),
+    );
     var prov = MultiBlocProvider(
       providers: [
         BlocProvider<LnInfoBloc>.value(
@@ -40,7 +45,7 @@ class PeerListTile extends StatelessWidget {
           value: BlocProvider.of<ListMessagesBloc>(context),
         ),
       ],
-      child: ChatPage(p.peer.pubKey),
+      child: repoProvider,
     );
     Navigator.push(
       context,
