@@ -72,7 +72,7 @@ class _ChatPageState extends State<ChatPage> {
     return BlocBuilder(
       bloc: _getRemoteNodeInfoBloc,
       builder: (BuildContext context, GetRemoteNodeInfoState state) {
-        var title = tr(context, 'chat.chat');
+        var title = tr(context, 'chat.info');
         Widget body;
 
         if (state is InitialGetRemoteNodeInfoState ||

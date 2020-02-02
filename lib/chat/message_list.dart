@@ -61,6 +61,7 @@ class _MessageListWidgetState extends State<MessageListWidget> {
     _msgBlockSub = _listMsgBloc.listen((state) {
       if (state is MessageListLoadedState) {
         if (state.messages.containsKey(widget.nodeInfo.node.pubKey)) {
+          _messages.clear();
           setState(() {
             _messages.addAll(
               state.messages[widget.nodeInfo.node.pubKey].reversed,
@@ -240,7 +241,6 @@ class _MessageListWidgetState extends State<MessageListWidget> {
   }
 
   Icon _getDeliveryIcon(MessageItem m) {
-    print(m.text);
     if (m.deliveryFailure) {
       return Icon(
         Icons.error_outline,

@@ -91,6 +91,7 @@ class ListMessagesBloc
   Future<void> _initMessageList(List<Tx> transactions) async {
     // TODO: Run this code in an isolate and cache using https://pub.dev/packages/hive
     _fullLoadFinished = false;
+    _messages.clear();
     try {
       transactions.forEach((tx) async {
         if (tx is TxLightningInvoice) {
