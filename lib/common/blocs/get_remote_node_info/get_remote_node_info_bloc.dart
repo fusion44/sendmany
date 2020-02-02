@@ -23,14 +23,16 @@ class GetRemoteNodeInfoBloc
   Stream<GetRemoteNodeInfoState> mapEventToState(
     GetRemoteNodeInfoEvent event,
   ) async* {
-    yield (RemoteNodeInfoLoadingState(event.pubKeys));
+    if (state is InitialGetRemoteNodeInfoState) {
+      yield (RemoteNodeInfoLoadingState(event.pubKeys));
+    }
 
     var res = await _repository.getNodeInfos(
       event.pubKeys,
       event.includeChannels,
     );
 
-    if (res != null && res.errors != null && res.errors.isEmpty) {
+    if (res != null && res.infos != null && res.infos.isNotEmpty) {
       yield RemoteNodeInfoLoadedState(res.infos, res.errors);
     } else {
       yield RemoteNodeInfoErrorState(res.errors);

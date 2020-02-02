@@ -26,7 +26,7 @@ class RemoteNodeInfoLoadedState extends GetRemoteNodeInfoState {
   RemoteNodeInfoLoadedState(this.nodeInfos, this.errors);
 
   @override
-  List<Object> get props => [nodeInfos];
+  List<Object> get props => [nodeInfos, errors];
 }
 
 class RemoteNodeInfoErrorState extends GetRemoteNodeInfoState {

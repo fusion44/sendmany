@@ -6,7 +6,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../common/blocs/get_remote_node_info/bloc.dart';
 import '../common/constants.dart';
-import '../common/models/models.dart';
 import '../wallet/balance/bloc/bloc.dart';
 import 'chat_page.dart';
 import 'chat_peer_tile.dart';
@@ -61,8 +60,9 @@ class ChatConversationsPage extends StatefulWidget {
 class _ChatConversationsPageState extends State<ChatConversationsPage> {
   final TextEditingController _searchPeerController = TextEditingController();
   StreamSubscription<ListMessagesBaseState> _sub;
-  bool _loadingMessages = true;
-  List<_ChatPeersItem> _peers;
+  bool _messagesLoaded = false;
+  List<_ChatPeersItem> _peers = [];
+  List<String> _pubKeys = [];
   GetRemoteNodeInfoBloc _nodeInfoBloc;
 
   @override
@@ -72,9 +72,9 @@ class _ChatConversationsPageState extends State<ChatConversationsPage> {
     _nodeInfoBloc = BlocProvider.of<GetRemoteNodeInfoBloc>(context);
 
     _sub = bloc.listen((state) {
-      if (state is InitialListMessagesState) {
+      if (state is InitialListMessagesState && _messagesLoaded) {
         setState(() {
-          _loadingMessages = true;
+          _messagesLoaded = false;
         });
       } else if (state is MessageListLoadedState) {
         var l = <_ChatPeersItem>[];
@@ -85,19 +85,27 @@ class _ChatConversationsPageState extends State<ChatConversationsPage> {
           return p2.lastMessage.date.compareTo((p1.lastMessage.date));
         });
 
-        _nodeInfoBloc.add(GetRemoteNodeInfoEvent(state.messages.keys.toList()));
+        _pubKeys = state.messages.keys.toList();
+        _nodeInfoBloc.add(GetRemoteNodeInfoEvent(_pubKeys));
 
         setState(() {
-          _loadingMessages = false;
+          _messagesLoaded = true;
           _peers = l;
         });
       } else if (state is NewMessageAddedState) {
-        if (state.message.isMe) return;
+        if (state.message.isMe || _peers == null || _peers.isEmpty) return;
         if (_peers.first.key == state.message.peer) {
           _peers.removeAt(0);
           _peers.insert(0, _ChatPeersItem(state.message.peer, state.message));
         } else {
-          _peers.removeWhere((p) => p.key == state.message.peer);
+          if (_pubKeys.contains(state.message.peer)) {
+            _peers.removeWhere((p) => p.key == state.message.peer);
+          } else {
+            // We've got a new chat peer. Reload the RemoteNodeInfoObjects
+            _pubKeys.add(state.message.peer);
+            _nodeInfoBloc.add(GetRemoteNodeInfoEvent(_pubKeys));
+          }
+
           _peers.insert(0, _ChatPeersItem(state.message.peer, state.message));
         }
         setState(() {});
@@ -119,14 +127,27 @@ class _ChatConversationsPageState extends State<ChatConversationsPage> {
     return BlocBuilder<GetRemoteNodeInfoBloc, GetRemoteNodeInfoState>(
       bloc: _nodeInfoBloc,
       builder: (context, niState) {
-        if (!_loadingMessages && niState is RemoteNodeInfoLoadedState) {
+        if (_messagesLoaded && niState is RemoteNodeInfoLoadedState) {
           return ListView.separated(
             separatorBuilder: (context, i) {
               return Divider();
             },
             itemCount: _peers.length,
             itemBuilder: (context, i) {
-              return _buildTile(_peers[i], niState.nodeInfos[_peers[i].key]);
+              var key = _peers[i].key;
+              if (niState.nodeInfos.containsKey(key)) {
+                return _buildTile(
+                  _peers[i],
+                  key,
+                  color: niState.nodeInfos[key].node.color,
+                  alias: niState.nodeInfos[key].node.alias,
+                );
+              } else {
+                // Use default values. The RemoteNodeInfo object is not yet loaded
+                var alias =
+                    niState.errors.containsKey(key) ? niState.errors[key] : '';
+                return _buildTile(_peers[i], key, alias: alias);
+              }
             },
           );
         } else {
@@ -140,16 +161,27 @@ class _ChatConversationsPageState extends State<ChatConversationsPage> {
     return Center(child: SpinKitRipple(color: sendManyBlue200, size: 150));
   }
 
-  Widget _buildTile(_ChatPeersItem item, RemoteNodeInfo ni) {
-    return ChatPeerListTile(ni, item.lastMessage, (String pubKey) async {
-      await Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) {
-            return ChatPage(item.key);
-          },
-        ),
-      );
-    });
+  Widget _buildTile(
+    _ChatPeersItem item,
+    String pubKey, {
+    Color color = Colors.black,
+    String alias = '',
+  }) {
+    return ChatPeerListTile(
+      pubKey,
+      item.lastMessage,
+      color: color,
+      alias: alias,
+      onTap: (String pubKey) async {
+        await Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return ChatPage(item.key);
+            },
+          ),
+        );
+      },
+    );
   }
 }
