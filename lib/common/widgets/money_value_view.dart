@@ -31,7 +31,7 @@ class MoneyValueView extends StatelessWidget {
           decimalDigits: 0,
         );
 
-        var style = hero ? textTheme.headline : textTheme.body1;
+        var style = hero ? textTheme.headline5 : textTheme.bodyText2;
         if (!settled) style = style.copyWith(color: Colors.grey);
 
         return Text(
@@ -46,8 +46,8 @@ class MoneyValueView extends StatelessWidget {
   TextTheme _buildSendManyTextThemeEczar(TextTheme base) {
     return base
         .copyWith(
-          body1: base.body1.copyWith(fontSize: 16),
-          headline: base.headline.copyWith(fontSize: 48),
+          bodyText2: base.bodyText2.copyWith(fontSize: 16),
+          headline5: base.headline5.copyWith(fontSize: 48),
         )
         .apply(fontFamily: 'Eczar');
   }

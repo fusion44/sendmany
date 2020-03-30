@@ -1,7 +1,5 @@
 import 'dart:async';
 
-import 'package:grpc/grpc.dart';
-
 import '../../connection/connection_manager/bloc.dart';
 import '../../connection/lnd_rpc/lnd_rpc.dart' as grpc;
 import '../../models/models.dart';

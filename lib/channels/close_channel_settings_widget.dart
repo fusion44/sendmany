@@ -116,7 +116,7 @@ class _CloseChannelSettingsWidgetState
                   Expanded(
                     child: TranslatedText(
                       'channels.force_close',
-                      style: theme.textTheme.subhead,
+                      style: theme.textTheme.subtitle1,
                     ),
                   ),
                   Checkbox(

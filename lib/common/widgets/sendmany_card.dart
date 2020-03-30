@@ -34,7 +34,7 @@ class SendManyCard extends Card {
   Widget _buildHeader(ThemeData theme) {
     Widget headerText = Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
-      child: Text(header, style: theme.textTheme.title),
+      child: Text(header, style: theme.textTheme.headline6),
     );
     if (actionButtonIcon == null && onActionButtonPressed == null) {
       return headerText;

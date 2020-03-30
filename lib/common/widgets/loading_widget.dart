@@ -24,7 +24,7 @@ class LoadingWidget extends StatelessWidget {
           Container(height: height),
           TranslatedText(
             text,
-            style: theme.textTheme.title,
+            style: theme.textTheme.headline6,
           ),
           Padding(
             padding: const EdgeInsets.only(top: 64.0),

@@ -71,7 +71,7 @@ class _CheckLNDConnectionPageState extends State<CheckLNDConnectionPage> {
                   Container(height: 64),
                   TranslatedText(
                     'onboarding.check_connection_error',
-                    style: theme.textTheme.display1,
+                    style: theme.textTheme.headline4,
                     textAlign: TextAlign.center,
                   ),
                   Container(height: h),
@@ -79,7 +79,7 @@ class _CheckLNDConnectionPageState extends State<CheckLNDConnectionPage> {
                   Container(height: h),
                   Text(
                     _getErrorMessage(state.error),
-                    style: theme.textTheme.body1,
+                    style: theme.textTheme.bodyText2,
                     textAlign: TextAlign.center,
                   ),
                   Container(height: h),
@@ -123,7 +123,7 @@ class _CheckLNDConnectionPageState extends State<CheckLNDConnectionPage> {
           Container(height: 64),
           TranslatedText(
             'onboarding.check_connection_success',
-            style: theme.textTheme.display1,
+            style: theme.textTheme.headline4,
             textAlign: TextAlign.center,
           ),
           Padding(

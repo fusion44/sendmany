@@ -32,7 +32,7 @@ class TimeAgoListItem extends StatelessWidget {
             children: <Widget>[
               TimeAgoTextWidget(
                 dateTime,
-                style: theme.textTheme.subhead,
+                style: theme.textTheme.subtitle1,
                 overflow: TextOverflow.ellipsis,
                 softWrap: false,
               ),

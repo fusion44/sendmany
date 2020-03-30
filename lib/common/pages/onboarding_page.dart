@@ -57,7 +57,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
           child: TranslatedText(
             'onboarding.first_header',
             textAlign: TextAlign.center,
-            style: theme.textTheme.display1,
+            style: theme.textTheme.headline4,
           ),
         ),
         Expanded(
@@ -68,7 +68,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
         ),
         TranslatedText(
           'onboarding.question_how_to_input_conn_data',
-          style: theme.textTheme.body2,
+          style: theme.textTheme.bodyText1,
           textAlign: TextAlign.center,
         ),
         Row(
@@ -104,7 +104,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
           child: TranslatedText(
             'onboarding.second_header',
             textAlign: TextAlign.center,
-            style: theme.textTheme.display1,
+            style: theme.textTheme.headline4,
           ),
         ),
         Expanded(

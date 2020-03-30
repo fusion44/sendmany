@@ -31,7 +31,7 @@ class DataItem extends StatelessWidget {
             children: <Widget>[
               Text(
                 text,
-                style: theme.textTheme.subhead,
+                style: theme.textTheme.subtitle1,
                 overflow: TextOverflow.ellipsis,
                 softWrap: false,
               ),

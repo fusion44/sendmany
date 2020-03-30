@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_i18n/flutter_i18n_delegate.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:sendmany/common/constants.dart';
@@ -225,11 +226,11 @@ class _SendManyAppState extends State<SendManyApp> {
   TextTheme _buildSendManyTextThemeRoboto(TextTheme base) {
     return base
         .copyWith(
-          headline: base.headline.copyWith(
+          headline5: base.headline5.copyWith(
             fontSize: 96,
             fontWeight: FontWeight.w200,
           ),
-          display1: base.display1.copyWith(
+          headline4: base.headline4.copyWith(
             fontSize: 60,
             fontWeight: FontWeight.w200,
           ),
@@ -239,9 +240,15 @@ class _SendManyAppState extends State<SendManyApp> {
 
   List<LocalizationsDelegate<dynamic>> _buildLocalizationDelegates() {
     var delegates = <LocalizationsDelegate<dynamic>>[];
+
     delegates.addAll([
       FlutterI18nDelegate(
-          useCountryCode: false, fallbackFile: 'en', path: 'assets/i18n'),
+        translationLoader: FileTranslationLoader(
+          useCountryCode: false,
+          fallbackFile: 'en',
+          basePath: 'assets/i18n',
+        ),
+      ),
       GlobalMaterialLocalizations.delegate,
       GlobalWidgetsLocalizations.delegate
     ]);

@@ -35,7 +35,7 @@ class BalanceDisplayListItem extends StatelessWidget {
             children: <Widget>[
               Text(
                 title,
-                style: theme.textTheme.subhead,
+                style: theme.textTheme.subtitle1,
               ),
               subtitle != ''
                   ? Text(

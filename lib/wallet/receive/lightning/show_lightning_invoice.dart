@@ -84,7 +84,7 @@ class _ShowLightningInvoiceState extends State<ShowLightningInvoice> {
                         Container(height: 24.0),
                         TranslatedText(
                           'wallet.receive_page.show_receive_invoice_ln',
-                          style: theme.textTheme.title,
+                          style: theme.textTheme.headline6,
                         ),
                         Container(height: 8.0),
                         QrImage(

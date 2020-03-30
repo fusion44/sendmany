@@ -45,7 +45,7 @@ class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: TranslatedText('wallet.balance',
-                    style: theme.textTheme.title),
+                    style: theme.textTheme.headline6),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),

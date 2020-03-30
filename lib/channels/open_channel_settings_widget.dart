@@ -41,7 +41,7 @@ class _OpenChannelSettingsWidgetState extends State<OpenChannelSettingsWidget> {
             SizedBox(height: 8.0),
             TranslatedText(
               'channels.open.channel_settings',
-              style: theme.textTheme.title,
+              style: theme.textTheme.headline6,
             ),
             SizedBox(height: 8.0),
             MoneyValueInput(

@@ -9,7 +9,11 @@ import 'package:timeago/timeago.dart' as timeago;
 /// Translates a string with the given [key] and the [translationParams].
 String tr(BuildContext context, String key,
     [Map<String, String> translationParams]) {
-  return FlutterI18n.translate(context, key, translationParams);
+  return FlutterI18n.translate(
+    context,
+    key,
+    translationParams: translationParams,
+  );
 }
 
 /// Returns the full language name of the provided language code

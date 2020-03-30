@@ -49,7 +49,7 @@ class _ShowOnchainInvoiceState extends State<ShowOnchainInvoice> {
                   Container(height: 24.0),
                   TranslatedText(
                     'wallet.receive_page.show_receive_invoice_onchain',
-                    style: theme.textTheme.title,
+                    style: theme.textTheme.headline6,
                   ),
                   Container(height: 8.0),
                   Row(

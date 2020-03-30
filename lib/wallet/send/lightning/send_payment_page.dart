@@ -120,8 +120,9 @@ class _SendPaymentPageState extends State<SendPaymentPage> {
           expired
               ? Text(
                   tr(context, 'wallet.invoices.is_expired'),
-                  style:
-                      theme.textTheme.body1.copyWith(color: Colors.redAccent),
+                  style: theme.textTheme.bodyText2.copyWith(
+                    color: Colors.redAccent,
+                  ),
                 )
               : Container(),
           Divider(),
