@@ -163,7 +163,6 @@ class _RetrieveConnectionInfoPageState
             child: FilledTextField(
               text: _host,
               textHint: tr(context, 'onboarding.host'),
-              keyboardType: TextInputType.number,
               validator: (String host) {
                 var v = Validator();
                 String ret;
