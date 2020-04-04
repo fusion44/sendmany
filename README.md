@@ -17,7 +17,7 @@ The app is currently still under heavy development and is not recommended for ge
 * _new:_ Chat using LN keysend functionality
 
 #### Prerequisites to use keysend (and thus the chat)
- * LND must be run with the argument `--accept-keysend`
+ * LND must be run with the argument `--accept-keysend` in lnd.conf add the line `accept-keysend=1`
  * LND must be compiled with `make tags="signrpc routerrpc"` and `make install tags="signrpc routerrpc"`. The official binaries include both.
  * LND must regenerate all macaroons to include permissions for signrpc and routerrpc
 
