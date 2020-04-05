@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - View channel details by clicking on a channel item
 - Long-press an item in the channels list to open the close channels page. 
 - A version indicator to the preferences page
+- Add a FAB to switch between manual and QR scan modes when adding another node
   
 ### changed
 - Channel list items display peer alias instead of channel id

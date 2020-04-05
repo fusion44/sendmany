@@ -141,7 +141,7 @@ class _PreferencesPageState extends State<PreferencesPage> {
       MaterialPageRoute(builder: (context) {
         return BlocProvider.value(
           value: BlocProvider.of<PreferencesBloc>(context),
-          child: RetrieveConnectionInfoPage(doScan: true),
+          child: RetrieveConnectionInfoPage(),
         );
       }),
     );

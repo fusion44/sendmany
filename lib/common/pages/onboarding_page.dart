@@ -36,7 +36,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
     var result = await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) {
-        return RetrieveConnectionInfoPage(doScan: scan);
+        return RetrieveConnectionInfoPage(showScanView: scan);
       }),
     );
     if (result == true) {

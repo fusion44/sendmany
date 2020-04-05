@@ -12,11 +12,11 @@ import 'package:convert/convert.dart';
 import 'package:sendmany/preferences/bloc.dart';
 
 class RetrieveConnectionInfoPage extends StatefulWidget {
-  final bool doScan;
+  final bool showScanView;
 
   const RetrieveConnectionInfoPage({
     Key key,
-    @required this.doScan,
+    this.showScanView = true,
   }) : super(key: key);
 
   @override
@@ -42,29 +42,30 @@ class _RetrieveConnectionInfoPageState
   bool _portValid = true;
 
   bool _allValid = false;
-  bool _doScan = false;
+  bool _showScanView = false;
 
   bool _savingConnectionData = false;
   bool _connectionDataSaved = false;
 
   @override
   void initState() {
-    _doScan = widget.doScan;
+    _showScanView = widget.showScanView;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _doScan ? _buildQrScannerWidget() : _buildManualEntry(),
+      body: _showScanView ? _buildQrScannerWidget() : _buildManualEntry(),
+      floatingActionButton: _buildFAB(),
     );
   }
 
   QRScannerWidget _buildQrScannerWidget() {
     return QRScannerWidget(
       onStringFound: (String code) {
-        if (_doScan && code.startsWith('lndconnect')) {
-          _doScan = false;
+        if (_showScanView && code.startsWith('lndconnect')) {
+          _showScanView = false;
           var uri = Uri.parse(code);
 
           setState(() {
@@ -316,6 +317,18 @@ class _RetrieveConnectionInfoPageState
       _savingConnectionData = false;
       _connectionDataSaved = true;
     });
+  }
+
+  Widget _buildFAB() {
+    return FloatingActionButton(
+      onPressed: () {
+        setState(() {
+          _showScanView = !_showScanView;
+        });
+      },
+      tooltip: tr(context, 'qr.open_qr_scanner'),
+      child: _showScanView ? Icon(Icons.edit) : Icon(Icons.camera),
+    );
   }
 
   List<int> _prepareCertificate(String certificate) {
