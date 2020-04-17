@@ -63,7 +63,7 @@ class _PreferencesPageState extends State<PreferencesPage> {
                   ),
                   Spacer(),
                   Text(
-                    '0.6.0-beta-rc2',
+                    '0.6.0-beta',
                     textAlign: TextAlign.end,
                     style: Theme.of(context).textTheme.caption,
                   ),
