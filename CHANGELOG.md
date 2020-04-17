@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Update dependencies and gRPC files
 - Applied pedantic rules to the Dart source
 - Improve error handling while handling peer data
+- Fix handling of reloads in transaction list
 
 ### known issues
 - Confirmation count not updated when opening a channel

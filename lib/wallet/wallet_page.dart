@@ -22,32 +22,39 @@ class _WalletPageState extends State<WalletPage> {
         return !(newState is ReloadingTxState);
       },
       builder: (context, state) {
-        if (state is InitialListTxState || state is LoadingTxState) {
+        if (state is InitialListTxState ||
+            state is LoadingTxState && state.transactions.isEmpty) {
           return Center(child: TranslatedText('network.loading'));
+        } else if (state is LoadingTxState && state.transactions.isNotEmpty) {
+          return _buildTxList(context, state.transactions);
         } else if (state is LoadingTxFinishedState) {
-          var infoBloc = BlocProvider.of<LnInfoBloc>(context);
-          return Column(
-            children: <Widget>[
-              Expanded(
-                child: ListView.builder(
-                  itemCount: state.transactions.length,
-                  itemBuilder: (context, i) {
-                    if (i == 0) {
-                      return BlocProvider.value(
-                        value: infoBloc,
-                        child: BalanceOverviewWidget(),
-                      );
-                    }
-                    return _buildListTile(state.transactions[i - 1]);
-                  },
-                ),
-              )
-            ],
-          );
+          return _buildTxList(context, state.transactions);
         } else {
           return Center(child: Text('Unknown state: $state'));
         }
       },
+    );
+  }
+
+  Column _buildTxList(BuildContext context, List<Tx> txList) {
+    var infoBloc = BlocProvider.of<LnInfoBloc>(context);
+    return Column(
+      children: <Widget>[
+        Expanded(
+          child: ListView.builder(
+            itemCount: txList.length,
+            itemBuilder: (context, i) {
+              if (i == 0) {
+                return BlocProvider.value(
+                  value: infoBloc,
+                  child: BalanceOverviewWidget(),
+                );
+              }
+              return _buildListTile(txList[i - 1]);
+            },
+          ),
+        )
+      ],
     );
   }
 
