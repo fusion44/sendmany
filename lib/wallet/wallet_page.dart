@@ -102,6 +102,7 @@ class _WalletPageState extends State<WalletPage> {
         amount: tx.amountSat,
         textAlign: TextAlign.end,
         settled: settled,
+        fee: tx.amountFees,
       ),
       dense: true,
     );

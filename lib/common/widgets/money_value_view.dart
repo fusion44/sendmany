@@ -6,6 +6,7 @@ import 'package:sendmany/preferences/bloc.dart';
 
 class MoneyValueView extends StatelessWidget {
   final Int64 amount;
+  final Int64 fee;
   final bool hero;
   final bool settled;
   final TextAlign textAlign;
@@ -16,6 +17,7 @@ class MoneyValueView extends StatelessWidget {
     this.hero = false,
     this.settled = true,
     this.textAlign = TextAlign.start,
+    this.fee,
   }) : super(key: key);
 
   @override
@@ -33,6 +35,32 @@ class MoneyValueView extends StatelessWidget {
 
         var style = hero ? textTheme.headline5 : textTheme.bodyText2;
         if (!settled) style = style.copyWith(color: Colors.grey);
+
+        if (fee != null) {
+          return SizedBox(
+            width: 100,
+            child: Stack(
+              children: <Widget>[
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Text(
+                    '${numberFormat.format(amount)}',
+                    style: style,
+                    textAlign: textAlign,
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Text(
+                    numberFormat.format(fee),
+                    style: textTheme.caption,
+                    textAlign: textAlign,
+                  ),
+                )
+              ],
+            ),
+          );
+        }
 
         return Text(
           numberFormat.format(amount),
