@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:bloc/bloc.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:hive/hive.dart';
 import 'package:sendmany/common/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sendmany/common/models/models.dart';
@@ -9,6 +9,8 @@ import '../pedantic.dart';
 import './bloc.dart';
 
 class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
+  final String _hiveBoxName = 'prefs_hive_box';
+
   @override
   PreferencesState get initialState => PreferencesLoadingState();
 
@@ -45,9 +47,10 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
         unawaited(prefs.setBool(prefPinActive, false));
       }
 
-      final storage = FlutterSecureStorage();
-      var connectionJSON = await storage.read(key: prefConnectionData);
-      var activeConnectionName = await storage.read(key: prefActiveConnection);
+      final box = await Hive.openBox(_hiveBoxName);
+
+      var connectionJSON = await box.get(prefConnectionData);
+      var activeConnectionName = await box.get(prefActiveConnection);
       List items;
 
       LndConnectionData activeConnection;
@@ -120,11 +123,11 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
         connections: state.connections,
       );
     } else if (event is ChangeActiveConnectionEvent) {
-      final storage = FlutterSecureStorage();
+      final box = await Hive.openBox(_hiveBoxName);
 
-      await storage.write(
-        key: prefActiveConnection,
-        value: event.connectionName,
+      await box.put(
+        prefActiveConnection,
+        event.connectionName,
       );
 
       yield PreferencesLoadedState(
@@ -137,7 +140,8 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
         connections: state.connections,
       );
     } else if (event is AddConnectionEvent) {
-      final storage = FlutterSecureStorage();
+      final box = await Hive.openBox(_hiveBoxName);
+
       try {
         var connectionData = List<LndConnectionData>.from(
           state.connections,
@@ -145,14 +149,14 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
         connectionData.add(event.connection);
 
         // set the new node as active by default
-        await storage.write(
-          key: prefActiveConnection,
-          value: event.connection.name,
+        await box.put(
+          prefActiveConnection,
+          event.connection.name,
         );
 
-        await storage.write(
-          key: prefConnectionData,
-          value: json.encode(
+        await box.put(
+          prefConnectionData,
+          json.encode(
             connectionData,
             toEncodable: (object) {
               if (object is LndConnectionData) {

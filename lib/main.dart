@@ -5,6 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_i18n/flutter_i18n_delegate.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:sendmany/common/constants.dart';
 import 'package:sendmany/common/pages/home_page.dart';
 import 'package:sendmany/preferences/bloc.dart';
@@ -22,8 +24,9 @@ class SimpleBlocDelegate extends BlocDelegate {
   }
 }
 
-void main() async {
+void main({bool isDesktop = false}) async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
   var prefs = await SharedPreferences.getInstance();
   BlocSupervisor.delegate = SimpleBlocDelegate();
   runApp(SendManyApp(sharedPreferences: prefs));
