@@ -20,6 +20,16 @@ The app is currently still under heavy development and is not recommended for ge
  * LND must be run with the argument `--accept-keysend` in lnd.conf add the line `accept-keysend=1`
  * LND must be compiled with `make tags="signrpc routerrpc"` and `make install tags="signrpc routerrpc"`. The official binaries include both.
  * LND must regenerate all macaroons to include permissions for signrpc and routerrpc
+ 
+## How to connect to your node
+You will need to have access to your:
+ * SSL cert
+ * Macaroon
+ * IP or .onion address
+ * Port
+If you are using for example "MyNode" you can go to LND Connect and copy the HEX string (part by part) you have down the QR Code, following the steps before mentioned (SSL, Macaroon, IP, Port).
+
+In case you want to connect using your .onion address you could do it using Orbot (mobile version) and setting your VPN Mode pointing SendMany app. Inside SendMany, instead of adding your IP address, put your .onion address.
 
 ## Develop
 SendMany is build using the [Flutter-Framework](https://flutter.dev/) and is currently only tested with Android phones. It should work on iOS without modification. 
