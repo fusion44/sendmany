@@ -9,8 +9,7 @@ import '../pedantic.dart';
 import './bloc.dart';
 
 class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
-  @override
-  PreferencesState get initialState => PreferencesLoadingState();
+  PreferencesBloc() : super(PreferencesLoadingState());
 
   @override
   Stream<PreferencesState> mapEventToState(

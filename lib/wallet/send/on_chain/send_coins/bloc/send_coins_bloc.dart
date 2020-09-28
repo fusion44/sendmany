@@ -6,8 +6,7 @@ import 'package:sendmany/common/connection/lnd_rpc/lnd_rpc.dart';
 import './bloc.dart';
 
 class SendCoinsBloc extends Bloc<SendCoinsEvent, SendCoinsState> {
-  @override
-  SendCoinsState get initialState => InitialSendCoinsState();
+  SendCoinsBloc() : super(InitialSendCoinsState());
 
   @override
   Stream<SendCoinsState> mapEventToState(

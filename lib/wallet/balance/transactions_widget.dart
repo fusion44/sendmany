@@ -17,8 +17,8 @@ class _TransactionsWidgetState extends State<TransactionsWidget> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder(
-      bloc: BlocProvider.of<ListTxBloc>(context),
-      condition: (oldState, newState) {
+      cubit: BlocProvider.of<ListTxBloc>(context),
+      buildWhen: (oldState, newState) {
         return !(newState is ReloadingTxState);
       },
       builder: (context, state) {

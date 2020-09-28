@@ -23,7 +23,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     print('loginPage build');
     return BlocListener(
-      bloc: _loginBloc,
+      cubit: _loginBloc,
       listener: (BuildContext context, LoginState state) {
         if (state is LoginSuccess) {
           Navigator.pushReplacementNamed(context, '/home');

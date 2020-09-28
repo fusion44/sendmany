@@ -6,8 +6,7 @@ import 'package:sendmany/common/connection/lnd_rpc/rpc.pb.dart';
 import './bloc.dart';
 
 class DecodePayReqBloc extends Bloc<DecodePayReqBlocEvent, DecodePayReqState> {
-  @override
-  DecodePayReqState get initialState => InitialDecodePayReqBlocState();
+  DecodePayReqBloc() : super(InitialDecodePayReqBlocState());
 
   @override
   Stream<DecodePayReqState> mapEventToState(

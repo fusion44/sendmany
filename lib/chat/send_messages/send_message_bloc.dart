@@ -38,7 +38,8 @@ class SendMessageBloc extends Bloc<SendMessageBaseEvent, SendMessageBaseState> {
         _signerClient = signer.SignerClient(LnConnectionDataProvider().channel),
         _opts = CallOptions(
           metadata: {'macaroon': LnConnectionDataProvider().macaroon},
-        ) {
+        ),
+        super(InitialSendMessageState()) {
     _init();
   }
   void _init() async {
@@ -49,9 +50,6 @@ class SendMessageBloc extends Bloc<SendMessageBaseEvent, SendMessageBaseState> {
       throw StateError('Unable to get _selfPubKey: $e');
     }
   }
-
-  @override
-  SendMessageBaseState get initialState => InitialSendMessageState();
 
   @override
   Stream<SendMessageBaseState> mapEventToState(

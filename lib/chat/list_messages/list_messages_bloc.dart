@@ -43,18 +43,23 @@ class ListMessagesBloc
 
   bool _fullLoadFinished = true;
 
-  ListMessagesBloc(this.listTxBloc) {
+  ListMessagesBloc(this.listTxBloc) : super(InitialListMessagesState()) {
+    _updateState(listTxBloc.state);
     _listTxSub = listTxBloc.listen((state) {
-      if (state is LoadingTxFinishedState) {
-        if (_lastMessageListSize == null ||
-            _lastMessageListSize < state.transactions.length) {
-          // Only process messages when there are new transactions
-          _initMessageList(state.transactions);
-          _lastMessageListSize = state.transactions.length;
-        }
-      }
+      _updateState(state);
     });
     _initInvoiceSubscription();
+  }
+
+  void _updateState(ListTxState state) {
+    if (state is LoadingTxFinishedState) {
+      if (_lastMessageListSize == null ||
+          _lastMessageListSize < state.transactions.length) {
+        // Only process messages when there are new transactions
+        _initMessageList(state.transactions);
+        _lastMessageListSize = state.transactions.length;
+      }
+    }
   }
 
   @override
@@ -63,9 +68,6 @@ class ListMessagesBloc
     await _subscribeInvoices.cancel();
     return super.close();
   }
-
-  @override
-  ListMessagesBaseState get initialState => InitialListMessagesState();
 
   @override
   Stream<ListMessagesBaseState> mapEventToState(

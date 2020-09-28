@@ -17,7 +17,7 @@ class _PreferencesPageState extends State<PreferencesPage> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder(
-        bloc: BlocProvider.of<PreferencesBloc>(context),
+        cubit: BlocProvider.of<PreferencesBloc>(context),
         builder: (BuildContext context, PreferencesState state) {
           return Scaffold(
             body: Center(

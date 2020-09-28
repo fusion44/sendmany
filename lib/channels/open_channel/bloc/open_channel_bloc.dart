@@ -9,8 +9,7 @@ import 'package:sendmany/common/models/models.dart';
 import './bloc.dart';
 
 class OpenChannelBloc extends Bloc<OpenChannelEvent, OpenChannelState> {
-  @override
-  OpenChannelState get initialState => InitialOpenChannelState();
+  OpenChannelBloc() : super(InitialOpenChannelState());
 
   @override
   Stream<OpenChannelState> mapEventToState(OpenChannelEvent e) async* {

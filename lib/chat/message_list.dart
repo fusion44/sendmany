@@ -58,65 +58,70 @@ class _MessageListWidgetState extends State<MessageListWidget> {
   void initState() {
     _listMsgBloc = BlocProvider.of<ListMessagesBloc>(context);
 
+    _updateState(_listMsgBloc.state);
     _msgBlockSub = _listMsgBloc.listen((state) {
-      if (state is MessageListLoadedState) {
-        if (state.messages.containsKey(widget.nodeInfo.node.pubKey)) {
-          _messages.clear();
-          setState(() {
-            _messages.addAll(
-              state.messages[widget.nodeInfo.node.pubKey].reversed,
-            );
-          });
-        }
-      } else if (state is NewMessageAddedState) {
-        if (state.message.peer != widget.nodeInfo.node.pubKey) return;
-
-        if (_messages.isNotEmpty) {
-          _messages.first.belowIsSame =
-              _messages.first.isMe == state.message.isMe;
-        }
-
-        _messages.insert(0, state.message);
-        if (_listKey.currentState != null) {
-          _listKey.currentState.insertItem(
-            0,
-            duration: Duration(milliseconds: 350),
-          );
-        }
-      } else if (state is MessageUpdatedState) {
-        var found = false;
-        var m = state.message;
-        if (state.message.peer != widget.nodeInfo.node.pubKey) return;
-        if (_messages.isEmpty) return;
-        if (_messages.last.id == m.id) {
-          m.aboveIsSame = _messages.last.aboveIsSame;
-          m.belowIsSame = _messages.last.belowIsSame;
-          _messages[_messages.length - 1] = m;
-          found = true;
-        } else {
-          for (var i = 0; i < _messages.length; i++) {
-            if (_messages[i].id == m.id) {
-              m.aboveIsSame = _messages[i].aboveIsSame;
-              m.belowIsSame = _messages[i].belowIsSame;
-              _messages[i] = m;
-              found = true;
-              break;
-            }
-          }
-        }
-
-        if (found) {
-          if (m.deliveryFailure) {
-            showSnackbar(context, m.errorMessage);
-          }
-          setState(() {});
-        } else {
-          print('Message not found');
-        }
-      }
+      _updateState(state);
     });
 
     super.initState();
+  }
+
+  void _updateState(ListMessagesBaseState state) {
+    if (state is MessageListLoadedState) {
+      if (state.messages.containsKey(widget.nodeInfo.node.pubKey)) {
+        _messages.clear();
+        setState(() {
+          _messages.addAll(
+            state.messages[widget.nodeInfo.node.pubKey].reversed,
+          );
+        });
+      }
+    } else if (state is NewMessageAddedState) {
+      if (state.message.peer != widget.nodeInfo.node.pubKey) return;
+
+      if (_messages.isNotEmpty) {
+        _messages.first.belowIsSame =
+            _messages.first.isMe == state.message.isMe;
+      }
+
+      _messages.insert(0, state.message);
+      if (_listKey.currentState != null) {
+        _listKey.currentState.insertItem(
+          0,
+          duration: Duration(milliseconds: 350),
+        );
+      }
+    } else if (state is MessageUpdatedState) {
+      var found = false;
+      var m = state.message;
+      if (state.message.peer != widget.nodeInfo.node.pubKey) return;
+      if (_messages.isEmpty) return;
+      if (_messages.last.id == m.id) {
+        m.aboveIsSame = _messages.last.aboveIsSame;
+        m.belowIsSame = _messages.last.belowIsSame;
+        _messages[_messages.length - 1] = m;
+        found = true;
+      } else {
+        for (var i = 0; i < _messages.length; i++) {
+          if (_messages[i].id == m.id) {
+            m.aboveIsSame = _messages[i].aboveIsSame;
+            m.belowIsSame = _messages[i].belowIsSame;
+            _messages[i] = m;
+            found = true;
+            break;
+          }
+        }
+      }
+
+      if (found) {
+        if (m.deliveryFailure) {
+          showSnackbar(context, m.errorMessage);
+        }
+        setState(() {});
+      } else {
+        print('Message not found');
+      }
+    }
   }
 
   @override

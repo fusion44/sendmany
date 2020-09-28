@@ -9,8 +9,7 @@ import 'package:sendmany/common/models/models.dart';
 import './bloc.dart';
 
 class ListPeersBloc extends Bloc<ListPeersEvent, ListPeersState> {
-  @override
-  ListPeersState get initialState => InitialListPeersState();
+  ListPeersBloc() : super(InitialListPeersState());
 
   @override
   Stream<ListPeersState> mapEventToState(

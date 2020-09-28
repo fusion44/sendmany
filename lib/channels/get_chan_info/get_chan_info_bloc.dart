@@ -9,8 +9,7 @@ import '../../common/connection/lnd_rpc/lnd_rpc.dart' as grpc;
 import '../../common/models/channels/models.dart';
 
 class GetChanInfoBloc extends Bloc<GetChanInfoEvent, GetChanInfoState> {
-  @override
-  GetChanInfoState get initialState => InitialGetChanInfoState();
+  GetChanInfoBloc() : super(InitialGetChanInfoState());
 
   @override
   Stream<GetChanInfoState> mapEventToState(

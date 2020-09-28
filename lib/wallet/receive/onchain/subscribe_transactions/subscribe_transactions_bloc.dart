@@ -8,11 +8,7 @@ import './bloc.dart';
 
 class SubscribeTransactionsBloc
     extends Bloc<SubscribeTransactionsEvent, SubscribeTransactionsState> {
-  @override
-  SubscribeTransactionsState get initialState =>
-      InitialSubscribeTransactionsState();
-
-  SubscribeTransactionsBloc() {
+  SubscribeTransactionsBloc() : super(InitialSubscribeTransactionsState()) {
     _subscribeTransactions();
   }
 

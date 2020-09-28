@@ -17,7 +17,7 @@ class _SubscribeInvoicesEvent extends WatchInvoicesEvent {
 class WatchInvoicesBloc extends Bloc<WatchInvoicesEvent, WatchInvoicesState> {
   ResponseStream<grpc.Invoice> _responseStream;
 
-  WatchInvoicesBloc() {
+  WatchInvoicesBloc() : super(InitialWatchInvoicesState()) {
     var client = LnConnectionDataProvider().lightningClient;
     var macaroon = LnConnectionDataProvider().macaroon;
 
@@ -31,9 +31,6 @@ class WatchInvoicesBloc extends Bloc<WatchInvoicesEvent, WatchInvoicesState> {
       add(_SubscribeInvoicesEvent(onData));
     });
   }
-
-  @override
-  WatchInvoicesState get initialState => InitialWatchInvoicesState();
 
   @override
   Stream<WatchInvoicesState> mapEventToState(

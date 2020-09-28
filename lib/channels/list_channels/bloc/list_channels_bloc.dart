@@ -8,8 +8,7 @@ import 'list_channels_event.dart';
 import 'package:sendmany/common/models/models.dart';
 
 class ListChannelsBloc extends Bloc<ListChannelsEvent, ListChannelsState> {
-  @override
-  ListChannelsState get initialState => InitialListChannelsState();
+  ListChannelsBloc() : super(InitialListChannelsState());
 
   @override
   Stream<ListChannelsState> mapEventToState(

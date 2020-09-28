@@ -43,18 +43,24 @@ class _ChatPageState extends State<ChatPage> {
         !(listMsgBloc.state is MessageListLoadedState)) {
       listMsgBloc.add(ListMessagesEvent());
     }
+
+    _updateState(listMsgBloc.state);
     _msgBlockSub = listMsgBloc.listen((state) {
-      if (state is MessageListLoadedState) {
-        setState(() {
-          _messagesLoading = false;
-        });
-      }
+      _updateState(state);
     });
 
     _controller.addListener(() => setState(() {}));
     _sendMessageBloc = SendMessageBloc(listMsgBloc);
     _getRemoteNodeInfoBloc.add(GetRemoteNodeInfoEvent([widget.peer]));
     super.initState();
+  }
+
+  void _updateState(ListMessagesBaseState state) {
+    if (state is MessageListLoadedState) {
+      setState(() {
+        _messagesLoading = false;
+      });
+    }
   }
 
   @override
@@ -70,7 +76,7 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder(
-      bloc: _getRemoteNodeInfoBloc,
+      cubit: _getRemoteNodeInfoBloc,
       builder: (BuildContext context, GetRemoteNodeInfoState state) {
         var title = tr(context, 'chat.info');
         Widget body;

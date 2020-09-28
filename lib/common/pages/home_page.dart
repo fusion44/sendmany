@@ -85,7 +85,7 @@ class _HomePageState extends State<HomePage>
     var repoProvider = RepositoryProvider.value(
       value: _remoteNodeInfoRepo,
       child: BlocListener(
-        bloc: BlocProvider.of<PreferencesBloc>(context),
+        cubit: BlocProvider.of<PreferencesBloc>(context),
         listener: (BuildContext context, PreferencesState state) {
           if (state != null) {
             FlutterI18n.refresh(context, Locale(state.language));
@@ -94,7 +94,7 @@ class _HomePageState extends State<HomePage>
           }
         },
         child: BlocBuilder(
-          bloc: BlocProvider.of<ConnectionManagerBloc>(context),
+          cubit: BlocProvider.of<ConnectionManagerBloc>(context),
           builder: (BuildContext context, ConnectionManagerState state) {
             if (state is ConnectionEstablishedState) {
               return _buildScaffold();

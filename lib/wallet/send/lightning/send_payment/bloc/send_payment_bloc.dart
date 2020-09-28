@@ -19,10 +19,7 @@ class SendPaymentBloc extends Bloc<SendPaymentEvent, SendPaymentState> {
       StreamController<SendRequest>();
   ResponseStream<SendResponse> _responseStream;
 
-  @override
-  SendPaymentState get initialState => InitialSendPaymentState();
-
-  SendPaymentBloc() {
+  SendPaymentBloc() : super(InitialSendPaymentState()) {
     setupStream();
   }
 

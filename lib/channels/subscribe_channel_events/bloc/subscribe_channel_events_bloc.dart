@@ -10,13 +10,9 @@ import './bloc.dart';
 
 class SubscribeChannelEventsBloc
     extends Bloc<SubscribeChannelEventsEvent, SubscribeChannelEventsState> {
-  SubscribeChannelEventsBloc() {
+  SubscribeChannelEventsBloc() : super(InitialSubscribeChannelEventsState()) {
     _subscribeTransactions();
   }
-
-  @override
-  SubscribeChannelEventsState get initialState =>
-      InitialSubscribeChannelEventsState();
 
   @override
   Stream<SubscribeChannelEventsState> mapEventToState(

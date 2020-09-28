@@ -10,7 +10,7 @@ class PeerListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder(
-      bloc: BlocProvider.of<ListPeersBloc>(context),
+      cubit: BlocProvider.of<ListPeersBloc>(context),
       builder: (BuildContext context, ListPeersState state) {
         if (state is PeersLoadedState) {
           var peers = <Widget>[];

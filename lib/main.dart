@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_i18n/flutter_i18n_delegate.dart';
@@ -14,18 +13,9 @@ import 'common/connection/connection_manager/bloc.dart';
 import 'common/pages/onboarding_page.dart';
 import 'preferences/preferences_page.dart';
 
-class SimpleBlocDelegate extends BlocDelegate {
-  @override
-  void onTransition(Bloc bloc, Transition transition) {
-    super.onTransition(bloc, transition);
-    print(transition);
-  }
-}
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   var prefs = await SharedPreferences.getInstance();
-  BlocSupervisor.delegate = SimpleBlocDelegate();
   runApp(SendManyApp(sharedPreferences: prefs));
 }
 
@@ -63,10 +53,10 @@ class _SendManyAppState extends State<SendManyApp> {
 
   Widget _buildSplashPage() {
     return BlocBuilder(
-      bloc: _connectionManagerBloc,
+      cubit: _connectionManagerBloc,
       builder: (context, ConnectionManagerState connState) {
         return BlocBuilder(
-          bloc: _preferencesBloc,
+          cubit: _preferencesBloc,
           builder: (BuildContext context, PreferencesState prefsState) {
             // possible states:
             // PreferencesLoadingState -> Show splash screen
@@ -145,8 +135,8 @@ class _SendManyAppState extends State<SendManyApp> {
     var delegates = _buildLocalizationDelegates();
 
     return BlocBuilder(
-      bloc: _preferencesBloc,
-      condition: (PreferencesState oldState, PreferencesState newState) {
+      cubit: _preferencesBloc,
+      buildWhen: (PreferencesState oldState, PreferencesState newState) {
         if (oldState is PreferencesLoadingState) return true;
         return oldState.theme != newState.theme;
       },

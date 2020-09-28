@@ -20,16 +20,14 @@ class CloseChannelBloc
   ResponseStream<grpc.CloseStatusUpdate> _stream;
   final SubscribeChannelEventsBloc _subChannelEventsBloc;
 
-  CloseChannelBloc(this._subChannelEventsBloc);
+  CloseChannelBloc(this._subChannelEventsBloc)
+      : super(InitialCloseChannelBlocState());
 
   @override
   Future<void> close() async {
     await _stream?.cancel();
     return super.close();
   }
-
-  @override
-  CloseChannelBlocState get initialState => InitialCloseChannelBlocState();
 
   @override
   Stream<CloseChannelBlocState> mapEventToState(

@@ -14,7 +14,7 @@ class _NodeOverviewWidgetState extends State<NodeOverviewWidget> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder(
-      bloc: BlocProvider.of<LnInfoBloc>(context),
+      cubit: BlocProvider.of<LnInfoBloc>(context),
       builder: (BuildContext context, LnInfoState state) {
         if (state is LnInfoStateLoading) {
           return TranslatedText('network.loading');

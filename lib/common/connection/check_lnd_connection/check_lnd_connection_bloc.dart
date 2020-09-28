@@ -10,15 +10,13 @@ class CheckLndConnectionBloc
     extends Bloc<CheckLNDConnectionEvent, CheckLNDConnectionState> {
   ClientChannel _clientChannel;
   LightningClient _lightningClient;
+  CheckLndConnectionBloc() : super(InitialCheckLNDConnectionState());
 
   @override
   Future<void> close() async {
     await _clientChannel.shutdown();
     await super.close();
   }
-
-  @override
-  CheckLNDConnectionState get initialState => InitialCheckLNDConnectionState();
 
   @override
   Stream<CheckLNDConnectionState> mapEventToState(

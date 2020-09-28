@@ -39,7 +39,7 @@ class ListTxBloc extends Bloc<ListTxEvent, ListTxState> {
   int _lastBlockHight = 0;
   bool _checkingBlockHeight = false;
 
-  ListTxBloc(LnInfoBloc lnInfoBloc) {
+  ListTxBloc(LnInfoBloc lnInfoBloc) : super(InitialListTxState()) {
     _lnInfoBloc = lnInfoBloc;
     _setupTransactionSubscription();
   }
@@ -106,9 +106,6 @@ class ListTxBloc extends Bloc<ListTxEvent, ListTxState> {
     }
     _checkingBlockHeight = false;
   }
-
-  @override
-  ListTxState get initialState => InitialListTxState();
 
   @override
   Stream<ListTxState> mapEventToState(

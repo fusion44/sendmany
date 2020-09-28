@@ -41,42 +41,52 @@ class _CreateChannelPageState extends State<CreateChannelPage> {
         RepositoryProvider.of<GetRemoteNodeInfoRepository>(context);
     _getNodeInfoBloc = GetRemoteNodeInfoBloc(provider);
 
+    _updateStateNodeInfoBloc(_getNodeInfoBloc.state);
     _getNodeInfoBloc.listen((state) {
-      if (state is RemoteNodeInfoLoadingState) {
-        setState(() {
-          _state = _CreateChannelPageStateState.loadingNodeInfo;
-        });
-      }
-      if (state is RemoteNodeInfoLoadedState) {
-        setState(() {
-          _nodeInfo = state.nodeInfos[_pubKey];
-          _state = _CreateChannelPageStateState.loadedNodeInfo;
-        });
-      } else if (state is RemoteNodeInfoErrorState) {
-        setState(() {
-          _state = _CreateChannelPageStateState.nodeInfoLoadError;
-          _errorMessage = state.errors[_pubKey];
-        });
-      }
+      _updateStateNodeInfoBloc(state);
     });
 
     _openChannelBloc = OpenChannelBloc();
+    _updateStateOpenChannelBloc(_openChannelBloc.state);
     _openChannelBloc.listen((state) {
-      if (state is InitiateOpenChannelState) {
-        // loading - open loading thing
-      } else if (state is OpenChannelInitiatedState) {
-        // got the channel point
-        BlocProvider.of<SubscribeChannelEventsBloc>(context).add(
-          OpeningNewChannelEvent(state.channelPoint),
-        );
-        Navigator.pop(context, true);
-      } else if (state is OpenChannelErrorState) {
-        // error??
-        print(state.errorMessage);
-      } else {
-        print('Unknown OpenChannelState: $state');
-      }
+      _updateStateOpenChannelBloc(state);
     });
+  }
+
+  void _updateStateOpenChannelBloc(OpenChannelState state) {
+    if (state is InitiateOpenChannelState) {
+      // loading - open loading thing
+    } else if (state is OpenChannelInitiatedState) {
+      // got the channel point
+      BlocProvider.of<SubscribeChannelEventsBloc>(context).add(
+        OpeningNewChannelEvent(state.channelPoint),
+      );
+      Navigator.pop(context, true);
+    } else if (state is OpenChannelErrorState) {
+      // error??
+      print(state.errorMessage);
+    } else {
+      print('Unknown OpenChannelState: $state');
+    }
+  }
+
+  void _updateStateNodeInfoBloc(GetRemoteNodeInfoState state) {
+    if (state is RemoteNodeInfoLoadingState) {
+      setState(() {
+        _state = _CreateChannelPageStateState.loadingNodeInfo;
+      });
+    }
+    if (state is RemoteNodeInfoLoadedState) {
+      setState(() {
+        _nodeInfo = state.nodeInfos[_pubKey];
+        _state = _CreateChannelPageStateState.loadedNodeInfo;
+      });
+    } else if (state is RemoteNodeInfoErrorState) {
+      setState(() {
+        _state = _CreateChannelPageStateState.nodeInfoLoadError;
+        _errorMessage = state.errors[_pubKey];
+      });
+    }
   }
 
   @override

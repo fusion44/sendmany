@@ -71,45 +71,9 @@ class _ChatConversationsPageState extends State<ChatConversationsPage> {
     bloc.add(ListMessagesEvent());
     _nodeInfoBloc = BlocProvider.of<GetRemoteNodeInfoBloc>(context);
 
+    _updateState(bloc.state);
     _sub = bloc.listen((state) {
-      if (state is InitialListMessagesState && _messagesLoaded) {
-        setState(() {
-          _messagesLoaded = false;
-        });
-      } else if (state is MessageListLoadedState) {
-        var l = <_ChatPeersItem>[];
-        state.messages.forEach((key, messages) {
-          l.add(_ChatPeersItem(key, messages.last));
-        });
-        l.sort((p1, p2) {
-          return p2.lastMessage.date.compareTo((p1.lastMessage.date));
-        });
-
-        _pubKeys = state.messages.keys.toList();
-        _nodeInfoBloc.add(GetRemoteNodeInfoEvent(_pubKeys));
-
-        setState(() {
-          _messagesLoaded = true;
-          _peers = l;
-        });
-      } else if (state is NewMessageAddedState) {
-        if (state.message.isMe || _peers == null || _peers.isEmpty) return;
-        if (_peers.first.key == state.message.peer) {
-          _peers.removeAt(0);
-          _peers.insert(0, _ChatPeersItem(state.message.peer, state.message));
-        } else {
-          if (_pubKeys.contains(state.message.peer)) {
-            _peers.removeWhere((p) => p.key == state.message.peer);
-          } else {
-            // We've got a new chat peer. Reload the RemoteNodeInfoObjects
-            _pubKeys.add(state.message.peer);
-            _nodeInfoBloc.add(GetRemoteNodeInfoEvent(_pubKeys));
-          }
-
-          _peers.insert(0, _ChatPeersItem(state.message.peer, state.message));
-        }
-        setState(() {});
-      }
+      _updateState(state);
     });
 
     super.initState();
@@ -125,7 +89,7 @@ class _ChatConversationsPageState extends State<ChatConversationsPage> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<GetRemoteNodeInfoBloc, GetRemoteNodeInfoState>(
-      bloc: _nodeInfoBloc,
+      cubit: _nodeInfoBloc,
       builder: (context, niState) {
         if (_messagesLoaded && niState is RemoteNodeInfoLoadedState) {
           return ListView.separated(
@@ -183,5 +147,46 @@ class _ChatConversationsPageState extends State<ChatConversationsPage> {
         );
       },
     );
+  }
+
+  void _updateState(ListMessagesBaseState state) {
+    if (state is InitialListMessagesState && _messagesLoaded) {
+      setState(() {
+        _messagesLoaded = false;
+      });
+    } else if (state is MessageListLoadedState) {
+      var l = <_ChatPeersItem>[];
+      state.messages.forEach((key, messages) {
+        l.add(_ChatPeersItem(key, messages.last));
+      });
+      l.sort((p1, p2) {
+        return p2.lastMessage.date.compareTo((p1.lastMessage.date));
+      });
+
+      _pubKeys = state.messages.keys.toList();
+      _nodeInfoBloc.add(GetRemoteNodeInfoEvent(_pubKeys));
+
+      setState(() {
+        _messagesLoaded = true;
+        _peers = l;
+      });
+    } else if (state is NewMessageAddedState) {
+      if (state.message.isMe || _peers == null || _peers.isEmpty) return;
+      if (_peers.first.key == state.message.peer) {
+        _peers.removeAt(0);
+        _peers.insert(0, _ChatPeersItem(state.message.peer, state.message));
+      } else {
+        if (_pubKeys.contains(state.message.peer)) {
+          _peers.removeWhere((p) => p.key == state.message.peer);
+        } else {
+          // We've got a new chat peer. Reload the RemoteNodeInfoObjects
+          _pubKeys.add(state.message.peer);
+          _nodeInfoBloc.add(GetRemoteNodeInfoEvent(_pubKeys));
+        }
+
+        _peers.insert(0, _ChatPeersItem(state.message.peer, state.message));
+      }
+      setState(() {});
+    }
   }
 }

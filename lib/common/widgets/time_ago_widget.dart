@@ -22,7 +22,7 @@ class TimeAgoTextWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder(
-      bloc: BlocProvider.of<PreferencesBloc>(context),
+      cubit: BlocProvider.of<PreferencesBloc>(context),
       builder: (BuildContext context, PreferencesState state) {
         var formatted = format(
           date,

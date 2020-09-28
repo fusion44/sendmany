@@ -203,7 +203,7 @@ class _ReceivePageState extends State<ReceivePage> {
 
   BlocListener _buildNewAddressBlocListener(Widget child) {
     return BlocListener<NewAddressBloc, NewAddressState>(
-      bloc: _newAddressBloc,
+      cubit: _newAddressBloc,
       listener: (context, state) {
         if (state is ReceivedNewAddressState) {
           setState(() {
@@ -222,7 +222,7 @@ class _ReceivePageState extends State<ReceivePage> {
 
   Widget _buildListChannelsBlocListener(Widget child) {
     return BlocListener<ListChannelsBloc, ListChannelsState>(
-      bloc: BlocProvider.of<ListChannelsBloc>(context),
+      cubit: BlocProvider.of<ListChannelsBloc>(context),
       listener: (context, state) {
         if (state is ChannelsLoadedState) {
           state.channels.forEach((channel) {

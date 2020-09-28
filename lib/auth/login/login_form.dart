@@ -23,7 +23,7 @@ class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     return BlocListener(
-      bloc: widget.loginBloc,
+      cubit: widget.loginBloc,
       listener: (BuildContext context, LoginState loginState) {
         if (loginState is LoginFailure) {
           Scaffold.of(context).showSnackBar(
@@ -40,7 +40,7 @@ class _LoginFormState extends State<LoginForm> {
 
   Widget _buildUi() {
     return BlocBuilder<LoginBloc, LoginState>(
-      bloc: _loginBloc,
+      cubit: _loginBloc,
       builder: (
         BuildContext context,
         LoginState loginState,

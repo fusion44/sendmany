@@ -56,7 +56,7 @@ class _SendPaymentPageState extends State<SendPaymentPage> {
   Widget _buildScanAndSendUI() {
     var theme = Theme.of(context);
     return BlocBuilder(
-      bloc: _decodePayReqBloc,
+      cubit: _decodePayReqBloc,
       builder: (BuildContext context, DecodePayReqState state) {
         if (state is InitialDecodePayReqBlocState) {
           return Text('Initial');
@@ -163,7 +163,7 @@ class _SendPaymentPageState extends State<SendPaymentPage> {
 
   Widget _buildAwaitResponseUI() {
     return BlocBuilder(
-      bloc: _sendPaymentBloc,
+      cubit: _sendPaymentBloc,
       builder: (BuildContext context, SendPaymentState state) {
         if (state is SendPaymentResponseState) {
           return _buildPaymentSentWidget(state);

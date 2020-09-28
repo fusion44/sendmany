@@ -50,7 +50,7 @@ class _CheckLNDConnectionPageState extends State<CheckLNDConnectionPage> {
     var theme = Theme.of(context);
     return Scaffold(
       body: BlocBuilder(
-        bloc: _bloc,
+        cubit: _bloc,
         builder: (BuildContext context, CheckLNDConnectionState state) {
           if (state is InitialCheckLNDConnectionState) {
             return Center(child: TranslatedText('onboarding.initializing'));

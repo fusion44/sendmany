@@ -20,23 +20,26 @@ class ConnectionManagerBloc
   final PreferencesBloc _prefsBloc;
   StreamSubscription _prefsSubscription;
 
-  ConnectionManagerBloc(this._prefsBloc) {
+  ConnectionManagerBloc(this._prefsBloc)
+      : super(InitialConnectionManagerState()) {
+    _updateState(_prefsBloc.state);
     _prefsBloc.listen((state) {
-      if (state is PreferencesLoadedState) {
-        // listen to preference state changes and switch the active connection appropriately
-        if (_currentActiveConnection == null) {
-          add(AppStart(state.activeConnection));
-        } else {
-          if (state.activeConnection.name != _currentActiveConnection.name) {
-            add(SwitchConnectionEvent(state.activeConnection));
-          }
-        }
-      }
+      _updateState(state);
     });
   }
 
-  @override
-  ConnectionManagerState get initialState => InitialConnectionManagerState();
+  void _updateState(PreferencesState state) {
+    if (state is PreferencesLoadedState) {
+      // listen to preference state changes and switch the active connection appropriately
+      if (_currentActiveConnection == null) {
+        add(AppStart(state.activeConnection));
+      } else {
+        if (state.activeConnection.name != _currentActiveConnection.name) {
+          add(SwitchConnectionEvent(state.activeConnection));
+        }
+      }
+    }
+  }
 
   @override
   Future<void> close() async {

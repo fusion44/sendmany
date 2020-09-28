@@ -8,8 +8,7 @@ import 'package:sendmany/wallet/receive/lightning/add_invoice_bloc/add_invoice_e
 import 'package:sendmany/wallet/receive/lightning/add_invoice_bloc/add_invoice_state.dart';
 
 class AddInvoiceBloc extends Bloc<AddInvoiceEvent, AddInvoiceState> {
-  @override
-  AddInvoiceState get initialState => InitialAddinvoiceState();
+  AddInvoiceBloc() : super(InitialAddinvoiceState());
 
   @override
   Stream<AddInvoiceState> mapEventToState(

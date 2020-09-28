@@ -53,7 +53,7 @@ class _ListChannelsPageState extends State<ListChannelsPage> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<CloseChannelBloc, CloseChannelBlocState>(
-      bloc: _closeChannelBloc,
+      cubit: _closeChannelBloc,
       listener: (context, state) {
         if (state is CloseChannelErrorState &&
             state.reason == CloseErrorReason.peerOffline) {
@@ -70,7 +70,7 @@ class _ListChannelsPageState extends State<ListChannelsPage> {
         }
       },
       child: BlocBuilder(
-        bloc: BlocProvider.of<SubscribeChannelEventsBloc>(context),
+        cubit: BlocProvider.of<SubscribeChannelEventsBloc>(context),
         builder: (BuildContext context, SubscribeChannelEventsState state) {
           if (state is SubscribeChannelLoadingState) {
             return TranslatedText('network.loading');
@@ -132,17 +132,23 @@ class _ListChannelsPageState extends State<ListChannelsPage> {
   @override
   void initState() {
     super.initState();
-    _sub = BlocProvider.of<LnInfoBloc>(context).listen((LnInfoState state) {
-      if (state is LnInfoStateLoadingFinished &&
-          state.infoResponse.blockHeight != _blockHeight) {
-        setState(() {
-          _blockHeight = state.infoResponse.blockHeight;
-        });
-      }
+    var bloc = BlocProvider.of<LnInfoBloc>(context);
+    _updateState(bloc.state);
+    _sub = bloc.listen((LnInfoState state) {
+      _updateState(state);
     });
 
     var subChanBloc = BlocProvider.of<SubscribeChannelEventsBloc>(context);
     _closeChannelBloc = CloseChannelBloc(subChanBloc);
+  }
+
+  void _updateState(LnInfoState state) {
+    if (state is LnInfoStateLoadingFinished &&
+        state.infoResponse.blockHeight != _blockHeight) {
+      setState(() {
+        _blockHeight = state.infoResponse.blockHeight;
+      });
+    }
   }
 
   FlatLineChart _buildFlatLineChart(EstablishedChannel channel) {

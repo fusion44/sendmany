@@ -10,8 +10,7 @@ import 'ln_info_event.dart';
 import 'ln_info_state.dart';
 
 class LnInfoBloc extends Bloc<LnInfoEvent, LnInfoState> {
-  @override
-  LnInfoState get initialState => InitialLnInfoState();
+  LnInfoBloc() : super(InitialLnInfoState());
 
   @override
   Stream<LnInfoState> mapEventToState(

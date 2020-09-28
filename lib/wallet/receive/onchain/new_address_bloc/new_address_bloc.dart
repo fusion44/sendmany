@@ -8,8 +8,7 @@ import 'package:sendmany/wallet/receive/onchain/new_address_bloc/bloc.dart';
 import './bloc.dart';
 
 class NewAddressBloc extends Bloc<NewAddressEvent, NewAddressState> {
-  @override
-  NewAddressState get initialState => InitialNewAddressState();
+  NewAddressBloc() : super(InitialNewAddressState());
 
   @override
   Stream<NewAddressState> mapEventToState(

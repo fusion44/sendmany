@@ -108,6 +108,7 @@ class _RetrieveConnectionInfoPageState
               textHint: tr(context, 'onboarding.certificate'),
               minLines: 3,
               maxLines: 6,
+              keyboardType: TextInputType.multiline,
               textInputAction: TextInputAction.newline,
               validator: (String text) {
                 String ret;
@@ -128,6 +129,7 @@ class _RetrieveConnectionInfoPageState
               textHint: tr(context, 'onboarding.macaroon'),
               minLines: 3,
               maxLines: 6,
+              keyboardType: TextInputType.multiline,
               textInputAction: TextInputAction.newline,
               validator: (String text) {
                 String ret;

@@ -14,10 +14,8 @@ class GetRemoteNodeInfoBloc
     extends Bloc<GetRemoteNodeInfoEvent, GetRemoteNodeInfoState> {
   final GetRemoteNodeInfoRepository _repository;
 
-  GetRemoteNodeInfoBloc(this._repository);
-
-  @override
-  GetRemoteNodeInfoState get initialState => InitialGetRemoteNodeInfoState();
+  GetRemoteNodeInfoBloc(this._repository)
+      : super(InitialGetRemoteNodeInfoState());
 
   @override
   Stream<GetRemoteNodeInfoState> mapEventToState(
