@@ -1,13 +1,17 @@
 import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:grpc/grpc.dart';
-import 'package:sendmany/common/connection/connection_manager/bloc.dart';
-import 'package:sendmany/common/models/models.dart';
-import 'package:sendmany/common/connection/lnd_rpc/lnd_rpc.dart' as lngrpc;
-import 'package:sendmany/wallet/balance/bloc/bloc.dart';
-import 'package:sendmany/wallet/balance/bloc/ln_info_bloc.dart';
+import 'package:meta/meta.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../common/connection/connection_manager/bloc.dart';
+import '../../../common/connection/lnd_rpc/lnd_rpc.dart' as lngrpc;
+import '../../../common/constants.dart';
+import '../../../common/models/models.dart';
+import '../bloc/bloc.dart';
+import '../bloc/ln_info_bloc.dart';
 import 'list_transactions_event.dart';
 import 'list_transactions_state.dart';
 
@@ -39,7 +43,21 @@ class ListTxBloc extends Bloc<ListTxEvent, ListTxState> {
   int _lastBlockHight = 0;
   bool _checkingBlockHeight = false;
 
-  ListTxBloc(LnInfoBloc lnInfoBloc) : super(InitialListTxState()) {
+  final lngrpc.LightningClient lnClient;
+
+  final String macaroon;
+
+  int numInvoices = -1;
+
+  int numPayments = -1;
+
+  int numOnchainTx = -1;
+
+  ListTxBloc(
+    LnInfoBloc lnInfoBloc, {
+    @required this.lnClient,
+    @required this.macaroon,
+  }) : super(InitialListTxState()) {
     _lnInfoBloc = lnInfoBloc;
     _setupTransactionSubscription();
   }
@@ -54,12 +72,10 @@ class ListTxBloc extends Bloc<ListTxEvent, ListTxState> {
   }
 
   void _setupTransactionSubscription() {
-    var client = LnConnectionDataProvider().lightningClient;
-    var macaroon = LnConnectionDataProvider().macaroon;
     var opts = CallOptions(metadata: {'macaroon': macaroon});
 
     var req = lngrpc.GetTransactionsRequest();
-    _responseStream = client.subscribeTransactions(
+    _responseStream = lnClient.subscribeTransactions(
       req,
       options: opts,
     );
@@ -136,7 +152,17 @@ class ListTxBloc extends Bloc<ListTxEvent, ListTxState> {
         yield LoadingTxState([]);
       }
       try {
-        await _loadTransactions();
+        await _loadTransactions(event.numMaxInvoices);
+
+        if (event.updateTxPrefData) {
+          // save the last index - necessary to check for new
+          // invoices in a background process
+          var prefs = await SharedPreferences.getInstance();
+          await prefs.setInt(prefLastNumInvoices, numInvoices);
+          await prefs.setInt(prefLastNumPayments, numPayments);
+          await prefs.setInt(prefLastNumOnchainTx, numOnchainTx);
+        }
+
         yield _buildTxList();
       } catch (error) {
         yield LoadingTxErrorState(error);
@@ -164,9 +190,7 @@ class ListTxBloc extends Bloc<ListTxEvent, ListTxState> {
     }
   }
 
-  Future _loadTransactions() async {
-    var client = LnConnectionDataProvider().lightningClient;
-
+  Future _loadTransactions(int numMaxInvoices) async {
     var invoicesRequest = lngrpc.ListInvoiceRequest();
     invoicesRequest.reversed = true;
     invoicesRequest.numMaxInvoices = Int64(99999);
@@ -176,9 +200,9 @@ class ListTxBloc extends Bloc<ListTxEvent, ListTxState> {
     var responseList;
     try {
       responseList = await Future.wait([
-        client.listInvoices(invoicesRequest),
-        client.listPayments(paymentsRequest),
-        client.getTransactions(txRequest),
+        lnClient.listInvoices(invoicesRequest),
+        lnClient.listPayments(paymentsRequest),
+        lnClient.getTransactions(txRequest),
       ]);
     } on GrpcError catch (e) {
       print('gRPC error: $e');
@@ -209,6 +233,11 @@ class ListTxBloc extends Bloc<ListTxEvent, ListTxState> {
           onchains.add(TxOnchain(txm));
         }
       });
+
+      numInvoices = invoiceResponse.lastIndexOffset.toInt();
+      numPayments = paymentsResponse.payments.length;
+      // we ignore transactions with amount of 0
+      numOnchainTx = onchains.length;
     } catch (e) {
       print(e);
       print(e.stackTrace);
@@ -252,6 +281,11 @@ class ListTxBloc extends Bloc<ListTxEvent, ListTxState> {
       return b.date.compareTo(a.date);
     });
 
-    return LoadingTxFinishedState(tx);
+    return LoadingTxFinishedState(
+      tx,
+      invoices: invoices,
+      payments: payments,
+      onchains: onchains,
+    );
   }
 }

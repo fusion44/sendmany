@@ -30,8 +30,16 @@ class ReloadingTxState extends ListTxState {
 
 class LoadingTxFinishedState extends ListTxState {
   final List<Tx> transactions;
+  final List<TxLightningInvoice> invoices;
+  final List<TxLightningPayment> payments;
+  final List<TxOnchain> onchains;
 
-  LoadingTxFinishedState(this.transactions);
+  LoadingTxFinishedState(
+    this.transactions, {
+    @required this.invoices,
+    @required this.payments,
+    @required this.onchains,
+  });
 
   @override
   List<Object> get props => [transactions];

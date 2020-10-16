@@ -14,6 +14,9 @@ const String prefPinActive = 'pin_active';
 const String prefConnectionData = 'sec_connection_data_json';
 const String prefActiveConnection = 'active_node';
 const String prefActiveConnectionPubKey = 'active_connection_pubkey';
+const String prefLastNumInvoices = 'last_num_invoice';
+const String prefLastNumPayments = 'last_num_payments';
+const String prefLastNumOnchainTx = 'last_num_onchain_tx';
 
 // Themeing
 const sendManyBackground = Color(0xff32333d);
@@ -47,6 +50,21 @@ const themeDark = 'dark';
 const themeLight = 'light';
 
 const double defaultHorizontalWhiteSpace = 4.0;
+
+// Background processing
+class LocalNotificationChannels {
+  static String chatChannelID = 'sendmany_chat';
+  static String chatChannelName = 'Chat';
+  static String chatChannelDescription = 'Chat messages';
+
+  static String paymentChannelID = 'sendmany_payments';
+  static String paymentChannelName = 'Payments';
+  static String paymentChannelDescription = 'Incoming or outgoing payments';
+
+  static String channelChannelID = 'sendmany_channels';
+  static String channelChannelName = 'Channels';
+  static String channelChannelDescription = 'Notifies on channel changes ';
+}
 
 /// TLV Records supported by SendMany
 class TlvRecords {

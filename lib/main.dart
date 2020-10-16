@@ -1,26 +1,36 @@
+import 'package:background_fetch/background_fetch.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_i18n/flutter_i18n_delegate.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:sendmany/common/constants.dart';
-import 'package:sendmany/common/pages/home_page.dart';
-import 'package:sendmany/preferences/bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'common/background/check_invoices_headless.dart';
+import 'common/blocs/send_local_notification/send_notification_bloc.dart';
 import 'common/connection/connection_manager/bloc.dart';
+import 'common/constants.dart';
+import 'common/pages/home_page.dart';
 import 'common/pages/onboarding_page.dart';
+import 'pedantic.dart';
+import 'preferences/bloc.dart';
 import 'preferences/preferences_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SendLocalNotificationBloc.initializeNotificationSystem();
+
+  // Register to receive BackgroundFetch events after app is terminated.
+  // Requires {stopOnTerminate: false, enableHeadless: true}
+  await BackgroundFetch.registerHeadlessTask(backgroundFetchHeadlessTask);
+
   var prefs = await SharedPreferences.getInstance();
   runApp(SendManyApp(sharedPreferences: prefs));
 }
 
 class SendManyApp extends StatefulWidget {
   final SharedPreferences sharedPreferences;
+
   SendManyApp({Key key, @required this.sharedPreferences}) : super(key: key);
 
   @override
@@ -48,7 +58,53 @@ class _SendManyAppState extends State<SendManyApp> {
       '/preferences': (BuildContext context) => PreferencesPage(),
     };
 
+    initPlatformState();
+
     super.initState();
+  }
+
+  // Platform messages are asynchronous, so we initialize in an async method.
+  Future<void> initPlatformState() async {
+    // var prefs = await SharedPreferences.getInstance();
+    // await prefs.setInt(prefLastNumInvoices, -1);
+    // await prefs.setInt(prefLastNumPayments, -1);
+    // await prefs.setInt(prefLastNumOnchainTx, -1);
+
+    // Configure BackgroundFetch.
+    unawaited(
+      BackgroundFetch.configure(
+          BackgroundFetchConfig(
+              minimumFetchInterval: 15,
+              stopOnTerminate: false,
+              enableHeadless: true,
+              requiresBatteryNotLow: false,
+              requiresCharging: false,
+              requiresStorageNotLow: false,
+              requiresDeviceIdle: false,
+              requiredNetworkType: NetworkType.NONE), (String taskId) async {
+        // This is the fetch-event callback.
+        print('[BackgroundFetch] Event received $taskId');
+
+        // IMPORTANT:  You must signal completion of your task or the OS can punish your app
+        // for taking too long in the background.
+        BackgroundFetch.finish(taskId);
+      }).then((int status) {
+        print('[BackgroundFetch] configure success: $status');
+      }).catchError((e) {
+        print('[BackgroundFetch] configure ERROR: $e');
+      }),
+    );
+
+    await BackgroundFetch.start().then((int status) {
+      print('[BackgroundFetch] start success: $status');
+    }).catchError((e) {
+      print('[BackgroundFetch] start FAILURE: $e');
+    });
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) return;
   }
 
   Widget _buildSplashPage() {

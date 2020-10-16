@@ -9,6 +9,7 @@ import 'package:fixnum/fixnum.dart';
 import 'package:grpc/grpc.dart';
 import 'package:nanoid/nanoid.dart';
 
+import '../utils.dart';
 import './bloc.dart';
 import '../../common/connection/connection_manager/bloc.dart';
 import '../../common/connection/lnd_rpc/lnd_rpc.dart' as grpc;
@@ -98,7 +99,7 @@ class ListMessagesBloc
       transactions.forEach((tx) async {
         if (tx is TxLightningInvoice) {
           if (tx.invoice.isKeySend) {
-            var rec = _findIncomingChatRecord(tx.invoice);
+            var rec = findIncomingChatRecord(tx.invoice);
             if (rec != null) await _handleIncomingChatHtlc(rec);
           }
         } else if (tx is TxLightningPayment) {
@@ -149,18 +150,6 @@ class ListMessagesBloc
         }
       }
     });
-  }
-
-  Map<Int64, List<int>> _findIncomingChatRecord(Invoice invoice) {
-    if (invoice.state != InvoiceState.settled) return null;
-
-    for (var htlc in invoice.htlcs) {
-      if (htlc.state == InvoiceHTLCState.settled) {
-        return htlc.customRecords;
-      }
-    }
-
-    return null;
   }
 
   Hop _findOutgoingChatRecord(Payment payment) {

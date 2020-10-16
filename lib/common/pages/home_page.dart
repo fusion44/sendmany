@@ -58,7 +58,11 @@ class _HomePageState extends State<HomePage>
     _listChannelsBloc.add(LoadChannelList());
     _listPeersBloc = ListPeersBloc();
     _listPeersBloc.add(LoadPeersList());
-    _listTxBloc = ListTxBloc(_lnInfoBloc);
+    _listTxBloc = ListTxBloc(
+      _lnInfoBloc,
+      lnClient: LnConnectionDataProvider().lightningClient,
+      macaroon: LnConnectionDataProvider().macaroon,
+    );
     _listTxBloc.add(LoadTxEvent());
     _listTxBloc.add(ChangePollTxIntervalEvent(30));
     _listMsgBloc = ListMessagesBloc(_listTxBloc);

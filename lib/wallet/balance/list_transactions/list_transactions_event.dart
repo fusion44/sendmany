@@ -6,6 +6,17 @@ class ListTxEvent {
 }
 
 class LoadTxEvent extends ListTxEvent {
+  // Set to false when fetching in headless mode
+  final bool updateTxPrefData;
+
+  // The maximum number of invoices returned
+  final int numMaxInvoices;
+
+  LoadTxEvent({
+    this.updateTxPrefData = true,
+    this.numMaxInvoices = 99999,
+  });
+
   @override
   List<Object> get props => const [];
 }
