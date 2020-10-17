@@ -177,7 +177,7 @@ class _CloseChannelSettingsWidgetState
       }),
     );
 
-    var qrInfo = checkQrCode(result);
+    var qrInfo = checkPaymentRequestType(result);
 
     if (qrInfo == null || qrInfo.layer != PaymentLayer.onchain) {
       showSnackbar(

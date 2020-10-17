@@ -98,23 +98,22 @@ class QrInfo {
 
 /// Checks a String if it is a valid lightning invoice or
 /// an onchain address.
-QrInfo checkQrCode(String code) {
-  if (code.contains(':')) {
-    code = code.split(':')[1].toLowerCase();
-  }
+QrInfo checkPaymentRequestType(String code) {
+  // split away the URI scheme as it is currently of no interest to us
+  if (code.contains(':')) code = code.split(':')[1];
 
   var info = QrInfo();
   info.layer = PaymentLayer.unknown;
   info.address = code;
 
-  if (code.startsWith('lnbc')) {
+  if (code.startsWith(RegExp('lnbc', caseSensitive: false))) {
     info.network = Network.mainnet;
     info.layer = PaymentLayer.lightning;
     return info;
-  } else if (code.startsWith('lntb')) {
+  } else if (code.startsWith(RegExp('lntb', caseSensitive: false))) {
     info.network = Network.testnet;
     info.layer = PaymentLayer.lightning;
-  } else if (code.startsWith('lncrt')) {
+  } else if (code.startsWith(RegExp('lncrt', caseSensitive: false))) {
     info.network = Network.regtest;
     info.layer = PaymentLayer.lightning;
   } else if (code.startsWith('1')) {
@@ -125,7 +124,7 @@ QrInfo checkQrCode(String code) {
     info.network = Network.mainnet;
     info.layer = PaymentLayer.onchain;
     info.btcAddressType = BitcoindAddressType.p2sh;
-  } else if (code.startsWith('bc1')) {
+  } else if (code.startsWith(RegExp('bc1', caseSensitive: false))) {
     info.network = Network.mainnet;
     info.layer = PaymentLayer.onchain;
     info.btcAddressType = BitcoindAddressType.bech32;
@@ -137,7 +136,7 @@ QrInfo checkQrCode(String code) {
     info.network = Network.testnet;
     info.layer = PaymentLayer.onchain;
     info.btcAddressType = BitcoindAddressType.p2sh;
-  } else if (code.startsWith('tb1')) {
+  } else if (code.startsWith(RegExp('tb1', caseSensitive: false))) {
     info.network = Network.testnet;
     info.layer = PaymentLayer.onchain;
     info.btcAddressType = BitcoindAddressType.bech32;

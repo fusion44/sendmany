@@ -57,7 +57,7 @@ class _SendPageState extends State<SendPage> {
       onStringFound: (String code) {
         if (!_pushedRoute) {
           _pushedRoute = true;
-          var qrinfo = checkQrCode(code);
+          var qrinfo = checkPaymentRequestType(code);
           switch (qrinfo.layer) {
             case PaymentLayer.lightning:
               _navigateToLnPayment(qrinfo);
@@ -109,7 +109,7 @@ class _SendPageState extends State<SendPage> {
                 labelText: tr(context, 'wallet.invoices.paste_invoice_here'),
               ),
               validator: (text) {
-                _qrinfo = checkQrCode(text);
+                _qrinfo = checkPaymentRequestType(text);
                 switch (_qrinfo.layer) {
                   case PaymentLayer.lightning:
                   case PaymentLayer.onchain:
