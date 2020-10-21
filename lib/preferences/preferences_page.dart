@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sendmany/common/models/models.dart';
-import 'package:sendmany/common/pages/retrieve_connection_info_page.dart';
-import 'package:sendmany/common/utils.dart';
-import 'package:sendmany/common/widgets/widgets.dart';
-import 'package:sendmany/preferences/bloc.dart';
+
+import '../common/models/models.dart';
+import '../common/pages/retrieve_connection_info_page.dart';
+import '../common/utils.dart';
+import '../common/widgets/set_pin_dialog.dart';
+import '../common/widgets/widgets.dart';
+import 'bloc.dart';
 
 class PreferencesPage extends StatefulWidget {
   PreferencesPage({Key key}) : super(key: key);
@@ -14,6 +16,13 @@ class PreferencesPage extends StatefulWidget {
 }
 
 class _PreferencesPageState extends State<PreferencesPage> {
+  PreferencesBloc prefsBloc;
+  @override
+  void initState() {
+    super.initState();
+    prefsBloc = BlocProvider.of<PreferencesBloc>(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder(
@@ -60,6 +69,18 @@ class _PreferencesPageState extends State<PreferencesPage> {
                       },
                       items: _buildNodeItems(state.connections),
                     ),
+                  ),
+                  Divider(),
+                  SwitchListTile(
+                    title: TranslatedText('prefs.enable_pin'),
+                    value: state.pinActive,
+                    onChanged: (bool value) {
+                      if (state.pinActive) {
+                        _unsetPinDialog(context, state.pin);
+                      } else {
+                        _showSetPinDialog(context);
+                      }
+                    },
                   ),
                   Spacer(),
                   Text(
@@ -145,5 +166,23 @@ class _PreferencesPageState extends State<PreferencesPage> {
         );
       }),
     );
+  }
+
+  void _showSetPinDialog(BuildContext context) async {
+    var pin = await showDialog(
+      context: context,
+      builder: (BuildContext dlgContext) => SetPinDialog(),
+    );
+
+    if (pin is String && pin.length == 4) {
+      prefsBloc.add(ChangePinEvent(true, pin));
+    }
+  }
+
+  void _unsetPinDialog(BuildContext context, String pin) async {
+    var res = await showVerifyPinDialog(context, pin);
+    if (res) {
+      prefsBloc.add(ChangePinEvent(false));
+    }
   }
 }

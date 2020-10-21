@@ -38,12 +38,6 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
         unawaited(prefs.setInt(prefNumNodes, 0));
       }
 
-      var pinActive = prefs.getBool(prefPinActive);
-      if (pinActive == null) {
-        pinActive = false;
-        unawaited(prefs.setBool(prefPinActive, false));
-      }
-
       final storage = FlutterSecureStorage();
       var connectionJSON = await storage.read(key: prefConnectionData);
       var activeConnectionName = await storage.read(key: prefActiveConnection);
@@ -62,16 +56,27 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
         });
       }
 
+      var val = await storage.read(key: prefPinActive);
+      var pinActive = false;
+      var pin = '';
+      if (val == 'true') {
+        pinActive = true;
+        pin = await storage.read(key: prefPin);
+      } else if (val == null) {
+        await storage.write(key: prefPinActive, value: 'false');
+      }
+
       yield PreferencesLoadedState(
         language: lang,
         theme: theme,
         onboardingFinished: onboarding,
         numNodes: numNodes,
-        pinActive: pinActive,
         activeConnection: activeConnection,
         connections: items != null
             ? items.cast<LndConnectionData>()
             : const <LndConnectionData>[],
+        pinActive: pinActive,
+        pin: pin,
       );
     } else if (event is ChangeLanguageEvent) {
       yield PreferencesLoadedState(
@@ -175,6 +180,21 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
       } catch (error) {
         print(error);
       }
+    } else if (event is ChangePinEvent) {
+      final storage = FlutterSecureStorage();
+      await storage.write(key: prefPinActive, value: event.active.toString());
+      await storage.write(key: prefPin, value: event.pin);
+
+      yield PreferencesLoadedState(
+        language: state.language,
+        theme: state.theme,
+        onboardingFinished: state.onboardingFinished,
+        numNodes: state.numNodes,
+        activeConnection: state.activeConnection,
+        connections: state.connections,
+        pinActive: event.active,
+        pin: event.pin,
+      );
     }
   }
 

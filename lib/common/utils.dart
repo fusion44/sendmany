@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
+import 'widgets/verify_pin_dialog.dart';
+
 /// Translates a string with the given [key] and the [translationParams].
 String tr(BuildContext context, String key,
     [Map<String, String> translationParams]) {
@@ -142,6 +144,13 @@ QrInfo checkPaymentRequestType(String code) {
     info.btcAddressType = BitcoindAddressType.bech32;
   }
   return info;
+}
+
+Future<bool> showVerifyPinDialog(BuildContext context, String pin) async {
+  return await showDialog(
+    context: context,
+    builder: (BuildContext dlgContext) => VerifyPinDialog(pin),
+  );
 }
 
 void showSnackbar(BuildContext context, String message) {

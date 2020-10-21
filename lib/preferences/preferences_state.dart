@@ -9,18 +9,20 @@ class PreferencesState extends Equatable {
   final String theme;
   final bool onboardingFinished;
   final int numNodes;
-  final bool pinActive;
   final LndConnectionData activeConnection;
   final List<LndConnectionData> connections;
+  final bool pinActive;
+  final String pin;
 
   PreferencesState({
     @required this.language,
     @required this.theme,
     @required this.onboardingFinished,
     @required this.numNodes,
-    @required this.pinActive,
     @required this.activeConnection,
     @required this.connections,
+    this.pinActive = false,
+    this.pin = '',
   });
 
   @override
@@ -29,9 +31,10 @@ class PreferencesState extends Equatable {
         theme,
         onboardingFinished,
         numNodes,
-        pinActive,
         activeConnection,
         connections,
+        pinActive,
+        pin,
       ];
 }
 
@@ -41,7 +44,6 @@ class PreferencesLoadingState extends PreferencesState {
     String theme = themeSendMany,
     bool onboardingFinished = false,
     int numNodes = 0,
-    bool pinActive = true,
     LndConnectionData activeConnection,
     List<LndConnectionData> connections = const <LndConnectionData>[],
   }) : super(
@@ -49,7 +51,6 @@ class PreferencesLoadingState extends PreferencesState {
           theme: theme,
           onboardingFinished: onboardingFinished,
           numNodes: numNodes,
-          pinActive: pinActive,
           activeConnection: activeConnection,
           connections: connections,
         );
@@ -61,16 +62,18 @@ class PreferencesLoadedState extends PreferencesState {
     @required String theme,
     @required bool onboardingFinished,
     @required int numNodes,
-    @required bool pinActive,
     @required LndConnectionData activeConnection,
     @required List<LndConnectionData> connections,
+    bool pinActive = false,
+    String pin = '',
   }) : super(
           language: language,
           theme: theme,
           onboardingFinished: onboardingFinished,
           numNodes: numNodes,
-          pinActive: pinActive,
           activeConnection: activeConnection,
           connections: connections,
+          pinActive: pinActive,
+          pin: pin,
         );
 }

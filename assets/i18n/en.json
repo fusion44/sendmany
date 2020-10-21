@@ -1,13 +1,18 @@
 {
   "alert_dialog": {
     "cancel": "Cancel",
+    "clear": "Clear",
     "confirm": "Confirm",
     "confirm_action_title": "Confirm Action"
   },
   "amount": "amount",
   "auth": {
     "check": "Check",
-    "pin": "Enter your PIN"
+    "enter_pin": "PIN",
+    "entry_mismatch": "Entries don't match",
+    "min_pin_length": "Min four digits",
+    "pin": "PIN",
+    "verify_pin": "Verify PIN"
   },
   "channels": {
     "capacity": "Capacity",
@@ -121,6 +126,7 @@
   "prefs": {
     "add_node_btn": "Add a node",
     "btn": "Settings",
+    "enable_pin": "Activate PIN",
     "language_label": "Language",
     "node_dropdown": "Active Node",
     "theme_label": "Theme",

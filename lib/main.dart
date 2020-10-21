@@ -12,6 +12,7 @@ import 'common/connection/connection_manager/bloc.dart';
 import 'common/constants.dart';
 import 'common/pages/home_page.dart';
 import 'common/pages/onboarding_page.dart';
+import 'common/pages/pin_code_verification_page.dart';
 import 'pedantic.dart';
 import 'preferences/bloc.dart';
 import 'preferences/preferences_page.dart';
@@ -56,6 +57,8 @@ class _SendManyAppState extends State<SendManyApp> {
       '/setup': (BuildContext context) => Text('Setup'),
       '/home': (BuildContext context) => HomePage(),
       '/preferences': (BuildContext context) => PreferencesPage(),
+      '/login': (BuildContext context) =>
+          PinCodeVerificationScreen(_preferencesBloc),
     };
 
     initPlatformState();

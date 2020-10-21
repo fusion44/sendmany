@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sendmany/common/constants.dart';
+import 'package:sendmany/common/widgets/set_pin_dialog.dart';
 import 'package:sendmany/common/widgets/widgets.dart';
 import 'package:sendmany/preferences/bloc.dart';
 
@@ -13,6 +14,14 @@ class OnboardingPage extends StatefulWidget {
 
 class _OnboardingPageState extends State<OnboardingPage> {
   int _currentStep = 0;
+
+  PreferencesBloc prefsBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    prefsBloc = BlocProvider.of<PreferencesBloc>(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -120,17 +129,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
               child: TranslatedText(
                 'onboarding.button_skip_pin',
               ),
-              onPressed: () {
-                BlocProvider.of<PreferencesBloc>(context).add(
-                  SetOnboardingFinishedEvent(),
-                );
-
-                Navigator.pushNamedAndRemoveUntil(
-                  context,
-                  '/splash',
-                  (Route<dynamic> route) => false,
-                );
-              },
+              onPressed: _finishOnboarding,
               color: sendManyDarkGreen,
             ),
             Container(width: 16.0),
@@ -138,7 +137,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
               child: TranslatedText(
                 'onboarding.button_setup_pin',
               ),
-              onPressed: null, // TODO: implement me
+              onPressed: () {
+                _showSetPinDialog(context);
+              },
               color: sendManyDarkGreen,
             )
           ],
@@ -148,5 +149,26 @@ class _OnboardingPageState extends State<OnboardingPage> {
     } else {
       return [Text('Unknown step $_currentStep')];
     }
+  }
+
+  void _showSetPinDialog(BuildContext context) async {
+    var pin = await showDialog(
+      context: context,
+      builder: (BuildContext dlgContext) => SetPinDialog(),
+    );
+
+    if (pin is String && pin.length == 4) {
+      prefsBloc.add(ChangePinEvent(true, pin));
+      _finishOnboarding();
+    }
+  }
+
+  void _finishOnboarding() {
+    prefsBloc.add(SetOnboardingFinishedEvent());
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      '/home',
+      (Route<dynamic> route) => false,
+    );
   }
 }

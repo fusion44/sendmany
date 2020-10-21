@@ -68,3 +68,13 @@ class AddConnectionEvent extends PreferencesEvent {
   @override
   List<Object> get props => [connection];
 }
+
+class ChangePinEvent extends PreferencesEvent {
+  final bool active;
+  final String pin;
+
+  ChangePinEvent(this.active, [this.pin = '']);
+
+  @override
+  List<Object> get props => [active, pin];
+}

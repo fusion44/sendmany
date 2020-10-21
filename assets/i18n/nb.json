@@ -1,13 +1,18 @@
 {
   "alert_dialog": {
     "cancel": "Avbryt",
+    "clear": "Tilbakestill til standard",
     "confirm": "Bekrefte",
     "confirm_action_title": "Bekreft handling"
   },
   "amount": "beløp",
   "auth": {
     "check": "Sjekke",
-    "pin": "Skriv inn din PIN-kode"
+    "enter_pin": "Skriv inn din PIN-kode",
+    "entry_mismatch": "Oppføringene stemmer ikke overens",
+    "min_pin_length": "Min fire sifre",
+    "pin": "PIN",
+    "verify_pin": "Bekreft PIN"
   },
   "channels": {
     "capacity": "Capacity",
@@ -121,6 +126,7 @@
   "prefs": {
     "add_node_btn": "Add a node",
     "btn": "Innstillinger",
+    "enable_pin": "Activer PIN",
     "language_label": "Språk",
     "node_dropdown": "Active Node",
     "theme_label": "Theme",

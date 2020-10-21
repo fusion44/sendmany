@@ -11,6 +11,7 @@ const String prefTheme = 'theme_preference';
 const String prefOnboardingFinished = 'onboarding_finished';
 const String prefNumNodes = 'num_nodes';
 const String prefPinActive = 'pin_active';
+const String prefPin = 'pin_string';
 const String prefConnectionData = 'sec_connection_data_json';
 const String prefActiveConnection = 'active_node';
 const String prefActiveConnectionPubKey = 'active_connection_pubkey';
