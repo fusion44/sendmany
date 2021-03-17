@@ -1,4 +1,4 @@
-import 'package:sendmany/common/connection/lnd_rpc/lnd_rpc.dart' as grpc;
+import '../connection/lnd_rpc/lnd_rpc.dart' as grpc;
 
 class LightningAddress {
   /// The identity pubkey of the Lightning node

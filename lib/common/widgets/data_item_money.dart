@@ -1,7 +1,8 @@
 import 'package:fixnum/fixnum.dart';
 import 'package:flutter/material.dart';
-import 'package:sendmany/common/constants.dart';
-import 'package:sendmany/common/widgets/money_value_view.dart';
+
+import '../constants.dart';
+import 'money_value_view.dart';
 
 class DataItemMoney extends StatelessWidget {
   final Int64 amount;

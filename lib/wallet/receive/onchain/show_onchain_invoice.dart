@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:sendmany/common/constants.dart';
-import 'package:sendmany/common/models/models.dart';
-import 'package:sendmany/common/utils.dart';
-import 'package:sendmany/common/widgets/widgets.dart';
-import 'package:sendmany/wallet/receive/onchain/subscribe_transactions/bloc.dart';
+
+import '../../../common/constants.dart';
+import '../../../common/models/models.dart';
+import '../../../common/utils.dart';
+import '../../../common/widgets/widgets.dart';
+import 'subscribe_transactions/bloc.dart';
 
 class ShowOnchainInvoice extends StatefulWidget {
   final String address;
@@ -102,15 +103,15 @@ class _ShowOnchainInvoiceState extends State<ShowOnchainInvoice> {
                           color: sendManyBlue200,
                           size: 100,
                         ),
-                  RaisedButton(
-                    child: TranslatedText(
-                      'wallet.invoices.paid_go_back_to_home',
-                    ),
+                  ElevatedButton(
                     onPressed: () {
                       if (Navigator.canPop(context)) {
                         Navigator.pop(context);
                       }
                     },
+                    child: TranslatedText(
+                      'wallet.invoices.paid_go_back_to_home',
+                    ),
                   )
                 ],
               ),

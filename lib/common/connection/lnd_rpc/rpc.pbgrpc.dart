@@ -2,8 +2,8 @@
 //  Generated code. Do not modify.
 //  source: rpc.proto
 //
-// @dart = 2.3
-// ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,annotate_overrides,unnecessary_const
+// @dart = 2.7
+// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:async' as $async;
 
@@ -12,140 +12,6 @@ import 'dart:core' as $core;
 import 'package:grpc/service_api.dart' as $grpc;
 import 'rpc.pb.dart' as $0;
 export 'rpc.pb.dart';
-
-class WalletUnlockerClient extends $grpc.Client {
-  static final _$genSeed =
-      $grpc.ClientMethod<$0.GenSeedRequest, $0.GenSeedResponse>(
-          '/lnrpc.WalletUnlocker/GenSeed',
-          ($0.GenSeedRequest value) => value.writeToBuffer(),
-          ($core.List<$core.int> value) =>
-              $0.GenSeedResponse.fromBuffer(value));
-  static final _$initWallet =
-      $grpc.ClientMethod<$0.InitWalletRequest, $0.InitWalletResponse>(
-          '/lnrpc.WalletUnlocker/InitWallet',
-          ($0.InitWalletRequest value) => value.writeToBuffer(),
-          ($core.List<$core.int> value) =>
-              $0.InitWalletResponse.fromBuffer(value));
-  static final _$unlockWallet =
-      $grpc.ClientMethod<$0.UnlockWalletRequest, $0.UnlockWalletResponse>(
-          '/lnrpc.WalletUnlocker/UnlockWallet',
-          ($0.UnlockWalletRequest value) => value.writeToBuffer(),
-          ($core.List<$core.int> value) =>
-              $0.UnlockWalletResponse.fromBuffer(value));
-  static final _$changePassword =
-      $grpc.ClientMethod<$0.ChangePasswordRequest, $0.ChangePasswordResponse>(
-          '/lnrpc.WalletUnlocker/ChangePassword',
-          ($0.ChangePasswordRequest value) => value.writeToBuffer(),
-          ($core.List<$core.int> value) =>
-              $0.ChangePasswordResponse.fromBuffer(value));
-
-  WalletUnlockerClient($grpc.ClientChannel channel, {$grpc.CallOptions options})
-      : super(channel, options: options);
-
-  $grpc.ResponseFuture<$0.GenSeedResponse> genSeed($0.GenSeedRequest request,
-      {$grpc.CallOptions options}) {
-    final call = $createCall(_$genSeed, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
-  }
-
-  $grpc.ResponseFuture<$0.InitWalletResponse> initWallet(
-      $0.InitWalletRequest request,
-      {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$initWallet, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
-  }
-
-  $grpc.ResponseFuture<$0.UnlockWalletResponse> unlockWallet(
-      $0.UnlockWalletRequest request,
-      {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$unlockWallet, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
-  }
-
-  $grpc.ResponseFuture<$0.ChangePasswordResponse> changePassword(
-      $0.ChangePasswordRequest request,
-      {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$changePassword, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
-  }
-}
-
-abstract class WalletUnlockerServiceBase extends $grpc.Service {
-  $core.String get $name => 'lnrpc.WalletUnlocker';
-
-  WalletUnlockerServiceBase() {
-    $addMethod($grpc.ServiceMethod<$0.GenSeedRequest, $0.GenSeedResponse>(
-        'GenSeed',
-        genSeed_Pre,
-        false,
-        false,
-        ($core.List<$core.int> value) => $0.GenSeedRequest.fromBuffer(value),
-        ($0.GenSeedResponse value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.InitWalletRequest, $0.InitWalletResponse>(
-        'InitWallet',
-        initWallet_Pre,
-        false,
-        false,
-        ($core.List<$core.int> value) => $0.InitWalletRequest.fromBuffer(value),
-        ($0.InitWalletResponse value) => value.writeToBuffer()));
-    $addMethod(
-        $grpc.ServiceMethod<$0.UnlockWalletRequest, $0.UnlockWalletResponse>(
-            'UnlockWallet',
-            unlockWallet_Pre,
-            false,
-            false,
-            ($core.List<$core.int> value) =>
-                $0.UnlockWalletRequest.fromBuffer(value),
-            ($0.UnlockWalletResponse value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.ChangePasswordRequest,
-            $0.ChangePasswordResponse>(
-        'ChangePassword',
-        changePassword_Pre,
-        false,
-        false,
-        ($core.List<$core.int> value) =>
-            $0.ChangePasswordRequest.fromBuffer(value),
-        ($0.ChangePasswordResponse value) => value.writeToBuffer()));
-  }
-
-  $async.Future<$0.GenSeedResponse> genSeed_Pre(
-      $grpc.ServiceCall call, $async.Future<$0.GenSeedRequest> request) async {
-    return genSeed(call, await request);
-  }
-
-  $async.Future<$0.InitWalletResponse> initWallet_Pre($grpc.ServiceCall call,
-      $async.Future<$0.InitWalletRequest> request) async {
-    return initWallet(call, await request);
-  }
-
-  $async.Future<$0.UnlockWalletResponse> unlockWallet_Pre(
-      $grpc.ServiceCall call,
-      $async.Future<$0.UnlockWalletRequest> request) async {
-    return unlockWallet(call, await request);
-  }
-
-  $async.Future<$0.ChangePasswordResponse> changePassword_Pre(
-      $grpc.ServiceCall call,
-      $async.Future<$0.ChangePasswordRequest> request) async {
-    return changePassword(call, await request);
-  }
-
-  $async.Future<$0.GenSeedResponse> genSeed(
-      $grpc.ServiceCall call, $0.GenSeedRequest request);
-  $async.Future<$0.InitWalletResponse> initWallet(
-      $grpc.ServiceCall call, $0.InitWalletRequest request);
-  $async.Future<$0.UnlockWalletResponse> unlockWallet(
-      $grpc.ServiceCall call, $0.UnlockWalletRequest request);
-  $async.Future<$0.ChangePasswordResponse> changePassword(
-      $grpc.ServiceCall call, $0.ChangePasswordRequest request);
-}
 
 class LightningClient extends $grpc.Client {
   static final _$walletBalance =
@@ -242,6 +108,12 @@ class LightningClient extends $grpc.Client {
           ($0.GetInfoRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $0.GetInfoResponse.fromBuffer(value));
+  static final _$getRecoveryInfo =
+      $grpc.ClientMethod<$0.GetRecoveryInfoRequest, $0.GetRecoveryInfoResponse>(
+          '/lnrpc.Lightning/GetRecoveryInfo',
+          ($0.GetRecoveryInfoRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $0.GetRecoveryInfoResponse.fromBuffer(value));
   static final _$pendingChannels =
       $grpc.ClientMethod<$0.PendingChannelsRequest, $0.PendingChannelsResponse>(
           '/lnrpc.Lightning/PendingChannels',
@@ -363,6 +235,12 @@ class LightningClient extends $grpc.Client {
           '/lnrpc.Lightning/DescribeGraph',
           ($0.ChannelGraphRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $0.ChannelGraph.fromBuffer(value));
+  static final _$getNodeMetrics =
+      $grpc.ClientMethod<$0.NodeMetricsRequest, $0.NodeMetricsResponse>(
+          '/lnrpc.Lightning/GetNodeMetrics',
+          ($0.NodeMetricsRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $0.NodeMetricsResponse.fromBuffer(value));
   static final _$getChanInfo =
       $grpc.ClientMethod<$0.ChanInfoRequest, $0.ChannelEdge>(
           '/lnrpc.Lightning/GetChanInfo',
@@ -454,474 +332,390 @@ class LightningClient extends $grpc.Client {
           ($0.BakeMacaroonRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $0.BakeMacaroonResponse.fromBuffer(value));
+  static final _$listMacaroonIDs =
+      $grpc.ClientMethod<$0.ListMacaroonIDsRequest, $0.ListMacaroonIDsResponse>(
+          '/lnrpc.Lightning/ListMacaroonIDs',
+          ($0.ListMacaroonIDsRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $0.ListMacaroonIDsResponse.fromBuffer(value));
+  static final _$deleteMacaroonID = $grpc.ClientMethod<
+          $0.DeleteMacaroonIDRequest, $0.DeleteMacaroonIDResponse>(
+      '/lnrpc.Lightning/DeleteMacaroonID',
+      ($0.DeleteMacaroonIDRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) =>
+          $0.DeleteMacaroonIDResponse.fromBuffer(value));
+  static final _$listPermissions =
+      $grpc.ClientMethod<$0.ListPermissionsRequest, $0.ListPermissionsResponse>(
+          '/lnrpc.Lightning/ListPermissions',
+          ($0.ListPermissionsRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $0.ListPermissionsResponse.fromBuffer(value));
 
-  LightningClient($grpc.ClientChannel channel, {$grpc.CallOptions options})
-      : super(channel, options: options);
+  LightningClient($grpc.ClientChannel channel,
+      {$grpc.CallOptions options,
+      $core.Iterable<$grpc.ClientInterceptor> interceptors})
+      : super(channel, options: options, interceptors: interceptors);
 
   $grpc.ResponseFuture<$0.WalletBalanceResponse> walletBalance(
       $0.WalletBalanceRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$walletBalance, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$walletBalance, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.ChannelBalanceResponse> channelBalance(
       $0.ChannelBalanceRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$channelBalance, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$channelBalance, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.TransactionDetails> getTransactions(
       $0.GetTransactionsRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$getTransactions, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$getTransactions, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.EstimateFeeResponse> estimateFee(
       $0.EstimateFeeRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$estimateFee, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$estimateFee, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.SendCoinsResponse> sendCoins(
       $0.SendCoinsRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(_$sendCoins, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$sendCoins, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.ListUnspentResponse> listUnspent(
       $0.ListUnspentRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$listUnspent, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$listUnspent, request, options: options);
   }
 
   $grpc.ResponseStream<$0.Transaction> subscribeTransactions(
       $0.GetTransactionsRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
+    return $createStreamingCall(
         _$subscribeTransactions, $async.Stream.fromIterable([request]),
         options: options);
-    return $grpc.ResponseStream(call);
   }
 
   $grpc.ResponseFuture<$0.SendManyResponse> sendMany($0.SendManyRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(_$sendMany, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$sendMany, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.NewAddressResponse> newAddress(
       $0.NewAddressRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$newAddress, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$newAddress, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.SignMessageResponse> signMessage(
       $0.SignMessageRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$signMessage, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$signMessage, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.VerifyMessageResponse> verifyMessage(
       $0.VerifyMessageRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$verifyMessage, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$verifyMessage, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.ConnectPeerResponse> connectPeer(
       $0.ConnectPeerRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$connectPeer, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$connectPeer, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.DisconnectPeerResponse> disconnectPeer(
       $0.DisconnectPeerRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$disconnectPeer, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$disconnectPeer, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.ListPeersResponse> listPeers(
       $0.ListPeersRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(_$listPeers, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$listPeers, request, options: options);
   }
 
   $grpc.ResponseStream<$0.PeerEvent> subscribePeerEvents(
       $0.PeerEventSubscription request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
+    return $createStreamingCall(
         _$subscribePeerEvents, $async.Stream.fromIterable([request]),
         options: options);
-    return $grpc.ResponseStream(call);
   }
 
   $grpc.ResponseFuture<$0.GetInfoResponse> getInfo($0.GetInfoRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(_$getInfo, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$getInfo, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.GetRecoveryInfoResponse> getRecoveryInfo(
+      $0.GetRecoveryInfoRequest request,
+      {$grpc.CallOptions options}) {
+    return $createUnaryCall(_$getRecoveryInfo, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.PendingChannelsResponse> pendingChannels(
       $0.PendingChannelsRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$pendingChannels, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$pendingChannels, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.ListChannelsResponse> listChannels(
       $0.ListChannelsRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$listChannels, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$listChannels, request, options: options);
   }
 
   $grpc.ResponseStream<$0.ChannelEventUpdate> subscribeChannelEvents(
       $0.ChannelEventSubscription request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
+    return $createStreamingCall(
         _$subscribeChannelEvents, $async.Stream.fromIterable([request]),
         options: options);
-    return $grpc.ResponseStream(call);
   }
 
   $grpc.ResponseFuture<$0.ClosedChannelsResponse> closedChannels(
       $0.ClosedChannelsRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$closedChannels, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$closedChannels, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.ChannelPoint> openChannelSync(
       $0.OpenChannelRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$openChannelSync, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$openChannelSync, request, options: options);
   }
 
   $grpc.ResponseStream<$0.OpenStatusUpdate> openChannel(
       $0.OpenChannelRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
+    return $createStreamingCall(
         _$openChannel, $async.Stream.fromIterable([request]),
         options: options);
-    return $grpc.ResponseStream(call);
   }
 
   $grpc.ResponseFuture<$0.FundingStateStepResp> fundingStateStep(
       $0.FundingTransitionMsg request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$fundingStateStep, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$fundingStateStep, request, options: options);
   }
 
   $grpc.ResponseStream<$0.ChannelAcceptRequest> channelAcceptor(
       $async.Stream<$0.ChannelAcceptResponse> request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(_$channelAcceptor, request, options: options);
-    return $grpc.ResponseStream(call);
+    return $createStreamingCall(_$channelAcceptor, request, options: options);
   }
 
   $grpc.ResponseStream<$0.CloseStatusUpdate> closeChannel(
       $0.CloseChannelRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
+    return $createStreamingCall(
         _$closeChannel, $async.Stream.fromIterable([request]),
         options: options);
-    return $grpc.ResponseStream(call);
   }
 
   $grpc.ResponseFuture<$0.AbandonChannelResponse> abandonChannel(
       $0.AbandonChannelRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$abandonChannel, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$abandonChannel, request, options: options);
   }
 
   $grpc.ResponseStream<$0.SendResponse> sendPayment(
       $async.Stream<$0.SendRequest> request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(_$sendPayment, request, options: options);
-    return $grpc.ResponseStream(call);
+    return $createStreamingCall(_$sendPayment, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.SendResponse> sendPaymentSync($0.SendRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$sendPaymentSync, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$sendPaymentSync, request, options: options);
   }
 
   $grpc.ResponseStream<$0.SendResponse> sendToRoute(
       $async.Stream<$0.SendToRouteRequest> request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(_$sendToRoute, request, options: options);
-    return $grpc.ResponseStream(call);
+    return $createStreamingCall(_$sendToRoute, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.SendResponse> sendToRouteSync(
       $0.SendToRouteRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$sendToRouteSync, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$sendToRouteSync, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.AddInvoiceResponse> addInvoice($0.Invoice request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$addInvoice, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$addInvoice, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.ListInvoiceResponse> listInvoices(
       $0.ListInvoiceRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$listInvoices, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$listInvoices, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.Invoice> lookupInvoice($0.PaymentHash request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$lookupInvoice, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$lookupInvoice, request, options: options);
   }
 
   $grpc.ResponseStream<$0.Invoice> subscribeInvoices(
       $0.InvoiceSubscription request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
+    return $createStreamingCall(
         _$subscribeInvoices, $async.Stream.fromIterable([request]),
         options: options);
-    return $grpc.ResponseStream(call);
   }
 
   $grpc.ResponseFuture<$0.PayReq> decodePayReq($0.PayReqString request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$decodePayReq, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$decodePayReq, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.ListPaymentsResponse> listPayments(
       $0.ListPaymentsRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$listPayments, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$listPayments, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.DeleteAllPaymentsResponse> deleteAllPayments(
       $0.DeleteAllPaymentsRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$deleteAllPayments, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$deleteAllPayments, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.ChannelGraph> describeGraph(
       $0.ChannelGraphRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$describeGraph, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$describeGraph, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.NodeMetricsResponse> getNodeMetrics(
+      $0.NodeMetricsRequest request,
+      {$grpc.CallOptions options}) {
+    return $createUnaryCall(_$getNodeMetrics, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.ChannelEdge> getChanInfo($0.ChanInfoRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$getChanInfo, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$getChanInfo, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.NodeInfo> getNodeInfo($0.NodeInfoRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$getNodeInfo, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$getNodeInfo, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.QueryRoutesResponse> queryRoutes(
       $0.QueryRoutesRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$queryRoutes, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$queryRoutes, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.NetworkInfo> getNetworkInfo(
       $0.NetworkInfoRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$getNetworkInfo, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$getNetworkInfo, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.StopResponse> stopDaemon($0.StopRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$stopDaemon, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$stopDaemon, request, options: options);
   }
 
   $grpc.ResponseStream<$0.GraphTopologyUpdate> subscribeChannelGraph(
       $0.GraphTopologySubscription request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
+    return $createStreamingCall(
         _$subscribeChannelGraph, $async.Stream.fromIterable([request]),
         options: options);
-    return $grpc.ResponseStream(call);
   }
 
   $grpc.ResponseFuture<$0.DebugLevelResponse> debugLevel(
       $0.DebugLevelRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$debugLevel, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$debugLevel, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.FeeReportResponse> feeReport(
       $0.FeeReportRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(_$feeReport, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$feeReport, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.PolicyUpdateResponse> updateChannelPolicy(
       $0.PolicyUpdateRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$updateChannelPolicy, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$updateChannelPolicy, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.ForwardingHistoryResponse> forwardingHistory(
       $0.ForwardingHistoryRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$forwardingHistory, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$forwardingHistory, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.ChannelBackup> exportChannelBackup(
       $0.ExportChannelBackupRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$exportChannelBackup, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$exportChannelBackup, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.ChanBackupSnapshot> exportAllChannelBackups(
       $0.ChanBackupExportRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$exportAllChannelBackups, $async.Stream.fromIterable([request]),
+    return $createUnaryCall(_$exportAllChannelBackups, request,
         options: options);
-    return $grpc.ResponseFuture(call);
   }
 
   $grpc.ResponseFuture<$0.VerifyChanBackupResponse> verifyChanBackup(
       $0.ChanBackupSnapshot request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$verifyChanBackup, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$verifyChanBackup, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.RestoreBackupResponse> restoreChannelBackups(
       $0.RestoreChanBackupRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$restoreChannelBackups, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$restoreChannelBackups, request, options: options);
   }
 
   $grpc.ResponseStream<$0.ChanBackupSnapshot> subscribeChannelBackups(
       $0.ChannelBackupSubscription request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
+    return $createStreamingCall(
         _$subscribeChannelBackups, $async.Stream.fromIterable([request]),
         options: options);
-    return $grpc.ResponseStream(call);
   }
 
   $grpc.ResponseFuture<$0.BakeMacaroonResponse> bakeMacaroon(
       $0.BakeMacaroonRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$bakeMacaroon, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$bakeMacaroon, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.ListMacaroonIDsResponse> listMacaroonIDs(
+      $0.ListMacaroonIDsRequest request,
+      {$grpc.CallOptions options}) {
+    return $createUnaryCall(_$listMacaroonIDs, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.DeleteMacaroonIDResponse> deleteMacaroonID(
+      $0.DeleteMacaroonIDRequest request,
+      {$grpc.CallOptions options}) {
+    return $createUnaryCall(_$deleteMacaroonID, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.ListPermissionsResponse> listPermissions(
+      $0.ListPermissionsRequest request,
+      {$grpc.CallOptions options}) {
+    return $createUnaryCall(_$listPermissions, request, options: options);
   }
 }
 
@@ -1061,6 +855,15 @@ abstract class LightningServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.GetInfoRequest.fromBuffer(value),
         ($0.GetInfoResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.GetRecoveryInfoRequest,
+            $0.GetRecoveryInfoResponse>(
+        'GetRecoveryInfo',
+        getRecoveryInfo_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) =>
+            $0.GetRecoveryInfoRequest.fromBuffer(value),
+        ($0.GetRecoveryInfoResponse value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.PendingChannelsRequest,
             $0.PendingChannelsResponse>(
         'PendingChannels',
@@ -1243,6 +1046,15 @@ abstract class LightningServiceBase extends $grpc.Service {
         ($core.List<$core.int> value) =>
             $0.ChannelGraphRequest.fromBuffer(value),
         ($0.ChannelGraph value) => value.writeToBuffer()));
+    $addMethod(
+        $grpc.ServiceMethod<$0.NodeMetricsRequest, $0.NodeMetricsResponse>(
+            'GetNodeMetrics',
+            getNodeMetrics_Pre,
+            false,
+            false,
+            ($core.List<$core.int> value) =>
+                $0.NodeMetricsRequest.fromBuffer(value),
+            ($0.NodeMetricsResponse value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.ChanInfoRequest, $0.ChannelEdge>(
         'GetChanInfo',
         getChanInfo_Pre,
@@ -1376,6 +1188,33 @@ abstract class LightningServiceBase extends $grpc.Service {
             ($core.List<$core.int> value) =>
                 $0.BakeMacaroonRequest.fromBuffer(value),
             ($0.BakeMacaroonResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.ListMacaroonIDsRequest,
+            $0.ListMacaroonIDsResponse>(
+        'ListMacaroonIDs',
+        listMacaroonIDs_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) =>
+            $0.ListMacaroonIDsRequest.fromBuffer(value),
+        ($0.ListMacaroonIDsResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.DeleteMacaroonIDRequest,
+            $0.DeleteMacaroonIDResponse>(
+        'DeleteMacaroonID',
+        deleteMacaroonID_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) =>
+            $0.DeleteMacaroonIDRequest.fromBuffer(value),
+        ($0.DeleteMacaroonIDResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.ListPermissionsRequest,
+            $0.ListPermissionsResponse>(
+        'ListPermissions',
+        listPermissions_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) =>
+            $0.ListPermissionsRequest.fromBuffer(value),
+        ($0.ListPermissionsResponse value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.WalletBalanceResponse> walletBalance_Pre(
@@ -1462,6 +1301,12 @@ abstract class LightningServiceBase extends $grpc.Service {
   $async.Future<$0.GetInfoResponse> getInfo_Pre(
       $grpc.ServiceCall call, $async.Future<$0.GetInfoRequest> request) async {
     return getInfo(call, await request);
+  }
+
+  $async.Future<$0.GetRecoveryInfoResponse> getRecoveryInfo_Pre(
+      $grpc.ServiceCall call,
+      $async.Future<$0.GetRecoveryInfoRequest> request) async {
+    return getRecoveryInfo(call, await request);
   }
 
   $async.Future<$0.PendingChannelsResponse> pendingChannels_Pre(
@@ -1567,6 +1412,12 @@ abstract class LightningServiceBase extends $grpc.Service {
     return describeGraph(call, await request);
   }
 
+  $async.Future<$0.NodeMetricsResponse> getNodeMetrics_Pre(
+      $grpc.ServiceCall call,
+      $async.Future<$0.NodeMetricsRequest> request) async {
+    return getNodeMetrics(call, await request);
+  }
+
   $async.Future<$0.ChannelEdge> getChanInfo_Pre(
       $grpc.ServiceCall call, $async.Future<$0.ChanInfoRequest> request) async {
     return getChanInfo(call, await request);
@@ -1656,6 +1507,24 @@ abstract class LightningServiceBase extends $grpc.Service {
     return bakeMacaroon(call, await request);
   }
 
+  $async.Future<$0.ListMacaroonIDsResponse> listMacaroonIDs_Pre(
+      $grpc.ServiceCall call,
+      $async.Future<$0.ListMacaroonIDsRequest> request) async {
+    return listMacaroonIDs(call, await request);
+  }
+
+  $async.Future<$0.DeleteMacaroonIDResponse> deleteMacaroonID_Pre(
+      $grpc.ServiceCall call,
+      $async.Future<$0.DeleteMacaroonIDRequest> request) async {
+    return deleteMacaroonID(call, await request);
+  }
+
+  $async.Future<$0.ListPermissionsResponse> listPermissions_Pre(
+      $grpc.ServiceCall call,
+      $async.Future<$0.ListPermissionsRequest> request) async {
+    return listPermissions(call, await request);
+  }
+
   $async.Future<$0.WalletBalanceResponse> walletBalance(
       $grpc.ServiceCall call, $0.WalletBalanceRequest request);
   $async.Future<$0.ChannelBalanceResponse> channelBalance(
@@ -1688,6 +1557,8 @@ abstract class LightningServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.PeerEventSubscription request);
   $async.Future<$0.GetInfoResponse> getInfo(
       $grpc.ServiceCall call, $0.GetInfoRequest request);
+  $async.Future<$0.GetRecoveryInfoResponse> getRecoveryInfo(
+      $grpc.ServiceCall call, $0.GetRecoveryInfoRequest request);
   $async.Future<$0.PendingChannelsResponse> pendingChannels(
       $grpc.ServiceCall call, $0.PendingChannelsRequest request);
   $async.Future<$0.ListChannelsResponse> listChannels(
@@ -1732,6 +1603,8 @@ abstract class LightningServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.DeleteAllPaymentsRequest request);
   $async.Future<$0.ChannelGraph> describeGraph(
       $grpc.ServiceCall call, $0.ChannelGraphRequest request);
+  $async.Future<$0.NodeMetricsResponse> getNodeMetrics(
+      $grpc.ServiceCall call, $0.NodeMetricsRequest request);
   $async.Future<$0.ChannelEdge> getChanInfo(
       $grpc.ServiceCall call, $0.ChanInfoRequest request);
   $async.Future<$0.NodeInfo> getNodeInfo(
@@ -1764,4 +1637,10 @@ abstract class LightningServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.ChannelBackupSubscription request);
   $async.Future<$0.BakeMacaroonResponse> bakeMacaroon(
       $grpc.ServiceCall call, $0.BakeMacaroonRequest request);
+  $async.Future<$0.ListMacaroonIDsResponse> listMacaroonIDs(
+      $grpc.ServiceCall call, $0.ListMacaroonIDsRequest request);
+  $async.Future<$0.DeleteMacaroonIDResponse> deleteMacaroonID(
+      $grpc.ServiceCall call, $0.DeleteMacaroonIDRequest request);
+  $async.Future<$0.ListPermissionsResponse> listPermissions(
+      $grpc.ServiceCall call, $0.ListPermissionsRequest request);
 }

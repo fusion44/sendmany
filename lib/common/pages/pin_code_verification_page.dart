@@ -69,7 +69,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: true,
+      resizeToAvoidBottomInset: true,
       key: scaffoldKey,
       body: GestureDetector(
         child: Container(
@@ -151,7 +151,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
               SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 64.0),
-                child: RaisedButton(
+                child: ElevatedButton(
                   onPressed: _verifyBtnEnabled
                       ? () {
                           formKey.currentState.validate();
@@ -181,11 +181,11 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  FlatButton(
-                    child: TranslatedText('alert_dialog.clear'),
+                  TextButton(
                     onPressed: () {
                       textEditingController.clear();
                     },
+                    child: TranslatedText('alert_dialog.clear'),
                   ),
                 ],
               )

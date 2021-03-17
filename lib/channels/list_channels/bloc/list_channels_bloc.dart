@@ -1,11 +1,13 @@
 import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:grpc/grpc.dart';
-import 'package:sendmany/common/connection/connection_manager/bloc.dart';
-import 'package:sendmany/common/connection/lnd_rpc/lnd_rpc.dart' as grpc;
-import 'list_channels_state.dart';
+
+import '../../../common/connection/connection_manager/bloc.dart';
+import '../../../common/connection/lnd_rpc/lnd_rpc.dart' as grpc;
+import '../../../common/models/models.dart';
 import 'list_channels_event.dart';
-import 'package:sendmany/common/models/models.dart';
+import 'list_channels_state.dart';
 
 class ListChannelsBloc extends Bloc<ListChannelsEvent, ListChannelsState> {
   ListChannelsBloc() : super(InitialListChannelsState());

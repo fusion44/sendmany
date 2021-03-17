@@ -8,7 +8,7 @@ const back_camera = 'BACK CAMERA';
 
 // TODO: improve me
 class QRScannerWidget extends StatefulWidget {
-  final Function onStringFound;
+  final Function(String) onStringFound;
   const QRScannerWidget({
     Key key,
     this.onStringFound,
@@ -30,6 +30,7 @@ class _QRScannerWidgetState extends State<QRScannerWidget> {
       body: Column(
         children: <Widget>[
           Expanded(
+            flex: 4,
             child: QRView(
               key: qrKey,
               onQRViewCreated: _onQRViewCreated,
@@ -41,9 +42,9 @@ class _QRScannerWidgetState extends State<QRScannerWidget> {
                 cutOutSize: 300,
               ),
             ),
-            flex: 4,
           ),
           Expanded(
+            flex: 1,
             child: FittedBox(
               fit: BoxFit.contain,
               child: Column(
@@ -55,7 +56,7 @@ class _QRScannerWidgetState extends State<QRScannerWidget> {
                     children: <Widget>[
                       Container(
                         margin: EdgeInsets.all(8.0),
-                        child: RaisedButton(
+                        child: ElevatedButton(
                           onPressed: () {
                             if (controller != null) {
                               controller.toggleFlash();
@@ -76,7 +77,7 @@ class _QRScannerWidgetState extends State<QRScannerWidget> {
                       ),
                       Container(
                         margin: EdgeInsets.all(8.0),
-                        child: RaisedButton(
+                        child: ElevatedButton(
                           onPressed: () {
                             if (controller != null) {
                               controller.flipCamera();
@@ -103,7 +104,7 @@ class _QRScannerWidgetState extends State<QRScannerWidget> {
                     children: <Widget>[
                       Container(
                         margin: EdgeInsets.all(8.0),
-                        child: RaisedButton(
+                        child: ElevatedButton(
                           onPressed: () {
                             controller?.pauseCamera();
                           },
@@ -112,7 +113,7 @@ class _QRScannerWidgetState extends State<QRScannerWidget> {
                       ),
                       Container(
                         margin: EdgeInsets.all(8.0),
-                        child: RaisedButton(
+                        child: ElevatedButton(
                           onPressed: () {
                             controller?.resumeCamera();
                           },
@@ -124,7 +125,6 @@ class _QRScannerWidgetState extends State<QRScannerWidget> {
                 ],
               ),
             ),
-            flex: 1,
           )
         ],
       ),
@@ -143,7 +143,7 @@ class _QRScannerWidgetState extends State<QRScannerWidget> {
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) {
       setState(() {
-        widget.onStringFound(scanData);
+        widget.onStringFound(scanData.code);
       });
     });
   }

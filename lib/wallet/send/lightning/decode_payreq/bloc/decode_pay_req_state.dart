@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:sendmany/common/connection/lnd_rpc/rpc.pbgrpc.dart';
+
+import '../../../../../common/connection/lnd_rpc/rpc.pbgrpc.dart';
 
 @immutable
 abstract class DecodePayReqState extends Equatable {}

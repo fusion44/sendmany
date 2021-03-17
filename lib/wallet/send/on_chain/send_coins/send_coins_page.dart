@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:sendmany/common/constants.dart';
-import 'package:sendmany/common/utils.dart';
-import 'package:sendmany/common/widgets/widgets.dart';
-import 'package:sendmany/wallet/balance/bloc/bloc.dart';
-import 'package:sendmany/wallet/send/send_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../common/constants.dart';
+import '../../../../common/utils.dart';
+import '../../../../common/widgets/widgets.dart';
+import '../../../balance/bloc/bloc.dart';
+import '../../send_page.dart';
 import 'bloc/bloc.dart';
 import 'send_coins_input_widget.dart';
 
@@ -138,21 +138,21 @@ class _SendCoinsPageState extends State<SendCoinsPage> {
     );
   }
 
-  RaisedButton _buildViewTxOnlineButton(Function onPressed) {
-    return RaisedButton(
-      color: sendManyDarkGreen,
+  ElevatedButton _buildViewTxOnlineButton(Function onPressed) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(primary: sendManyDarkGreen),
+      onPressed: onPressed,
       child: TranslatedText(
         'wallet.transactions.view_on_blockstream_info',
       ),
-      onPressed: onPressed,
     );
   }
 
   Widget _buildNextTxButton() {
-    return RaisedButton.icon(
+    return ElevatedButton.icon(
       icon: Icon(Icons.camera_alt),
       label: TranslatedText('wallet.transactions.next_transaction_button'),
-      color: sendManyConfirmedBalance,
+      style: ElevatedButton.styleFrom(primary: sendManyConfirmedBalance),
       onPressed: () {
         Navigator.popUntil(
           context,
@@ -163,14 +163,14 @@ class _SendCoinsPageState extends State<SendCoinsPage> {
   }
 
   Widget _buildBackToHomeButton() {
-    return RaisedButton(
-      child: TranslatedText('wallet.transactions.tx_sent_go_back_to_home'),
+    return ElevatedButton(
       onPressed: () {
         Navigator.popUntil(
           context,
           ModalRoute.withName('/home'),
         );
       },
+      child: TranslatedText('wallet.transactions.tx_sent_go_back_to_home'),
     );
   }
 
@@ -214,11 +214,11 @@ class _SendCoinsPageState extends State<SendCoinsPage> {
             ),
           ),
           actions: <Widget>[
-            FlatButton(
-              child: TranslatedText('wallet.transactions.close_txid_qr_dlg'),
+            TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
+              child: TranslatedText('wallet.transactions.close_txid_qr_dlg'),
             ),
           ],
         );

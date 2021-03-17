@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sendmany/common/constants.dart';
-import 'package:sendmany/common/widgets/time_ago_widget.dart';
+
+import '../constants.dart';
+import 'time_ago_widget.dart';
 
 class TimeAgoListItem extends StatelessWidget {
   final DateTime dateTime;

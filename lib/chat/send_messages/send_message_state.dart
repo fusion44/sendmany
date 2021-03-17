@@ -1,5 +1,6 @@
 import 'package:meta/meta.dart';
-import 'package:sendmany/chat/models/message_item.dart';
+
+import '../models/message_item.dart';
 
 @immutable
 abstract class SendMessageBaseState {}

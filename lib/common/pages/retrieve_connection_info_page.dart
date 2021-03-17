@@ -1,15 +1,15 @@
 import 'dart:convert';
 
+import 'package:convert/convert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sendmany/common/connection/check_lnd_connection/check_lnd_connection_page.dart';
-import 'package:sendmany/common/models/lnd_connection_data.dart';
-import 'package:sendmany/common/utils.dart';
-import 'package:sendmany/common/validator.dart';
-import 'package:sendmany/common/widgets/widgets.dart';
 
-import 'package:convert/convert.dart';
-import 'package:sendmany/preferences/bloc.dart';
+import '../../preferences/bloc.dart';
+import '../connection/check_lnd_connection/check_lnd_connection_page.dart';
+import '../models/lnd_connection_data.dart';
+import '../utils.dart';
+import '../validator.dart';
+import '../widgets/widgets.dart';
 
 class RetrieveConnectionInfoPage extends StatefulWidget {
   final bool showScanView;
@@ -216,9 +216,9 @@ class _RetrieveConnectionInfoPageState
     if (_savingConnectionData) {
       return Padding(
         padding: const EdgeInsets.only(top: 8.0),
-        child: FlatButton(
-          child: TranslatedText('onboarding.saving_connection_data'),
+        child: TextButton(
           onPressed: null,
+          child: TranslatedText('onboarding.saving_connection_data'),
         ),
       );
     } else if (_connectionDataSaved) {
@@ -228,9 +228,9 @@ class _RetrieveConnectionInfoPageState
 
       return Padding(
         padding: const EdgeInsets.only(top: 8.0),
-        child: FlatButton(
-          child: TranslatedText('onboarding.finish_connection_data_input'),
+        child: TextButton(
           onPressed: onPressed,
+          child: TranslatedText('onboarding.finish_connection_data_input'),
         ),
       );
     }
@@ -241,9 +241,9 @@ class _RetrieveConnectionInfoPageState
 
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
-      child: FlatButton(
-        child: TranslatedText('onboarding.checking_connection'),
+      child: TextButton(
         onPressed: _allValid ? onPressed : null,
+        child: TranslatedText('onboarding.checking_connection'),
       ),
     );
   }

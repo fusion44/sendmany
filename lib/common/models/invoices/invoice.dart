@@ -161,7 +161,7 @@ class Invoice {
       state: state,
       htlcs: _buildHTLCList(grpcInvoice.htlcs),
       features: _buildFeaturesList(grpcInvoice.features),
-      isKeySend: grpcInvoice.isKeySend,
+      isKeySend: grpcInvoice.isKeysend,
     );
   }
 }

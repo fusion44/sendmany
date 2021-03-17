@@ -43,7 +43,7 @@ class SendLocalNotificationBloc extends Bloc<SendLocalNotificationBlocBaseEvent,
               id: id, title: title, body: body, payload: payload));
         });
     var initializationSettings = InitializationSettings(
-        initializationSettingsAndroid, initializationSettingsIOS);
+        android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
     await flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onSelectNotification: (String payload) async {
       selectNotificationSubject.add(payload);
@@ -65,8 +65,8 @@ class SendLocalNotificationBloc extends Bloc<SendLocalNotificationBlocBaseEvent,
       );
       var iOSPlatformChannelSpecifics = IOSNotificationDetails();
       var platformChannelSpecifics = NotificationDetails(
-        androidPlatformChannelSpecifics,
-        iOSPlatformChannelSpecifics,
+        android: androidPlatformChannelSpecifics,
+        iOS: iOSPlatformChannelSpecifics,
       );
       await flutterLocalNotificationsPlugin.show(
         event.id,

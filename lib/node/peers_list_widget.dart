@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:sendmany/common/constants.dart';
-import 'package:sendmany/common/utils.dart';
-import 'package:sendmany/common/widgets/widgets.dart';
-import 'package:sendmany/node/peers/bloc/bloc.dart';
+
+import '../common/constants.dart';
+import '../common/utils.dart';
+import '../common/widgets/widgets.dart';
+import 'peers/bloc/bloc.dart';
 
 class PeerListWidget extends StatelessWidget {
   @override

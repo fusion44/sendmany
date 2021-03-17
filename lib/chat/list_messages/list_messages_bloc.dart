@@ -9,8 +9,6 @@ import 'package:fixnum/fixnum.dart';
 import 'package:grpc/grpc.dart';
 import 'package:nanoid/nanoid.dart';
 
-import '../utils.dart';
-import './bloc.dart';
 import '../../common/connection/connection_manager/bloc.dart';
 import '../../common/connection/lnd_rpc/lnd_rpc.dart' as grpc;
 import '../../common/constants.dart';
@@ -19,6 +17,8 @@ import '../../common/models/transaction.dart';
 import '../../wallet/balance/list_transactions/bloc.dart';
 import '../../wallet/balance/list_transactions/list_transactions_bloc.dart';
 import '../models/message_item.dart';
+import '../utils.dart';
+import 'bloc.dart';
 
 class _MessagesLoadedEvent extends ListMessagesBaseEvent {
   @override
@@ -96,15 +96,15 @@ class ListMessagesBloc
     _fullLoadFinished = false;
     _messages.clear();
     try {
-      transactions.forEach((tx) async {
+      transactions.forEach((tx) {
         if (tx is TxLightningInvoice) {
           if (tx.invoice.isKeySend) {
             var rec = findIncomingChatRecord(tx.invoice);
-            if (rec != null) await _handleIncomingChatHtlc(rec);
+            if (rec != null) _handleIncomingChatHtlc(rec);
           }
         } else if (tx is TxLightningPayment) {
           var hop = _findOutgoingChatRecord(tx.payment);
-          if (hop != null) await _handleOutgoingChatHtlc(hop);
+          if (hop != null) _handleOutgoingChatHtlc(hop);
         }
       });
 
@@ -141,7 +141,7 @@ class ListMessagesBloc
     var req = grpc.InvoiceSubscription();
     _subscribeInvoices = client.subscribeInvoices(req);
     _subscribeInvoices.listen((i) {
-      if (i.isKeySend && i.htlcs.isNotEmpty) {
+      if (i.isKeysend && i.htlcs.isNotEmpty) {
         if (i.state != grpc.Invoice_InvoiceState.SETTLED) return null;
         for (var h in i.htlcs) {
           if (h.state == grpc.InvoiceHTLCState.SETTLED) {

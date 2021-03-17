@@ -1,11 +1,13 @@
 import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:grpc/grpc.dart';
-import 'package:sendmany/common/connection/connection_manager/bloc.dart';
-import 'package:sendmany/common/connection/lnd_rpc/lnd_rpc.dart' as grpc;
-import 'package:sendmany/common/models/models.dart';
-import 'package:sendmany/wallet/receive/lightning/add_invoice_bloc/add_invoice_event.dart';
-import 'package:sendmany/wallet/receive/lightning/add_invoice_bloc/add_invoice_state.dart';
+
+import '../../../../common/connection/connection_manager/bloc.dart';
+import '../../../../common/connection/lnd_rpc/lnd_rpc.dart' as grpc;
+import '../../../../common/models/models.dart';
+import 'add_invoice_event.dart';
+import 'add_invoice_state.dart';
 
 class AddInvoiceBloc extends Bloc<AddInvoiceEvent, AddInvoiceState> {
   AddInvoiceBloc() : super(InitialAddinvoiceState());

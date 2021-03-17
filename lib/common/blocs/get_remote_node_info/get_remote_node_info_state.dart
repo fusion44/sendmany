@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:sendmany/common/models/models.dart';
+
+import '../../models/models.dart';
 
 abstract class GetRemoteNodeInfoState extends Equatable {
   const GetRemoteNodeInfoState();

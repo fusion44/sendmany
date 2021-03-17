@@ -5,11 +5,11 @@ import 'package:convert/convert.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:grpc/grpc.dart';
 
-import './bloc.dart';
 import '../../common/connection/connection_manager/bloc.dart';
 import '../../common/connection/lnd_rpc/lnd_rpc.dart' as grpc;
 import '../../common/models/channels/channel_point.dart';
 import '../subscribe_channel_events/bloc/bloc.dart';
+import 'bloc.dart';
 
 class _PeerOfflineEvent extends CloseChannelBaseEvent {
   _PeerOfflineEvent(ChannelPoint channelPoint) : super(channelPoint);

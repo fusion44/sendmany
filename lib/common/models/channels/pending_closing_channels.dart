@@ -1,5 +1,4 @@
-import 'package:sendmany/common/connection/lnd_rpc/lnd_rpc.dart' as grpc;
-
+import '../../connection/lnd_rpc/lnd_rpc.dart' as grpc;
 import 'channel.dart';
 import 'pending_channel_data.dart';
 

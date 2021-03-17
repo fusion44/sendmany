@@ -78,22 +78,22 @@ class _SetPinDialogState extends State<SetPinDialog> {
                 focusNode: _focusNode,
                 hasError: !_pinValid,
               ),
-              RaisedButton(
-                child: TranslatedText('alert_dialog.confirm'),
+              ElevatedButton(
                 onPressed: _pinValid
                     ? () {
                         Navigator.pop(context, _ctrlPin1.text);
                       }
                     : null,
+                child: TranslatedText('alert_dialog.confirm'),
               ),
-              FlatButton(
-                child: TranslatedText('alert_dialog.clear'),
+              TextButton(
                 onPressed: () {
                   _ctrlPin1.text = '';
                   _ctrlPin2.text = '';
                   _pinValid = false;
                   _entriesCompleted = false;
                 },
+                child: TranslatedText('alert_dialog.clear'),
               ),
             ],
           ),

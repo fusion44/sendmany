@@ -1,6 +1,7 @@
 import 'package:fixnum/fixnum.dart';
-import 'package:sendmany/common/connection/lnd_rpc/lnd_rpc.dart' as grpc;
-import 'package:sendmany/common/models/models.dart';
+
+import '../../connection/lnd_rpc/lnd_rpc.dart' as grpc;
+import '../models.dart';
 
 enum ChannelCloseType {
   cooperativeClose,

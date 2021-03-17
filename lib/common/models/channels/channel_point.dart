@@ -1,7 +1,7 @@
-import 'package:equatable/equatable.dart';
-import 'package:sendmany/common/connection/lnd_rpc/lnd_rpc.dart' as grpc;
-
 import 'package:convert/convert.dart';
+import 'package:equatable/equatable.dart';
+
+import '../../connection/lnd_rpc/lnd_rpc.dart' as grpc;
 
 class ChannelPoint extends Equatable {
   /// Hex-encoded string representing the funding transaction

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sendmany/auth/login/bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:sendmany/common/widgets/widgets.dart';
+
+import '../../common/widgets/widgets.dart';
+import 'bloc.dart';
 
 class LoginForm extends StatefulWidget {
   final LoginBloc loginBloc;
@@ -26,7 +26,7 @@ class _LoginFormState extends State<LoginForm> {
       cubit: widget.loginBloc,
       listener: (BuildContext context, LoginState loginState) {
         if (loginState is LoginFailure) {
-          Scaffold.of(context).showSnackBar(
+          ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text('${loginState.error}'),
               backgroundColor: Colors.red,
@@ -57,7 +57,7 @@ class _LoginFormState extends State<LoginForm> {
                     color: Colors.greenAccent,
                   ),
                 )
-              : RaisedButton(
+              : ElevatedButton(
                   onPressed: _onLoginButtonPressed,
                   child: TranslatedText('auth.check'),
                 ),

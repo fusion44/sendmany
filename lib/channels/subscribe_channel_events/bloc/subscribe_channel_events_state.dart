@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:sendmany/common/models/models.dart';
+
+import '../../../common/models/models.dart';
 
 /// Yields always the most recent channel states
 class ChannelsUpdatedState extends SubscribeChannelEventsState {

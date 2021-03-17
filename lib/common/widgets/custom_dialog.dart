@@ -8,9 +8,8 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
-
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 // Examples can assume:
 // enum Department { treasury, state }
@@ -130,7 +129,7 @@ class Dialog extends StatelessWidget {
 ///           ),
 ///         ),
 ///         actions: <Widget>[
-///           FlatButton(
+///           TextButton(
 ///             child: Text('Regret'),
 ///             onPressed: () {
 ///               Navigator.of(context).pop();
@@ -205,7 +204,7 @@ class CustomAlertDialog extends StatelessWidget {
   /// The (optional) set of actions that are displayed at the bottom of the
   /// dialog.
   ///
-  /// Typically this is a list of [FlatButton] widgets.
+  /// Typically this is a list of [TextButton] widgets.
   ///
   /// These widgets will be wrapped in a [ButtonBar], which introduces 8 pixels
   /// of padding on each side.
@@ -239,7 +238,7 @@ class CustomAlertDialog extends StatelessWidget {
             EdgeInsets.fromLTRB(24.0, 24.0, 24.0, content == null ? 20.0 : 0.0),
         child: DefaultTextStyle(
           style: Theme.of(context).textTheme.headline6,
-          child: Semantics(child: title, namesRoute: true),
+          child: Semantics(namesRoute: true, child: title),
         ),
       ));
     } else {
@@ -325,7 +324,7 @@ class CustomAlertDialog extends StatelessWidget {
 ///
 ///  * [SimpleDialog], for a dialog in which to use this widget.
 ///  * [showDialog], which actually displays the dialog and returns its result.
-///  * [FlatButton], which are commonly used as actions in other kinds of
+///  * [TextButton], which are commonly used as actions in other kinds of
 ///    dialogs, such as [AlertDialog]s.
 ///  * <https://material.google.com/components/dialogs.html#dialogs-simple-dialogs>
 class SimpleDialogOption extends StatelessWidget {
@@ -587,9 +586,9 @@ class _DialogRoute<T> extends PopupRoute<T> {
     return SafeArea(
       child: Builder(builder: (BuildContext context) {
         final Widget annotatedChild = Semantics(
-          child: child,
           scopesRoute: true,
           explicitChildNodes: true,
+          child: child,
         );
         return theme != null
             ? Theme(data: theme, child: annotatedChild)
@@ -649,7 +648,7 @@ Future<T> customShowDialog<T>({
   assert(child == null || builder == null);
   return Navigator.of(context, rootNavigator: true).push(_DialogRoute<T>(
     child: child ?? Builder(builder: builder),
-    theme: Theme.of(context, shadowThemeOnly: true),
+    theme: Theme.of(context),
     barrierDismissible: barrierDismissible,
     barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
   ));

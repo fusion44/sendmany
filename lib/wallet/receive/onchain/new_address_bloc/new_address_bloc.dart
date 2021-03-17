@@ -1,11 +1,11 @@
 import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:grpc/grpc.dart';
-import 'package:sendmany/common/connection/connection_manager/bloc.dart';
-import 'package:sendmany/common/connection/lnd_rpc/lnd_rpc.dart' as rpc;
-import 'package:sendmany/wallet/receive/onchain/new_address_bloc/bloc.dart';
 
-import './bloc.dart';
+import '../../../../common/connection/connection_manager/bloc.dart';
+import '../../../../common/connection/lnd_rpc/lnd_rpc.dart' as rpc;
+import 'bloc.dart';
 
 class NewAddressBloc extends Bloc<NewAddressEvent, NewAddressState> {
   NewAddressBloc() : super(InitialNewAddressState());

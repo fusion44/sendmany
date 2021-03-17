@@ -156,7 +156,9 @@ Future<bool> showVerifyPinDialog(BuildContext context, String pin) async {
 void showSnackbar(BuildContext context, String message) {
   WidgetsBinding.instance.addPostFrameCallback(
     (_) async {
-      Scaffold.of(context).showSnackBar(SnackBar(content: Text(message)));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(message)),
+      );
     },
   );
 }

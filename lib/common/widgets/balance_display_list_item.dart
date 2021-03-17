@@ -1,7 +1,8 @@
 import 'package:fixnum/fixnum.dart';
 import 'package:flutter/material.dart';
-import 'package:sendmany/common/constants.dart';
-import 'package:sendmany/common/widgets/widgets.dart';
+
+import '../constants.dart';
+import 'widgets.dart';
 
 class BalanceDisplayListItem extends StatelessWidget {
   final ThemeData theme;

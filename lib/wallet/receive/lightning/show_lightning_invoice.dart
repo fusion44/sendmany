@@ -7,14 +7,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:sendmany/common/constants.dart';
-import 'package:sendmany/common/models/models.dart';
-import 'package:sendmany/common/utils.dart';
-import 'package:sendmany/common/widgets/widgets.dart';
-import 'package:sendmany/wallet/receive/lightning/watch_invoices_bloc/bloc.dart';
 import 'package:unicorndial/unicorndial.dart';
 
+import '../../../common/constants.dart';
+import '../../../common/models/models.dart';
+import '../../../common/utils.dart';
+import '../../../common/widgets/widgets.dart';
 import 'add_invoice_bloc/bloc.dart';
+import 'watch_invoices_bloc/bloc.dart';
 
 class ShowLightningInvoice extends StatefulWidget {
   final String memo;
@@ -93,15 +93,15 @@ class _ShowLightningInvoiceState extends State<ShowLightningInvoice> {
                           size: MediaQuery.of(context).size.width * 0.8,
                           backgroundColor: Colors.white,
                         ),
-                        RaisedButton(
-                          child: TranslatedText(
-                            'wallet.invoices.paid_go_back_to_home',
-                          ),
+                        ElevatedButton(
                           onPressed: () {
                             if (Navigator.canPop(context)) {
                               Navigator.pop(context);
                             }
                           },
+                          child: TranslatedText(
+                            'wallet.invoices.paid_go_back_to_home',
+                          ),
                         )
                       ],
                     ),
@@ -130,7 +130,6 @@ class _ShowLightningInvoiceState extends State<ShowLightningInvoice> {
         currentButton: FloatingActionButton(
           heroTag: 'qrImgBtn',
           mini: true,
-          child: Icon(MdiIcons.qrcode),
           onPressed: () async {
             var painter = QrPainter(
               data: paymentRequest,
@@ -149,6 +148,7 @@ class _ShowLightningInvoiceState extends State<ShowLightningInvoice> {
               text: paymentRequest,
             );
           },
+          child: Icon(MdiIcons.qrcode),
         ),
       ),
     );
@@ -160,7 +160,6 @@ class _ShowLightningInvoiceState extends State<ShowLightningInvoice> {
         currentButton: FloatingActionButton(
           heroTag: 'lnUrlBtn',
           mini: true,
-          child: Icon(Icons.link),
           onPressed: () {
             Share.text(
               tr(context, 'wallet.invoices.lightning_invoice'),
@@ -168,6 +167,7 @@ class _ShowLightningInvoiceState extends State<ShowLightningInvoice> {
               'text/plain',
             );
           },
+          child: Icon(Icons.link),
         ),
       ),
     );
@@ -179,7 +179,6 @@ class _ShowLightningInvoiceState extends State<ShowLightningInvoice> {
         currentButton: FloatingActionButton(
           heroTag: 'payReqBtn',
           mini: true,
-          child: Icon(Icons.short_text),
           onPressed: () {
             Share.text(
               tr(context, 'wallet.invoices.lightning_invoice'),
@@ -187,6 +186,7 @@ class _ShowLightningInvoiceState extends State<ShowLightningInvoice> {
               'text/plain',
             );
           },
+          child: Icon(Icons.short_text),
         ),
       ),
     );

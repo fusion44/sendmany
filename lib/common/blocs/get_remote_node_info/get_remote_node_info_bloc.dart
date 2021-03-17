@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 
-import './bloc.dart';
+import 'bloc.dart';
 import 'get_remote_node_info_repo.dart';
 
 /// Fetches information about another node in the lightning network

@@ -1,9 +1,9 @@
 import 'package:fixnum/fixnum.dart';
-import 'package:sendmany/common/models/channels/htlc.dart';
-import 'package:sendmany/common/connection/lnd_rpc/lnd_rpc.dart' as grpc;
-import 'package:sendmany/common/models/models.dart';
 
+import '../../connection/lnd_rpc/lnd_rpc.dart' as grpc;
+import '../models.dart';
 import 'channel.dart';
+import 'htlc.dart';
 
 class EstablishedChannel extends Channel {
   /// Whether this channel is active or not

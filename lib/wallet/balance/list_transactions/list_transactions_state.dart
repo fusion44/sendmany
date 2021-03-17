@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:sendmany/common/models/models.dart';
+
+import '../../../common/models/models.dart';
 
 @immutable
 abstract class ListTxState extends Equatable {}

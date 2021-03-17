@@ -1,9 +1,10 @@
 import 'package:fixnum/fixnum.dart';
 import 'package:flutter/material.dart';
-import 'package:sendmany/common/constants.dart';
-import 'package:sendmany/common/models/models.dart';
-import 'package:sendmany/common/utils.dart';
-import 'package:sendmany/common/widgets/widgets.dart';
+
+import '../common/constants.dart';
+import '../common/models/models.dart';
+import '../common/utils.dart';
+import '../common/widgets/widgets.dart';
 
 class OpenChannelSettingsWidget extends StatefulWidget {
   final RemoteNodeInfo nodeInfo;
@@ -85,17 +86,18 @@ class _OpenChannelSettingsWidgetState extends State<OpenChannelSettingsWidget> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                RaisedButton(
-                  child: TranslatedText('channels.open.advanced_settings'),
+                ElevatedButton(
                   onPressed: () {
                     // TODO: implement advanced settings
                     showSnackbar(context, tr(context, 'not_implemented_yet'));
                   },
-                  color: sendManyBackgroundAccent,
+                  style: ElevatedButton.styleFrom(
+                    primary: sendManyBackgroundAccent,
+                  ),
+                  child: TranslatedText('channels.open.advanced_settings'),
                 ),
                 SizedBox(width: 8.0),
-                RaisedButton(
-                  child: TranslatedText('channels.open.open_channel'),
+                ElevatedButton(
                   onPressed: _localAmountValid && _feeValid
                       ? () {
                           var f = _feeType == OnchainFeeType.blockTarget
@@ -104,6 +106,7 @@ class _OpenChannelSettingsWidgetState extends State<OpenChannelSettingsWidget> {
                           widget.openChannelClicked(_feeType, f, _localAmount);
                         }
                       : null,
+                  child: TranslatedText('channels.open.open_channel'),
                 ),
               ],
             ),

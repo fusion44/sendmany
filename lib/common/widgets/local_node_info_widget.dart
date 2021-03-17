@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:sendmany/common/models/models.dart';
-import 'package:sendmany/common/utils.dart';
-import 'package:sendmany/common/widgets/widgets.dart';
+
+import '../models/models.dart';
+import '../utils.dart';
+import 'widgets.dart';
 
 class LocalNodeInfoWidget extends StatefulWidget {
   final LocalNodeInfo info;
@@ -128,11 +129,11 @@ class _LocalNodeInfoWidgetState extends State<LocalNodeInfoWidget> {
         ),
         Expanded(
           child: Tooltip(
+            message: 'Active / Inactive / Pending',
             child: DataItem(
               label: tr(context, 'node.channels'),
               text: '$a / $i / $p',
             ),
-            message: 'Active / Inactive / Pending',
           ),
         ),
       ],

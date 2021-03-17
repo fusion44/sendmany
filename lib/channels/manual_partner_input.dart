@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:sendmany/common/constants.dart';
-import 'package:sendmany/common/utils.dart';
-import 'package:sendmany/common/validator.dart';
-import 'package:sendmany/common/widgets/widgets.dart';
+
+import '../common/constants.dart';
+import '../common/utils.dart';
+import '../common/validator.dart';
+import '../common/widgets/widgets.dart';
 
 class ManualPartnerInputWidget extends StatefulWidget {
   final Function(String, String, int) checkConnection;
@@ -98,8 +99,8 @@ class _ManualPartnerInputWidgetState extends State<ManualPartnerInputWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              RaisedButton.icon(
-                color: sendManyDarkGreen,
+              ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(primary: sendManyDarkGreen),
                 icon: Icon(Icons.assignment_returned),
                 label: TranslatedText('channels.open.get_from_clipboard'),
                 onPressed: () {
@@ -129,7 +130,7 @@ class _ManualPartnerInputWidgetState extends State<ManualPartnerInputWidget> {
                 },
               ),
               SizedBox(width: 8.0),
-              RaisedButton.icon(
+              ElevatedButton.icon(
                 icon: Icon(MdiIcons.networkOutline),
                 label: TranslatedText('channels.open.check_connection'),
                 onPressed: _allValid

@@ -1,13 +1,14 @@
 import 'dart:async';
 import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:grpc/grpc.dart';
-import 'package:sendmany/common/connection/connection_manager/bloc.dart';
-import 'package:sendmany/common/connection/lnd_rpc/lnd_rpc.dart';
-import 'package:sendmany/common/models/models.dart';
-import 'package:sendmany/preferences/bloc.dart';
-import 'package:sendmany/preferences/preferences_bloc.dart';
 
+import '../../../preferences/bloc.dart';
+import '../../../preferences/preferences_bloc.dart';
+import '../../models/models.dart';
+import '../lnd_rpc/lnd_rpc.dart';
+import 'bloc.dart';
 import 'connection_manager_event.dart';
 import 'connection_manager_state.dart';
 
@@ -65,7 +66,7 @@ class ConnectionManagerBloc
     }
   }
 
-  void _establishConnection(LndConnectionData data) async {
+  Future<void> _establishConnection(LndConnectionData data) async {
     _currentActiveConnection = data;
     var creds = ChannelCredentials.secure(
       certificates: _currentActiveConnection.certificate,
@@ -91,7 +92,7 @@ class ConnectionManagerBloc
     LnConnectionDataProvider().lightningClient = _lightningClient;
   }
 
-  void _releaseConnection() async {
+  Future<void> _releaseConnection() async {
     if (_connected) {
       _currentActiveConnection = null;
       await _clientChannel.shutdown();

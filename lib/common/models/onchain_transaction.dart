@@ -1,6 +1,6 @@
 import 'package:fixnum/fixnum.dart';
 
-import 'package:sendmany/common/connection/lnd_rpc/lnd_rpc.dart' as rpc;
+import '../connection/lnd_rpc/lnd_rpc.dart' as rpc;
 
 class OnchainTransaction {
   // The transaction hash

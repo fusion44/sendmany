@@ -1,4 +1,4 @@
-import 'package:sendmany/common/models/models.dart';
+import '../models.dart';
 
 abstract class Channel {
   /// The outpoint (txid:index) of the funding transaction.

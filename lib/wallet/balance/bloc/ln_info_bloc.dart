@@ -1,11 +1,13 @@
 import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:grpc/service_api.dart';
-import 'package:sendmany/common/connection/connection_manager/bloc.dart';
-import 'package:sendmany/common/connection/lnd_rpc/lnd_rpc.dart';
-import 'package:sendmany/common/constants.dart';
-import 'package:sendmany/common/models/models.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../common/connection/connection_manager/bloc.dart';
+import '../../../common/connection/lnd_rpc/lnd_rpc.dart';
+import '../../../common/constants.dart';
+import '../../../common/models/models.dart';
 import 'ln_info_event.dart';
 import 'ln_info_state.dart';
 

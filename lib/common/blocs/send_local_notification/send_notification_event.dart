@@ -26,8 +26,8 @@ class SendLocalNotificationEvent extends SendLocalNotificationBlocBaseEvent {
     this.id,
     this.title,
     this.body, {
-    this.importance = Importance.Default,
-    this.priority = Priority.Default,
+    this.importance = Importance.defaultImportance,
+    this.priority = Priority.defaultPriority,
     this.ticker = '',
     this.payload = '',
   });

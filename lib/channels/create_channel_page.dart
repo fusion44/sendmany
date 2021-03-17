@@ -2,14 +2,15 @@ import 'package:fixnum/fixnum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:sendmany/channels/manual_partner_input.dart';
-import 'package:sendmany/channels/open_channel/bloc/bloc.dart';
-import 'package:sendmany/channels/open_channel_settings_widget.dart';
-import 'package:sendmany/channels/subscribe_channel_events/bloc/bloc.dart';
-import 'package:sendmany/common/blocs/get_remote_node_info/bloc.dart';
-import 'package:sendmany/common/constants.dart';
-import 'package:sendmany/common/models/models.dart';
-import 'package:sendmany/common/widgets/widgets.dart';
+
+import '../common/blocs/get_remote_node_info/bloc.dart';
+import '../common/constants.dart';
+import '../common/models/models.dart';
+import '../common/widgets/widgets.dart';
+import 'manual_partner_input.dart';
+import 'open_channel/bloc/bloc.dart';
+import 'open_channel_settings_widget.dart';
+import 'subscribe_channel_events/bloc/bloc.dart';
 
 class CreateChannelPage extends StatefulWidget {
   @override
@@ -200,13 +201,13 @@ class _CreateChannelPageState extends State<CreateChannelPage> {
       child: Column(
         children: <Widget>[
           Text(errorText),
-          RaisedButton(
-            child: TranslatedText('channels.open.retry_connection_test'),
+          ElevatedButton(
             onPressed: () {
               setState(() {
                 _state = _CreateChannelPageStateState.manualInput;
               });
             },
+            child: TranslatedText('channels.open.retry_connection_test'),
           ),
         ],
       ),
@@ -221,7 +222,6 @@ class _CreateChannelPageState extends State<CreateChannelPage> {
           : Icons.camera);
 
       return FloatingActionButton(
-        child: icon,
         onPressed: () {
           setState(() {
             if (_state == _CreateChannelPageStateState.scanQr) {
@@ -231,6 +231,7 @@ class _CreateChannelPageState extends State<CreateChannelPage> {
             }
           });
         },
+        child: icon,
       );
     }
     return null;

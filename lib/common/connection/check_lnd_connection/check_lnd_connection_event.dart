@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:sendmany/common/models/lnd_connection_data.dart';
+
+import '../../models/lnd_connection_data.dart';
 
 @immutable
 abstract class CheckLNDConnectionEvent extends Equatable {}

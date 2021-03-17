@@ -1,6 +1,6 @@
+export 'channel.dart';
 export 'channel_edge.dart';
 export 'channel_point.dart';
-export 'channel.dart';
 export 'closed_channel_summary.dart';
 export 'established_channel.dart';
 export 'htlc.dart';

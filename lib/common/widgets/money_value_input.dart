@@ -1,7 +1,8 @@
 import 'package:fixnum/fixnum.dart';
 import 'package:flutter/material.dart';
-import 'package:sendmany/common/utils.dart';
-import 'package:sendmany/common/widgets/widgets.dart';
+
+import '../utils.dart';
+import 'widgets.dart';
 
 class MoneyValueInput extends StatefulWidget {
   /// Initial amount to display

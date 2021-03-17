@@ -1,7 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:meta/meta.dart';
-import 'package:sendmany/common/models/models.dart';
+
+import '../../../common/models/models.dart';
 
 class OpenChannelEvent extends Equatable {
   /// The [LightningAddress] address to open a channel with

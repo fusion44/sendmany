@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sendmany/auth/login/bloc.dart';
-import 'package:sendmany/auth/login/login_form.dart';
-import 'package:sendmany/common/widgets/widgets.dart';
+
+import '../../common/widgets/widgets.dart';
+import 'bloc.dart';
+import 'login_form.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -30,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
         }
       },
       child: Scaffold(
-        resizeToAvoidBottomPadding: true,
+        resizeToAvoidBottomInset: true,
         body: SingleChildScrollView(
           child: Center(
             child: Column(

@@ -1,12 +1,14 @@
 import 'dart:async';
 import 'dart:convert';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:sendmany/common/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sendmany/common/models/models.dart';
+
+import '../common/constants.dart';
+import '../common/models/models.dart';
 import '../pedantic.dart';
-import './bloc.dart';
+import 'bloc.dart';
 
 class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
   PreferencesBloc() : super(PreferencesLoadingState());

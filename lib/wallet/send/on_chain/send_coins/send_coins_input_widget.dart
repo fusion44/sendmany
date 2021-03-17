@@ -1,7 +1,8 @@
 import 'package:fixnum/fixnum.dart';
 import 'package:flutter/material.dart';
-import 'package:sendmany/common/utils.dart';
-import 'package:sendmany/common/widgets/widgets.dart';
+
+import '../../../../common/utils.dart';
+import '../../../../common/widgets/widgets.dart';
 
 final _formKey = GlobalKey<FormState>();
 
@@ -105,14 +106,13 @@ class _SendCoinsInputWidgetState extends State<SendCoinsInputWidget> {
 
   Widget _buildSendButton() {
     if (widget.working) {
-      return RaisedButton(
-        child: TranslatedText('wallet.transactions.working'),
+      return ElevatedButton(
         onPressed: null,
+        child: TranslatedText('wallet.transactions.working'),
       );
     } else {
       print(_amountValid);
-      return RaisedButton(
-        child: TranslatedText('wallet.transactions.send'),
+      return ElevatedButton(
         onPressed: _amountValid
             ? () {
                 if (_amountValid) {
@@ -120,6 +120,7 @@ class _SendCoinsInputWidgetState extends State<SendCoinsInputWidget> {
                 }
               }
             : null,
+        child: TranslatedText('wallet.transactions.send'),
       );
     }
   }

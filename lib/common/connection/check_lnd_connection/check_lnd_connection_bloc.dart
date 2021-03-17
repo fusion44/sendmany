@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:grpc/grpc.dart';
-import 'package:sendmany/common/connection/check_lnd_connection/check_lnd_connection_event.dart';
-import 'package:sendmany/common/connection/check_lnd_connection/check_lnd_connection_state.dart';
-import 'package:sendmany/common/connection/lnd_rpc/lnd_rpc.dart';
+
 import 'package:bloc/bloc.dart';
+import 'package:grpc/grpc.dart';
+
+import '../lnd_rpc/lnd_rpc.dart';
+import 'check_lnd_connection_event.dart';
+import 'check_lnd_connection_state.dart';
 
 class CheckLndConnectionBloc
     extends Bloc<CheckLNDConnectionEvent, CheckLNDConnectionState> {

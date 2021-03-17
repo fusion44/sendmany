@@ -1,5 +1,6 @@
 import 'package:fixnum/fixnum.dart';
-import 'package:sendmany/common/connection/lnd_rpc/lnd_rpc.dart' as grpc;
+
+import '../../connection/lnd_rpc/lnd_rpc.dart' as grpc;
 
 class PendingHtlc {
   /// The direction within the channel that the htlc was sent

@@ -1,9 +1,11 @@
 import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:grpc/grpc.dart';
-import 'package:sendmany/common/connection/connection_manager/bloc.dart';
-import 'package:sendmany/common/connection/lnd_rpc/rpc.pb.dart';
-import './bloc.dart';
+
+import '../../../../../common/connection/connection_manager/bloc.dart';
+import '../../../../../common/connection/lnd_rpc/rpc.pb.dart';
+import 'bloc.dart';
 
 class DecodePayReqBloc extends Bloc<DecodePayReqBlocEvent, DecodePayReqState> {
   DecodePayReqBloc() : super(InitialDecodePayReqBlocState());

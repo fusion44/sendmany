@@ -1,5 +1,6 @@
 import 'package:grpc/grpc.dart';
-import 'package:sendmany/common/connection/lnd_rpc/lnd_rpc.dart';
+
+import '../lnd_rpc/lnd_rpc.dart';
 
 class LnConnectionDataProvider {
   static final LnConnectionDataProvider _singleton =

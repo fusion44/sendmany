@@ -147,10 +147,11 @@ class _CloseChannelSettingsWidgetState
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                RaisedButton(
-                    color: sendManyOrange300,
-                    child: TranslatedText('channels.close.close'),
-                    onPressed: () => _showAlert()),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(primary: sendManyOrange300),
+                  onPressed: () => _showAlert(),
+                  child: TranslatedText('channels.close.close'),
+                ),
               ],
             )
           ],
@@ -198,13 +199,13 @@ class _CloseChannelSettingsWidgetState
             title: TranslatedText('alert_dialog.confirm_action_title'),
             content: _buildAlertContentWidget(),
             actions: <Widget>[
-              FlatButton(
-                child: TranslatedText('alert_dialog.cancel'),
+              TextButton(
                 onPressed: () => Navigator.pop(context, false),
+                child: TranslatedText('alert_dialog.cancel'),
               ),
-              FlatButton(
-                child: TranslatedText('alert_dialog.confirm'),
+              TextButton(
                 onPressed: () => Navigator.of(context).pop(true),
+                child: TranslatedText('alert_dialog.confirm'),
               ),
             ],
           );

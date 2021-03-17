@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sendmany/common/constants.dart';
-import 'package:sendmany/common/widgets/set_pin_dialog.dart';
-import 'package:sendmany/common/widgets/widgets.dart';
-import 'package:sendmany/preferences/bloc.dart';
 
+import '../../preferences/bloc.dart';
+import '../constants.dart';
+import '../widgets/set_pin_dialog.dart';
+import '../widgets/widgets.dart';
 import 'retrieve_connection_info_page.dart';
 
 class OnboardingPage extends StatefulWidget {
@@ -83,25 +83,19 @@ class _OnboardingPageState extends State<OnboardingPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            RaisedButton(
-              child: TranslatedText(
-                'onboarding.button_enter_conn_data_manual',
-              ),
-              onPressed: () {
+            _buildElevatedButton(
+              'onboarding.button_enter_conn_data_manual',
+              () {
                 _navigateToAddRemoteNode(scan: false);
               },
-              color: sendManyDarkGreen,
             ),
             Container(width: 16.0),
-            RaisedButton(
-              child: TranslatedText(
-                'onboarding.button_enter_conn_data_qr_scan',
-              ),
-              onPressed: () {
+            _buildElevatedButton(
+              'onboarding.button_enter_conn_data_qr_scan',
+              () {
                 _navigateToAddRemoteNode(scan: true);
               },
-              color: sendManyDarkGreen,
-            )
+            ),
           ],
         ),
         Container(height: 56.0),
@@ -125,22 +119,16 @@ class _OnboardingPageState extends State<OnboardingPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            RaisedButton(
-              child: TranslatedText(
-                'onboarding.button_skip_pin',
-              ),
-              onPressed: _finishOnboarding,
-              color: sendManyDarkGreen,
+            _buildElevatedButton(
+              'onboarding.button_skip_pin',
+              _finishOnboarding,
             ),
             Container(width: 16.0),
-            RaisedButton(
-              child: TranslatedText(
-                'onboarding.button_setup_pin',
-              ),
-              onPressed: () {
+            _buildElevatedButton(
+              'onboarding.button_setup_pin',
+              () {
                 _showSetPinDialog(context);
               },
-              color: sendManyDarkGreen,
             )
           ],
         ),
@@ -149,6 +137,14 @@ class _OnboardingPageState extends State<OnboardingPage> {
     } else {
       return [Text('Unknown step $_currentStep')];
     }
+  }
+
+  ElevatedButton _buildElevatedButton(String textId, Function callback) {
+    return ElevatedButton(
+      onPressed: callback,
+      style: ElevatedButton.styleFrom(primary: sendManyDarkGreen),
+      child: TranslatedText(textId),
+    );
   }
 
   void _showSetPinDialog(BuildContext context) async {

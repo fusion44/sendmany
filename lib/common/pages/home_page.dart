@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
-import 'package:sendmany/channels/list_channels/bloc/bloc.dart';
-import 'package:sendmany/channels/list_channels_page.dart';
-import 'package:sendmany/channels/subscribe_channel_events/bloc/bloc.dart';
-import 'package:sendmany/chat/chat_conversations_page.dart';
-import 'package:sendmany/chat/list_messages/bloc.dart';
-import 'package:sendmany/common/blocs/get_remote_node_info/bloc.dart';
-import 'package:sendmany/common/blocs/get_remote_node_info/get_remote_node_info_repo.dart';
-import 'package:sendmany/common/connection/connection_manager/bloc.dart';
-import 'package:sendmany/common/constants.dart';
-import 'package:sendmany/common/utils.dart';
-import 'package:sendmany/common/widgets/tabbar/tab_bar.dart';
-import 'package:sendmany/common/widgets/widgets.dart';
-import 'package:sendmany/node/node_overview_page.dart';
-import 'package:sendmany/node/peers/bloc/bloc.dart';
-import 'package:sendmany/preferences/bloc.dart';
-import 'package:sendmany/preferences/preferences_page.dart';
-import 'package:sendmany/wallet/balance/bloc/bloc.dart';
-import 'package:sendmany/wallet/balance/list_transactions/bloc.dart';
-import 'package:sendmany/wallet/wallet_page.dart';
+
+import '../../channels/list_channels/bloc/bloc.dart';
+import '../../channels/list_channels_page.dart';
+import '../../channels/subscribe_channel_events/bloc/bloc.dart';
+import '../../chat/chat_conversations_page.dart';
+import '../../chat/list_messages/bloc.dart';
+import '../../node/node_overview_page.dart';
+import '../../node/peers/bloc/bloc.dart';
+import '../../preferences/bloc.dart';
+import '../../preferences/preferences_page.dart';
+import '../../wallet/balance/bloc/bloc.dart';
+import '../../wallet/balance/list_transactions/bloc.dart';
+import '../../wallet/wallet_page.dart';
+import '../blocs/get_remote_node_info/bloc.dart';
+import '../blocs/get_remote_node_info/get_remote_node_info_repo.dart';
+import '../connection/connection_manager/bloc.dart';
+import '../constants.dart';
+import '../utils.dart';
+import '../widgets/tabbar/tab_bar.dart';
+import '../widgets/widgets.dart';
 
 enum _FABState {
   transitionIn,
@@ -248,8 +248,8 @@ class _HomePageState extends State<HomePage>
           child: Opacity(
             opacity: animState,
             child: FloatingActionButton(
-              child: icon,
               onPressed: onPressed,
+              child: icon,
             ),
           ),
         );
@@ -263,8 +263,8 @@ class _HomePageState extends State<HomePage>
         );
       case _FABState.normal:
         return FloatingActionButton(
-          child: icon,
           onPressed: onPressed,
+          child: icon,
         );
       default:
         return Container();

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sendmany/common/constants.dart';
+
+import '../constants.dart';
 
 class SendManyLogoHeroWidget extends StatelessWidget {
   const SendManyLogoHeroWidget({

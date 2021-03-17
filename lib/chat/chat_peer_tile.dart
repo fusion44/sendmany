@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sendmany/common/blocs/get_remote_node_info/bloc.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
+import '../common/blocs/get_remote_node_info/bloc.dart';
 import '../wallet/balance/bloc/bloc.dart';
 import 'chat_page.dart';
 import 'list_messages/bloc.dart';

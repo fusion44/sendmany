@@ -3,12 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sendmany/common/utils.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import '../common/constants.dart';
 import '../common/models/models.dart';
 import '../common/models/node_info/remote_node_info.dart';
+import '../common/utils.dart';
 import 'list_messages/bloc.dart';
 import 'models/message_item.dart';
 

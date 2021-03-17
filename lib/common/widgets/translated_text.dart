@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sendmany/common/utils.dart';
+
+import '../utils.dart';
 
 class TranslatedText extends StatelessWidget {
   final String text;

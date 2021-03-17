@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:sendmany/common/utils.dart';
-import 'package:sendmany/common/widgets/widgets.dart';
-import 'package:sendmany/wallet/balance/bloc/bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../wallet/balance/bloc/bloc.dart';
+import '../utils.dart';
+import 'widgets.dart';
 
 class TransactionHashDataItem extends StatelessWidget {
   final String txhash;
@@ -81,11 +82,11 @@ class TransactionHashDataItem extends StatelessWidget {
             ),
           ),
           actions: <Widget>[
-            FlatButton(
-              child: TranslatedText('wallet.transactions.close_txid_qr_dlg'),
+            TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
+              child: TranslatedText('wallet.transactions.close_txid_qr_dlg'),
             ),
           ],
         );

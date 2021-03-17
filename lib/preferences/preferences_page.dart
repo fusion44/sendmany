@@ -145,11 +145,11 @@ class _PreferencesPageState extends State<PreferencesPage> {
     l.add(
       DropdownMenuItem<String>(
         value: 'add_node',
-        child: RaisedButton(
-          child: TranslatedText('prefs.add_node_btn'),
+        child: ElevatedButton(
           onPressed: () {
             _navigateToAddRemoteNode();
           },
+          child: TranslatedText('prefs.add_node_btn'),
         ),
       ),
     );

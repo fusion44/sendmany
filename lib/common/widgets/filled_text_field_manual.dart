@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sendmany/common/constants.dart';
+import 'package:flutter/services.dart';
+
+import '../constants.dart';
 
 class FilledTextFieldManual extends StatefulWidget {
   final TextEditingController controller;
@@ -11,9 +13,8 @@ class FilledTextFieldManual extends StatefulWidget {
   final int maxLines;
   final int minLines;
   final int maxLength;
-  final bool maxLengthEnforced;
+  final MaxLengthEnforcement maxLengthEnforcement;
   final TextInputAction textInputAction;
-
   final String actionButtonText;
   final Function actionButtonClicked;
 
@@ -30,7 +31,7 @@ class FilledTextFieldManual extends StatefulWidget {
     this.maxLines = 1,
     this.minLines,
     this.maxLength,
-    this.maxLengthEnforced = true,
+    this.maxLengthEnforcement = MaxLengthEnforcement.enforced,
     this.textInputAction,
   }) : super(key: key);
 
@@ -76,7 +77,7 @@ class _FilledTextFieldManualState extends State<FilledTextFieldManual> {
           maxLines: widget.maxLines,
           minLines: widget.minLines,
           maxLength: widget.maxLength,
-          maxLengthEnforced: widget.maxLengthEnforced,
+          maxLengthEnforcement: widget.maxLengthEnforcement,
           textInputAction: widget.textInputAction,
         ),
         showButton ? Container(height: height) : Container(),

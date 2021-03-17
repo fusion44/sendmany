@@ -76,8 +76,7 @@ class _VerifyPinDialogState extends State<VerifyPinDialog> {
                 hasError: !_pinValid,
               ),
               SizedBox(height: 16),
-              RaisedButton(
-                child: TranslatedText('auth.check'),
+              ElevatedButton(
                 onPressed: _entryCompleted
                     ? () {
                         if (_pin.text == widget.pin) {
@@ -90,14 +89,15 @@ class _VerifyPinDialogState extends State<VerifyPinDialog> {
                         }
                       }
                     : null,
+                child: TranslatedText('auth.check'),
               ),
-              FlatButton(
-                child: TranslatedText('alert_dialog.clear'),
+              TextButton(
                 onPressed: () {
                   _pin.text = '';
                   _pinValid = false;
                   _entryCompleted = false;
                 },
+                child: TranslatedText('alert_dialog.clear'),
               ),
             ],
           ),

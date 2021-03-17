@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:sendmany/common/constants.dart';
 
+import '../constants.dart';
 import 'translated_text.dart';
 
 class LoadingWidget extends StatelessWidget {

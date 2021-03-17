@@ -1,4 +1,4 @@
-import 'package:sendmany/common/models/models.dart';
+import '../../../common/models/models.dart';
 
 /// A fully loaded Peer with all necessary info associated
 ///

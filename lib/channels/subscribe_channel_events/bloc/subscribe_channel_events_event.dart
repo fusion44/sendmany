@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:sendmany/common/models/channels/models.dart';
+
+import '../../../common/models/channels/models.dart';
 
 class OpeningNewChannelEvent extends SubscribeChannelEventsEvent {
   final ChannelPoint channelPoint;

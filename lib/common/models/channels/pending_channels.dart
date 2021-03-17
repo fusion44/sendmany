@@ -1,6 +1,6 @@
 import 'package:fixnum/fixnum.dart';
-import 'package:sendmany/common/connection/lnd_rpc/lnd_rpc.dart' as grpc;
 
+import '../../connection/lnd_rpc/lnd_rpc.dart' as grpc;
 import 'channel.dart';
 import 'pending_closing_channels.dart';
 import 'pending_force_closing_channels.dart';

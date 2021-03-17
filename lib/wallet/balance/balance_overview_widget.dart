@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sendmany/channels/list_channels/bloc/bloc.dart';
-import 'package:sendmany/common/constants.dart';
-import 'package:sendmany/common/widgets/charts/charts.dart';
-import 'package:sendmany/common/widgets/money_value_view.dart';
-import 'package:sendmany/common/widgets/widgets.dart';
-import 'package:sendmany/wallet/receive/receive_page.dart';
-import 'package:sendmany/wallet/send/send_page.dart';
 
+import '../../channels/list_channels/bloc/bloc.dart';
+import '../../common/constants.dart';
+import '../../common/widgets/charts/charts.dart';
+import '../../common/widgets/money_value_view.dart';
+import '../../common/widgets/widgets.dart';
+import '../receive/receive_page.dart';
+import '../send/send_page.dart';
 import 'bloc/bloc.dart';
 
 class BalanceOverviewWidget extends StatefulWidget {
@@ -127,16 +127,16 @@ class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
       children: <Widget>[
         Container(
           width: 150,
-          child: RaisedButton.icon(
+          child: ElevatedButton.icon(
             onPressed: _navigateToReceivePage,
             icon: Icon(Icons.call_received),
             label: TranslatedText('wallet.receive'),
-            color: sendManyDarkGreen,
+            style: ElevatedButton.styleFrom(primary: sendManyDarkGreen),
           ),
         ),
         Container(
           width: 150,
-          child: RaisedButton.icon(
+          child: ElevatedButton.icon(
             onPressed: () {
               var infoBloc = BlocProvider.of<LnInfoBloc>(context);
               Navigator.push(
@@ -153,7 +153,7 @@ class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
             },
             icon: Icon(Icons.send),
             label: TranslatedText('wallet.send'),
-            color: sendManyBlue700,
+            style: ElevatedButton.styleFrom(primary: sendManyBlue700),
           ),
         )
       ],

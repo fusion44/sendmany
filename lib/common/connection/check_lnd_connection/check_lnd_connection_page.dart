@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:sendmany/common/connection/check_lnd_connection/bloc.dart';
-import 'package:sendmany/common/models/models.dart';
-import 'package:sendmany/common/utils.dart';
-import 'package:sendmany/common/widgets/widgets.dart';
+
+import '../../models/models.dart';
+import '../../utils.dart';
+import '../../widgets/widgets.dart';
+import 'bloc.dart';
 
 enum CheckConnectionResultReason {
   // Connection successful and user pressed OK
@@ -86,8 +87,7 @@ class _CheckLNDConnectionPageState extends State<CheckLNDConnectionPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      RaisedButton(
-                        child: Text('onboarding.retry_connection_test'),
+                      ElevatedButton(
                         onPressed: () {
                           Navigator.pop(
                             context,
@@ -97,6 +97,7 @@ class _CheckLNDConnectionPageState extends State<CheckLNDConnectionPage> {
                             ),
                           );
                         },
+                        child: Text('onboarding.retry_connection_test'),
                       )
                     ],
                   )
@@ -137,8 +138,7 @@ class _CheckLNDConnectionPageState extends State<CheckLNDConnectionPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              FlatButton(
-                child: TranslatedText('onboarding.cancel_add_node'),
+              TextButton(
                 onPressed: () {
                   Navigator.pop(
                     context,
@@ -148,9 +148,9 @@ class _CheckLNDConnectionPageState extends State<CheckLNDConnectionPage> {
                     ),
                   );
                 },
+                child: TranslatedText('onboarding.cancel_add_node'),
               ),
-              RaisedButton(
-                child: TranslatedText('onboarding.add_node'),
+              ElevatedButton(
                 onPressed: () {
                   Navigator.pop(
                     context,
@@ -160,6 +160,7 @@ class _CheckLNDConnectionPageState extends State<CheckLNDConnectionPage> {
                     ),
                   );
                 },
+                child: TranslatedText('onboarding.add_node'),
               )
             ],
           )

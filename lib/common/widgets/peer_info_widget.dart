@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:sendmany/common/models/models.dart';
-import 'package:sendmany/common/utils.dart';
-import 'package:sendmany/common/widgets/widgets.dart';
+
+import '../models/models.dart';
+import '../utils.dart';
+import 'widgets.dart';
 
 class RemoteNodeInfoWidget extends StatelessWidget {
   final RemoteNodeInfo nodeInfo;

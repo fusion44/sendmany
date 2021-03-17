@@ -1,5 +1,6 @@
 import 'package:fixnum/fixnum.dart';
-import 'package:sendmany/common/models/models.dart';
+
+import 'models.dart';
 
 class Tx {
   final String memo;

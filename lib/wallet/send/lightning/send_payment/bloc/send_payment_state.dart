@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:sendmany/common/connection/lnd_rpc/lnd_rpc.dart';
+
+import '../../../../../common/connection/lnd_rpc/lnd_rpc.dart';
 
 @immutable
 abstract class SendPaymentState extends Equatable {}

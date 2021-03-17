@@ -1,9 +1,9 @@
 ///
 //  Generated code. Do not modify.
-//  source: signer.proto
+//  source: signrpc/signer.proto
 //
-// @dart = 2.3
-// ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,annotate_overrides
+// @dart = 2.7
+// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:async' as $async;
 
@@ -43,51 +43,38 @@ class SignerClient extends $grpc.Client {
           ($core.List<$core.int> value) =>
               $0.SharedKeyResponse.fromBuffer(value));
 
-  SignerClient($grpc.ClientChannel channel, {$grpc.CallOptions options})
-      : super(channel, options: options);
+  SignerClient($grpc.ClientChannel channel,
+      {$grpc.CallOptions options,
+      $core.Iterable<$grpc.ClientInterceptor> interceptors})
+      : super(channel, options: options, interceptors: interceptors);
 
   $grpc.ResponseFuture<$0.SignResp> signOutputRaw($0.SignReq request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$signOutputRaw, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$signOutputRaw, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.InputScriptResp> computeInputScript(
       $0.SignReq request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$computeInputScript, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$computeInputScript, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.SignMessageResp> signMessage(
       $0.SignMessageReq request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$signMessage, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$signMessage, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.VerifyMessageResp> verifyMessage(
       $0.VerifyMessageReq request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$verifyMessage, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$verifyMessage, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.SharedKeyResponse> deriveSharedKey(
       $0.SharedKeyRequest request,
       {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$deriveSharedKey, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+    return $createUnaryCall(_$deriveSharedKey, request, options: options);
   }
 }
 

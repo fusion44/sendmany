@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sendmany/common/models/models.dart';
-import 'package:sendmany/common/utils.dart';
-import 'package:sendmany/common/widgets/widgets.dart';
-import 'package:sendmany/wallet/balance/balance_overview_widget.dart';
 
+import '../common/models/models.dart';
+import '../common/utils.dart';
+import '../common/widgets/widgets.dart';
+import 'balance/balance_overview_widget.dart';
 import 'balance/bloc/bloc.dart';
 import 'balance/list_transactions/bloc.dart';
 

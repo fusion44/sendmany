@@ -28,11 +28,11 @@ class _FindPeerPageState extends State<FindPeerPage> {
                 controller: _controller,
                 maxLines: 3,
               ),
-              RaisedButton(
-                child: TranslatedText('chat.chat_with_peer'),
+              ElevatedButton(
                 onPressed: () {
                   Navigator.pop(context, _controller.text);
                 },
+                child: TranslatedText('chat.chat_with_peer'),
               ),
             ],
           ),

@@ -1,15 +1,16 @@
 import 'package:fixnum/fixnum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sendmany/channels/list_channels/bloc/bloc.dart';
-import 'package:sendmany/common/models/models.dart';
-import 'package:sendmany/common/utils.dart';
-import 'package:sendmany/common/widgets/widgets.dart';
-import 'package:sendmany/wallet/balance/bloc/bloc.dart';
-import 'package:sendmany/wallet/receive/lightning/show_lightning_invoice.dart';
-import 'package:sendmany/wallet/receive/onchain/new_address_bloc/bloc.dart';
-import 'package:sendmany/wallet/receive/onchain/show_onchain_invoice.dart';
-import 'package:sendmany/wallet/receive/onchain/subscribe_transactions/subscribe_transactions_bloc.dart';
+
+import '../../channels/list_channels/bloc/bloc.dart';
+import '../../common/models/models.dart';
+import '../../common/utils.dart';
+import '../../common/widgets/widgets.dart';
+import '../balance/bloc/bloc.dart';
+import 'lightning/show_lightning_invoice.dart';
+import 'onchain/new_address_bloc/bloc.dart';
+import 'onchain/show_onchain_invoice.dart';
+import 'onchain/subscribe_transactions/subscribe_transactions_bloc.dart';
 
 class ReceivePage extends StatefulWidget {
   @override
@@ -124,7 +125,7 @@ class _ReceivePageState extends State<ReceivePage> {
     );
   }
 
-  RaisedButton _buildButton() {
+  ElevatedButton _buildButton() {
     Function onClick;
 
     if (_amount != null && _isOnChain ||
@@ -163,9 +164,9 @@ class _ReceivePageState extends State<ReceivePage> {
       };
     }
 
-    return RaisedButton(
-      child: TranslatedText('wallet.receive_page.confirm_amount_and_show_qr'),
+    return ElevatedButton(
       onPressed: onClick,
+      child: TranslatedText('wallet.receive_page.confirm_amount_and_show_qr'),
     );
   }
 

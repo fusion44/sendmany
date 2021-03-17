@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:sendmany/chat/models/message_item.dart';
+
+import '../models/message_item.dart';
 
 abstract class ListMessagesBaseState extends Equatable {
   const ListMessagesBaseState();

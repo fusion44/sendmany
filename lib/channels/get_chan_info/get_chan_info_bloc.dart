@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:grpc/grpc.dart';
 
-import './bloc.dart';
 import '../../common/connection/connection_manager/bloc.dart';
 import '../../common/connection/lnd_rpc/lnd_rpc.dart' as grpc;
 import '../../common/models/channels/models.dart';
+import 'bloc.dart';
 
 class GetChanInfoBloc extends Bloc<GetChanInfoEvent, GetChanInfoState> {
   GetChanInfoBloc() : super(InitialGetChanInfoState());

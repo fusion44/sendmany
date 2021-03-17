@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sendmany/common/models/models.dart';
-import 'package:sendmany/common/utils.dart';
-import 'package:sendmany/common/widgets/widgets.dart';
 
+import '../../common/models/models.dart';
+import '../../common/utils.dart';
+import '../../common/widgets/widgets.dart';
 import 'list_transactions/bloc.dart';
 
 const numPayments = 12;

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sendmany/common/utils.dart';
-import 'package:sendmany/common/widgets/widgets.dart';
-import 'package:sendmany/wallet/balance/bloc/bloc.dart';
-import 'package:sendmany/wallet/send/lightning/send_payment_page.dart';
 
+import '../../common/utils.dart';
+import '../../common/widgets/widgets.dart';
+import '../balance/bloc/bloc.dart';
+import 'lightning/send_payment_page.dart';
 import 'on_chain/send_coins/send_coins_page.dart';
 
 final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -122,8 +122,7 @@ class _SendPageState extends State<SendPage> {
           ),
         ),
         _qrTestPassed
-            ? RaisedButton(
-                child: TranslatedText('wallet.send_page.next_step'),
+            ? ElevatedButton(
                 onPressed: () {
                   if (_qrinfo.layer == PaymentLayer.lightning) {
                     _navigateToLnPayment(_qrinfo);
@@ -131,12 +130,13 @@ class _SendPageState extends State<SendPage> {
                     _navigateToSendCoins(_qrinfo);
                   }
                 },
+                child: TranslatedText('wallet.send_page.next_step'),
               )
-            : RaisedButton(
-                child: TranslatedText('wallet.send_page.paste_from_clipboard'),
+            : ElevatedButton(
                 onPressed: () {
                   _copyFromClipboard();
                 },
+                child: TranslatedText('wallet.send_page.paste_from_clipboard'),
               )
       ],
     );

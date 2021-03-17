@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sendmany/common/connection/lnd_rpc/lnd_rpc.dart' as lnrpc;
-import 'package:sendmany/common/constants.dart';
-import 'package:sendmany/common/utils.dart';
-import 'package:sendmany/common/widgets/widgets.dart';
 
+import '../../../common/connection/lnd_rpc/lnd_rpc.dart' as lnrpc;
+import '../../../common/constants.dart';
+import '../../../common/utils.dart';
+import '../../../common/widgets/widgets.dart';
 import 'decode_payreq/bloc/bloc.dart';
 import 'send_payment/bloc/bloc.dart';
 
@@ -137,8 +137,8 @@ class _SendPaymentPageState extends State<SendPaymentPage> {
     );
   }
 
-  RaisedButton _buildRetryButton() {
-    return RaisedButton.icon(
+  ElevatedButton _buildRetryButton() {
+    return ElevatedButton.icon(
       icon: Icon(Icons.sync),
       label: TranslatedText('wallet.invoices.try_another_invoice'),
       onPressed: () {
@@ -147,8 +147,8 @@ class _SendPaymentPageState extends State<SendPaymentPage> {
     );
   }
 
-  RaisedButton _buildSendButton(DecodedPayReqState state) {
-    return RaisedButton.icon(
+  ElevatedButton _buildSendButton(DecodedPayReqState state) {
+    return ElevatedButton.icon(
       icon: Icon(Icons.flash_on),
       label: TranslatedText('wallet.invoices.pay'),
       onPressed: () {
@@ -211,15 +211,14 @@ class _SendPaymentPageState extends State<SendPaymentPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            RaisedButton(
-              child: TranslatedText('wallet.invoices.paid_go_back_to_home'),
+            ElevatedButton(
               onPressed: () {
                 _navigateHome();
               },
+              child: TranslatedText('wallet.invoices.paid_go_back_to_home'),
             ),
             Container(width: 8.0),
-            RaisedButton(
-              child: TranslatedText('wallet.invoices.pay_another'),
+            ElevatedButton(
               onPressed: () {
                 // we've been launched from an URL
                 // the navigator won't be able to pop
@@ -230,7 +229,8 @@ class _SendPaymentPageState extends State<SendPaymentPage> {
                   _navigateHome();
                 }
               },
-              color: sendManyPrimaryGreen700,
+              style: ElevatedButton.styleFrom(primary: sendManyPrimaryGreen700),
+              child: TranslatedText('wallet.invoices.pay_another'),
             ),
           ],
         ),

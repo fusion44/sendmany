@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:sendmany/common/constants.dart';
-import 'package:sendmany/common/utils.dart';
-import 'package:sendmany/common/widgets/widgets.dart';
-import 'package:sendmany/wallet/balance/bloc/bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../common/constants.dart';
+import '../../common/utils.dart';
+import '../../common/widgets/widgets.dart';
+import '../balance/bloc/bloc.dart';
 import 'on_chain/send_coins/bloc/bloc.dart';
 
 class SendTransactionWidget extends StatefulWidget {
@@ -94,11 +94,11 @@ class _SendTransactionWidgetState extends State<SendTransactionWidget> {
             ),
           ),
           actions: <Widget>[
-            FlatButton(
-              child: TranslatedText('wallet.transactions.close_txid_qr_dlg'),
+            TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
+              child: TranslatedText('wallet.transactions.close_txid_qr_dlg'),
             ),
           ],
         );
@@ -122,7 +122,7 @@ class _SendTransactionWidgetState extends State<SendTransactionWidget> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Form(
-                  autovalidate: true,
+                  autovalidateMode: AutovalidateMode.always,
                   child: Column(
                     children: <Widget>[
                       TextFormField(
@@ -153,8 +153,7 @@ class _SendTransactionWidgetState extends State<SendTransactionWidget> {
                   ),
                 ),
               ),
-              RaisedButton(
-                child: TranslatedText('wallet.transactions.send'),
+              ElevatedButton(
                 onPressed: () {
                   var address = _addressController.value.text;
                   var amount = _amountController.value.text;
@@ -165,6 +164,7 @@ class _SendTransactionWidgetState extends State<SendTransactionWidget> {
                     ),
                   );
                 },
+                child: TranslatedText('wallet.transactions.send'),
               )
             ],
           )
@@ -209,11 +209,11 @@ class _SendTransactionWidgetState extends State<SendTransactionWidget> {
           ],
         ),
         _buildRetryButton(),
-        RaisedButton(
+        ElevatedButton(
+          onPressed: onPressed,
           child: TranslatedText(
             'wallet.transactions.view_on_blockstream_info',
           ),
-          onPressed: onPressed,
         ),
       ],
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -225,10 +225,10 @@ class _SendTransactionWidgetState extends State<SendTransactionWidget> {
   }
 
   Widget _buildRetryButton() {
-    return RaisedButton.icon(
+    return ElevatedButton.icon(
       icon: Icon(Icons.camera_alt),
       label: TranslatedText('wallet.transactions.next_transaction_button'),
-      color: sendManyConfirmedBalance,
+      style: ElevatedButton.styleFrom(primary: sendManyConfirmedBalance),
       onPressed: () {
         _showPasteView = false;
         widget.showFAB(true);

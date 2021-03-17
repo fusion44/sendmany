@@ -78,7 +78,7 @@ void backgroundFetchHeadlessTask(String taskId) async {
   var msg = '';
   if (state is LoadingTxFinishedState) {
     var prefs = await SharedPreferences.getInstance();
-    var lastNumInvoices = await prefs.getInt(prefLastNumInvoices);
+    var lastNumInvoices = prefs.getInt(prefLastNumInvoices);
 
     if (lastNumInvoices != state.invoices.length) {
       var res = _classifyNewInvoices(lastNumInvoices, state.invoices);

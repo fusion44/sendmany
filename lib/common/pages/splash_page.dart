@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
-import 'package:sendmany/common/constants.dart';
-import 'package:sendmany/common/widgets/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../constants.dart';
+import '../widgets/widgets.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key key}) : super(key: key);

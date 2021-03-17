@@ -7,17 +7,16 @@ import 'package:convert/convert.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:grpc/grpc.dart';
 import 'package:nanoid/nanoid.dart';
-import 'package:sendmany/chat/list_messages/list_messages_event.dart';
-import 'package:sendmany/common/connection/connection_manager/bloc.dart';
-import 'package:sendmany/common/connection/lnd_rpc/router.pbgrpc.dart'
-    as router;
-import 'package:sendmany/common/connection/lnd_rpc/signer.pbgrpc.dart'
-    as signer;
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 import './bloc.dart';
+import '../../common/connection/connection_manager/bloc.dart';
+import '../../common/connection/lnd_rpc/routerrpc/router.pbgrpc.dart' as router;
+import '../../common/connection/lnd_rpc/signrpc/signer.pbgrpc.dart' as signer;
 import '../../common/constants.dart';
 import '../list_messages/list_messages_bloc.dart';
+import '../list_messages/list_messages_event.dart';
 import '../models/ln_preimage.dart';
 import '../models/message_item.dart';
 import '../utils.dart';

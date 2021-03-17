@@ -3,22 +3,19 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:sendmany/channels/create_channel_page.dart';
-import 'package:sendmany/common/blocs/get_remote_node_info/bloc.dart';
-import 'package:sendmany/common/constants.dart';
-import 'package:sendmany/common/models/models.dart';
-import 'package:sendmany/common/utils.dart';
-import 'package:sendmany/common/widgets/charts/charts.dart';
-import 'package:sendmany/common/widgets/widgets.dart';
-import 'package:sendmany/wallet/balance/bloc/bloc.dart';
 
+import '../common/blocs/get_remote_node_info/bloc.dart';
 import '../common/constants.dart';
 import '../common/models/models.dart';
+import '../common/utils.dart';
+import '../common/widgets/charts/charts.dart';
 import '../common/widgets/widgets.dart';
+import '../wallet/balance/bloc/bloc.dart';
+import 'close_channel/bloc.dart';
 import 'close_channel_page.dart';
+import 'create_channel_page.dart';
 import 'display_channel_info_page.dart';
 import 'subscribe_channel_events/bloc/bloc.dart';
-import 'close_channel/bloc.dart';
 
 class ListChannelsPage extends StatefulWidget {
   static final fabIcon = Icon(Icons.add);
@@ -57,7 +54,7 @@ class _ListChannelsPageState extends State<ListChannelsPage> {
       listener: (context, state) {
         if (state is CloseChannelErrorState &&
             state.reason == CloseErrorReason.peerOffline) {
-          Scaffold.of(context).showSnackBar(
+          ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(
                 tr(
@@ -406,8 +403,8 @@ class _ListChannelsPageState extends State<ListChannelsPage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          RaisedButton.icon(
-            color: sendManyOrange300,
+          ElevatedButton.icon(
+            style: ElevatedButton.styleFrom(primary: sendManyOrange300),
             label: TranslatedText('channels.close.close'),
             icon: Icon(Icons.delete_forever),
             onPressed: () {

@@ -1,6 +1,6 @@
 import 'package:fixnum/fixnum.dart';
-import 'package:sendmany/common/connection/lnd_rpc/rpc.pb.dart' as grpc;
 
+import '../../connection/lnd_rpc/rpc.pb.dart' as grpc;
 import '../node_info/node_infos.dart';
 import 'channel.dart';
 import 'pending_channel_data.dart';

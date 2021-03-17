@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sendmany/common/connection/lnd_rpc/lnd_rpc.dart' as grpc;
 
+import '../../connection/lnd_rpc/lnd_rpc.dart' as grpc;
 import 'node_address.dart';
 
 class LightningNode {
