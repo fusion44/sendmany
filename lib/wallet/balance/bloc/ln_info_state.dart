@@ -3,6 +3,7 @@ import 'package:meta/meta.dart';
 
 import '../../../common/connection/lnd_rpc/lnd_rpc.dart';
 import '../../../common/models/models.dart';
+import '../../../node/forwards/models/models.dart';
 
 @immutable
 abstract class LnInfoState extends Equatable {}
@@ -36,13 +37,20 @@ class LnInfoStateLoadingFinished extends LnInfoState {
   final LocalNodeInfo infoResponse;
   final WalletBalanceResponse walletBalance;
   final ChannelBalanceResponse channelBalance;
+  final FwdFeeReport feeReport;
 
   LnInfoStateLoadingFinished(
     this.infoResponse,
     this.walletBalance,
     this.channelBalance,
+    this.feeReport,
   );
 
   @override
-  List<Object> get props => [infoResponse, walletBalance, channelBalance];
+  List<Object> get props => [
+        infoResponse,
+        walletBalance,
+        channelBalance,
+        feeReport,
+      ];
 }

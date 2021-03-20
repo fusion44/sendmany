@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
+import '../../../node/forwards/models/models.dart';
 import '../lnd_rpc/lnd_rpc.dart';
 
 @immutable
@@ -18,13 +19,12 @@ class CheckingLNDConnectionState extends CheckLNDConnectionState {
 
 class CheckLNDConnectionSuccessState extends CheckLNDConnectionState {
   final GetInfoResponse info;
+  final FwdFeeReport feeReport;
 
-  CheckLNDConnectionSuccessState({
-    this.info,
-  });
+  CheckLNDConnectionSuccessState(this.info, this.feeReport);
 
   @override
-  List<Object> get props => [info];
+  List<Object> get props => [info, feeReport];
 }
 
 class CheckLNDConnectionErrorState extends CheckLNDConnectionState {

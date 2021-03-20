@@ -8,6 +8,7 @@ import '../../../common/connection/connection_manager/bloc.dart';
 import '../../../common/connection/lnd_rpc/lnd_rpc.dart';
 import '../../../common/constants.dart';
 import '../../../common/models/models.dart';
+import '../../../node/forwards/models/models.dart';
 import 'ln_info_event.dart';
 import 'ln_info_state.dart';
 
@@ -34,12 +35,15 @@ class LnInfoBloc extends Bloc<LnInfoEvent, LnInfoState> {
       var infoRequest = GetInfoRequest();
       var walletBalanceRequest = WalletBalanceRequest();
       var channelBalanceRequest = ChannelBalanceRequest();
+      var feeReportReq = FeeReportRequest();
+
       var opts = CallOptions(metadata: {'macaroon': macaroon});
 
       var responseList = await Future.wait([
         client.getInfo(infoRequest, options: opts),
         client.walletBalance(walletBalanceRequest, options: opts),
         client.channelBalance(channelBalanceRequest, options: opts),
+        client.feeReport(feeReportReq, options: opts),
       ]).catchError((error) {
         print(error);
       });
@@ -56,6 +60,7 @@ class LnInfoBloc extends Bloc<LnInfoEvent, LnInfoState> {
         localNodeInfo,
         responseList[1],
         responseList[2],
+        FwdFeeReport.fromGrpc(responseList[3]),
       );
     }
   }

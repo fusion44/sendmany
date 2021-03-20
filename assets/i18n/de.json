@@ -74,6 +74,13 @@
     "find_a_peer": "Node suchen",
     "info": "Chat"
   },
+  "forwards": {
+    "day": "Gebühren (Tag)",
+    "fees": "Gebühren",
+    "forwards": "Weiterleitungen",
+    "month": "Gebühren (Monat)",
+    "week": "Gebühren (Woche)"
+  },
   "network": {
     "loading": "Lade",
     "not_yet_established": "Verbindung noch nicht hergestellt"

@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:grpc/grpc.dart';
 
+import '../../../node/forwards/models/models.dart';
 import '../lnd_rpc/lnd_rpc.dart';
 import 'check_lnd_connection_event.dart';
 import 'check_lnd_connection_state.dart';
@@ -54,10 +55,13 @@ class CheckLndConnectionBloc
       options: opts,
     );
 
-    var infoRequest = GetInfoRequest();
+    final infoRequest = GetInfoRequest();
+    final feeReportReq = FeeReportRequest();
+
     try {
-      var response = await _lightningClient.getInfo(infoRequest, options: opts);
-      return CheckLNDConnectionSuccessState(info: response);
+      final info = await _lightningClient.getInfo(infoRequest);
+      final fees = await _lightningClient.feeReport(feeReportReq);
+      return CheckLNDConnectionSuccessState(info, FwdFeeReport.fromGrpc(fees));
     } catch (e) {
       return CheckLNDConnectionErrorState(error: e.toString());
     }

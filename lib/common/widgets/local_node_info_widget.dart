@@ -1,14 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../channels/list_channels/list_channels_repository/list_channel_repository.dart';
+import '../../node/forwards/fwd_history_bloc/fwd_history_bloc.dart';
+import '../../node/forwards/fwd_overview_page.dart';
+import '../../node/forwards/models/models.dart';
 import '../models/models.dart';
 import '../utils.dart';
 import 'widgets.dart';
 
 class LocalNodeInfoWidget extends StatefulWidget {
   final LocalNodeInfo info;
+  final FwdFeeReport feeReport;
   final bool showShareButton;
   final String header;
-  LocalNodeInfoWidget(this.info, this.header, {this.showShareButton = true});
+
+  LocalNodeInfoWidget(
+    this.info,
+    this.feeReport,
+    this.header, {
+    this.showShareButton = true,
+  });
 
   @override
   _LocalNodeInfoWidgetState createState() => _LocalNodeInfoWidgetState();
@@ -29,6 +41,8 @@ class _LocalNodeInfoWidgetState extends State<LocalNodeInfoWidget> {
         _buildRowPubkey(widget.info),
         Divider(),
         _buildRowVersion(widget.info),
+        Divider(),
+        _buildFeeReport(widget.feeReport),
       ],
     );
   }
@@ -137,6 +151,52 @@ class _LocalNodeInfoWidgetState extends State<LocalNodeInfoWidget> {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildFeeReport(FwdFeeReport report) {
+    return InkWell(
+      onTap: () {
+        _navigateToFeeOverviewPage();
+      },
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: DataItemMoney(
+              amount: report.dayFeeSum,
+              label: tr(context, 'forwards.day'),
+            ),
+          ),
+          Expanded(
+            child: DataItemMoney(
+              amount: report.weekFeeSum,
+              label: tr(context, 'forwards.week'),
+            ),
+          ),
+          Expanded(
+            child: DataItemMoney(
+              amount: report.monthFeeSum,
+              label: tr(context, 'forwards.month'),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _navigateToFeeOverviewPage() async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (c) {
+          return BlocProvider(
+            create: (providerContext) => ForwardingHistoryBloc(
+              RepositoryProvider.of<ListChannelsRepository>(context),
+            )..add(LoadFwdHistory()),
+            child: FwdOverviewPage(),
+          );
+        },
+      ),
     );
   }
 }

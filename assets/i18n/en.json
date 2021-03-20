@@ -74,6 +74,13 @@
     "find_a_peer": "Find a peer",
     "info": "Chat"
   },
+  "forwards": {
+    "day": "Fees (Day)",
+    "fees": "Fees",
+    "forwards": "Forwards",
+    "month": "Fees (Month)",
+    "week": "Fees (Week)"
+  },
   "network": {
     "loading": "loading",
     "not_yet_established": "Connection not yet established"
