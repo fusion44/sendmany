@@ -12,8 +12,7 @@ enum ChannelCloseType {
   abandoned,
 }
 
-class ClosedChannelSummary {
-  final ChannelPoint channelPoint;
+class ClosedChannelSummary extends Channel {
   final Int64 chanId;
   final String chainHash;
   final String closingTxHash;
@@ -25,7 +24,8 @@ class ClosedChannelSummary {
   final ChannelCloseType closeType;
 
   ClosedChannelSummary({
-    this.channelPoint,
+    ChannelPoint channelPoint,
+    RemoteNodeInfo remoteNodeInfo,
     this.chanId,
     this.chainHash,
     this.closingTxHash,
@@ -35,9 +35,12 @@ class ClosedChannelSummary {
     this.settledBalance,
     this.timeLockedBalance,
     this.closeType,
-  });
+  }) : super(channelPoint, remoteNodeInfo);
 
-  static ClosedChannelSummary fromGRPC(grpc.ChannelCloseSummary s) {
+  static ClosedChannelSummary fromGRPC(
+    grpc.ChannelCloseSummary s,
+    RemoteNodeInfo ni,
+  ) {
     ChannelCloseType type;
     switch (s.closeType) {
       case grpc.ChannelCloseSummary_ClosureType.COOPERATIVE_CLOSE:
@@ -63,6 +66,7 @@ class ClosedChannelSummary {
 
     return ClosedChannelSummary(
       channelPoint: ChannelPoint.fromString(s.channelPoint),
+      remoteNodeInfo: ni,
       chanId: s.chanId,
       chainHash: s.chainHash,
       closingTxHash: s.closingTxHash,

@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../channels/list_channels/bloc/bloc.dart';
+import '../../channels/list_channels/list_channels_repository/list_channel_repository.dart';
 import '../../common/constants.dart';
 import '../../common/widgets/charts/charts.dart';
 import '../../common/widgets/money_value_view.dart';
@@ -162,19 +163,18 @@ class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
 
   void _navigateToReceivePage() {
     var infoBloc = BlocProvider.of<LnInfoBloc>(context);
-    var channelsBloc = BlocProvider.of<ListChannelsBloc>(context);
     Navigator.push(
       context,
       MaterialPageRoute(
           builder: (context) {
             return MultiBlocProvider(
               providers: [
-                BlocProvider<LnInfoBloc>.value(
-                  value: infoBloc,
-                ),
-                BlocProvider<ListChannelsBloc>.value(
-                  value: channelsBloc,
-                ),
+                BlocProvider<LnInfoBloc>.value(value: infoBloc),
+                BlocProvider(
+                  create: (context) => ListChannelsBloc(
+                    RepositoryProvider.of<ListChannelsRepository>(context),
+                  ),
+                )
               ],
               child: ReceivePage(),
             );

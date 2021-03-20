@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../channels/list_channels/bloc/bloc.dart';
+import '../../channels/list_channels/list_channels_repository/list_channel_repository.dart';
 import '../../common/models/models.dart';
 import '../../common/utils.dart';
 import '../../common/widgets/widgets.dart';
@@ -28,10 +29,13 @@ class _ReceivePageState extends State<ReceivePage> {
   bool _isOnChain = false;
   String _onchainAddress = '';
 
+  ListChannelsBloc _listChannelsBloc;
+
   @override
   void initState() {
     // We require the most recent channel state => reload channels
-    BlocProvider.of<ListChannelsBloc>(context).add(LoadChannelList());
+    final repo = RepositoryProvider.of<ListChannelsRepository>(context);
+    _listChannelsBloc = ListChannelsBloc(repo)..add(LoadChannelList(true));
     super.initState();
   }
 
@@ -223,7 +227,7 @@ class _ReceivePageState extends State<ReceivePage> {
 
   Widget _buildListChannelsBlocListener(Widget child) {
     return BlocListener<ListChannelsBloc, ListChannelsState>(
-      cubit: BlocProvider.of<ListChannelsBloc>(context),
+      cubit: _listChannelsBloc,
       listener: (context, state) {
         if (state is ChannelsLoadedState) {
           state.channels.forEach((channel) {

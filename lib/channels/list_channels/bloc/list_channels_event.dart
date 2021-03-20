@@ -6,6 +6,10 @@ abstract class ListChannelsEvent extends Equatable {}
 
 @immutable
 class LoadChannelList extends ListChannelsEvent {
+  final bool forceReload;
+
+  LoadChannelList([this.forceReload = false]);
+
   @override
   List<Object> get props => const [];
 }

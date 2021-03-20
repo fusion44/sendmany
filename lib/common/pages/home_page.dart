@@ -3,7 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 
-import '../../channels/list_channels/bloc/bloc.dart';
+import '../../channels/list_channels/list_channels_repository/list_channel_repository.dart';
 import '../../channels/list_channels_page.dart';
 import '../../channels/subscribe_channel_events/bloc/bloc.dart';
 import '../../chat/chat_conversations_page.dart';
@@ -40,7 +40,6 @@ class _HomePageState extends State<HomePage>
   TabController _controller;
   LnInfoBloc _lnInfoBloc;
   SubscribeChannelEventsBloc _subscribeChannelEventsBloc;
-  ListChannelsBloc _listChannelsBloc;
   ListPeersBloc _listPeersBloc;
   ListTxBloc _listTxBloc;
   ListMessagesBloc _listMsgBloc;
@@ -54,8 +53,6 @@ class _HomePageState extends State<HomePage>
     _lnInfoBloc.add(LoadLnInfo());
     _subscribeChannelEventsBloc = SubscribeChannelEventsBloc();
     _subscribeChannelEventsBloc.add(SubscribeChannelEventsAppStart());
-    _listChannelsBloc = ListChannelsBloc();
-    _listChannelsBloc.add(LoadChannelList());
     _listPeersBloc = ListPeersBloc();
     _listPeersBloc.add(LoadPeersList());
     _listTxBloc = ListTxBloc(
@@ -76,7 +73,6 @@ class _HomePageState extends State<HomePage>
     _listMsgBloc.close();
     _listTxBloc.close(); // contains a reference to _lnInfoBloc, dispose first
     _lnInfoBloc.close();
-    _listChannelsBloc.close();
     _listPeersBloc.close();
     _subscribeChannelEventsBloc.close();
     _remoteNodeInfoRepo.dispose();
@@ -86,36 +82,16 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    var repoProvider = RepositoryProvider.value(
-      value: _remoteNodeInfoRepo,
-      child: BlocListener(
-        cubit: BlocProvider.of<PreferencesBloc>(context),
-        listener: (BuildContext context, PreferencesState state) {
-          if (state != null) {
-            FlutterI18n.refresh(context, Locale(state.language));
-            updateTimeAgoLib(state.language);
-            setState(() {});
-          }
-        },
-        child: BlocBuilder(
-          cubit: BlocProvider.of<ConnectionManagerBloc>(context),
-          builder: (BuildContext context, ConnectionManagerState state) {
-            if (state is ConnectionEstablishedState) {
-              return _buildScaffold();
-            }
-            return Scaffold(
-              body: Center(
-                child: TranslatedText('network.not_yet_established'),
-              ),
-            );
-          },
-        ),
-      ),
+    final repoProvider = MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider(create: (context) => ListChannelsRepository()),
+      ],
+      child: _buildRemoteNodeRepoProvider(context),
     );
+
     return MultiBlocProvider(
       providers: [
         BlocProvider<LnInfoBloc>.value(value: _lnInfoBloc),
-        BlocProvider<ListChannelsBloc>.value(value: _listChannelsBloc),
         BlocProvider<SubscribeChannelEventsBloc>.value(
           value: _subscribeChannelEventsBloc,
         ),
@@ -269,5 +245,35 @@ class _HomePageState extends State<HomePage>
       default:
         return Container();
     }
+  }
+
+  RepositoryProvider<GetRemoteNodeInfoRepository> _buildRemoteNodeRepoProvider(
+      BuildContext context) {
+    return RepositoryProvider.value(
+      value: _remoteNodeInfoRepo,
+      child: BlocListener(
+        cubit: BlocProvider.of<PreferencesBloc>(context),
+        listener: (BuildContext context, PreferencesState state) {
+          if (state != null) {
+            FlutterI18n.refresh(context, Locale(state.language));
+            updateTimeAgoLib(state.language);
+            setState(() {});
+          }
+        },
+        child: BlocBuilder(
+          cubit: BlocProvider.of<ConnectionManagerBloc>(context),
+          builder: (BuildContext context, ConnectionManagerState state) {
+            if (state is ConnectionEstablishedState) {
+              return _buildScaffold();
+            }
+            return Scaffold(
+              body: Center(
+                child: TranslatedText('network.not_yet_established'),
+              ),
+            );
+          },
+        ),
+      ),
+    );
   }
 }

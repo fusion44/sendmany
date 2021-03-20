@@ -174,7 +174,8 @@ class SubscribeChannelEventsBloc
             // called when a channel finished closing
             add(
               _ChannelClosedEvent(
-                ClosedChannelSummary.fromGRPC(update.closedChannel),
+                // TODO: update when RemoteNodeInfoRepository is implemented
+                ClosedChannelSummary.fromGRPC(update.closedChannel, null),
               ),
             );
             break;
