@@ -162,19 +162,16 @@ class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
   }
 
   void _navigateToReceivePage() {
-    var infoBloc = BlocProvider.of<LnInfoBloc>(context);
+    final lcProvider = RepositoryProvider.of<ListChannelsRepository>(context);
+    final infoBloc = BlocProvider.of<LnInfoBloc>(context);
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) {
+          builder: (_) {
             return MultiBlocProvider(
               providers: [
                 BlocProvider<LnInfoBloc>.value(value: infoBloc),
-                BlocProvider(
-                  create: (context) => ListChannelsBloc(
-                    RepositoryProvider.of<ListChannelsRepository>(context),
-                  ),
-                )
+                BlocProvider(create: (_) => ListChannelsBloc(lcProvider))
               ],
               child: ReceivePage(),
             );

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../channels/list_channels/bloc/bloc.dart';
-import '../../channels/list_channels/list_channels_repository/list_channel_repository.dart';
 import '../../common/models/models.dart';
 import '../../common/utils.dart';
 import '../../common/widgets/widgets.dart';
@@ -34,8 +33,8 @@ class _ReceivePageState extends State<ReceivePage> {
   @override
   void initState() {
     // We require the most recent channel state => reload channels
-    final repo = RepositoryProvider.of<ListChannelsRepository>(context);
-    _listChannelsBloc = ListChannelsBloc(repo)..add(LoadChannelList(true));
+    _listChannelsBloc = BlocProvider.of<ListChannelsBloc>(context)
+      ..add(LoadChannelList(true));
     super.initState();
   }
 
