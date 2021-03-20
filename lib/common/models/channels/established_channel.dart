@@ -59,11 +59,6 @@ class EstablishedChannel extends Channel {
   /// channel.
   final List<HTLC> pendingHtlcs;
 
-  /// The CSV delay expressed in relative blocks. If the channel is force
-  /// closed, we will need to wait for this many blocks before we can regain
-  /// our funds.
-  final int csvDelay;
-
   /// Whether this channel is advertised to the network or not.
   final bool private;
 
@@ -72,18 +67,6 @@ class EstablishedChannel extends Channel {
 
   /// A set of flags showing the current state of the channel.
   final String chanStatusFlags;
-
-  /// The minimum satoshis this node is required to reserve in its balance.
-  final Int64 localChanReserveSat;
-
-  /// The minimum satoshis the other node is required to reserve in its balance.
-  final Int64 remoteChanReserveSat;
-
-  /// If true, then this channel uses the modern commitment format where
-  /// the key in the output of the remote party does not change each state.
-  /// This makes back up and recovery easier as when the channel is closed,
-  /// the funds go directly to that key.
-  final bool staticRemoteKey;
 
   /// The number of seconds that the channel has been monitored by the channel
   /// scoring system. Scores are currently not persisted, so this value may
@@ -102,6 +85,28 @@ class EstablishedChannel extends Channel {
   /// cooperatively closing with the delivery_address field set.
   final String closeAddress;
 
+  ///	The amount that the initiator of the channel optionally pushed to the
+  /// remote party on channel open. This amount will be zero if the channel
+  /// initiator did not push any funds to the remote peer. If the initiator
+  /// field is true, we pushed this amount to our peer, if it is false, the
+  /// remote peer pushed this amount to us.
+  final Int64 pushAmountSat;
+
+  /// This uint32 indicates if this channel is to be considered 'frozen'.
+  /// A frozen channel doest not allow a cooperative channel close by the
+  /// initiator. The thaw_height is the height that this restriction stops
+  /// applying to the channel. This field is optional, not setting it or
+  /// using a value of zero will mean the channel has no additional restrictions.
+  /// The height can be interpreted in two ways: as a relative height if the
+  /// value is less than 500,000, or as an absolute height otherwise.
+  final int thawHeight;
+
+  /// List constraints for the local node.
+  final ChannelConstraints localConstraints;
+
+  /// List constraints for the remote node.
+  final ChannelConstraints remoteConstraints;
+
   EstablishedChannel({
     this.active,
     this.remotePubkey,
@@ -118,16 +123,16 @@ class EstablishedChannel extends Channel {
     this.totalSatoshisReceived,
     this.numUpdates,
     this.pendingHtlcs,
-    this.csvDelay,
     this.private,
     this.initiator,
     this.chanStatusFlags,
-    this.localChanReserveSat,
-    this.remoteChanReserveSat,
-    this.staticRemoteKey,
     this.lifetime,
     this.uptime,
     this.closeAddress,
+    this.pushAmountSat,
+    this.thawHeight,
+    this.localConstraints,
+    this.remoteConstraints,
     RemoteNodeInfo remoteNodeInfo,
   }) : super(channelPoint, remoteNodeInfo);
 
@@ -158,16 +163,16 @@ class EstablishedChannel extends Channel {
       totalSatoshisReceived: c.totalSatoshisReceived,
       numUpdates: c.numUpdates,
       pendingHtlcs: pendingHtlcs,
-      csvDelay: c.csvDelay,
       private: c.private,
       initiator: c.initiator,
       chanStatusFlags: c.chanStatusFlags,
-      localChanReserveSat: c.localChanReserveSat,
-      remoteChanReserveSat: c.remoteChanReserveSat,
-      staticRemoteKey: c.staticRemoteKey,
       lifetime: c.lifetime,
       uptime: c.uptime,
       closeAddress: c.closeAddress,
+      pushAmountSat: c.pushAmountSat,
+      thawHeight: c.thawHeight,
+      localConstraints: ChannelConstraints.fromGrpc(c.localConstraints),
+      remoteConstraints: ChannelConstraints.fromGrpc(c.remoteConstraints),
       remoteNodeInfo: remoteNodeInfo,
     );
   }
@@ -198,6 +203,10 @@ class EstablishedChannel extends Channel {
     lifetime,
     uptime,
     closeAddress,
+    pushAmountSat,
+    thawHeight,
+    localConstraints,
+    remoteConstraints,
     remoteNodeInfo,
   }) {
     return EstablishedChannel(
@@ -217,16 +226,16 @@ class EstablishedChannel extends Channel {
           totalSatoshisReceived ?? this.totalSatoshisReceived,
       numUpdates: numUpdates ?? this.numUpdates,
       pendingHtlcs: pendingHtlcs ?? this.pendingHtlcs,
-      csvDelay: csvDelay ?? this.csvDelay,
       private: private ?? this.private,
       initiator: initiator ?? this.initiator,
       chanStatusFlags: chanStatusFlags ?? this.chanStatusFlags,
-      localChanReserveSat: localChanReserveSat ?? this.localChanReserveSat,
-      remoteChanReserveSat: remoteChanReserveSat ?? this.remoteChanReserveSat,
-      staticRemoteKey: staticRemoteKey ?? this.staticRemoteKey,
       lifetime: lifetime ?? this.lifetime,
       uptime: uptime ?? this.uptime,
       closeAddress: closeAddress ?? this.closeAddress,
+      pushAmountSat: pushAmountSat ?? this.pushAmountSat,
+      thawHeight: thawHeight ?? this.thawHeight,
+      localConstraints: localConstraints ?? this.localConstraints,
+      remoteConstraints: remoteConstraints ?? this.remoteConstraints,
       remoteNodeInfo: remoteNodeInfo ?? this.remoteNodeInfo,
     );
   }

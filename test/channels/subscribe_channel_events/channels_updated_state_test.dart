@@ -42,21 +42,10 @@ void main() {
         numPending: 2,
       );
 
-      // simulate a new incoming pending closing channel (close est123)
-      state = state.copyWith(
-        PendingClosingChannel(
-          channel: PendingChannelData(
-            capacity: Int64.parseInt('300'),
-            channelPoint: ChannelPoint(fundingTxid: 'est123', outputIndex: 0),
-          ),
-        ),
-      );
-
       expect(state.channels[0] is PendingOpenChannel, true);
       expect(state.channels[1] is PendingOpenChannel, true);
-      expect(state.channels[2] is PendingClosingChannel, true);
-      expect(state.channels[3], null);
-      expect(state.channels[4] is EstablishedChannel, true);
+      expect(state.channels[2], null);
+      expect(state.channels[3] is EstablishedChannel, true);
     },
   );
   test(

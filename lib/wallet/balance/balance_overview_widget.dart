@@ -27,7 +27,7 @@ class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
         if (state is LnInfoStateLoading) {
           return TranslatedText('network.loading');
         } else if (state is LnInfoStateLoadingFinished) {
-          var total = state.channelBalance.balance +
+          var total = state.channelBalance.localBalance.sat +
               state.walletBalance.confirmedBalance +
               state.walletBalance.unconfirmedBalance;
 
@@ -36,7 +36,7 @@ class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
                 sendManyConfirmedBalance),
             ChartSectionInput(state.walletBalance.unconfirmedBalance.toDouble(),
                 sendManyUnconfirmedBalance),
-            ChartSectionInput(state.channelBalance.balance.toDouble(),
+            ChartSectionInput(state.channelBalance.localBalance.sat.toDouble(),
                 sendManyChannelBalance),
           ];
 
@@ -105,7 +105,7 @@ class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
                     title: TranslatedText('wallet.channel'),
                     subtitle: Text('Total'),
                     trailing: MoneyValueView(
-                      amount: state.channelBalance.balance,
+                      amount: state.channelBalance.localBalance.sat,
                       textAlign: TextAlign.end,
                     ),
                     dense: false,

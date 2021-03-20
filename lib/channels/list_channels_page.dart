@@ -94,8 +94,6 @@ class _ListChannelsPageState extends State<ListChannelsPage> {
                   );
                 } else if (channel is PendingOpenChannel) {
                   return _buildOpenPendingListTile(channel);
-                } else if (channel is PendingClosingChannel) {
-                  return _buildPendingCloseListTile(channel);
                 } else if (channel is PendingForceClosingChannel) {
                   return _buildPendingForceCloseListTile(channel);
                 } else if (channel is WaitingCloseChannel) {
@@ -211,46 +209,6 @@ class _ListChannelsPageState extends State<ListChannelsPage> {
               ),
               SizedBox(width: defaultHorizontalWhiteSpace),
               Expanded(child: MoneyValueView(amount: channel.channel.capacity)),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  ListTile _buildPendingCloseListTile(PendingClosingChannel channel) {
-    var theme = Theme.of(context);
-
-    return ListTile(
-      leading: Icon(MdiIcons.minusNetwork, color: Colors.red),
-      title: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              TranslatedText(
-                'channels.close.closing',
-                style: theme.textTheme.caption,
-              ),
-              SizedBox(width: defaultHorizontalWhiteSpace),
-              Expanded(
-                child: Text(
-                  channel.channel.channelPoint.toString(),
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            ],
-          ),
-          Row(
-            children: <Widget>[
-              TranslatedText(
-                'channels.close.receive_amt',
-                style: theme.textTheme.caption,
-              ),
-              SizedBox(width: defaultHorizontalWhiteSpace),
-              Expanded(
-                child: MoneyValueView(amount: channel.channel.localBalance),
-              ),
             ],
           ),
         ],

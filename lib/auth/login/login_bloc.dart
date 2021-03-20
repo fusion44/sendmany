@@ -14,7 +14,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       yield LoginLoading();
 
       try {
-        // TODO: Implement PIN check
         yield LoginSuccess();
       } catch (error) {
         yield LoginFailure(error: error.toString());

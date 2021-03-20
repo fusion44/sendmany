@@ -76,15 +76,16 @@ class SubscribeChannelEventsBloc
           channel: PendingChannelData(
             capacity: closingChannel.capacity,
             channelPoint: closingChannel.channelPoint,
-            localBalance: closingChannel.localChanReserveSat,
+            localBalance: closingChannel.localConstraints.chanReserveSat,
             remoteBalance: closingChannel.remoteBalance,
-            localChanReserveSat: closingChannel.localChanReserveSat,
-            remoteChanReserveSat: closingChannel.remoteChanReserveSat,
+            localChanReserveSat: closingChannel.localConstraints.chanReserveSat,
+            remoteChanReserveSat:
+                closingChannel.remoteConstraints.chanReserveSat,
             remoteNodeInfo: closingChannel.remoteNodeInfo,
             remoteNodePub: closingChannel.remotePubkey,
           ),
-          limboBalance:
-              closingChannel.localBalance + closingChannel.localChanReserveSat,
+          limboBalance: closingChannel.localBalance +
+              closingChannel.localConstraints.chanReserveSat,
           remoteNodeInfo: closingChannel.remoteNodeInfo,
         );
 

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:convert/convert.dart';
 import 'package:grpc/grpc.dart';
 
 import '../../../common/connection/connection_manager/bloc.dart';
@@ -31,7 +32,7 @@ class OpenChannelBloc extends Bloc<OpenChannelEvent, OpenChannelState> {
     }
 
     var req = grpc.OpenChannelRequest();
-    req.nodePubkeyString = e.address.pubkey;
+    req.nodePubkey = hex.decode(e.address.pubkey);
     req.localFundingAmount = e.localFundingAmount;
     if (e.pushSat != null) req.pushSat = e.pushSat;
     if (e.targetConf != null) req.targetConf = e.targetConf;
