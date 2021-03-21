@@ -113,7 +113,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                       fieldHeight: 50,
                       fieldWidth: 50,
                       activeFillColor: hasError
-                          ? sendManyOrange300
+                          ? sendManyErrorColor
                           : sendManyBackgroundAccent,
                     ),
                     cursorColor: Colors.deepOrange,

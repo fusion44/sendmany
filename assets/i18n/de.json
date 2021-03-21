@@ -48,6 +48,7 @@
       "channel_settings": "Kanal Einstellungen",
       "check_connection": "Prüfen",
       "confirmations": "Bestätigungen",
+      "connection_failed": "Verbindung abgelehnt",
       "enter_partner_pubkey": "Öffentlicher Schlüssel",
       "fee_manual_sat_per_byte": "Manuelle Gebühr",
       "fee_target_block": "Zielblock",

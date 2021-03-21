@@ -39,6 +39,7 @@ const sendManyPurple50 = Color(0xffdecaf7);
 const sendManyBlue700 = Color(0xff0082fb);
 const sendManyBlue200 = Color(0xff72deff);
 const sendManyBlue100 = Color(0xffb2f2ff);
+const sendManyErrorColor = sendManyOrange300;
 
 const sendManyConfirmedBalance = sendManyPrimaryGreen700;
 const sendManyUnconfirmedBalance = sendManyPrimaryGreen500;

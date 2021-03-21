@@ -34,6 +34,8 @@ class _CreateChannelPageState extends State<CreateChannelPage> {
   String _host = '';
   int _port = 10009;
   String _errorMessage = '';
+  bool _connectionValid = true;
+  bool _connecting = false;
 
   @override
   void initState() {
@@ -64,8 +66,10 @@ class _CreateChannelPageState extends State<CreateChannelPage> {
       );
       Navigator.pop(context, true);
     } else if (state is OpenChannelErrorState) {
-      // error??
-      print(state.errorMessage);
+      setState(() {
+        _connectionValid = false;
+        _connecting = false;
+      });
     } else {
       print('Unknown OpenChannelState: $state');
     }
@@ -129,11 +133,17 @@ class _CreateChannelPageState extends State<CreateChannelPage> {
           value: _getNodeInfoBloc,
           child: OpenChannelSettingsWidget(
             nodeInfo: _nodeInfo,
+            connectionValid: _connectionValid,
+            connecting: _connecting,
             openChannelClicked: (
               OnchainFeeType feeType,
               Int64 fee,
               Int64 localAmount,
             ) {
+              setState(() {
+                _connectionValid = true;
+                _connecting = true;
+              });
               _openChannelBloc.add(
                 OpenChannelEvent(
                   address: LightningAddress(_pubKey, '$_host:$_port'),

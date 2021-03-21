@@ -48,6 +48,7 @@
       "channel_settings": "Channel Settings",
       "check_connection": "Check Connection",
       "confirmations": "Confirmations",
+      "connection_failed": "Connection refused",
       "enter_partner_pubkey": "Public Key",
       "fee_manual_sat_per_byte": "Manual Fee",
       "fee_target_block": "Target Block",

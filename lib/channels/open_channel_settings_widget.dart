@@ -1,5 +1,7 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../common/constants.dart';
 import '../common/models/models.dart';
@@ -8,12 +10,16 @@ import '../common/widgets/widgets.dart';
 
 class OpenChannelSettingsWidget extends StatefulWidget {
   final RemoteNodeInfo nodeInfo;
+  final bool connectionValid;
+  final bool connecting;
   final Function(OnchainFeeType feeType, Int64 fee, Int64 localAmount)
       openChannelClicked;
 
   const OpenChannelSettingsWidget({
     Key key,
     @required this.nodeInfo,
+    @required this.connectionValid,
+    @required this.connecting,
     @required this.openChannelClicked,
   }) : super(key: key);
 
@@ -83,36 +89,73 @@ class _OpenChannelSettingsWidgetState extends State<OpenChannelSettingsWidget> {
               }
             }),
             SizedBox(height: 8.0),
+            _buildConnectionErrorWidget(theme),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 ElevatedButton(
-                  onPressed: () {
-                    // TODO: implement advanced settings
-                    showSnackbar(context, tr(context, 'not_implemented_yet'));
-                  },
+                  onPressed: widget.connecting
+                      ? null
+                      : () {
+                          // TODO: implement advanced settings
+                          showSnackbar(
+                              context, tr(context, 'not_implemented_yet'));
+                        },
                   style: ElevatedButton.styleFrom(
                     primary: sendManyBackgroundAccent,
                   ),
                   child: TranslatedText('channels.open.advanced_settings'),
                 ),
                 SizedBox(width: 8.0),
-                ElevatedButton(
-                  onPressed: _localAmountValid && _feeValid
-                      ? () {
-                          var f = _feeType == OnchainFeeType.blockTarget
-                              ? _targetBlocks
-                              : _fee;
-                          widget.openChannelClicked(_feeType, f, _localAmount);
-                        }
-                      : null,
-                  child: TranslatedText('channels.open.open_channel'),
-                ),
+                _buildOpenChannelButton(),
               ],
             ),
           ],
         ),
       ),
     );
+  }
+
+  ElevatedButton _buildOpenChannelButton() {
+    if (widget.connecting) {
+      return ElevatedButton(
+        onPressed: null,
+        child: SpinKitCircle(size: 15, color: sendManyBlue100),
+      );
+    } else {
+      return ElevatedButton(
+        onPressed: _localAmountValid && _feeValid
+            ? () {
+                var f = _feeType == OnchainFeeType.blockTarget
+                    ? _targetBlocks
+                    : _fee;
+                widget.openChannelClicked(_feeType, f, _localAmount);
+              }
+            : null,
+        child: widget.connectionValid
+            ? TranslatedText('channels.open.open_channel')
+            : TranslatedText('channels.open.retry_connection_test'),
+      );
+    }
+  }
+
+  Widget _buildConnectionErrorWidget(ThemeData theme) {
+    if (!widget.connectionValid) {
+      return BounceInDown(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TranslatedText(
+              'channels.open.connection_failed',
+              style: theme.textTheme.bodyText1.copyWith(
+                color: sendManyErrorColor,
+              ),
+            )
+          ],
+        ),
+      );
+    } else {
+      return Text(' ');
+    }
   }
 }
