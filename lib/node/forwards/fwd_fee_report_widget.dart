@@ -21,14 +21,14 @@ class _FwdFeeReportWidgetState extends State<FwdFeeReportWidget> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<FwdFeeReportBloc, FwdFeeReportState>(
-      cubit: _bloc,
+      bloc: _bloc,
       builder: (context, state) {
         if (state is FeeReportInitial) {
           return SpinKitRipple(color: sendManyBlue200);
         } else if (state is FeeReportLoadedState) {
           return Column(
             children: [
-              Text('day  ${state.feeReport.dayFeeSum}'),
+              Text('day ${state.feeReport.dayFeeSum}'),
               Text('week ${state.feeReport.weekFeeSum}'),
               Text('month ${state.feeReport.monthFeeSum}'),
             ],

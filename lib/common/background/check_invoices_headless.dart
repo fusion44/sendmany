@@ -67,7 +67,7 @@ void backgroundFetchHeadlessTask(String taskId) async {
     macaroon: activeConnection.macaroon,
   );
   bloc.add(LoadTxEvent(updateTxPrefData: false, numMaxInvoices: 100));
-  var state = await bloc.firstWhere((state) {
+  var state = await bloc.stream.firstWhere((state) {
     if (state is LoadingTxFinishedState) return true;
     return false;
   });

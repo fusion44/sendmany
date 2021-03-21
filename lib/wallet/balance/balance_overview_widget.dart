@@ -22,7 +22,7 @@ class _BalanceOverviewWidgetState extends State<BalanceOverviewWidget> {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     return BlocBuilder(
-      cubit: BlocProvider.of<LnInfoBloc>(context),
+      bloc: BlocProvider.of<LnInfoBloc>(context),
       builder: (BuildContext context, LnInfoState state) {
         if (state is LnInfoStateLoading) {
           return TranslatedText('network.loading');

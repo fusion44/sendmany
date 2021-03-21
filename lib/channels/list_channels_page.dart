@@ -50,7 +50,7 @@ class _ListChannelsPageState extends State<ListChannelsPage> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<CloseChannelBloc, CloseChannelBlocState>(
-      cubit: _closeChannelBloc,
+      bloc: _closeChannelBloc,
       listener: (context, state) {
         if (state is CloseChannelErrorState &&
             state.reason == CloseErrorReason.peerOffline) {
@@ -67,7 +67,7 @@ class _ListChannelsPageState extends State<ListChannelsPage> {
         }
       },
       child: BlocBuilder(
-        cubit: BlocProvider.of<SubscribeChannelEventsBloc>(context),
+        bloc: BlocProvider.of<SubscribeChannelEventsBloc>(context),
         builder: (BuildContext context, SubscribeChannelEventsState state) {
           if (state is SubscribeChannelLoadingState) {
             return TranslatedText('network.loading');
@@ -129,7 +129,7 @@ class _ListChannelsPageState extends State<ListChannelsPage> {
     super.initState();
     var bloc = BlocProvider.of<LnInfoBloc>(context);
     _updateState(bloc.state);
-    _sub = bloc.listen((LnInfoState state) {
+    _sub = bloc.stream.listen((LnInfoState state) {
       _updateState(state);
     });
 

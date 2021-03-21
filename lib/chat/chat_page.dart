@@ -45,7 +45,7 @@ class _ChatPageState extends State<ChatPage> {
     }
 
     _updateState(listMsgBloc.state);
-    _msgBlockSub = listMsgBloc.listen((state) {
+    _msgBlockSub = listMsgBloc.stream.listen((state) {
       _updateState(state);
     });
 
@@ -76,7 +76,7 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder(
-      cubit: _getRemoteNodeInfoBloc,
+      bloc: _getRemoteNodeInfoBloc,
       builder: (BuildContext context, GetRemoteNodeInfoState state) {
         var title = tr(context, 'chat.info');
         Widget body;

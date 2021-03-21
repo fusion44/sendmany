@@ -59,7 +59,7 @@ class _MessageListWidgetState extends State<MessageListWidget> {
     _listMsgBloc = BlocProvider.of<ListMessagesBloc>(context);
 
     _updateState(_listMsgBloc.state);
-    _msgBlockSub = _listMsgBloc.listen((state) {
+    _msgBlockSub = _listMsgBloc.stream.listen((state) {
       _updateState(state);
     });
 

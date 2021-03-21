@@ -48,10 +48,10 @@ class _SendTransactionWidgetState extends State<SendTransactionWidget> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder(
-      cubit: BlocProvider.of<LnInfoBloc>(context),
+      bloc: BlocProvider.of<LnInfoBloc>(context),
       builder: (BuildContext context, LnInfoState infoState) {
         return BlocBuilder(
-          cubit: _sendCoinsBloc,
+          bloc: _sendCoinsBloc,
           builder: (context, sendCoinsState) {
             if (sendCoinsState is InitialSendCoinsState) {
               return _buildScanAndSendUI();

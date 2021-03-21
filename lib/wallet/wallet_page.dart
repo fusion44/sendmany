@@ -17,7 +17,7 @@ class _WalletPageState extends State<WalletPage> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder(
-      cubit: BlocProvider.of<ListTxBloc>(context),
+      bloc: BlocProvider.of<ListTxBloc>(context),
       buildWhen: (oldState, newState) {
         return !(newState is ReloadingTxState);
       },

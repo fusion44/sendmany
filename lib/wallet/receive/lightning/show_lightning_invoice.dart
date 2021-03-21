@@ -57,7 +57,7 @@ class _ShowLightningInvoiceState extends State<ShowLightningInvoice> {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     return BlocBuilder<AddInvoiceBloc, AddInvoiceState>(
-      cubit: _addInvoicesBloc,
+      bloc: _addInvoicesBloc,
       builder: (context, state) {
         if (state is InitialAddinvoiceState) {
           return Center(
@@ -69,7 +69,7 @@ class _ShowLightningInvoiceState extends State<ShowLightningInvoice> {
               child: SingleChildScrollView(
                 child: Center(
                   child: BlocListener<WatchInvoicesBloc, WatchInvoicesState>(
-                    cubit: _watchInvoicesBloc,
+                    bloc: _watchInvoicesBloc,
                     listener: (context, state) {
                       if (state is InvoiceChangedState &&
                           state.invoice.addIndex == _addIndex &&

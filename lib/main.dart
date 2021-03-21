@@ -112,10 +112,10 @@ class _SendManyAppState extends State<SendManyApp> {
 
   Widget _buildSplashPage() {
     return BlocBuilder(
-      cubit: _connectionManagerBloc,
+      bloc: _connectionManagerBloc,
       builder: (context, ConnectionManagerState connState) {
         return BlocBuilder(
-          cubit: _preferencesBloc,
+          bloc: _preferencesBloc,
           builder: (BuildContext context, PreferencesState prefsState) {
             // possible states:
             // PreferencesLoadingState -> Show splash screen
@@ -194,7 +194,7 @@ class _SendManyAppState extends State<SendManyApp> {
     var delegates = _buildLocalizationDelegates();
 
     return BlocBuilder(
-      cubit: _preferencesBloc,
+      bloc: _preferencesBloc,
       buildWhen: (PreferencesState oldState, PreferencesState newState) {
         if (oldState is PreferencesLoadingState) return true;
         return oldState.theme != newState.theme;

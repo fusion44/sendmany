@@ -36,7 +36,7 @@ class _DisplayChannelInfoPageState extends State<DisplayChannelInfoPage> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<GetChanInfoBloc, GetChanInfoState>(
-      cubit: _getChanInfoBloc,
+      bloc: _getChanInfoBloc,
       builder: (_, GetChanInfoState state) {
         var body;
         if (widget.c is EstablishedChannel) {

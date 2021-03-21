@@ -43,13 +43,13 @@ class _CreateChannelPageState extends State<CreateChannelPage> {
     _getNodeInfoBloc = GetRemoteNodeInfoBloc(provider);
 
     _updateStateNodeInfoBloc(_getNodeInfoBloc.state);
-    _getNodeInfoBloc.listen((state) {
+    _getNodeInfoBloc.stream.listen((state) {
       _updateStateNodeInfoBloc(state);
     });
 
     _openChannelBloc = OpenChannelBloc();
     _updateStateOpenChannelBloc(_openChannelBloc.state);
-    _openChannelBloc.listen((state) {
+    _openChannelBloc.stream.listen((state) {
       _updateStateOpenChannelBloc(state);
     });
   }

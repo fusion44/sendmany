@@ -24,7 +24,7 @@ class ConnectionManagerBloc
   ConnectionManagerBloc(this._prefsBloc)
       : super(InitialConnectionManagerState()) {
     _updateState(_prefsBloc.state);
-    _prefsBloc.listen((state) {
+    _prefsBloc.stream.listen((state) {
       _updateState(state);
     });
   }

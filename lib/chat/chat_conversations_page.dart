@@ -72,7 +72,7 @@ class _ChatConversationsPageState extends State<ChatConversationsPage> {
     _nodeInfoBloc = BlocProvider.of<GetRemoteNodeInfoBloc>(context);
 
     _updateState(bloc.state);
-    _sub = bloc.listen((state) {
+    _sub = bloc.stream.listen((state) {
       _updateState(state);
     });
 
@@ -89,7 +89,7 @@ class _ChatConversationsPageState extends State<ChatConversationsPage> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<GetRemoteNodeInfoBloc, GetRemoteNodeInfoState>(
-      cubit: _nodeInfoBloc,
+      bloc: _nodeInfoBloc,
       builder: (context, niState) {
         if (_messagesLoaded && niState is RemoteNodeInfoLoadedState) {
           return ListView.separated(

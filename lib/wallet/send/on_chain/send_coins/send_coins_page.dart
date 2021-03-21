@@ -55,17 +55,17 @@ class _SendCoinsPageState extends State<SendCoinsPage> {
 
   Widget _buildInnerUI(LnInfoBloc infoBloc) {
     return BlocBuilder(
-      cubit: infoBloc,
+      bloc: infoBloc,
       builder: (BuildContext context, LnInfoState infoState) {
         return BlocListener(
-          cubit: _sendCoinsBloc,
+          bloc: _sendCoinsBloc,
           listener: (context, state) {
             if (state is SendCoinsErrorState) {
               showSnackbar(context, state.error);
             }
           },
           child: BlocBuilder(
-            cubit: _sendCoinsBloc,
+            bloc: _sendCoinsBloc,
             builder: (context, sendCoinsState) {
               if (sendCoinsState is InitialSendCoinsState ||
                   sendCoinsState is SendCoinsErrorState) {

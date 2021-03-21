@@ -46,7 +46,7 @@ class ListMessagesBloc
 
   ListMessagesBloc(this.listTxBloc) : super(InitialListMessagesState()) {
     _updateState(listTxBloc.state);
-    _listTxSub = listTxBloc.listen((state) {
+    _listTxSub = listTxBloc.stream.listen((state) {
       _updateState(state);
     });
     _initInvoiceSubscription();

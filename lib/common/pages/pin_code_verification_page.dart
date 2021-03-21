@@ -39,7 +39,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
     super.initState();
 
     _updateState(widget.prefsBloc.state);
-    prefSub = widget.prefsBloc.listen((state) {
+    prefSub = widget.prefsBloc.stream.listen((state) {
       _updateState(state);
     });
 
