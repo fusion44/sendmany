@@ -37,12 +37,25 @@ class HTLCAttempt {
         status = HTLCAttemptStatus.failed;
     }
 
-    var attemptTime = DateTime.fromMillisecondsSinceEpoch(
-      htlc.attemptTimeNs.toInt() * 1000 ?? 0,
-    );
-    var resolveTime = DateTime.fromMillisecondsSinceEpoch(
-      htlc.attemptTimeNs.toInt() * 1000 ?? 0,
-    );
+    var attemptTime;
+    try {
+      attemptTime = DateTime.fromMillisecondsSinceEpoch(
+        htlc.attemptTimeNs.toInt() * 1000 ?? 0,
+      );
+    } on ArgumentError catch (e) {
+      attemptTime = DateTime.fromMillisecondsSinceEpoch(0);
+      print('Error parsing attemptTime: $e');
+    }
+
+    var resolveTime;
+    try {
+      resolveTime = DateTime.fromMillisecondsSinceEpoch(
+        htlc.attemptTimeNs.toInt() * 1000 ?? 0,
+      );
+    } on ArgumentError catch (e) {
+      resolveTime = DateTime.fromMillisecondsSinceEpoch(0);
+      print('Error parsing resolveTime: $e');
+    }
 
     return HTLCAttempt(
       status: status,
