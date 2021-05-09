@@ -5,12 +5,13 @@ import 'package:background_fetch/background_fetch.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:grpc/grpc.dart';
+import '../connection/connection_manager/bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../chat/utils.dart';
-import '../../wallet/balance/bloc/ln_info_bloc.dart';
 import '../../wallet/balance/list_transactions/bloc.dart';
 import '../../wallet/balance/list_transactions/list_transactions_bloc.dart';
+import '../../wallet/balance/list_transactions/list_transactions_repository.dart';
 import '../blocs/send_local_notification/send_notification_bloc.dart';
 import '../connection/lnd_rpc/lnd_rpc.dart' as lngrpc;
 import '../constants.dart';
@@ -61,11 +62,8 @@ void backgroundFetchHeadlessTask(String taskId) async {
     ),
   );
 
-  var bloc = ListTxBloc(
-    LnInfoBloc(),
-    lnClient: lnClient,
-    macaroon: activeConnection.macaroon,
-  );
+  LnConnectionDataProvider().lightningClient = lnClient;
+  var bloc = ListTxBloc(ListTxRepository());
   bloc.add(LoadTxEvent(updateTxPrefData: false, numMaxInvoices: 100));
   var state = await bloc.stream.firstWhere((state) {
     if (state is LoadingTxFinishedState) return true;

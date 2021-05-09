@@ -7,6 +7,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../common/blocs/get_remote_node_info/bloc.dart';
 import '../common/constants.dart';
 import '../wallet/balance/bloc/bloc.dart';
+import '../wallet/balance/list_transactions/bloc.dart';
 import 'chat_page.dart';
 import 'chat_peer_tile.dart';
 import 'find_peer_page.dart';
@@ -26,7 +27,6 @@ class ChatConversationsPage extends StatefulWidget {
   static final Function fabCallback = (
     context,
     LnInfoBloc lnInfoBloc,
-    ListMessagesBloc listMessagesBloc,
     GetRemoteNodeInfoRepository remoteNodeInfoRepo,
   ) async {
     var result = await Navigator.push(
@@ -38,7 +38,10 @@ class ChatConversationsPage extends StatefulWidget {
       var prov = MultiBlocProvider(
         providers: [
           BlocProvider<LnInfoBloc>.value(value: lnInfoBloc),
-          BlocProvider<ListMessagesBloc>.value(value: listMessagesBloc)
+          BlocProvider(
+            create: (context) =>
+                ListMessagesBloc(ListTxBloc(RepositoryProvider.of(context))),
+          )
         ],
         child: RepositoryProvider.value(
           value: remoteNodeInfoRepo,

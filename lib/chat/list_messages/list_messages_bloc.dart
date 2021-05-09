@@ -6,6 +6,7 @@ import 'package:bloc/bloc.dart';
 import 'package:buffer/buffer.dart';
 import 'package:convert/convert.dart';
 import 'package:fixnum/fixnum.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grpc/grpc.dart';
 import 'package:nanoid/nanoid.dart';
 
@@ -45,6 +46,7 @@ class ListMessagesBloc
   bool _fullLoadFinished = true;
 
   ListMessagesBloc(this.listTxBloc) : super(InitialListMessagesState()) {
+    listTxBloc.add(LoadTxEvent());
     _updateState(listTxBloc.state);
     _listTxSub = listTxBloc.stream.listen((state) {
       _updateState(state);

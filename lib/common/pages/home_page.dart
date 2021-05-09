@@ -14,6 +14,7 @@ import '../../preferences/bloc.dart';
 import '../../preferences/preferences_page.dart';
 import '../../wallet/balance/bloc/bloc.dart';
 import '../../wallet/balance/list_transactions/bloc.dart';
+import '../../wallet/balance/list_transactions/list_transactions_repository.dart';
 import '../../wallet/wallet_page.dart';
 import '../blocs/get_remote_node_info/bloc.dart';
 import '../blocs/get_remote_node_info/get_remote_node_info_repo.dart';
@@ -41,9 +42,8 @@ class _HomePageState extends State<HomePage>
   LnInfoBloc _lnInfoBloc;
   SubscribeChannelEventsBloc _subscribeChannelEventsBloc;
   ListPeersBloc _listPeersBloc;
-  ListTxBloc _listTxBloc;
-  ListMessagesBloc _listMsgBloc;
   final _remoteNodeInfoRepo = GetRemoteNodeInfoRepository();
+  final _listTxRepo = ListTxRepository();
   GetRemoteNodeInfoBloc _nodeInfoBloc;
 
   @override
@@ -55,14 +55,6 @@ class _HomePageState extends State<HomePage>
     _subscribeChannelEventsBloc.add(SubscribeChannelEventsAppStart());
     _listPeersBloc = ListPeersBloc();
     _listPeersBloc.add(LoadPeersList());
-    _listTxBloc = ListTxBloc(
-      _lnInfoBloc,
-      lnClient: LnConnectionDataProvider().lightningClient,
-      macaroon: LnConnectionDataProvider().macaroon,
-    );
-    _listTxBloc.add(LoadTxEvent());
-    _listTxBloc.add(ChangePollTxIntervalEvent(30));
-    _listMsgBloc = ListMessagesBloc(_listTxBloc);
     _nodeInfoBloc = GetRemoteNodeInfoBloc(_remoteNodeInfoRepo);
     super.initState();
   }
@@ -70,8 +62,6 @@ class _HomePageState extends State<HomePage>
   @override
   void dispose() {
     _controller.dispose();
-    _listMsgBloc.close();
-    _listTxBloc.close(); // contains a reference to _lnInfoBloc, dispose first
     _lnInfoBloc.close();
     _listPeersBloc.close();
     _subscribeChannelEventsBloc.close();
@@ -85,6 +75,7 @@ class _HomePageState extends State<HomePage>
     final repoProvider = MultiRepositoryProvider(
       providers: [
         RepositoryProvider(create: (context) => ListChannelsRepository()),
+        RepositoryProvider.value(value: _listTxRepo),
       ],
       child: _buildRemoteNodeRepoProvider(context),
     );
@@ -96,9 +87,10 @@ class _HomePageState extends State<HomePage>
           value: _subscribeChannelEventsBloc,
         ),
         BlocProvider<ListPeersBloc>.value(value: _listPeersBloc),
-        BlocProvider<ListTxBloc>.value(value: _listTxBloc),
-        BlocProvider<ListMessagesBloc>.value(value: _listMsgBloc),
         BlocProvider<GetRemoteNodeInfoBloc>.value(value: _nodeInfoBloc),
+        BlocProvider(
+          create: (context) => ListMessagesBloc(ListTxBloc(_listTxRepo)),
+        )
       ],
       child: repoProvider,
     );
@@ -156,7 +148,6 @@ class _HomePageState extends State<HomePage>
               ChatConversationsPage.fabCallback(
                 context,
                 _lnInfoBloc,
-                _listMsgBloc,
                 _remoteNodeInfoRepo,
               );
             },

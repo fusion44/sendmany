@@ -1,23 +1,18 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:fixnum/fixnum.dart';
-import 'package:grpc/grpc.dart';
-import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../common/connection/connection_manager/bloc.dart';
-import '../../../common/connection/lnd_rpc/lnd_rpc.dart' as lngrpc;
 import '../../../common/constants.dart';
 import '../../../common/models/models.dart';
-import '../bloc/bloc.dart';
-import '../bloc/ln_info_bloc.dart';
 import 'list_transactions_event.dart';
+import 'list_transactions_options.dart';
+import 'list_transactions_repository.dart';
 import 'list_transactions_state.dart';
 
 // Event when a new message from the update subscription is received
 class _SubscribeTransactionEvent extends ListTxEvent {
-  final lngrpc.Transaction tx;
+  final Tx tx;
 
   _SubscribeTransactionEvent(this.tx);
 
@@ -26,125 +21,37 @@ class _SubscribeTransactionEvent extends ListTxEvent {
 }
 
 class ListTxBloc extends Bloc<ListTxEvent, ListTxState> {
-  LnInfoBloc _lnInfoBloc;
-  List<TxLightningInvoice> invoices;
-  List<TxLightningPayment> payments;
-  List<TxOnchain> onchains = [];
+  final ListTxRepository _repo;
+  StreamSubscription<Tx> _sub;
 
-  bool includeLightningInvoices = true;
-  bool includeLightningPayments = true;
-  bool includeOnchainTx = true;
-  bool onlySettled = false;
-  bool reversed = true;
-
-  ResponseStream<lngrpc.Transaction> _responseStream;
-  int pollInterval = 0;
-  Timer _timer;
-  int _lastBlockHight = 0;
-  bool _checkingBlockHeight = false;
-
-  final lngrpc.LightningClient lnClient;
-
-  final String macaroon;
-
+  List<TxLightningInvoice> _invoices = [];
+  List<TxLightningPayment> _payments = [];
+  List<TxOnchain> _onchains = [];
+  List<Tx> _combined = [];
   int numInvoices = -1;
-
   int numPayments = -1;
-
   int numOnchainTx = -1;
 
-  ListTxBloc(
-    LnInfoBloc lnInfoBloc, {
-    @required this.lnClient,
-    @required this.macaroon,
-  }) : super(InitialListTxState()) {
-    _lnInfoBloc = lnInfoBloc;
-    _setupTransactionSubscription();
+  ListTxOptions _options;
+
+  ListTxBloc(this._repo) : super(InitialListTxState()) {
+    _sub = _repo.rawTxStream
+        .listen((event) => add(_SubscribeTransactionEvent(event)));
   }
 
   @override
-  Future<void> close() async {
-    if (_timer != null && _timer.isActive) {
-      _timer.cancel();
-    }
-
-    await super.close();
-  }
-
-  void _setupTransactionSubscription() {
-    var opts = CallOptions(metadata: {'macaroon': macaroon});
-
-    var req = lngrpc.GetTransactionsRequest();
-    _responseStream = lnClient.subscribeTransactions(
-      req,
-      options: opts,
-    );
-    _responseStream.listen((onData) {
-      _lnInfoBloc.add(LoadLnInfo());
-      add(_SubscribeTransactionEvent(onData));
-    });
-  }
-
-  void _setupTimer() {
-    if (_timer != null && _timer.isActive) {
-      _timer.cancel();
-    }
-
-    _timer = Timer.periodic(Duration(seconds: pollInterval), (timer) {
-      if (pollInterval == 0) {
-        _timer.cancel();
-        _timer = null;
-      } else {
-        _checkBlockHeight();
-      }
-    });
-  }
-
-  Future _checkBlockHeight() async {
-    if (_checkingBlockHeight) {
-      return;
-    }
-    _checkingBlockHeight = true;
-    var client = LnConnectionDataProvider().lightningClient;
-    var macaroon = LnConnectionDataProvider().macaroon;
-    var opts = CallOptions(metadata: {'macaroon': macaroon});
-
-    var req = lngrpc.GetInfoRequest();
-    var info = await client.getInfo(
-      req,
-      options: opts,
-    );
-
-    if (info.blockHeight != _lastBlockHight) {
-      _lnInfoBloc.add(LoadLnInfo());
-      add(LoadTxEvent());
-      _lastBlockHight = info.blockHeight;
-    }
-    _checkingBlockHeight = false;
+  Future<void> close() {
+    _sub?.cancel();
+    return super.close();
   }
 
   @override
   Stream<ListTxState> mapEventToState(
     ListTxEvent event,
   ) async* {
-    if (event is ChangePollTxIntervalEvent) {
-      pollInterval = event.seconds;
-      _setupTimer();
-    } else if (event is SetFilterTxEvent) {
-      includeLightningInvoices = event.includeLightningInvoices;
-      includeLightningPayments = event.includeLightningPayments;
-      includeOnchainTx = event.includeOnchainTx;
-      onlySettled = event.onlySettled;
-      reversed = event.reversed;
-      yield _buildTxList();
-    } else if (event is ResetFilterTxEvent) {
-      includeLightningInvoices = true;
-      includeLightningPayments = true;
-      includeOnchainTx = true;
-      onlySettled = false;
-      reversed = true;
-      yield _buildTxList();
-    } else if (event is LoadTxEvent) {
+    if (event is LoadTxEvent) {
+      _options = event.options;
+
       if (state is LoadingTxFinishedState) {
         LoadingTxFinishedState tx = state;
         yield LoadingTxState(tx.transactions);
@@ -152,140 +59,122 @@ class ListTxBloc extends Bloc<ListTxEvent, ListTxState> {
         yield LoadingTxState([]);
       }
       try {
-        await _loadTransactions(event.numMaxInvoices);
+        _invoices = await _repo.getInvoices();
+        _payments = await _repo.getPayments();
+        _onchains = await _repo.getOnchains();
+
+        _buildTxList();
 
         if (event.updateTxPrefData) {
           // save the last index - necessary to check for new
           // invoices in a background process
           var prefs = await SharedPreferences.getInstance();
-          await prefs.setInt(prefLastNumInvoices, numInvoices);
-          await prefs.setInt(prefLastNumPayments, numPayments);
-          await prefs.setInt(prefLastNumOnchainTx, numOnchainTx);
+          await prefs.setInt(prefLastNumInvoices, _invoices.length);
+          await prefs.setInt(prefLastNumPayments, _payments.length);
+          await prefs.setInt(prefLastNumOnchainTx, _onchains.length);
         }
 
-        yield _buildTxList();
+        yield LoadingTxFinishedState(
+          _combined,
+          invoices: List.from(_invoices),
+          payments: List.from(_payments),
+          onchains: List.from(_onchains),
+        );
       } catch (error) {
         yield LoadingTxErrorState(error);
       }
     } else if (event is _SubscribeTransactionEvent) {
-      // check if it is an existing transaction
-      var found = false;
-      var newTx = OnchainTransaction.fromLND(event.tx);
-      List<Tx> l = onchains.map((tx) {
-        if (tx.tx.hash == newTx.hash) {
-          // found the transaction, replace with new tx state
-          found = true;
-          return TxOnchain(newTx);
+      _onNewTransaction(event);
+      yield LoadingTxFinishedState(
+        _combined,
+        invoices: List.from(_invoices),
+        payments: List.from(_payments),
+        onchains: List.from(_onchains),
+      );
+    }
+  }
+
+  void _buildTxList() {
+    _combined = <Tx>[];
+
+    if (_options.includeLightningInvoices) {
+      _invoices.forEach((TxLightningInvoice invoice) {
+        if (_options.includeUnsettledInvoices) {
+          _combined.add(invoice);
         } else {
-          return tx;
-        }
-      }).toList();
-
-      if (!found) {
-        // we didn't find the tx, add it to the store
-        l.add(TxOnchain(newTx));
-      }
-      onchains = l;
-      yield _buildTxList();
-    }
-  }
-
-  Future _loadTransactions(int numMaxInvoices) async {
-    var invoicesRequest = lngrpc.ListInvoiceRequest();
-    invoicesRequest.reversed = true;
-    invoicesRequest.numMaxInvoices = Int64(99999);
-    var paymentsRequest = lngrpc.ListPaymentsRequest();
-    var txRequest = lngrpc.GetTransactionsRequest();
-
-    var responseList;
-    try {
-      responseList = await Future.wait([
-        lnClient.listInvoices(invoicesRequest),
-        lnClient.listPayments(paymentsRequest),
-        lnClient.getTransactions(txRequest),
-      ]);
-    } on GrpcError catch (e) {
-      print('gRPC error: $e');
-      return;
-    }
-
-    lngrpc.ListInvoiceResponse invoiceResponse = responseList[0];
-    lngrpc.ListPaymentsResponse paymentsResponse = responseList[1];
-    lngrpc.TransactionDetails txResponse = responseList[2];
-
-    try {
-      invoices = [];
-      invoiceResponse.invoices.forEach((lngrpc.Invoice grpcInvoice) {
-        var invoice = Invoice.fromGRPC(grpcInvoice);
-        invoices.add(TxLightningInvoice(invoice));
-      });
-
-      payments = [];
-      paymentsResponse.payments.forEach((lngrpc.Payment grpcPayment) {
-        var payment = Payment.fromGRPC(grpcPayment);
-        payments.add(TxLightningPayment(payment));
-      });
-
-      onchains = [];
-      txResponse.transactions.forEach((lngrpc.Transaction onChainTx) {
-        if (onChainTx.amount != 0) {
-          var txm = OnchainTransaction.fromLND(onChainTx);
-          onchains.add(TxOnchain(txm));
-        }
-      });
-
-      numInvoices = invoiceResponse.lastIndexOffset.toInt();
-      numPayments = paymentsResponse.payments.length;
-      // we ignore transactions with amount of 0
-      numOnchainTx = onchains.length;
-    } catch (e) {
-      print(e);
-      print(e.stackTrace);
-    }
-  }
-
-  LoadingTxFinishedState _buildTxList() {
-    var tx = <Tx>[];
-
-    if (includeLightningInvoices) {
-      invoices.forEach((TxLightningInvoice invoice) {
-        if (onlySettled) {
           if (invoice.invoice.state == InvoiceState.settled) {
-            tx.add(invoice);
+            _combined.add(invoice);
           }
-        } else {
-          tx.add(invoice);
         }
       });
     }
 
-    if (includeLightningPayments) {
-      payments.forEach((TxLightningPayment payment) {
-        if (onlySettled) {
+    if (_options.includeLightningPayments) {
+      _payments.forEach((TxLightningPayment payment) {
+        if (_options.includeFailedPayments) {
+          _combined.add(payment);
+        } else {
           if (payment.payment.status == PaymentStatus.succeeded) {
-            tx.add(payment);
+            _combined.add(payment);
           }
-        } else {
-          tx.add(payment);
         }
       });
     }
 
-    if (includeOnchainTx) {
-      onchains.forEach((TxOnchain onchainTx) {
-        tx.add(onchainTx);
+    if (_options.includeOnchainTx) {
+      _onchains.forEach((TxOnchain onchainTx) {
+        _combined.add(onchainTx);
       });
     }
 
-    tx.sort((Tx a, Tx b) {
+    _combined.sort((Tx a, Tx b) {
       return b.date.compareTo(a.date);
     });
+  }
 
-    return LoadingTxFinishedState(
-      tx,
-      invoices: invoices,
-      payments: payments,
-      onchains: onchains,
-    );
+  void _onNewTransaction(_SubscribeTransactionEvent event) {
+    var found = false;
+    final newTx = event.tx;
+
+    if (newTx is TxOnchain) {
+      _onchains = _onchains.map((element) {
+        if (element.tx.hash == newTx.tx.hash) {
+          found = true;
+          return newTx;
+        } else {
+          return element;
+        }
+      }).toList();
+      if (!found) {
+        _onchains.add(newTx);
+      }
+    } else if (newTx is TxLightningInvoice) {
+      _invoices = _invoices.map((element) {
+        if (element.invoice.hash == newTx.invoice.hash) {
+          found = true;
+          return newTx;
+        } else {
+          return element;
+        }
+      }).toList();
+      if (!found) {
+        _invoices.add(newTx);
+      }
+    } else if (newTx is TxLightningPayment) {
+      _payments = _payments.map((element) {
+        if (element.payment.paymentHash == newTx.payment.paymentHash) {
+          found = true;
+          return newTx;
+        } else {
+          return element;
+        }
+      }).toList();
+      if (!found) {
+        _payments.add(newTx);
+      }
+    }
+
+    _buildTxList();
+    return;
   }
 }

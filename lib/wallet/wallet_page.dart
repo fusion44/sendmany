@@ -7,6 +7,7 @@ import '../common/widgets/widgets.dart';
 import 'balance/balance_overview_widget.dart';
 import 'balance/bloc/bloc.dart';
 import 'balance/list_transactions/bloc.dart';
+import 'balance/list_transactions/list_transactions_options.dart';
 
 class WalletPage extends StatefulWidget {
   @override
@@ -14,10 +15,25 @@ class WalletPage extends StatefulWidget {
 }
 
 class _WalletPageState extends State<WalletPage> {
+  ListTxBloc _bloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _bloc = ListTxBloc(RepositoryProvider.of(context));
+    _bloc.add(LoadTxEvent(options: ListTxOptions()));
+  }
+
+  @override
+  void dispose() {
+    _bloc.close();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder(
-      bloc: BlocProvider.of<ListTxBloc>(context),
+      bloc: _bloc,
       buildWhen: (oldState, newState) {
         return !(newState is ReloadingTxState);
       },
