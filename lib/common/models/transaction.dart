@@ -49,3 +49,21 @@ class TxOnchain extends Tx {
           amountFees: tx.totalFees,
         );
 }
+
+/// A class to group several Tx together. This may be used to unclutter the UI.
+class TxGroup extends Tx {
+  final List<Tx> tx;
+
+  TxGroup(
+    this.tx,
+    Int64 amountSat,
+    Int64 amountFees, {
+    String memo = '',
+    DateTime date,
+  }) : super(
+          memo,
+          amountSat,
+          date ?? tx[0].date,
+          amountFees: amountFees,
+        );
+}

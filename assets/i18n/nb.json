@@ -201,6 +201,7 @@
       "close_txid_qr_dlg": "Ferdig",
       "confirmations": "Bekreftelser",
       "destination_address": "destinasjon adresse",
+      "grouped_x_transactions": "Grupperte {num_tx} transaksjoner",
       "hash": "Transaction Hash",
       "insert_address_here": "Lim inn destinasjonsadressen her",
       "invoice_for_x_sats": "Faktura for",

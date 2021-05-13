@@ -12,8 +12,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Local notifications while the app is closed and new chat messages have arrived
 
 ### changed
-- Channel open UI shows an error when peer refused the connection
 
+- Channel open UI shows an error when peer refused the connection
+- Transaction list groups 1 sat transactions to de-clutter the list view
 
 ## [0.6.0] - 2020-04-17
 

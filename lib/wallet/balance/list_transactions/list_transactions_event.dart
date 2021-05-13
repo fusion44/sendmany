@@ -26,3 +26,18 @@ class LoadTxEvent extends ListTxEvent {
   @override
   List<Object> get props => [updateTxPrefData, numMaxInvoices, options];
 }
+
+class ResetFilterTxEvent extends ListTxEvent {
+  @override
+  List<Object> get props => [];
+}
+
+class ChangePollTxIntervalEvent extends ListTxEvent {
+  // 0 turns polling off
+  final int seconds;
+
+  ChangePollTxIntervalEvent(this.seconds);
+
+  @override
+  List<Object> get props => [seconds];
+}

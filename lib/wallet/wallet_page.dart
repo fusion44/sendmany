@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
+import '../common/constants.dart';
 import '../common/models/models.dart';
 import '../common/utils.dart';
 import '../common/widgets/widgets.dart';
@@ -92,6 +94,14 @@ class _WalletPageState extends State<WalletPage> {
     } else if (tx is TxLightningPayment) {
       icon = Icon(Icons.arrow_back, color: Colors.redAccent);
       if (tx.payment.status != PaymentStatus.succeeded) settled = false;
+    } else if (tx is TxGroup) {
+      icon = Icon(MdiIcons.selectGroup, color: sendManyPurple50);
+      settled = true;
+      memo = tr(
+        context,
+        'wallet.transactions.grouped_x_transactions',
+        {'num_tx': tx.tx.length.toString()},
+      );
     } else if (tx is TxOnchain) {
       if (tx.tx.numConfirmations == 0) settled = false;
       if (tx.tx.amount > 0) {

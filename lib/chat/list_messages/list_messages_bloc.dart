@@ -17,6 +17,7 @@ import '../../common/models/models.dart';
 import '../../common/models/transaction.dart';
 import '../../wallet/balance/list_transactions/bloc.dart';
 import '../../wallet/balance/list_transactions/list_transactions_bloc.dart';
+import '../../wallet/balance/list_transactions/list_transactions_options.dart';
 import '../models/message_item.dart';
 import '../utils.dart';
 import 'bloc.dart';
@@ -46,7 +47,12 @@ class ListMessagesBloc
   bool _fullLoadFinished = true;
 
   ListMessagesBloc(this.listTxBloc) : super(InitialListMessagesState()) {
-    listTxBloc.add(LoadTxEvent());
+    listTxBloc.add(LoadTxEvent(
+      options: ListTxOptions(
+        includeOnchainTx: false,
+        groupTransactions: false,
+      ),
+    ));
     _updateState(listTxBloc.state);
     _listTxSub = listTxBloc.stream.listen((state) {
       _updateState(state);

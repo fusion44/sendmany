@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:fixnum/fixnum.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../common/constants.dart';
@@ -33,7 +34,6 @@ class ListTxBloc extends Bloc<ListTxEvent, ListTxState> {
   int numOnchainTx = -1;
 
   ListTxOptions _options;
-
   ListTxBloc(this._repo) : super(InitialListTxState()) {
     _sub = _repo.rawTxStream
         .listen((event) => add(_SubscribeTransactionEvent(event)));
@@ -127,6 +127,43 @@ class ListTxBloc extends Bloc<ListTxEvent, ListTxState> {
       });
     }
 
+    if (_options.groupTransactions) {
+      var tempList = <Tx>[];
+      var newList = <Tx>[];
+      var amountSat = Int64.ZERO;
+      var amountFees = Int64.ZERO;
+      for (var i = 0; i < _combined.length; i++) {
+        if (_combined[i].amountSat != 1 && tempList.isEmpty) {
+          newList.add(_combined[i]);
+        } else if (_combined[i].amountSat != 1 && tempList.isNotEmpty) {
+          final grp = TxGroup(tempList, amountSat, amountFees);
+          newList.add(grp);
+          newList.add(_combined[i]);
+          tempList = <Tx>[];
+          amountSat = Int64.ZERO;
+          amountFees = Int64.ZERO;
+        } else if (_combined[i].amountSat == 1 &&
+            _combined[i + 1].amountSat != 1 &&
+            tempList.isEmpty) {
+          newList.add(_combined[i]);
+        } else if (_combined[i].amountSat == 1 &&
+            _combined[i + 1].amountSat == 1) {
+          tempList.add(_combined[i]);
+          amountSat += _combined[i].amountSat;
+          amountFees += _combined[i].amountFees;
+        } else if (_combined[i].amountSat == 1 &&
+            _combined[i + 1].amountSat != 1 &&
+            tempList.isNotEmpty) {
+          tempList.add(_combined[i]);
+          amountSat += _combined[i].amountSat;
+          amountFees += _combined[i].amountFees;
+        } else {
+          print('other case');
+        }
+      }
+      _combined = newList;
+    }
+
     _combined.sort((Tx a, Tx b) {
       return b.date.compareTo(a.date);
     });
@@ -175,6 +212,5 @@ class ListTxBloc extends Bloc<ListTxEvent, ListTxState> {
     }
 
     _buildTxList();
-    return;
   }
 }

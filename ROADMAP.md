@@ -8,8 +8,8 @@ This is a somewhat non-comprehensive roadmap, but it may give a general idea whe
 - [x] Further integrate chat into the app
 
 [0.7.0]
-- [ ] Implement PIN setup and entry
-- [ ] Implement batched payment listing (batch multiple same payments to remove clutter like 1 sat chat payments)
+- [x] Implement PIN setup and entry
+- [x] Implement batched payment listing (batch multiple same payments to remove clutter like 1 sat chat payments)
 - [ ] Reconnect when gRPC looses connection to the node
 
 [0.8.0]

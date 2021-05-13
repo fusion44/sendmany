@@ -201,6 +201,7 @@
       "close_txid_qr_dlg": "Fertig",
       "confirmations": "Bestätigungen",
       "destination_address": "Zieladresse",
+      "grouped_x_transactions": "{num_tx} Transaktionen gruppiert",
       "hash": "Hash der Transaktion",
       "insert_address_here": "Füge die Zieladresse hier ein",
       "invoice_for_x_sats": "Rechnung über",

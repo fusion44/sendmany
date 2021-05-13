@@ -6,6 +6,7 @@ class ListTxOptions extends Equatable {
   final bool includeLightningPayments;
   final bool includeFailedPayments;
   final bool includeOnchainTx;
+  final bool groupTransactions;
 
   const ListTxOptions({
     this.includeLightningInvoices = true,
@@ -13,6 +14,7 @@ class ListTxOptions extends Equatable {
     this.includeLightningPayments = true,
     this.includeFailedPayments = true,
     this.includeOnchainTx = true,
+    this.groupTransactions = true,
   });
 
   ListTxOptions.only({
@@ -21,11 +23,13 @@ class ListTxOptions extends Equatable {
     lightningPayments = false,
     failedPayments = false,
     onchainTx = false,
+    groupTransactions = false,
   })  : includeLightningInvoices = lightningInvoices,
         includeUnsettledInvoices = unsettledInvoices,
         includeLightningPayments = lightningPayments,
         includeFailedPayments = failedPayments,
-        includeOnchainTx = onchainTx;
+        includeOnchainTx = onchainTx,
+        groupTransactions = groupTransactions;
 
   @override
   List<Object> get props => [
@@ -33,6 +37,7 @@ class ListTxOptions extends Equatable {
         includeUnsettledInvoices,
         includeLightningPayments,
         includeFailedPayments,
-        includeOnchainTx
+        includeOnchainTx,
+        groupTransactions
       ];
 }
